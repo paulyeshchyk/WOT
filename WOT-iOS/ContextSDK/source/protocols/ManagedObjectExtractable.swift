@@ -21,7 +21,7 @@ public extension ManagedObjectExtractable {
         }
 
         let managedObjectJSON: JSON?
-        
+
         if let keyPath = jsonKeyPath {
             managedObjectJSON = jsonElement[keyPath] as? JSON
         } else {

@@ -35,7 +35,6 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
     // MARK: -
 
     private var requestPredicateComposition: RequestPredicateCompositionProtocol
-//    private var requestPredicateComposer: RequestPredicateComposerProtocol
     private let keypathPrefix: String?
     private let httpQueryItemName: String
     private let fieldsKeypaths: [String]

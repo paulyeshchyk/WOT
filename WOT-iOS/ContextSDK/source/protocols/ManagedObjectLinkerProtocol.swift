@@ -6,6 +6,15 @@
 //
 
 public typealias ManagedObjectLinkerContext = DataStoreContainerProtocol
+public typealias ManagedObjectLinkerCompletion = (FetchResultProtocol, Error?) -> Void
+
+// MARK: - ManagedObjectLinkerProtocol
+
+@objc
+public protocol ManagedObjectLinkerProtocol: MD5Protocol {
+    init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, anchor: ManagedObjectLinkerAnchorProtocol)
+    func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion)
+}
 
 // MARK: - ManagedObjectLinkerAnchorProtocol
 
@@ -24,19 +33,9 @@ public class ManagedObjectLinkerAnchor: NSObject, ManagedObjectLinkerAnchorProto
     public var keypath: KeypathType?
 
     override public var description: String {
-        let kp: String
-        if let kpath = (keypath as? String) {
-            kp = kpath
-        } else {
-            kp = "<NULL>"
-        }
-        let id: String
-        if let identifier = identifier {
-            id = String(describing: identifier)
-        } else {
-            id = "<NULL>"
-        }
-        return "\(type(of: self)): keypath [\(kp)]; identifier [\(id)]"
+        let kp = (keypath as? String) ?? "<NULL>"
+        let id = String(describing: identifier, orValue: "<NULL>")
+        return "<\(type(of: self)): keypath: \(kp), identifier: \(id)>"
     }
 
     // MARK: Lifecycle
@@ -59,14 +58,4 @@ public class ManagedObjectLinkerAnchor: NSObject, ManagedObjectLinkerAnchorProto
         self.init(identifier: nil, keypath: keypath)
     }
 
-}
-
-public typealias ManagedObjectLinkerCompletion = (FetchResultProtocol, Error?) -> Void
-
-// MARK: - ManagedObjectLinkerProtocol
-
-@objc
-public protocol ManagedObjectLinkerProtocol: MD5Protocol {
-    init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, anchor: ManagedObjectLinkerAnchorProtocol)
-    func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion)
 }

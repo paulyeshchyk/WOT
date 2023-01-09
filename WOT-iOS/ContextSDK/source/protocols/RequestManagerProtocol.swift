@@ -14,10 +14,10 @@ public protocol RequestManagerProtocol {
     func removeListener(_ listener: RequestManagerListenerProtocol)
     func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
 
-    @available(*, deprecated, message: "fetchRemote should be used instead")
+    // @available(*, deprecated, message: "fetchRemote should be used instead")
     func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol
 
-    @available(*, deprecated, message: "Syndicate to be used")
+    // @available(*, deprecated, message: "Syndicate to be used")
     func fetchRemote(requestParadigm: RequestParadigmProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
 }
 
