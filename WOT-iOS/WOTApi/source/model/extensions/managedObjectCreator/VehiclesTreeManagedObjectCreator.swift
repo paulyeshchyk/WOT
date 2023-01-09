@@ -7,18 +7,6 @@
 
 import WOTKit
 
-// MARK: - VehiclesTreeManagedObjectExtractor
-
-public class VehiclesTreeManagedObjectExtractor: ManagedObjectExtractable {
-    public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-
-    // MARK: Public
-
-    public func extractJSON(from: JSON) -> JSON? {
-        return from
-    }
-}
-
 // MARK: - VehiclesTreeManagedObjectCreator
 
 public class VehiclesTreeManagedObjectCreator: ManagedObjectLinker {

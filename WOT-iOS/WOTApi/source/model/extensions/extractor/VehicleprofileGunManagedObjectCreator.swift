@@ -6,7 +6,10 @@
 //
 
 public class VehicleprofileGunManagedObjectCreator: ManagedObjectExtractable {
-    public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+
+    public var linkerPrimaryKeyType: PrimaryKeyType {
+        return .external
+    }
 
     // MARK: Public
 

@@ -132,9 +132,9 @@ class ManagedObjectLinkerHelper {
 
 class MappingCoordinatorDecodeHelper {
 
-    typealias Context = (DataStoreContainerProtocol
+    typealias Context = DataStoreContainerProtocol
+        & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
-        & RequestManagerContainerProtocol)
 
     let appContext: Context
     var completion: ((FetchResultProtocol?, Error?) -> Void)?

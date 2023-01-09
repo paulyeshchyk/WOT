@@ -6,7 +6,10 @@
 //
 
 public class ModuleVehicleprofileEngineManagedObjectExtractor: ManagedObjectExtractable {
-    public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
+
+    public var linkerPrimaryKeyType: PrimaryKeyType {
+        return .internal
+    }
 
     // MARK: Public
 

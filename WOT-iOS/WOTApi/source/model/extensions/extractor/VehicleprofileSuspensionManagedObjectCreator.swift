@@ -1,11 +1,12 @@
 //
-//  VehicleprofileArmorListManagedObjectCreator.swift
+//  VehicleprofileSuspensionManagedObjectCreator.swift
 //  WOTApi
 //
 //  Created by Paul on 28.12.22.
 //
 
-public class VehicleprofileArmorListManagedObjectCreator: ManagedObjectExtractable {
+public class VehicleprofileSuspensionManagedObjectCreator: ManagedObjectExtractable {
+
     public var linkerPrimaryKeyType: PrimaryKeyType {
         return .external
     }

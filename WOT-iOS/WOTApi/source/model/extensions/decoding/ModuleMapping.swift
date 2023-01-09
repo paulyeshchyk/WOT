@@ -96,6 +96,7 @@ public extension Module {
 // MARK: - Module + RequestManagerListenerProtocol
 
 extension Module: RequestManagerListenerProtocol {
+
     public func requestManager(_: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error _: Error?) {
         //
     }

@@ -33,7 +33,7 @@ open class HttpRequest: Request {
         }
     }
 
-    override open func start(completion: @escaping (() -> Void)) throws {
+    override open func start() throws {
         let urlRequest = try HttpRequestBuilder().build(hostConfiguration: appContext.hostConfiguration,
                                                         httpMethod: httpMethod,
                                                         path: path,
@@ -42,7 +42,7 @@ open class HttpRequest: Request {
 
         httpDataReceiver = HttpDataReceiver(context: appContext, request: urlRequest)
         httpDataReceiver?.delegate = self
-        httpDataReceiver?.start(completion: completion)
+        httpDataReceiver?.start()
     }
 
 }
