@@ -32,7 +32,7 @@ public enum PredicateFormat: Int {
 // MARK: - PrimaryKeypathProtocol
 
 @objc
-public protocol PrimaryKeypathProtocol: AnyObject {
+public protocol PrimaryKeypathProtocol: RequestableProtocol {
     static func predicateFormat(forType: PrimaryKeyType) -> PredicateFormatProtocol
     static func predicate(for ident: AnyObject?, andType: PrimaryKeyType) -> NSPredicate?
     static func primaryKeyPath(forType: PrimaryKeyType) -> String

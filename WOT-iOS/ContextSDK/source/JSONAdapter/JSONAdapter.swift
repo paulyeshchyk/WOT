@@ -87,7 +87,7 @@ public extension JSONAdapter {
             dispatchGroup.enter()
 
             //
-            let syndicate = VehicleSyndicate(appContext: appContext, json: json, key: key)
+            let syndicate = JSONSyndicate(appContext: appContext, json: json, key: key)
             syndicate.contextPredicate = request.contextPredicate
             syndicate.modelClass = modelClass
             syndicate.managedObjectLinker = managedObjectLinker

@@ -36,10 +36,10 @@ public extension Vehicles {
             let collection = try JSONCollection(element: jsonElement)
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehiclesFetchResult, anchor: anchor)
-            let managedObjectExtractor = VehicleProfileManagedObjectCreator()
+            let managedObjectExtractor = DefaultProfileExtractor()
             let managedObjectContext = vehiclesFetchResult.managedObjectContext
 
-            ModuleSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -89,8 +89,22 @@ extension Vehicles {
         let modelClass = ModulesTree.self
         let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
         let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
-        let extractor = ModulesTreeManagedObjectCreator()
-        ModuleSyndicate.decodeAndLink(appContext: appContext, jsonCollection: jsonCollection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: contextPredicate, completion: { _, _ in })
+        let extractor = ModulesTreeExtractor()
+        MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: jsonCollection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: contextPredicate, completion: { _, _ in })
+    }
+}
+
+extension Vehicles {
+
+    public class DefaultProfileExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
+    private class ModulesTreeExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+
     }
 }
 

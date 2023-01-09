@@ -182,10 +182,7 @@ extension RequestManager: RequestManagerProtocol {
 
         try managedObjectCreatorList.addAdapterLinker(managedObjectCreator, forRequest: request)
 
-        try request.start { [weak self] in
-
-            self?.appContext.logInspector?.log(.custom("Start"), sender: self)
-        }
+        try request.start()
     }
 
     public func fetchRemote(requestParadigm: RequestParadigmProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {

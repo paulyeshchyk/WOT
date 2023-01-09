@@ -26,13 +26,24 @@ public extension VehicleprofileAmmoList {
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoListFetchResult, anchor: anchor)
-            let extractor = VehicleprofileAmmoListAmmoManagedObjectCreator()
+            let extractor = AmmoExtractor()
             let objectContext = vehicleprofileAmmoListFetchResult.managedObjectContext
-            ModuleSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         }
     }
+}
+
+// MARK: - VehicleprofileAmmoList.AmmoExtractor
+
+extension VehicleprofileAmmoList {
+
+    private class AmmoExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
 }
