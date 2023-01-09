@@ -1,17 +1,17 @@
 //
-//  ModuleSyndicate.swift
+//  MOSyndicate.swift
 //  ContextSDK
 //
 //  Created by Paul on 8.01.23.
 //
 
-// MARK: - ModuleSyndicate
+// MARK: - MOSyndicate
 
-public class ModuleSyndicate {
+public class MOSyndicate {
 
-    public typealias Context = LogInspectorContainerProtocol
-        & DataStoreContainerProtocol
+    public typealias Context = DataStoreContainerProtocol
         & RequestManagerContainerProtocol
+        & LogInspectorContainerProtocol
 
     public var managedObjectLinker: ManagedObjectLinkerProtocol?
     public var managedObjectExtractor: ManagedObjectExtractable?
@@ -37,14 +37,12 @@ public class ModuleSyndicate {
     public func run() {
         let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
         managedObjectLinkerHelper.managedObjectLinker = managedObjectLinker
-        managedObjectLinkerHelper.completion = { fetchResult, error in
-            self.completion?(fetchResult, error)
-        }
+        managedObjectLinkerHelper.completion = completion
 
         let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
         mappingCoordinatorDecodeHelper.jsonCollection = jsonCollection
         mappingCoordinatorDecodeHelper.contextPredicate = contextPredicate
-        mappingCoordinatorDecodeHelper.managedObjectCreator = managedObjectLinker
+        mappingCoordinatorDecodeHelper.managedObjectLinker = managedObjectLinker
         mappingCoordinatorDecodeHelper.managedObjectExtractor = managedObjectExtractor
         mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
             managedObjectLinkerHelper.run(fetchResult, error: error)
@@ -62,9 +60,9 @@ public class ModuleSyndicate {
 
 }
 
-extension ModuleSyndicate {
+extension MOSyndicate {
 
-    public static func decodeAndLink(appContext: ModuleSyndicate.Context?, jsonCollection: JSONCollectionProtocol, managedObjectContext: ManagedObjectContextProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectLinker: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, contextPredicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) {
+    public static func decodeAndLink(appContext: MOSyndicate.Context?, jsonCollection: JSONCollectionProtocol, managedObjectContext: ManagedObjectContextProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectLinker: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, contextPredicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) {
         //
         guard let nspredicate = contextPredicate.nspredicate(operator: .and) else {
             completion(nil, MappingCoordinatorError.noKeysDefinedForClass(String(describing: modelClass)))
@@ -76,19 +74,19 @@ extension ModuleSyndicate {
             return
         }
 
-        let moduleSyndicate = ModuleSyndicate(appContext: appContext)
-        moduleSyndicate.managedObjectLinker = managedObjectLinker
-        moduleSyndicate.managedObjectExtractor = managedObjectExtractor
-        moduleSyndicate.contextPredicate = contextPredicate
-        moduleSyndicate.jsonCollection = jsonCollection
-        moduleSyndicate.nspredicate = nspredicate
-        moduleSyndicate.modelClass = modelClass
-        moduleSyndicate.managedObjectContext = managedObjectContext
+        let moSyndicate = MOSyndicate(appContext: appContext)
+        moSyndicate.managedObjectLinker = managedObjectLinker
+        moSyndicate.managedObjectExtractor = managedObjectExtractor
+        moSyndicate.contextPredicate = contextPredicate
+        moSyndicate.jsonCollection = jsonCollection
+        moSyndicate.nspredicate = nspredicate
+        moSyndicate.modelClass = modelClass
+        moSyndicate.managedObjectContext = managedObjectContext
 
-        moduleSyndicate.completion = { fetchResult, error in
+        moSyndicate.completion = { fetchResult, error in
             completion(fetchResult, error)
         }
-        moduleSyndicate.run()
+        moSyndicate.run()
     }
 }
 

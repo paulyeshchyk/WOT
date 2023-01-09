@@ -2,6 +2,8 @@
 
 --exclude Tests/XCTestManifests.swift,Snapshots, Pods, Generated
 
+--rules andOperator
+
 --rules blankLineAfterImports
 --rules blankLinesAroundMark
 --rules blankLinesAtEndOfScope

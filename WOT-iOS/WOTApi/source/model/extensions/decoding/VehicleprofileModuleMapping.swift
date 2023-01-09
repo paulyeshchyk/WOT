@@ -26,8 +26,8 @@ public extension VehicleprofileModule {
             let joint = Joint(modelClass: modelClass, theID: gun_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
-            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "gun.", httpQueryItemName: "fields")
-            let extractor = VehicleprofileModuleGunManagedObjectExtractor()
+            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "gun.", httpQueryItemName: WGWebQueryArgs.fields)
+            let extractor = GunExtractor()
             try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
@@ -35,11 +35,11 @@ public extension VehicleprofileModule {
             let modelClass = VehicleprofileRadio.self
             let anchor = ManagedObjectLinkerAnchor(identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
-            let extractor = VehicleprofileModuleRadioManagedObjectCreator()
+            let extractor = RadioExtractor()
             let joint = Joint(modelClass: modelClass, theID: radio_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
-            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "radio.", httpQueryItemName: "fields")
+            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "radio.", httpQueryItemName: WGWebQueryArgs.fields)
             try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
@@ -47,11 +47,11 @@ public extension VehicleprofileModule {
             let modelClass = VehicleprofileEngine.self
             let anchor = ManagedObjectLinkerAnchor(identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
-            let extractor = VehicleprofileModuleEngineManagedObjectCreator()
+            let extractor = EngineExtractor()
             let joint = Joint(modelClass: modelClass, theID: engine_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
-            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "engine.", httpQueryItemName: "fields")
+            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "engine.", httpQueryItemName: WGWebQueryArgs.fields)
             try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
@@ -59,11 +59,11 @@ public extension VehicleprofileModule {
             let modelClass = VehicleprofileSuspension.self
             let anchor = ManagedObjectLinkerAnchor(identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
-            let extractor = VehicleprofileModuleSuspensionManagedObjectCreator()
+            let extractor = SuspensionExtractor()
             let joint = Joint(modelClass: modelClass, theID: suspension_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
-            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "suspension.", httpQueryItemName: "fields")
+            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "suspension.", httpQueryItemName: WGWebQueryArgs.fields)
             try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
@@ -71,14 +71,43 @@ public extension VehicleprofileModule {
             let modelClass = VehicleprofileTurret.self
             let anchor = ManagedObjectLinkerAnchor(identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
-            let extractor = VehicleprofileModuleTurretManagedObjectCreator()
+            let extractor = TurretExtractor()
             let joint = Joint(modelClass: modelClass, theID: turret_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
-            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "turret.", httpQueryItemName: "fields")
+            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "turret.", httpQueryItemName: WGWebQueryArgs.fields)
             try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
     }
+}
+
+extension VehicleprofileModule {
+
+    private class GunExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
+        public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.gun) }
+    }
+
+    private class RadioExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.radio) }
+    }
+
+    private class EngineExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.engine) }
+    }
+
+    private class SuspensionExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.suspension) }
+    }
+
+    private class TurretExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.turret) }
+    }
+
 }
 
 // MARK: - VehicleprofileModule + RequestManagerListenerProtocol

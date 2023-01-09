@@ -5,11 +5,7 @@
 //  Created by Paul on 26.12.22.
 //
 
-open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtractable {
-
-    open var linkerPrimaryKeyType: PrimaryKeyType {
-        fatalError("has not been implemented")
-    }
+open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
     public enum ManagedObjectLinkerError: Error, CustomStringConvertible {
         case unexpectedString(String)

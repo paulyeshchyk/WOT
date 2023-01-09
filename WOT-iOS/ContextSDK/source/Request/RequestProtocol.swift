@@ -110,7 +110,7 @@ extension Request {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    open func start(completion _: @escaping (() -> Void)) throws {
+    open func start() throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }

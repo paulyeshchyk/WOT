@@ -280,21 +280,14 @@
     return result;
 }
 
-//WOTRequestListenerProtocol
-
-- (void)requestHasStarted:(id<RequestProtocol>)request pumper: (NSObject *) pumper{
-    
-}
+#pragma mark - RequestListener
 
 - (void)request:(id<RequestProtocol>)request finishedLoadData:(NSData *)data error:(NSError *)error {
     [[self requestManager] removeListener: self];
     [self reloadModel];
-
-    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-//    [[appDelegate logInspector] logEvent: [[EventFlowEnd alloc] init:@"Tree"] sender:self];
 }
 
-- (void)requestManager:(id<RequestManagerProtocol>)requestManager didCancelRequest:(id<RequestProtocol>)didCancelRequest reason:(id<RequestCancelReasonProtocol>)reason {
+- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(NSURLRequest * _Nonnull)urlRequest {
     
 }
 
@@ -302,35 +295,22 @@
     
 }
 
-
-- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(NSURLRequest * _Nonnull)urlRequest {
-    
-}
-
-
-- (void)requestHasCanceled:(id<RequestProtocol>)request {
-    
-}
-
-- (void)removeRequest:(id<RequestProtocol> _Nonnull)request {
-    
-}
-
-
-- (void)requestHasStarted:(id<RequestProtocol> _Nonnull)request {
-    
-}
+#pragma mark - RequestManagerListener
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest error:(NSError * _Nullable)error{
     [self reloadModel];
-//    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-//    [[appDelegate logInspector] logEvent: [[EventFlowEnd alloc] init:@"Tree"] sender:self];
 }
 
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<RequestProtocol> _Nonnull)didStartRequest {
     //
 }
+
+- (void)requestManager:(id<RequestManagerProtocol>)requestManager didCancelRequest:(id<RequestProtocol>)didCancelRequest reason:(id<RequestCancelReasonProtocol>)reason {
+    
+}
+
+#pragma mark -
 
 - (void) didFinishLoadModelWithError:(NSError *)error {
     [self.collectionView reloadData];

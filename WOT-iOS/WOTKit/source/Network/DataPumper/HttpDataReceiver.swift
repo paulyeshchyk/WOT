@@ -50,7 +50,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
     }
 
     deinit {
-        if (state != .finished) {
+        if state != .finished {
             context.logInspector?.log(.warning("deinit HttpDataReceiver when state != finished"), sender: self)
         }
         urlDataTask?.cancelDataTask()
@@ -70,7 +70,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         return result
     }
 
-    public func start(completion: @escaping (() -> Void)) {
+    public func start() {
         urlDataTask?.cancelDataTask()
         urlDataTask = nil
 
@@ -80,7 +80,6 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         }
         urlDataTask = createDataTask(url: url) {
             self.state = .finished
-            completion()
         }
         context.logInspector?.log(.remoteFetch(message: "Start URL: \(String(describing: request.url))"), sender: self)
         delegate?.didStart(urlRequest: request, receiver: self)
@@ -89,12 +88,9 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
 
     // MARK: Private
 
-    private func createDataTask(url: URL, completion: @escaping () -> Void) -> URLSessionDataTask {
+    private func createDataTask(url: URL, completion _: @escaping () -> Void) -> URLSessionDataTask {
         state = .started
         return URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            //
-            completion()
-            //
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.delegate?.didEnd(urlRequest: self.request, receiver: self, data: data, error: error)
