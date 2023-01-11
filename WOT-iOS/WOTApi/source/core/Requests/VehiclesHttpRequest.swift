@@ -11,11 +11,10 @@ import WOTKit
 // MARK: - VehiclesHttpRequest
 
 public class VehiclesHttpRequest: HttpRequest {
-    override public var httpMethod: HTTPMethod { return .POST }
 
-    override public var path: String {
-        return "/wot/encyclopedia/vehicles/"
-    }
+    override public var httpMethod: HTTPMethod { return .POST }
+    override public var path: String { return "/wot/encyclopedia/vehicles/" }
+    override public var httpQueryItemName: String { WGWebQueryArgs.fields }
 }
 
 // MARK: - VehiclesHttpRequest + ModelServiceProtocol

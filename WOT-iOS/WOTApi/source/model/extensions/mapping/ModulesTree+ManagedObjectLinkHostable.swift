@@ -7,32 +7,33 @@
 
 import ContextSDK
 
-// MARK: - ModulesTree + ManagedObjectLinkable
+// MARK: - ModulesTree + ManagedObjectPinProtocol
 
-extension ModulesTree: ManagedObjectLinkable {}
+extension ModulesTree: ManagedObjectPinProtocol {}
 
-// MARK: - ModulesTree + ManagedObjectLinkHostable
+// MARK: - ModulesTree + ManagedObjectSocketProtocol
 
-extension ModulesTree: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, anchor: ManagedObjectLinkerAnchorProtocol) {
-        if let default_profile = element as? Vehicleprofile {
+extension ModulesTree: ManagedObjectSocketProtocol {
+
+    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
+        if let default_profile = pin as? Vehicleprofile {
             self.default_profile = default_profile
         }
-        if let module = element as? Module {
-            if (anchor.keypath as? String) == #keyPath(ModulesTree.currentModule) {
+        if let module = pin as? Module {
+            if (socket.keypath as? String) == #keyPath(ModulesTree.currentModule) {
                 self.currentModule = module
             }
-            if (anchor.keypath as? String) == #keyPath(ModulesTree.next_modules) {
+            if (socket.keypath as? String) == #keyPath(ModulesTree.next_modules) {
                 addToNext_modules(module)
             }
         }
 
-        if let vehicle = element as? Vehicles {
-            if (anchor.keypath as? String) == #keyPath(ModulesTree.next_tanks) {
+        if let vehicle = pin as? Vehicles {
+            if (socket.keypath as? String) == #keyPath(ModulesTree.next_tanks) {
                 addToNext_tanks(vehicle)
             }
         }
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], anchor _: ManagedObjectLinkerAnchorProtocol) {}
+    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {}
 }

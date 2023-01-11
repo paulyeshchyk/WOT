@@ -21,62 +21,62 @@ public extension VehicleprofileModule {
 
         if let gun_id = gun_id {
             let modelClass = VehicleprofileGun.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
-            let joint = Joint(modelClass: modelClass, theID: gun_id, contextPredicate: map.contextPredicate)
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
+            let socket = JointSocket(identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, socket: socket)
+            let pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "gun.", httpQueryItemName: WGWebQueryArgs.fields)
+
             let extractor = GunExtractor()
-            try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
         if let radio_id = radio_id {
             let modelClass = VehicleprofileRadio.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
+            let socket = JointSocket(identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = RadioExtractor()
-            let joint = Joint(modelClass: modelClass, theID: radio_id, contextPredicate: map.contextPredicate)
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
+            let pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "radio.", httpQueryItemName: WGWebQueryArgs.fields)
-            try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
         if let engine_id = engine_id {
             let modelClass = VehicleprofileEngine.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
+            let socket = JointSocket(identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = EngineExtractor()
-            let joint = Joint(modelClass: modelClass, theID: engine_id, contextPredicate: map.contextPredicate)
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
+            let pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "engine.", httpQueryItemName: WGWebQueryArgs.fields)
-            try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
         if let suspension_id = suspension_id {
             let modelClass = VehicleprofileSuspension.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
+            let socket = JointSocket(identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = SuspensionExtractor()
-            let joint = Joint(modelClass: modelClass, theID: suspension_id, contextPredicate: map.contextPredicate)
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
+            let pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "suspension.", httpQueryItemName: WGWebQueryArgs.fields)
-            try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
         if let turret_id = turret_id {
             let modelClass = VehicleprofileTurret.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
+            let socket = JointSocket(identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = TurretExtractor()
-            let joint = Joint(modelClass: modelClass, theID: turret_id, contextPredicate: map.contextPredicate)
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
+            let pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "turret.", httpQueryItemName: WGWebQueryArgs.fields)
-            try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
     }
 }

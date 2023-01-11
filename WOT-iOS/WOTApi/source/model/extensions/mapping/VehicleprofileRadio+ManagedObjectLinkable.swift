@@ -5,18 +5,19 @@
 //  Created by Paul on 2.01.23.
 //
 
-// MARK: - VehicleprofileRadio + ManagedObjectLinkable
+// MARK: - VehicleprofileRadio + ManagedObjectPinProtocol
 
-extension VehicleprofileRadio: ManagedObjectLinkable {}
+extension VehicleprofileRadio: ManagedObjectPinProtocol {}
 
-// MARK: - VehicleprofileRadio + ManagedObjectLinkHostable
+// MARK: - VehicleprofileRadio + ManagedObjectSocketProtocol
 
-extension VehicleprofileRadio: ManagedObjectLinkHostable {
-    public func doLinking(_: ManagedObjectLinkable, anchor _: ManagedObjectLinkerAnchorProtocol) {
+extension VehicleprofileRadio: ManagedObjectSocketProtocol {
+
+    public func doLinking(pin _: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
         //
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], anchor _: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

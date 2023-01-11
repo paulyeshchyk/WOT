@@ -8,13 +8,13 @@
 
 public class VehicleprofileAmmoListAmmoRequestPredicateComposer: RequestPredicateComposerProtocol {
 
-    private let drivenJoint: Joint
+    private let pin: JointPinProtocol
     private var foreignSelectKey: String
 
     // MARK: Lifecycle
 
-    public init(drivenJoint: Joint, foreignSelectKey: String) {
-        self.drivenJoint = drivenJoint
+    public init(pin: JointPinProtocol, foreignSelectKey: String) {
+        self.pin = pin
         self.foreignSelectKey = foreignSelectKey
     }
 
@@ -22,8 +22,8 @@ public class VehicleprofileAmmoListAmmoRequestPredicateComposer: RequestPredicat
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
-        lookupPredicate[.primary] = drivenJoint.contextPredicate?[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
-        lookupPredicate[.secondary] = drivenJoint.modelClass.primaryKey(forType: .internal, andObject: drivenJoint.theID)
+        lookupPredicate[.primary] = pin.contextPredicate?[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
+        lookupPredicate[.secondary] = pin.modelClass.primaryKey(forType: .internal, andObject: pin.identifier)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }

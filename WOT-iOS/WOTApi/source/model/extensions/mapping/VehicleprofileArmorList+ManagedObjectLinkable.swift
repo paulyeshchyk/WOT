@@ -5,25 +5,26 @@
 //  Created by Paul on 2.01.23.
 //
 
-// MARK: - VehicleprofileArmorList + ManagedObjectLinkable
+// MARK: - VehicleprofileArmorList + ManagedObjectPinProtocol
 
-extension VehicleprofileArmorList: ManagedObjectLinkable {}
+extension VehicleprofileArmorList: ManagedObjectPinProtocol {}
 
-// MARK: - VehicleprofileArmorList + ManagedObjectLinkHostable
+// MARK: - VehicleprofileArmorList + ManagedObjectSocketProtocol
 
-extension VehicleprofileArmorList: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, anchor: ManagedObjectLinkerAnchorProtocol) {
-        if let armor = element as? VehicleprofileArmor {
-            if (anchor.keypath as? String) == #keyPath(VehicleprofileArmorList.turret) {
+extension VehicleprofileArmorList: ManagedObjectSocketProtocol {
+
+    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
+        if let armor = pin as? VehicleprofileArmor {
+            if (socket.keypath as? String) == #keyPath(VehicleprofileArmorList.turret) {
                 turret = armor
             }
-            if (anchor.keypath as? String) == #keyPath(VehicleprofileArmorList.hull) {
+            if (socket.keypath as? String) == #keyPath(VehicleprofileArmorList.hull) {
                 hull = armor
             }
         }
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], anchor _: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

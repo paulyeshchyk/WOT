@@ -101,11 +101,11 @@ extension RequestManager: RequestListenerProtocol {
             throw RequestManagerError.modelNotFound(request)
         }
 
-        guard let managedObjectExtractor = managedObjectExractableList.extractorForRequest(request) else {
+        guard let jsonExtractor = managedObjectExractableList.extractorForRequest(request) else {
             throw RequestManagerError.extractorNotFound(request)
         }
 
-        let dataAdapter = type(of: modelService).dataAdapterClass().init(modelClass: modelClass, request: request, managedObjectLinker: managedObjectCreator, jsonExtractor: managedObjectExtractor, appContext: appContext)
+        let dataAdapter = type(of: modelService).dataAdapterClass().init(modelClass: modelClass, request: request, managedObjectLinker: managedObjectCreator, jsonExtractor: jsonExtractor, appContext: appContext)
         dataAdapter.completion = { request, error in
             self.finalizeParseResponse(request: request, error: error)
         }
@@ -185,25 +185,33 @@ extension RequestManager: RequestManagerProtocol {
         try request.start()
     }
 
-    public func fetchRemote(requestParadigm: RequestParadigmProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
-        //
-        let requestIDs = requestRegistrator.requestIds(modelServiceClass: requestParadigm.modelClass)
+    public func fetchRemote(modelClass: RequestableProtocol.Type, contextPredicate: ContextPredicateProtocol?, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
+        let requestIDs = requestRegistrator.requestIds(modelServiceClass: modelClass)
         guard !requestIDs.isEmpty else {
-            throw RequestManagerError.requestsNotRegistered(requestParadigm)
+            throw RequestManagerError.requestsNotRegistered(modelClass)
         }
         for requestID in requestIDs {
             do {
                 //
-                let request = try requestRegistrator.createRequest(forRequestId: requestID)
-                request.contextPredicate = requestParadigm.buildContextPredicate()
-                request.arguments = requestParadigm.buildRequestArguments()
-                let groupId: RequestIdType = requestParadigm.MD5.hashValue
+                let request = try createRequest(modelClass: modelClass, requestID: requestID, contextPredicate: contextPredicate)
+                let groupId: RequestIdType = request.MD5.hashValue
 
                 try startRequest(request, forGroupId: groupId, managedObjectCreator: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
             } catch {
                 appContext.logInspector?.log(.error(error), sender: self)
             }
         }
+    }
+
+    private func createRequest(modelClass: RequestableProtocol.Type, requestID: RequestIdType, contextPredicate: ContextPredicateProtocol?) throws -> RequestProtocol {
+        let request = try requestRegistrator.createRequest(forRequestId: requestID)
+
+        let builder = RequestArgumentsBuilder(modelClass: modelClass, contextPredicate: contextPredicate)
+        let arguments = builder.buildRequestArguments(keypathPrefix: request.httpAPIQueryPrefix(), httpQueryItemName: request.httpQueryItemName)
+
+        request.contextPredicate = contextPredicate
+        request.arguments = arguments
+        return request
     }
 }
 
@@ -432,8 +440,8 @@ private enum RequestManagerError: Error, CustomStringConvertible {
     case modelNotFound(RequestProtocol)
     case notAModelService(RequestProtocol)
     case noRequestIds(RequestProtocol)
-    case requestNotCreated(RequestParadigmProtocol)
-    case requestsNotRegistered(RequestParadigmProtocol)
+    case requestNotCreated(RequestArgumentsBuilderProtocol)
+    case requestsNotRegistered(RequestableProtocol.Type)
     case receivedResponseFromReleasedRequest
     case cantAddListener
     case invalidRequest
@@ -455,7 +463,7 @@ private enum RequestManagerError: Error, CustomStringConvertible {
         case .modelClassNotFound(let request): return "\(type(of: self)): Model class not found for request: \(String(describing: request))"
         case .modelClassNotRegistered(let model, let request): return "\(type(of: self)): Model class(\((type(of: model))) registered for request: \(String(describing: request))"
         case .requestManagerListenerIsNil: return "\(type(of: self)): RequestManagerListener is nil"
-        case .requestsNotRegistered(let paradigm): return "[\(type(of: self))]: Request was not registered for [\(String(describing: paradigm))]"
+        case .requestsNotRegistered(let modelClass): return "[\(type(of: self))]: Request was not registered for [\(String(describing: modelClass))]"
         }
     }
 }

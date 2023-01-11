@@ -11,11 +11,11 @@ import WOTKit
 // MARK: - VehicleprofileRadiosHttpRequest
 
 public class VehicleprofileRadiosHttpRequest: HttpRequest {
-    override public var httpMethod: HTTPMethod { return .POST }
 
-    override public var path: String {
-        return "/wot/encyclopedia/vehicleprofile/"
-    }
+    override public var httpMethod: HTTPMethod { return .POST }
+    override public var path: String { return "/wot/encyclopedia/vehicleprofile/" }
+    override public var httpQueryItemName: String { WGWebQueryArgs.fields }
+    override public func httpAPIQueryPrefix() -> String? { "radio." }
 }
 
 // MARK: - VehicleprofileRadiosHttpRequest + ModelServiceProtocol
