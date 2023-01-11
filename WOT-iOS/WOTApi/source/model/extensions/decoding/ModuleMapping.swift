@@ -8,13 +8,6 @@
 
 public extension Module {
 
-    private func gunRequestParadigm(modelClass: PrimaryKeypathProtocol.Type, hostPin: ManagedObjectLinkerPin, keypathPrefix _: String?) throws -> RequestParadigm {
-        let pin = ManagedObjectLinkerPin(modelClass: modelClass.self, identifier: module_id, contextPredicate: nil)
-        let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
-        let composition = try composer.buildRequestPredicateComposition()
-        return RequestParadigm(modelClass: modelClass.self, requestPredicateComposition: composition, httpQueryItemName: WGWebQueryArgs.fields)
-    }
-
     // MARK: - JSONDecodableProtocol
 
     override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
@@ -46,11 +39,14 @@ public extension Module {
         switch moduleType {
         case .vehicleGun:
             let modelClass = VehicleprofileGun.self
-            let gunRequestParadigm = try gunRequestParadigm(modelClass: modelClass, hostPin: hostPin, keypathPrefix: "gun.")
             let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.gun))
-            let managedObjectExtractorLinker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
-            let managedObjectExtractor = GunExtractor()
-            try appContext?.requestManager?.fetchRemote(requestParadigm: gunRequestParadigm, managedObjectLinker: managedObjectExtractorLinker, managedObjectExtractor: managedObjectExtractor, listener: self)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
+            let extractor = GunExtractor()
+            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
+            let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
+            let composition = try composer.buildRequestPredicateComposition()
+
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleRadio:
             let modelClass = VehicleprofileRadio.self
             let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.radio))
@@ -59,8 +55,8 @@ public extension Module {
             let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
             let composition = try composer.buildRequestPredicateComposition()
-            let radioRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, httpQueryItemName: WGWebQueryArgs.fields)
-            try appContext?.requestManager?.fetchRemote(requestParadigm: radioRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleEngine:
             let modelClass = VehicleprofileEngine.self
             let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.engine))
@@ -68,9 +64,9 @@ public extension Module {
             let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
             let composition = try composer.buildRequestPredicateComposition()
-            let engineRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, httpQueryItemName: WGWebQueryArgs.fields)
             let extractor = EngineExtractor()
-            try appContext?.requestManager?.fetchRemote(requestParadigm: engineRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleChassis:
             let modelClass = VehicleprofileSuspension.self
             let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.suspension))
@@ -79,8 +75,8 @@ public extension Module {
             let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
             let composition = try composer.buildRequestPredicateComposition()
-            let chassisRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, httpQueryItemName: WGWebQueryArgs.fields)
-            try appContext?.requestManager?.fetchRemote(requestParadigm: chassisRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleTurret:
             let modelClass = VehicleprofileTurret.self
             let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.turret))
@@ -89,8 +85,8 @@ public extension Module {
             let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
             let composition = try composer.buildRequestPredicateComposition()
-            let turretRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, httpQueryItemName: WGWebQueryArgs.fields)
-            try appContext?.requestManager?.fetchRemote(requestParadigm: turretRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         default:
             throw ModuleMappingError.unexpectedModuleType(moduleType)
         }

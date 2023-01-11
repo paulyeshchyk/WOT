@@ -18,7 +18,7 @@ public protocol RequestManagerProtocol {
     func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol
 
     // @available(*, deprecated, message: "Syndicate to be used")
-    func fetchRemote(requestParadigm: RequestParadigmProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
+    func fetchRemote(modelClass: RequestableProtocol.Type, contextPredicate: ContextPredicateProtocol?, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
 }
 
 // MARK: - RequestManagerContainerProtocol

@@ -25,7 +25,7 @@
 		DA0E806B2950920C00B44CC6 /* PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E806A2950920C00B44CC6 /* PrimaryKeypathProtocol.swift */; };
 		DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80702950933200B44CC6 /* FetchResult.swift */; };
 		DA0E80792950A3A100B44CC6 /* ContextPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80782950A3A100B44CC6 /* ContextPredicate.swift */; };
-		DA0E807C2950A60300B44CC6 /* RequestParadigm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807B2950A60300B44CC6 /* RequestParadigm.swift */; };
+		DA0E807C2950A60300B44CC6 /* RequestArgumentsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807B2950A60300B44CC6 /* RequestArgumentsBuilder.swift */; };
 		DA0E807E2950A6D200B44CC6 /* RequestPredicateComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807D2950A6D200B44CC6 /* RequestPredicateComposition.swift */; };
 		DA0E80902950B07C00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80842950B07A00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift */; };
 		DA0E80922950B07C00B44CC6 /* RootTagRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80862950B07A00B44CC6 /* RootTagRuleBuilder.swift */; };
@@ -77,7 +77,7 @@
 		DACDB101295EDC96005BBA72 /* ContextControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0EE295EDC95005BBA72 /* ContextControllerProtocol.swift */; };
 		DACDB102295EDC96005BBA72 /* ManagedObjectContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0EF295EDC95005BBA72 /* ManagedObjectContextProtocol.swift */; };
 		DACDB103295EDC96005BBA72 /* LogInspectorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0F0295EDC95005BBA72 /* LogInspectorProtocol.swift */; };
-		DACDB105295EDCB9005BBA72 /* RequestParadigmProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB104295EDCB9005BBA72 /* RequestParadigmProtocol.swift */; };
+		DACDB105295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB104295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift */; };
 		DACDB107295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB106295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift */; };
 		DACDB10A295EDDD9005BBA72 /* JSONCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB109295EDDD9005BBA72 /* JSONCollection.swift */; };
 		DACDB10C295EDE08005BBA72 /* JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB10B295EDE08005BBA72 /* JSONDecodingProtocol.swift */; };
@@ -119,7 +119,7 @@
 		DA0E806A2950920C00B44CC6 /* PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryKeypathProtocol.swift; sourceTree = "<group>"; };
 		DA0E80702950933200B44CC6 /* FetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchResult.swift; sourceTree = "<group>"; };
 		DA0E80782950A3A100B44CC6 /* ContextPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPredicate.swift; sourceTree = "<group>"; };
-		DA0E807B2950A60300B44CC6 /* RequestParadigm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestParadigm.swift; sourceTree = "<group>"; };
+		DA0E807B2950A60300B44CC6 /* RequestArgumentsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestArgumentsBuilder.swift; sourceTree = "<group>"; };
 		DA0E807D2950A6D200B44CC6 /* RequestPredicateComposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPredicateComposition.swift; sourceTree = "<group>"; };
 		DA0E80842950B07A00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedLocalAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		DA0E80862950B07A00B44CC6 /* RootTagRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTagRuleBuilder.swift; sourceTree = "<group>"; };
@@ -171,7 +171,7 @@
 		DACDB0EE295EDC95005BBA72 /* ContextControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextControllerProtocol.swift; sourceTree = "<group>"; };
 		DACDB0EF295EDC95005BBA72 /* ManagedObjectContextProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectContextProtocol.swift; sourceTree = "<group>"; };
 		DACDB0F0295EDC95005BBA72 /* LogInspectorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInspectorProtocol.swift; sourceTree = "<group>"; };
-		DACDB104295EDCB9005BBA72 /* RequestParadigmProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestParadigmProtocol.swift; sourceTree = "<group>"; };
+		DACDB104295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestArgumentsBuilderProtocol.swift; sourceTree = "<group>"; };
 		DACDB106295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPredicateComposerProtocol.swift; sourceTree = "<group>"; };
 		DACDB109295EDDD9005BBA72 /* JSONCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCollection.swift; sourceTree = "<group>"; };
 		DACDB10B295EDE08005BBA72 /* JSONDecodingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingProtocol.swift; sourceTree = "<group>"; };
@@ -355,7 +355,7 @@
 		DA0E807A2950A5F400B44CC6 /* RequestParadigm */ = {
 			isa = PBXGroup;
 			children = (
-				DA0E807B2950A60300B44CC6 /* RequestParadigm.swift */,
+				DA0E807B2950A60300B44CC6 /* RequestArgumentsBuilder.swift */,
 				DA0E807D2950A6D200B44CC6 /* RequestPredicateComposition.swift */,
 			);
 			path = RequestParadigm;
@@ -441,7 +441,7 @@
 				DACDB0E0295EDC94005BBA72 /* RequestManagerProtocol.swift */,
 				DACDB0ED295EDC95005BBA72 /* ResponseAdapterProtocol.swift */,
 				DACDB0E1295EDC94005BBA72 /* ResponseDataAdapterCreatorProtocol.swift */,
-				DACDB104295EDCB9005BBA72 /* RequestParadigmProtocol.swift */,
+				DACDB104295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift */,
 				DACDB106295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift */,
 				DACDB0E9295EDC95005BBA72 /* SessionManagerProtocol.swift */,
 				DACDB0E7295EDC95005BBA72 /* URLEncodedProtocol.swift */,
@@ -713,7 +713,7 @@
 				DACDB102295EDC96005BBA72 /* ManagedObjectContextProtocol.swift in Sources */,
 				DACDB0F4295EDC96005BBA72 /* ResponseDataAdapterCreatorProtocol.swift in Sources */,
 				DA0E80922950B07C00B44CC6 /* RootTagRuleBuilder.swift in Sources */,
-				DACDB105295EDCB9005BBA72 /* RequestParadigmProtocol.swift in Sources */,
+				DACDB105295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift in Sources */,
 				DAA3A54E296A16D800430492 /* OperationQueueObserver.swift in Sources */,
 				DACDB100295EDC96005BBA72 /* ResponseAdapterProtocol.swift in Sources */,
 				DA0E80792950A3A100B44CC6 /* ContextPredicate.swift in Sources */,
@@ -730,7 +730,7 @@
 				DA456E72296E9DE20065D8FF /* ManagedObjectLinkerPin.swift in Sources */,
 				DACDB0F7295EDC96005BBA72 /* RequestableProtocol.swift in Sources */,
 				DA0E80902950B07C00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */,
-				DA0E807C2950A60300B44CC6 /* RequestParadigm.swift in Sources */,
+				DA0E807C2950A60300B44CC6 /* RequestArgumentsBuilder.swift in Sources */,
 				DA12D0772962FD530077F664 /* SessionManager.swift in Sources */,
 				DACDB0FF295EDC96005BBA72 /* DataStoreProtocol.swift in Sources */,
 				DA0E80942950B07C00B44CC6 /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,

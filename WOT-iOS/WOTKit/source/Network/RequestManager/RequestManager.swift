@@ -185,16 +185,15 @@ extension RequestManager: RequestManagerProtocol {
         try request.start()
     }
 
-    public func fetchRemote(requestParadigm: RequestParadigmProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
-        //
-        let requestIDs = requestRegistrator.requestIds(modelServiceClass: requestParadigm.modelClass)
+    public func fetchRemote(modelClass: RequestableProtocol.Type, contextPredicate: ContextPredicateProtocol?, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
+        let requestIDs = requestRegistrator.requestIds(modelServiceClass: modelClass)
         guard !requestIDs.isEmpty else {
-            throw RequestManagerError.requestsNotRegistered(requestParadigm)
+            throw RequestManagerError.requestsNotRegistered(modelClass)
         }
         for requestID in requestIDs {
             do {
                 //
-                let request = try createRequest(requestID: requestID, requestParadigm: requestParadigm)
+                let request = try createRequest(modelClass: modelClass, requestID: requestID, contextPredicate: contextPredicate)
                 let groupId: RequestIdType = request.MD5.hashValue
 
                 try startRequest(request, forGroupId: groupId, managedObjectCreator: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
@@ -204,54 +203,19 @@ extension RequestManager: RequestManagerProtocol {
         }
     }
 
-    private func createRequest(requestID: RequestIdType, requestParadigm: RequestParadigmProtocol) throws -> RequestProtocol {
+    private func createRequest(modelClass: RequestableProtocol.Type, requestID: RequestIdType, contextPredicate: ContextPredicateProtocol?) throws -> RequestProtocol {
         let request = try requestRegistrator.createRequest(forRequestId: requestID)
-        request.contextPredicate = requestParadigm.buildContextPredicate()
-        request.arguments = requestParadigm.buildRequestArguments(keypathPrefix: request.httpAPIQueryPrefix(), httpQueryItemName: request.httpQueryItemName)
+
+        let builder = RequestArgumentsBuilder(modelClass: modelClass, contextPredicate: contextPredicate)
+        let arguments = builder.buildRequestArguments(keypathPrefix: request.httpAPIQueryPrefix(), httpQueryItemName: request.httpQueryItemName)
+
+        request.contextPredicate = contextPredicate
+        request.arguments = arguments
         return request
     }
 }
 
 // MARK: - ResponseManagedObjectCreatorList
-
-//// MARK: - RequestArgumentsBuilder
-//
-// private class RequestArgumentsBuilder: RequestArgumentsBuilderProtocol {
-//
-//    private let modelClass: RequestableProtocol.Type
-//    private let keypathPrefix: String?
-//    private let httpQueryItemName: String
-//    private let primaryKeys: Set<ContextExpression>
-//
-//    init(modelClass: RequestableProtocol.Type, keypathPrefix: String?, httpQueryItemName: String, primaryKeys: Set<ContextExpression>) {
-//        self.modelClass = modelClass
-//        self.keypathPrefix = keypathPrefix
-//        self.httpQueryItemName = httpQueryItemName
-//        self.primaryKeys = primaryKeys
-//    }
-//
-//    func buildRequestArguments() -> RequestArguments {
-//        let fieldsKeypaths = modelClass.fieldsKeypaths()
-//        let keyPaths = fieldsKeypaths.compactMap {
-//            self.addPreffix(to: $0)
-//        }
-//
-//        let arguments = RequestArguments()
-//        arguments.setValues(keyPaths, forKey: httpQueryItemName)
-//        primaryKeys.forEach {
-//            arguments.setValues([$0.value], forKey: $0.nameAlias)
-//        }
-//        return arguments
-//    }
-//
-//    private func addPreffix(to: String) -> String {
-//        guard let preffix = keypathPrefix else {
-//            return to
-//        }
-//        return String(format: "%@%@", preffix, to)
-//    }
-//
-// }
 
 private class ResponseManagedObjectCreatorList {
 
@@ -476,8 +440,8 @@ private enum RequestManagerError: Error, CustomStringConvertible {
     case modelNotFound(RequestProtocol)
     case notAModelService(RequestProtocol)
     case noRequestIds(RequestProtocol)
-    case requestNotCreated(RequestParadigmProtocol)
-    case requestsNotRegistered(RequestParadigmProtocol)
+    case requestNotCreated(RequestArgumentsBuilderProtocol)
+    case requestsNotRegistered(RequestableProtocol.Type)
     case receivedResponseFromReleasedRequest
     case cantAddListener
     case invalidRequest
@@ -499,7 +463,7 @@ private enum RequestManagerError: Error, CustomStringConvertible {
         case .modelClassNotFound(let request): return "\(type(of: self)): Model class not found for request: \(String(describing: request))"
         case .modelClassNotRegistered(let model, let request): return "\(type(of: self)): Model class(\((type(of: model))) registered for request: \(String(describing: request))"
         case .requestManagerListenerIsNil: return "\(type(of: self)): RequestManagerListener is nil"
-        case .requestsNotRegistered(let paradigm): return "[\(type(of: self))]: Request was not registered for [\(String(describing: paradigm))]"
+        case .requestsNotRegistered(let modelClass): return "[\(type(of: self))]: Request was not registered for [\(String(describing: modelClass))]"
         }
     }
 }
