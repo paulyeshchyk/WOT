@@ -5,42 +5,43 @@
 //  Created by Paul on 2.01.23.
 //
 
-// MARK: - Module + ManagedObjectLinkable
+// MARK: - Module + ManagedObjectPinProtocol
 
-extension Module: ManagedObjectLinkable {}
+extension Module: ManagedObjectPinProtocol {}
 
-// MARK: - Module + ManagedObjectLinkHostable
+// MARK: - Module + ManagedObjectSocketProtocol
 
-extension Module: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, anchor: ManagedObjectLinkerAnchorProtocol) {
+extension Module: ManagedObjectSocketProtocol {
+
+    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
         //
-        if let engine = element as? VehicleprofileEngine {
-            engine.engine_id = anchor.identifier as? NSDecimalNumber
+        if let engine = pin as? VehicleprofileEngine {
+            engine.engine_id = socket.identifier as? NSDecimalNumber
             self.engine = engine
         }
         //
-        if let gun = element as? VehicleprofileGun {
-            gun.gun_id = anchor.identifier as? NSDecimalNumber
+        if let gun = pin as? VehicleprofileGun {
+            gun.gun_id = socket.identifier as? NSDecimalNumber
             self.gun = gun
         }
         //
-        if let radio = element as? VehicleprofileRadio {
-            radio.radio_id = anchor.identifier as? NSDecimalNumber
+        if let radio = pin as? VehicleprofileRadio {
+            radio.radio_id = socket.identifier as? NSDecimalNumber
             self.radio = radio
         }
         //
-        if let suspension = element as? VehicleprofileSuspension {
-            suspension.suspension_id = anchor.identifier as? NSDecimalNumber
+        if let suspension = pin as? VehicleprofileSuspension {
+            suspension.suspension_id = socket.identifier as? NSDecimalNumber
             self.suspension = suspension
         }
         //
-        if let turret = element as? VehicleprofileTurret {
-            turret.turret_id = anchor.identifier as? NSDecimalNumber
+        if let turret = pin as? VehicleprofileTurret {
+            turret.turret_id = socket.identifier as? NSDecimalNumber
             self.turret = turret
         }
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], anchor _: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

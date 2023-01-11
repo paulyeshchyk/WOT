@@ -34,8 +34,8 @@ public extension Vehicles {
             let builder = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let composition = try builder.buildRequestPredicateComposition()
             let collection = try JSONCollection(element: jsonElement)
-            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehiclesFetchResult, anchor: anchor)
+            let socket = JointSocket(identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehiclesFetchResult, socket: socket)
             let managedObjectExtractor = DefaultProfileExtractor()
             let managedObjectContext = vehiclesFetchResult.managedObjectContext
 
@@ -87,8 +87,8 @@ extension Vehicles {
         contextPredicate[.primary] = ModulesTree.primaryKey(forType: .internal, andObject: module_id)
         contextPredicate[.secondary] = requestPredicate[.primary]
         let modelClass = ModulesTree.self
-        let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
-        let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+        let socket = JointSocket(identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
+        let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, socket: socket)
         let extractor = ModulesTreeExtractor()
         MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: jsonCollection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: contextPredicate, completion: { _, _ in })
     }

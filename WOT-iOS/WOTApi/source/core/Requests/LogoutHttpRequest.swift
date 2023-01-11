@@ -11,11 +11,10 @@ import WOTKit
 // MARK: - LogoutHttpRequest
 
 public class LogoutHttpRequest: HttpRequest {
-    override public var httpMethod: HTTPMethod { return .POST }
 
-    override public var path: String {
-        return "wot/auth/logout/"
-    }
+    override public var httpMethod: HTTPMethod { return .POST }
+    override public var path: String { return "wot/auth/logout/" }
+    override public var httpQueryItemName: String { WGWebQueryArgs.fields }
 }
 
 // MARK: - LogoutHttpRequest + ModelServiceProtocol

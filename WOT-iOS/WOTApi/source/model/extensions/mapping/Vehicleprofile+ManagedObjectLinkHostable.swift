@@ -7,41 +7,42 @@
 
 import ContextSDK
 
-// MARK: - Vehicleprofile + ManagedObjectLinkable
+// MARK: - Vehicleprofile + ManagedObjectPinProtocol
 
-extension Vehicleprofile: ManagedObjectLinkable {}
+extension Vehicleprofile: ManagedObjectPinProtocol {}
 
-// MARK: - Vehicleprofile + ManagedObjectLinkHostable
+// MARK: - Vehicleprofile + ManagedObjectSocketProtocol
 
-extension Vehicleprofile: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, anchor _: ManagedObjectLinkerAnchorProtocol) {
-        if let turret = element as? VehicleprofileTurret {
+extension Vehicleprofile: ManagedObjectSocketProtocol {
+
+    public func doLinking(pin: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
+        if let turret = pin as? VehicleprofileTurret {
             self.turret = turret
         }
-        if let suspension = element as? VehicleprofileSuspension {
+        if let suspension = pin as? VehicleprofileSuspension {
             self.suspension = suspension
         }
-        if let radio = element as? VehicleprofileRadio {
+        if let radio = pin as? VehicleprofileRadio {
             self.radio = radio
         }
-        if let gun = element as? VehicleprofileGun {
+        if let gun = pin as? VehicleprofileGun {
             self.gun = gun
         }
-        if let engine = element as? VehicleprofileEngine {
+        if let engine = pin as? VehicleprofileEngine {
             self.engine = engine
         }
-        if let ammo = element as? VehicleprofileAmmoList {
+        if let ammo = pin as? VehicleprofileAmmoList {
             self.ammo = ammo
         }
-        if let armor = element as? VehicleprofileArmorList {
+        if let armor = pin as? VehicleprofileArmorList {
             self.armor = armor
         }
-        if let modules = element as? VehicleprofileModule {
+        if let modules = pin as? VehicleprofileModule {
             self.modules = modules
         }
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], anchor _: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }
