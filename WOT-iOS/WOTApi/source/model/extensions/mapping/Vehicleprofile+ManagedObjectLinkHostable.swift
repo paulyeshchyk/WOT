@@ -7,14 +7,14 @@
 
 import ContextSDK
 
-// MARK: - Vehicleprofile + ManagedObjectLinkable
+// MARK: - Vehicleprofile + ManagedObjectPinProtocol
 
-extension Vehicleprofile: ManagedObjectLinkable {}
+extension Vehicleprofile: ManagedObjectPinProtocol {}
 
-// MARK: - Vehicleprofile + ManagedObjectLinkHostable
+// MARK: - Vehicleprofile + ManagedObjectSocketProtocol
 
-extension Vehicleprofile: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, socket _: ManagedObjectLinkerSocketProtocol) {
+extension Vehicleprofile: ManagedObjectSocketProtocol {
+    public func doLinking(_ element: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
         if let turret = element as? VehicleprofileTurret {
             self.turret = turret
         }
@@ -41,7 +41,7 @@ extension Vehicleprofile: ManagedObjectLinkHostable {
         }
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], socket _: ManagedObjectLinkerSocketProtocol) {
+    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

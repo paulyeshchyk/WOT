@@ -5,14 +5,14 @@
 //  Created by Paul on 2.01.23.
 //
 
-// MARK: - VehicleprofileArmorList + ManagedObjectLinkable
+// MARK: - VehicleprofileArmorList + ManagedObjectPinProtocol
 
-extension VehicleprofileArmorList: ManagedObjectLinkable {}
+extension VehicleprofileArmorList: ManagedObjectPinProtocol {}
 
-// MARK: - VehicleprofileArmorList + ManagedObjectLinkHostable
+// MARK: - VehicleprofileArmorList + ManagedObjectSocketProtocol
 
-extension VehicleprofileArmorList: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, socket: ManagedObjectLinkerSocketProtocol) {
+extension VehicleprofileArmorList: ManagedObjectSocketProtocol {
+    public func doLinking(_ element: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
         if let armor = element as? VehicleprofileArmor {
             if (socket.keypath as? String) == #keyPath(VehicleprofileArmorList.turret) {
                 turret = armor
@@ -23,7 +23,7 @@ extension VehicleprofileArmorList: ManagedObjectLinkHostable {
         }
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], socket _: ManagedObjectLinkerSocketProtocol) {
+    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

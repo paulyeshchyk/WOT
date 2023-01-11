@@ -5,14 +5,14 @@
 //  Created by Paul on 2.01.23.
 //
 
-// MARK: - VehicleprofileModule + ManagedObjectLinkable
+// MARK: - VehicleprofileModule + ManagedObjectPinProtocol
 
-extension VehicleprofileModule: ManagedObjectLinkable {}
+extension VehicleprofileModule: ManagedObjectPinProtocol {}
 
-// MARK: - VehicleprofileModule + ManagedObjectLinkHostable
+// MARK: - VehicleprofileModule + ManagedObjectSocketProtocol
 
-extension VehicleprofileModule: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, socket: ManagedObjectLinkerSocketProtocol) {
+extension VehicleprofileModule: ManagedObjectSocketProtocol {
+    public func doLinking(_ element: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
         //
         if let vehicleGun = element as? VehicleprofileGun {
             vehicleGun.gun_id = socket.identifier as? NSDecimalNumber
@@ -42,7 +42,7 @@ extension VehicleprofileModule: ManagedObjectLinkHostable {
         }
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], socket _: ManagedObjectLinkerSocketProtocol) {
+    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

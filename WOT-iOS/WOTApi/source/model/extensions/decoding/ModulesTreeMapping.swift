@@ -23,12 +23,12 @@ public extension ModulesTree {
 
         let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
         if let nextTanks = moduleTreeJSON[nextTanksKeypath] as? [AnyObject] {
-            let socket = ManagedObjectLinkerSocket(identifier: nil, keypath: nextTanksKeypath)
+            let socket = JointSocket(identifier: nil, keypath: nextTanksKeypath)
             let linker = ManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: modulesTreeFetchResult, socket: socket)
             let extractor = NextVehicleExtractor()
             for nextTank in nextTanks {
                 // parents was not used for next portion of tanks
-                let pin = ManagedObjectLinkerPin(modelClass: Vehicles.self, identifier: nextTank, contextPredicate: nil)
+                let pin = JointPin(modelClass: Vehicles.self, identifier: nextTank, contextPredicate: nil)
                 let composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
                 do {
                     let modelClass = Vehicles.self
@@ -45,12 +45,12 @@ public extension ModulesTree {
 
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
         if let nextModules = moduleTreeJSON[nextModulesKeypath] as? [AnyObject] {
-            let socket = ManagedObjectLinkerSocket(identifier: nil, keypath: nextModulesKeypath)
+            let socket = JointSocket(identifier: nil, keypath: nextModulesKeypath)
             let extractor = NextModuleExtractor()
             let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, masterFetchResult: modulesTreeFetchResult, socket: socket)
             for nextModuleID in nextModules {
                 let modelClass = Module.self
-                let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
+                let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
                 let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin, hostObjectID: objectID)
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
@@ -66,10 +66,10 @@ public extension ModulesTree {
 
         let keypath = #keyPath(ModulesTree.currentModule)
         let modelClass = Module.self
-        let currentModuleAnchor = ManagedObjectLinkerSocket(identifier: nil, keypath: keypath)
+        let currentModuleAnchor = JointSocket(identifier: nil, keypath: keypath)
         let extractor = CurrentModuleExtractor()
         let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: modulesTreeFetchResult, socket: currentModuleAnchor)
-        let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: module_id, contextPredicate: map.contextPredicate)
+        let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: map.contextPredicate)
         let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, hostObjectID: objectID)
         let composition = try composer.buildRequestPredicateComposition()
 

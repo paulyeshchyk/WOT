@@ -15,16 +15,16 @@ public protocol ManagedObjectLinkerProtocol: MD5Protocol {
     func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion)
 }
 
-// MARK: - ManagedObjectLinkerSocketProtocol
+// MARK: - JointSocketProtocol
 
-public protocol ManagedObjectLinkerSocketProtocol {
+public protocol JointSocketProtocol {
     var identifier: Any? { get }
     var keypath: KeypathType? { get }
 }
 
-// MARK: - ManagedObjectLinkerPinProtocol
+// MARK: - JointPinProtocol
 
-public protocol ManagedObjectLinkerPinProtocol {
+public protocol JointPinProtocol {
     var modelClass: PrimaryKeypathProtocol.Type { get }
     var identifier: JSONValueType? { get }
     var contextPredicate: ContextPredicateProtocol? { get }

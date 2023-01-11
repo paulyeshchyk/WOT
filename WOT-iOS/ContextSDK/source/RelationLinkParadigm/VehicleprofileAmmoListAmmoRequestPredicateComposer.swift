@@ -8,12 +8,12 @@
 
 public class VehicleprofileAmmoListAmmoRequestPredicateComposer: RequestPredicateComposerProtocol {
 
-    private let pin: ManagedObjectLinkerPinProtocol
+    private let pin: JointPinProtocol
     private var foreignSelectKey: String
 
     // MARK: Lifecycle
 
-    public init(pin: ManagedObjectLinkerPinProtocol, foreignSelectKey: String) {
+    public init(pin: JointPinProtocol, foreignSelectKey: String) {
         self.pin = pin
         self.foreignSelectKey = foreignSelectKey
     }

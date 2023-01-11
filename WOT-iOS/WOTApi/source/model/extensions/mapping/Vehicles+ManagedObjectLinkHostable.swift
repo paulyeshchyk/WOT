@@ -5,14 +5,14 @@
 //  Created by Paul on 2.01.23.
 //
 
-// MARK: - Vehicles + ManagedObjectLinkable
+// MARK: - Vehicles + ManagedObjectPinProtocol
 
-extension Vehicles: ManagedObjectLinkable {}
+extension Vehicles: ManagedObjectPinProtocol {}
 
-// MARK: - Vehicles + ManagedObjectLinkHostable
+// MARK: - Vehicles + ManagedObjectSocketProtocol
 
-extension Vehicles: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, socket: ManagedObjectLinkerSocketProtocol) {
+extension Vehicles: ManagedObjectSocketProtocol {
+    public func doLinking(_ element: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
         if let default_profile = element as? Vehicleprofile {
             self.default_profile = default_profile
         }
@@ -22,7 +22,7 @@ extension Vehicles: ManagedObjectLinkHostable {
         modules_tree?.doLinking(element, socket: socket)
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], socket _: ManagedObjectLinkerSocketProtocol) {
+    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

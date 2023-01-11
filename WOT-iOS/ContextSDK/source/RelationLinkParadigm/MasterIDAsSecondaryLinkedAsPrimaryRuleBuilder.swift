@@ -8,12 +8,12 @@
 
 public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
-    private let pin: ManagedObjectLinkerPinProtocol
-    private let hostPin: ManagedObjectLinkerPinProtocol
+    private let pin: JointPinProtocol
+    private let hostPin: JointPinProtocol
 
     // MARK: Lifecycle
 
-    public init(pin: ManagedObjectLinkerPinProtocol, hostPin: ManagedObjectLinkerPinProtocol) {
+    public init(pin: JointPinProtocol, hostPin: JointPinProtocol) {
         self.pin = pin
         self.hostPin = hostPin
     }

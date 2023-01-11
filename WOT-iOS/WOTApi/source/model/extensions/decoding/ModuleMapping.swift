@@ -33,35 +33,35 @@ public extension Module {
             throw ModuleMappingError.moduleIdNotDefined
         }
 
-        let hostPin = ManagedObjectLinkerPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
+        let hostPin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
 
         let moduleType = VehicleModuleType.fromString(type)
         switch moduleType {
         case .vehicleGun:
             let modelClass = VehicleprofileGun.self
-            let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.gun))
+            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.gun))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
             let extractor = GunExtractor()
-            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
+            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
             let composition = try composer.buildRequestPredicateComposition()
 
             try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleRadio:
             let modelClass = VehicleprofileRadio.self
-            let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.radio))
+            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.radio))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
             let extractor = RadioExtractor()
-            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
+            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
             let composition = try composer.buildRequestPredicateComposition()
 
             try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleEngine:
             let modelClass = VehicleprofileEngine.self
-            let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.engine))
+            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.engine))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
-            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
+            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
             let composition = try composer.buildRequestPredicateComposition()
             let extractor = EngineExtractor()
@@ -69,20 +69,20 @@ public extension Module {
             try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleChassis:
             let modelClass = VehicleprofileSuspension.self
-            let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.suspension))
+            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.suspension))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
             let extractor = SuspensionExtractor()
-            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
+            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
             let composition = try composer.buildRequestPredicateComposition()
 
             try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleTurret:
             let modelClass = VehicleprofileTurret.self
-            let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.turret))
+            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.turret))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
             let extractor = TurretExtractor()
-            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
+            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
             let composition = try composer.buildRequestPredicateComposition()
 

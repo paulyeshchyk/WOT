@@ -7,14 +7,14 @@
 
 import ContextSDK
 
-// MARK: - ModulesTree + ManagedObjectLinkable
+// MARK: - ModulesTree + ManagedObjectPinProtocol
 
-extension ModulesTree: ManagedObjectLinkable {}
+extension ModulesTree: ManagedObjectPinProtocol {}
 
-// MARK: - ModulesTree + ManagedObjectLinkHostable
+// MARK: - ModulesTree + ManagedObjectSocketProtocol
 
-extension ModulesTree: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, socket: ManagedObjectLinkerSocketProtocol) {
+extension ModulesTree: ManagedObjectSocketProtocol {
+    public func doLinking(_ element: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
         if let default_profile = element as? Vehicleprofile {
             self.default_profile = default_profile
         }
@@ -34,5 +34,5 @@ extension ModulesTree: ManagedObjectLinkHostable {
         }
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], socket _: ManagedObjectLinkerSocketProtocol) {}
+    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {}
 }

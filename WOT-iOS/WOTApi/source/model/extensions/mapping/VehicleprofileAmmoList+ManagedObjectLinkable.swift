@@ -5,20 +5,20 @@
 //  Created by Paul on 2.01.23.
 //
 
-// MARK: - VehicleprofileAmmoList + ManagedObjectLinkable
+// MARK: - VehicleprofileAmmoList + ManagedObjectPinProtocol
 
-extension VehicleprofileAmmoList: ManagedObjectLinkable {}
+extension VehicleprofileAmmoList: ManagedObjectPinProtocol {}
 
-// MARK: - VehicleprofileAmmoList + ManagedObjectLinkHostable
+// MARK: - VehicleprofileAmmoList + ManagedObjectSocketProtocol
 
-extension VehicleprofileAmmoList: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, socket _: ManagedObjectLinkerSocketProtocol) {
+extension VehicleprofileAmmoList: ManagedObjectSocketProtocol {
+    public func doLinking(_ element: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
         if let ammo = element as? VehicleprofileAmmo {
             addToVehicleprofileAmmo(ammo)
         }
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], socket _: ManagedObjectLinkerSocketProtocol) {
+    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

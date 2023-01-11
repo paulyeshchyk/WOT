@@ -24,7 +24,7 @@ public extension VehicleprofileArmorList {
             let collection = try JSONCollection(element: jsonElement)
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: keypathturret)
+            let socket = JointSocket(identifier: composition.objectIdentifier, keypath: keypathturret)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileArmorListFetchResult, socket: socket)
             let extractor = TurretExtractor()
             let objectContext = vehicleprofileArmorListFetchResult.managedObjectContext
@@ -45,7 +45,7 @@ public extension VehicleprofileArmorList {
             let collection = try JSONCollection(element: jsonElement)
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: keypathhull)
+            let socket = JointSocket(identifier: composition.objectIdentifier, keypath: keypathhull)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileArmorListFetchResult, socket: socket)
             let extractor = HullExtractor()
             let objectContext = vehicleprofileArmorListFetchResult.managedObjectContext

@@ -5,7 +5,7 @@
 //  Created by Paul on 11.01.23.
 //
 
-public struct ManagedObjectLinkerPin: ManagedObjectLinkerPinProtocol {
+public struct JointPin: JointPinProtocol {
 
     public let modelClass: PrimaryKeypathProtocol.Type
     public let identifier: JSONValueType?

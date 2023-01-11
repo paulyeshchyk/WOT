@@ -7,7 +7,7 @@
 
 // MARK: - ManagedObjectLinkerSocket
 
-public class ManagedObjectLinkerSocket: NSObject, ManagedObjectLinkerSocketProtocol {
+public class JointSocket: NSObject, JointSocketProtocol {
 
     public var identifier: Any?
     public var keypath: KeypathType?

@@ -5,18 +5,18 @@
 //  Created by Paul on 2.01.23.
 //
 
-// MARK: - VehicleprofileArmor + ManagedObjectLinkable
+// MARK: - VehicleprofileArmor + ManagedObjectPinProtocol
 
-extension VehicleprofileArmor: ManagedObjectLinkable {}
+extension VehicleprofileArmor: ManagedObjectPinProtocol {}
 
-// MARK: - VehicleprofileArmor + ManagedObjectLinkHostable
+// MARK: - VehicleprofileArmor + ManagedObjectSocketProtocol
 
-extension VehicleprofileArmor: ManagedObjectLinkHostable {
-    public func doLinking(_: ManagedObjectLinkable, socket _: ManagedObjectLinkerSocketProtocol) {
+extension VehicleprofileArmor: ManagedObjectSocketProtocol {
+    public func doLinking(_: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
         //
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], socket _: ManagedObjectLinkerSocketProtocol) {
+    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

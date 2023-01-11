@@ -103,7 +103,7 @@ class ObjectID {}
 
 // MARK: - Socket
 
-class Socket: ManagedObjectLinkerSocketProtocol {
+class Socket: JointSocketProtocol {
 
     var identifier: Any?
 
@@ -176,7 +176,7 @@ class Linker: ManagedObjectLinkerProtocol {
 
     // MARK: Lifecycle
 
-    required init(modelClass _: PrimaryKeypathProtocol.Type, masterFetchResult _: FetchResultProtocol?, socket _: ManagedObjectLinkerSocketProtocol) {
+    required init(modelClass _: PrimaryKeypathProtocol.Type, masterFetchResult _: FetchResultProtocol?, socket _: JointSocketProtocol) {
         //
     }
 

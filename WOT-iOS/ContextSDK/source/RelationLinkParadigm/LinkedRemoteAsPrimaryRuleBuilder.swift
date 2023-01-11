@@ -8,12 +8,12 @@
 
 open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
-    private let pin: ManagedObjectLinkerPinProtocol
+    private let pin: JointPinProtocol
     private let hostObjectID: AnyObject
 
     // MARK: Lifecycle
 
-    public init(pin: ManagedObjectLinkerPinProtocol, hostObjectID: AnyObject) {
+    public init(pin: JointPinProtocol, hostObjectID: AnyObject) {
         self.pin = pin
         self.hostObjectID = hostObjectID
     }

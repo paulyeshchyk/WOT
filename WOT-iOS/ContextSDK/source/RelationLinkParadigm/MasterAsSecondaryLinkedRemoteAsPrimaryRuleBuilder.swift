@@ -8,11 +8,11 @@
 
 open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
-    private let pin: ManagedObjectLinkerPinProtocol
+    private let pin: JointPinProtocol
 
     // MARK: Lifecycle
 
-    public init(pin: ManagedObjectLinkerPinProtocol) {
+    public init(pin: JointPinProtocol) {
         self.pin = pin
     }
 
