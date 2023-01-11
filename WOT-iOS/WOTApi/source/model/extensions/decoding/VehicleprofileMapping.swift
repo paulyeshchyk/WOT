@@ -95,8 +95,8 @@ public extension Vehicleprofile {
             let keypath = VehicleprofileEngine.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileEngine.self
-            let joint = Joint(modelClass: modelClass, theID: drivenObjectID, contextPredicate: nil)
-            let composer = RootTagRuleBuilder(drivenJoint: joint)
+            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
+            let composer = RootTagRuleBuilder(pin: pin)
             let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: engineKeypath)
@@ -119,8 +119,8 @@ public extension Vehicleprofile {
             let modelClass = VehicleprofileGun.self
             let keypath = VehicleprofileGun.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
-            let joint = Joint(modelClass: modelClass, theID: drivenObjectID, contextPredicate: nil)
-            let composer = RootTagRuleBuilder(drivenJoint: joint)
+            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
+            let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: gunKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
@@ -143,8 +143,8 @@ public extension Vehicleprofile {
             let keypath = VehicleprofileSuspension.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileSuspension.self
-            let joint = Joint(modelClass: modelClass, theID: drivenObjectID, contextPredicate: nil)
-            let composer = RootTagRuleBuilder(drivenJoint: joint)
+            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
+            let composer = RootTagRuleBuilder(pin: pin)
             let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: suspensionKeypath)
@@ -167,8 +167,8 @@ public extension Vehicleprofile {
             let keypath = VehicleprofileTurret.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileTurret.self
-            let joint = Joint(modelClass: modelClass, theID: drivenObjectID, contextPredicate: nil)
-            let composer = RootTagRuleBuilder(drivenJoint: joint)
+            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
+            let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: turretKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
@@ -191,8 +191,8 @@ public extension Vehicleprofile {
             let keypath = VehicleprofileRadio.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileRadio.self
-            let joint = Joint(modelClass: modelClass, theID: drivenObjectID, contextPredicate: nil)
-            let composer = RootTagRuleBuilder(drivenJoint: joint)
+            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
+            let composer = RootTagRuleBuilder(pin: pin)
             let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: radioKeypath)

@@ -20,8 +20,8 @@ public extension VehicleprofileAmmoList {
         for jsonElement in profilesJSON {
             let ammoType = jsonElement[keypath]
             let modelClass = VehicleprofileAmmo.self
-            let joint = Joint(modelClass: modelClass, theID: ammoType, contextPredicate: map.contextPredicate)
-            let composer = VehicleprofileAmmoListAmmoRequestPredicateComposer(drivenJoint: joint, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
+            let pin = ManagedObjectLinkerPin(modelClass: modelClass, identifier: ammoType, contextPredicate: map.contextPredicate)
+            let composer = VehicleprofileAmmoListAmmoRequestPredicateComposer(pin: pin, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier)

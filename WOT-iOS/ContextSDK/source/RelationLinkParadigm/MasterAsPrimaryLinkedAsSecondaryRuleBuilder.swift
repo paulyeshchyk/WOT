@@ -8,13 +8,13 @@
 
 open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposerProtocol {
 
-    private let drivenJoint: Joint
+    private let pin: ManagedObjectLinkerPinProtocol
     private let hostObjectID: AnyObject
 
     // MARK: Lifecycle
 
-    public init(drivenJoint: Joint, hostObjectID: AnyObject) {
-        self.drivenJoint = drivenJoint
+    public init(pin: ManagedObjectLinkerPinProtocol, hostObjectID: AnyObject) {
+        self.pin = pin
         self.hostObjectID = hostObjectID
     }
 
@@ -22,14 +22,14 @@ open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposer
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         var parentObjectIDList = [AnyObject]()
-        if let parents = drivenJoint.contextPredicate?.parentObjectIDList {
+        if let parents = pin.contextPredicate?.parentObjectIDList {
             parentObjectIDList.append(contentsOf: parents)
         }
         parentObjectIDList.append(hostObjectID)
 
         let lookupPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
-        lookupPredicate[.primary] = drivenJoint.contextPredicate?[.primary]
-        lookupPredicate[.secondary] = drivenJoint.modelClass.primaryKey(forType: .external, andObject: drivenJoint.theID)
+        lookupPredicate[.primary] = pin.contextPredicate?[.primary]
+        lookupPredicate[.secondary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }

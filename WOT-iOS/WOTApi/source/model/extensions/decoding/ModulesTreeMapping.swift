@@ -28,8 +28,8 @@ public extension ModulesTree {
             let extractor = NextVehicleExtractor()
             for nextTank in nextTanks {
                 // parents was not used for next portion of tanks
-                let theLink = Joint(modelClass: Vehicles.self, theID: nextTank, contextPredicate: nil)
-                let composer = LinkedLocalAsPrimaryRuleBuilder(drivenJoint: theLink)
+                let theLink = ManagedObjectLinkerPin(modelClass: Vehicles.self, identifier: nextTank, contextPredicate: nil)
+                let composer = LinkedLocalAsPrimaryRuleBuilder(pin: theLink)
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
                     let requestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: WGWebQueryArgs.fields)
@@ -49,8 +49,8 @@ public extension ModulesTree {
             let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, masterFetchResult: modulesTreeFetchResult, socket: socket)
             for nextModuleID in nextModules {
                 let modelClass = Module.self
-                let theLink = Joint(modelClass: modelClass, theID: nextModuleID, contextPredicate: map.contextPredicate)
-                let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(drivenJoint: theLink, hostObjectID: objectID)
+                let theLink = ManagedObjectLinkerPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
+                let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: theLink, hostObjectID: objectID)
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
                     let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: WGWebQueryArgs.fields)
@@ -68,8 +68,8 @@ public extension ModulesTree {
         let currentModuleAnchor = ManagedObjectLinkerSocket(identifier: nil, keypath: keypath)
         let extractor = CurrentModuleExtractor()
         let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: modulesTreeFetchResult, socket: currentModuleAnchor)
-        let theLink = Joint(modelClass: Module.self, theID: module_id, contextPredicate: map.contextPredicate)
-        let composer = LinkedRemoteAsPrimaryRuleBuilder(drivenJoint: theLink, hostObjectID: objectID)
+        let theLink = ManagedObjectLinkerPin(modelClass: Module.self, identifier: module_id, contextPredicate: map.contextPredicate)
+        let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: theLink, hostObjectID: objectID)
         let composition = try composer.buildRequestPredicateComposition()
         let moduleRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: WGWebQueryArgs.fields)
         try appContext?.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: self)
