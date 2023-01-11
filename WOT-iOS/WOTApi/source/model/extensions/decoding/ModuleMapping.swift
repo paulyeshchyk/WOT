@@ -47,14 +47,14 @@ public extension Module {
         case .vehicleGun:
             let modelClass = VehicleprofileGun.self
             let gunRequestParadigm = try gunRequestParadigm(modelClass: modelClass, hostJoint: hostJoint, keypathPrefix: "gun.")
-            let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.gun))
-            let managedObjectExtractorLinker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.gun))
+            let managedObjectExtractorLinker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
             let managedObjectExtractor = GunExtractor()
             try appContext?.requestManager?.fetchRemote(requestParadigm: gunRequestParadigm, managedObjectLinker: managedObjectExtractorLinker, managedObjectExtractor: managedObjectExtractor, listener: self)
         case .vehicleRadio:
             let modelClass = VehicleprofileRadio.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.radio))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.radio))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
             let extractor = RadioExtractor()
             let joint = Joint(modelClass: modelClass, theID: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
@@ -63,8 +63,8 @@ public extension Module {
             try appContext?.requestManager?.fetchRemote(requestParadigm: radioRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleEngine:
             let modelClass = VehicleprofileEngine.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.engine))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.engine))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
             let joint = Joint(modelClass: modelClass, theID: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
             let composition = try composer.buildRequestPredicateComposition()
@@ -73,8 +73,8 @@ public extension Module {
             try appContext?.requestManager?.fetchRemote(requestParadigm: engineRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleChassis:
             let modelClass = VehicleprofileSuspension.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.suspension))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.suspension))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
             let extractor = SuspensionExtractor()
             let joint = Joint(modelClass: modelClass, theID: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
@@ -83,8 +83,8 @@ public extension Module {
             try appContext?.requestManager?.fetchRemote(requestParadigm: chassisRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleTurret:
             let modelClass = VehicleprofileTurret.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.turret))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: module_id, keypath: #keyPath(Module.turret))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
             let extractor = TurretExtractor()
             let joint = Joint(modelClass: modelClass, theID: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)

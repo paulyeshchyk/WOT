@@ -14,7 +14,7 @@ extension Vehicleprofile: ManagedObjectLinkable {}
 // MARK: - Vehicleprofile + ManagedObjectLinkHostable
 
 extension Vehicleprofile: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, anchor _: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(_ element: ManagedObjectLinkable, socket _: ManagedObjectLinkerSocketProtocol) {
         if let turret = element as? VehicleprofileTurret {
             self.turret = turret
         }
@@ -41,7 +41,7 @@ extension Vehicleprofile: ManagedObjectLinkHostable {
         }
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], anchor _: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(_: [ManagedObjectLinkable], socket _: ManagedObjectLinkerSocketProtocol) {
         //
     }
 }

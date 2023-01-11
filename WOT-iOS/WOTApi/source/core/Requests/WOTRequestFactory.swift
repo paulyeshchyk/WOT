@@ -37,8 +37,8 @@ public class WOTWEBRequestFactory: NSObject {
         request.arguments = arguments
         let extractor = VehiclesPivotManagedObjectExtractor()
         let emptyFetchResult = try appContext.dataStore?.emptyFetchResult()
-        let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nil)
-        let linker = VehiclesPivotManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: emptyFetchResult, anchor: anchor)
+        let socket = ManagedObjectLinkerSocket(identifier: nil, keypath: nil)
+        let linker = VehiclesPivotManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: emptyFetchResult, socket: socket)
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: linker, managedObjectExtractor: extractor, listener: listener)
     }
 
@@ -53,8 +53,8 @@ public class WOTWEBRequestFactory: NSObject {
         request.arguments = arguments
         let extractor = VehiclesTreeManagedObjectExtractor()
         let emptyFetchResult = try appContext.dataStore?.emptyFetchResult()
-        let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nil)
-        let linker = VehiclesTreeManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: emptyFetchResult, anchor: anchor)
+        let socket = ManagedObjectLinkerSocket(identifier: nil, keypath: nil)
+        let linker = VehiclesTreeManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: emptyFetchResult, socket: socket)
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: linker, managedObjectExtractor: extractor, listener: listener)
     }
 

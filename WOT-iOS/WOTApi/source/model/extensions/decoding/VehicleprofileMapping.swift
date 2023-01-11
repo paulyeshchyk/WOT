@@ -33,8 +33,8 @@ public extension Vehicleprofile {
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
             let collection = try JSONCollection(array: jsonArray)
             let composition = try composer.buildRequestPredicateComposition()
-            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: ammoKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: ammoKeypath)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = AmmoListExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
@@ -54,8 +54,8 @@ public extension Vehicleprofile {
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
             let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
-            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: armorKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: armorKeypath)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extactor = ArmorListExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extactor, contextPredicate: composition.contextPredicate, completion: { _, error in
@@ -75,8 +75,8 @@ public extension Vehicleprofile {
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
             let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
-            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: modulesKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: modulesKeypath)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = ModuleExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
@@ -99,8 +99,8 @@ public extension Vehicleprofile {
             let composer = RootTagRuleBuilder(drivenJoint: joint)
             let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
-            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: engineKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: engineKeypath)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = EngineExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
@@ -122,8 +122,8 @@ public extension Vehicleprofile {
             let joint = Joint(modelClass: modelClass, theID: drivenObjectID, contextPredicate: nil)
             let composer = RootTagRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
-            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: gunKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: gunKeypath)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = GunExtractor()
             let collection = try JSONCollection(element: jsonElement)
             let objectContext = vehicleprofileFetchResult.managedObjectContext
@@ -147,8 +147,8 @@ public extension Vehicleprofile {
             let composer = RootTagRuleBuilder(drivenJoint: joint)
             let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
-            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: suspensionKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: suspensionKeypath)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = SuspensionExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
@@ -170,8 +170,8 @@ public extension Vehicleprofile {
             let joint = Joint(modelClass: modelClass, theID: drivenObjectID, contextPredicate: nil)
             let composer = RootTagRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
-            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: turretKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: turretKeypath)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = TurretManagedObjectCreator()
             let collection = try JSONCollection(element: jsonElement)
             let objectContext = vehicleprofileFetchResult.managedObjectContext
@@ -195,8 +195,8 @@ public extension Vehicleprofile {
             let composer = RootTagRuleBuilder(drivenJoint: joint)
             let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
-            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: radioKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: radioKeypath)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = RadioExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in

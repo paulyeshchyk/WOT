@@ -12,11 +12,11 @@ extension VehicleprofileRadio: ManagedObjectLinkable {}
 // MARK: - VehicleprofileRadio + ManagedObjectLinkHostable
 
 extension VehicleprofileRadio: ManagedObjectLinkHostable {
-    public func doLinking(_: ManagedObjectLinkable, anchor _: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(_: ManagedObjectLinkable, socket _: ManagedObjectLinkerSocketProtocol) {
         //
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], anchor _: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(_: [ManagedObjectLinkable], socket _: ManagedObjectLinkerSocketProtocol) {
         //
     }
 }

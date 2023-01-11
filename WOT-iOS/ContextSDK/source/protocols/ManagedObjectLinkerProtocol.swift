@@ -12,22 +12,22 @@ public typealias ManagedObjectLinkerCompletion = (FetchResultProtocol, Error?) -
 
 @objc
 public protocol ManagedObjectLinkerProtocol: MD5Protocol {
-    init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, anchor: ManagedObjectLinkerAnchorProtocol)
+    init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, socket: ManagedObjectLinkerSocketProtocol)
     func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion)
 }
 
-// MARK: - ManagedObjectLinkerAnchorProtocol
+// MARK: - ManagedObjectLinkerSocketProtocol
 
 @objc
-public protocol ManagedObjectLinkerAnchorProtocol {
+public protocol ManagedObjectLinkerSocketProtocol {
     var identifier: Any? { get }
     var keypath: KeypathType? { get }
     init(identifier: Any?, keypath: KeypathType?)
 }
 
-// MARK: - ManagedObjectLinkerAnchor
+// MARK: - ManagedObjectLinkerSocket
 
-public class ManagedObjectLinkerAnchor: NSObject, ManagedObjectLinkerAnchorProtocol {
+public class ManagedObjectLinkerSocket: NSObject, ManagedObjectLinkerSocketProtocol {
 
     public var identifier: Any?
     public var keypath: KeypathType?

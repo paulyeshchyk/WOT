@@ -18,11 +18,11 @@ class RequestManagerTest: XCTestCase {
         let appContext = AppContext()
         let requestManager = RequestManager(appContext: appContext)
         let managedObjectContext = ManagedObjectContext()
-        let anchor = Anchor(identifier: "AnchorID", keypath: #keyPath(Anchor.keypath))
+        let socket = Socket(identifier: "AnchorID", keypath: #keyPath(Anchor.keypath))
         let objectID = ObjectID()
         let extractor = Extractor()
         let fetchResult = FetchResult(objectID: objectID, managedObjectContext: managedObjectContext, predicate: nil, fetchStatus: .fetched)
-        let linker = Linker(modelClass: PrimaryKeypath.self, masterFetchResult: fetchResult, anchor: anchor)
+        let linker = Linker(modelClass: PrimaryKeypath.self, masterFetchResult: fetchResult, socket: socket)
         let request = TestHttpRequest(context: appContext)
         let listener = Listener()
         listener.expectationDidStart = expectation(description: "didStart")
@@ -100,9 +100,9 @@ class Extractor: ManagedObjectExtractable {
 
 class ObjectID {}
 
-// MARK: - Anchor
+// MARK: - Socket
 
-class Anchor: ManagedObjectLinkerAnchorProtocol {
+class Socket: ManagedObjectLinkerSocketProtocol {
 
     var identifier: Any?
 
@@ -175,7 +175,7 @@ class Linker: ManagedObjectLinkerProtocol {
 
     // MARK: Lifecycle
 
-    required init(modelClass _: PrimaryKeypathProtocol.Type, masterFetchResult _: FetchResultProtocol?, anchor _: ManagedObjectLinkerAnchorProtocol) {
+    required init(modelClass _: PrimaryKeypathProtocol.Type, masterFetchResult _: FetchResultProtocol?, socket _: ManagedObjectLinkerSocketProtocol) {
         //
     }
 

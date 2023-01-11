@@ -27,8 +27,8 @@ public extension VehicleprofileAmmo {
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
             let collection = JSONCollection(custom: jsonCustom)
             let composition = try composer.buildRequestPredicateComposition()
-            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathPenetration)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: keypathPenetration)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, socket: socket)
             let extractor = PenetrationExtractor()
             let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
@@ -48,8 +48,8 @@ public extension VehicleprofileAmmo {
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
             let collection = JSONCollection(custom: jsonCustom)
             let composition = try composer.buildRequestPredicateComposition()
-            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathDamage)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: composition.objectIdentifier, keypath: keypathDamage)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, socket: socket)
             let extractor = DamageExtractor()
             let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in

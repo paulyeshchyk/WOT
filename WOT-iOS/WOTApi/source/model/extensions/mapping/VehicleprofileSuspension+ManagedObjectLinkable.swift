@@ -12,11 +12,11 @@ extension VehicleprofileSuspension: ManagedObjectLinkable {}
 // MARK: - VehicleprofileSuspension + ManagedObjectLinkHostable
 
 extension VehicleprofileSuspension: ManagedObjectLinkHostable {
-    public func doLinking(_: ManagedObjectLinkable, anchor _: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(_: ManagedObjectLinkable, socket _: ManagedObjectLinkerSocketProtocol) {
         //
     }
 
-    public func doLinking(_: [ManagedObjectLinkable], anchor _: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(_: [ManagedObjectLinkable], socket _: ManagedObjectLinkerSocketProtocol) {
         //
     }
 }

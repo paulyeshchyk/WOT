@@ -21,8 +21,8 @@ public extension VehicleprofileModule {
 
         if let gun_id = gun_id {
             let modelClass = VehicleprofileGun.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, socket: socket)
             let joint = Joint(modelClass: modelClass, theID: gun_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
@@ -33,8 +33,8 @@ public extension VehicleprofileModule {
 
         if let radio_id = radio_id {
             let modelClass = VehicleprofileRadio.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = RadioExtractor()
             let joint = Joint(modelClass: modelClass, theID: radio_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
@@ -45,8 +45,8 @@ public extension VehicleprofileModule {
 
         if let engine_id = engine_id {
             let modelClass = VehicleprofileEngine.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = EngineExtractor()
             let joint = Joint(modelClass: modelClass, theID: engine_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
@@ -57,8 +57,8 @@ public extension VehicleprofileModule {
 
         if let suspension_id = suspension_id {
             let modelClass = VehicleprofileSuspension.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = SuspensionExtractor()
             let joint = Joint(modelClass: modelClass, theID: suspension_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
@@ -69,8 +69,8 @@ public extension VehicleprofileModule {
 
         if let turret_id = turret_id {
             let modelClass = VehicleprofileTurret.self
-            let anchor = ManagedObjectLinkerAnchor(identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, anchor: anchor)
+            let socket = ManagedObjectLinkerSocket(identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = TurretExtractor()
             let joint = Joint(modelClass: modelClass, theID: turret_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)

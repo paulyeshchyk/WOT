@@ -24,7 +24,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
     public let modelClass: PrimaryKeypathProtocol.Type
 
     public var masterFetchResult: FetchResultProtocol?
-    public var anchor: ManagedObjectLinkerAnchorProtocol
+    public var socket: ManagedObjectLinkerSocketProtocol
 
     public var MD5: String { uuid.MD5 }
 
@@ -32,10 +32,10 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
     // MARK: Lifecycle
 
-    public required init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, anchor: ManagedObjectLinkerAnchorProtocol) {
+    public required init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, socket: ManagedObjectLinkerSocketProtocol) {
         self.masterFetchResult = masterFetchResult
         self.modelClass = modelClass
-        self.anchor = anchor
+        self.socket = socket
     }
 
     // MARK: Open
@@ -51,7 +51,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
             completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectLinkable.self)))
             return
         }
-        host.doLinking(link, anchor: anchor)
+        host.doLinking(link, socket: socket)
 
         // MARK: stash
 

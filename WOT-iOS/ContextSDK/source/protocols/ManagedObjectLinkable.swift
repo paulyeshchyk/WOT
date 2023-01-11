@@ -14,24 +14,24 @@ public protocol ManagedObjectLinkable {
 // MARK: - ManagedObjectLinkHostable
 
 public protocol ManagedObjectLinkHostable {
-    func doLinking(_ element: ManagedObjectLinkable, anchor: ManagedObjectLinkerAnchorProtocol)
-    func doLinking(_ elements: [ManagedObjectLinkable], anchor: ManagedObjectLinkerAnchorProtocol)
+    func doLinking(_ element: ManagedObjectLinkable, socket: ManagedObjectLinkerSocketProtocol)
+    func doLinking(_ elements: [ManagedObjectLinkable], socket: ManagedObjectLinkerSocketProtocol)
 }
 
 // MARK: - NSSet + ManagedObjectLinkHostable
 
 extension NSSet: ManagedObjectLinkHostable {
-    public func doLinking(_ element: ManagedObjectLinkable, anchor: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(_ element: ManagedObjectLinkable, socket: ManagedObjectLinkerSocketProtocol) {
         compactMap { $0 as? ManagedObjectLinkHostable }
             .forEach {
-                $0.doLinking(element, anchor: anchor)
+                $0.doLinking(element, socket: socket)
             }
     }
 
-    public func doLinking(_ array: [ManagedObjectLinkable], anchor: ManagedObjectLinkerAnchorProtocol) {
+    public func doLinking(_ array: [ManagedObjectLinkable], socket: ManagedObjectLinkerSocketProtocol) {
         compactMap { $0 as? ManagedObjectLinkHostable }
             .forEach {
-                $0.doLinking(array, anchor: anchor)
+                $0.doLinking(array, socket: socket)
             }
     }
 }
