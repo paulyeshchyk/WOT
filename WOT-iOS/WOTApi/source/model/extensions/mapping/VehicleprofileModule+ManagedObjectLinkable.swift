@@ -13,34 +13,28 @@ extension VehicleprofileModule: ManagedObjectPinProtocol {}
 
 extension VehicleprofileModule: ManagedObjectSocketProtocol {
 
+    // swiftlint:disable cyclomatic_complexity
     public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
-        //
-        if let vehicleGun = pin as? VehicleprofileGun {
-            vehicleGun.gun_id = socket.identifier as? NSDecimalNumber
-            self.vehicleGun = vehicleGun
+        switch socket.keypath as? String {
+        case #keyPath(VehicleprofileModule.gun_id):
+            vehicleGun = pin as? VehicleprofileGun
+            vehicleGun?.gun_id = socket.identifier as? NSDecimalNumber
+        case #keyPath(VehicleprofileModule.engine_id):
+            vehicleEngine = pin as? VehicleprofileEngine
+            vehicleEngine?.engine_id = socket.identifier as? NSDecimalNumber
+        case #keyPath(VehicleprofileModule.suspension_id):
+            vehicleChassis = pin as? VehicleprofileSuspension
+            vehicleChassis?.suspension_id = socket.identifier as? NSDecimalNumber
+        case #keyPath(VehicleprofileModule.radio_id):
+            vehicleRadio = pin as? VehicleprofileRadio
+            vehicleRadio?.radio_id = socket.identifier as? NSDecimalNumber
+        case #keyPath(VehicleprofileModule.turret_id):
+            vehicleTurret = pin as? VehicleprofileTurret
+            vehicleTurret?.turret_id = socket.identifier as? NSDecimalNumber
+        default:
+            assertionFailure("undefiend field \(String(describing: socket))")
         }
-        //
-        if let vehicleEngine = pin as? VehicleprofileEngine {
-            vehicleEngine.engine_id = socket.identifier as? NSDecimalNumber
-            self.vehicleEngine = vehicleEngine
-        }
-        //
-        if let vehicleChassis = pin as? VehicleprofileSuspension {
-            vehicleChassis.suspension_id = socket.identifier as? NSDecimalNumber
-            self.vehicleChassis = vehicleChassis
-        }
-        //
-        if let vehicleRadio = pin as? VehicleprofileRadio {
-            vehicleRadio.radio_id = socket.identifier as? NSDecimalNumber
-
-            self.vehicleRadio = vehicleRadio
-        }
-        //
-        if let vehicleTurret = pin as? VehicleprofileTurret {
-            vehicleTurret.turret_id = socket.identifier as? NSDecimalNumber
-
-            self.vehicleTurret = vehicleTurret
-        }
+        // swiftlint:enable cyclomatic_complexity
     }
 
     public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {

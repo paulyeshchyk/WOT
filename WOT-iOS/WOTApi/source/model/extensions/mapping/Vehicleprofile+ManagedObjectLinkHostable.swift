@@ -15,31 +15,22 @@ extension Vehicleprofile: ManagedObjectPinProtocol {}
 
 extension Vehicleprofile: ManagedObjectSocketProtocol {
 
-    public func doLinking(pin: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
-        if let turret = pin as? VehicleprofileTurret {
-            self.turret = turret
+    // swiftlint:disable cyclomatic_complexity
+    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
+        //
+        switch socket.keypath as? String {
+        case #keyPath(Vehicleprofile.turret): turret = pin as? VehicleprofileTurret
+        case #keyPath(Vehicleprofile.suspension): suspension = pin as? VehicleprofileSuspension
+        case #keyPath(Vehicleprofile.radio): radio = pin as? VehicleprofileRadio
+        case #keyPath(Vehicleprofile.gun): gun = pin as? VehicleprofileGun
+        case #keyPath(Vehicleprofile.engine): engine = pin as? VehicleprofileEngine
+        case #keyPath(Vehicleprofile.ammo): ammo = pin as? VehicleprofileAmmoList
+        case #keyPath(Vehicleprofile.armor): armor = pin as? VehicleprofileArmorList
+        case #keyPath(Vehicleprofile.modules): modules = pin as? VehicleprofileModule
+        default:
+            assertionFailure("undefiend field \(String(describing: socket))")
         }
-        if let suspension = pin as? VehicleprofileSuspension {
-            self.suspension = suspension
-        }
-        if let radio = pin as? VehicleprofileRadio {
-            self.radio = radio
-        }
-        if let gun = pin as? VehicleprofileGun {
-            self.gun = gun
-        }
-        if let engine = pin as? VehicleprofileEngine {
-            self.engine = engine
-        }
-        if let ammo = pin as? VehicleprofileAmmoList {
-            self.ammo = ammo
-        }
-        if let armor = pin as? VehicleprofileArmorList {
-            self.armor = armor
-        }
-        if let modules = pin as? VehicleprofileModule {
-            self.modules = modules
-        }
+        // swiftlint:enable cyclomatic_complexity
     }
 
     public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {

@@ -1,6 +1,7 @@
 # reference: https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md
 
 --exclude Tests/XCTestManifests.swift,Snapshots, Pods, Generated
+--swiftversion 4.2
 
 --rules andOperator
 
@@ -143,4 +144,3 @@
 #??
 #--comments indent
 #--empty void
-#--swiftversion 4.2

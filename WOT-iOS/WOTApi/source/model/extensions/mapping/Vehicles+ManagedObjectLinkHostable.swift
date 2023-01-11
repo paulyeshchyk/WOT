@@ -13,14 +13,19 @@ extension Vehicles: ManagedObjectPinProtocol {}
 
 extension Vehicles: ManagedObjectSocketProtocol {
 
-    public func doLinking(pin element: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
-        if let default_profile = element as? Vehicleprofile {
-            self.default_profile = default_profile
+    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
+        //
+        switch socket.keypath as? String {
+        case #keyPath(Vehicles.default_profile):
+            default_profile = pin as? Vehicleprofile
+            modules_tree?.doLinking(pin: pin, socket: socket)
+        case #keyPath(ModulesTree.next_modules):
+            if let modules_tree = pin as? ModulesTree {
+                addToModules_tree(modules_tree)
+            }
+        default:
+            assertionFailure("undefiend field \(String(describing: socket))")
         }
-        if let modules_tree = element as? ModulesTree {
-            addToModules_tree(modules_tree)
-        }
-        modules_tree?.doLinking(pin: element, socket: socket)
     }
 
     public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {

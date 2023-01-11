@@ -14,24 +14,24 @@ public protocol ManagedObjectPinProtocol {
 // MARK: - ManagedObjectSocketProtocol
 
 public protocol ManagedObjectSocketProtocol {
-    func doLinking(pin element: ManagedObjectPinProtocol, socket: JointSocketProtocol)
-    func doLinking(pins elements: [ManagedObjectPinProtocol], socket: JointSocketProtocol)
+    func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol)
+    func doLinking(pins: [ManagedObjectPinProtocol], socket: JointSocketProtocol)
 }
 
 // MARK: - NSSet + ManagedObjectSocketProtocol
 
 extension NSSet: ManagedObjectSocketProtocol {
-    public func doLinking(pin element: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
+    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
         compactMap { $0 as? ManagedObjectSocketProtocol }
             .forEach {
-                $0.doLinking(pin: element, socket: socket)
+                $0.doLinking(pin: pin, socket: socket)
             }
     }
 
-    public func doLinking(pins array: [ManagedObjectPinProtocol], socket: JointSocketProtocol) {
+    public func doLinking(pins: [ManagedObjectPinProtocol], socket: JointSocketProtocol) {
         compactMap { $0 as? ManagedObjectSocketProtocol }
             .forEach {
-                $0.doLinking(pins: array, socket: socket)
+                $0.doLinking(pins: pins, socket: socket)
             }
     }
 }

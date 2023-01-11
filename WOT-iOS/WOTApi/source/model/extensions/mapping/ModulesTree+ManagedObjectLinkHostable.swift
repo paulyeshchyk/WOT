@@ -15,24 +15,27 @@ extension ModulesTree: ManagedObjectPinProtocol {}
 
 extension ModulesTree: ManagedObjectSocketProtocol {
 
+    // swiftlint:disable cyclomatic_complexity
     public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
-        if let default_profile = pin as? Vehicleprofile {
-            self.default_profile = default_profile
-        }
-        if let module = pin as? Module {
-            if (socket.keypath as? String) == #keyPath(ModulesTree.currentModule) {
-                self.currentModule = module
-            }
-            if (socket.keypath as? String) == #keyPath(ModulesTree.next_modules) {
+        //
+
+        switch socket.keypath as? String {
+        case #keyPath(ModulesTree.default_profile):
+            default_profile = pin as? Vehicleprofile
+        case #keyPath(ModulesTree.currentModule):
+            currentModule = pin as? Module
+        case #keyPath(ModulesTree.next_modules):
+            if let module = pin as? Module {
                 addToNext_modules(module)
             }
-        }
-
-        if let vehicle = pin as? Vehicles {
-            if (socket.keypath as? String) == #keyPath(ModulesTree.next_tanks) {
+        case #keyPath(ModulesTree.next_tanks):
+            if let vehicle = pin as? Vehicles {
                 addToNext_tanks(vehicle)
             }
+        default:
+            assertionFailure("undefiend field \(String(describing: socket))")
         }
+        // swiftlint:enable cyclomatic_complexity
     }
 
     public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {}

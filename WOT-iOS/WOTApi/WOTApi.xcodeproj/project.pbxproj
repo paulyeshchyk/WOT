@@ -577,12 +577,12 @@
 				DA911B6E296346B1009E89F3 /* VehicleprofileRadio+ManagedObjectLinkable.swift */,
 				DA911B7029634744009E89F3 /* VehicleprofileSuspension+ManagedObjectLinkable.swift */,
 				DA911B72296347F8009E89F3 /* VehicleprofileTurret+ManagedObjectLinkable.swift */,
+				DA911B7629634F27009E89F3 /* VehicleprofileArmorList+ManagedObjectLinkable.swift */,
+				DA911B8029635576009E89F3 /* VehicleprofileArmor+ManagedObjectLinkable.swift */,
 				DA911B7429634EA6009E89F3 /* VehicleprofileAmmoList+ManagedObjectLinkable.swift */,
 				DA911B7C29635099009E89F3 /* VehicleprofileAmmo+ManagedObjectLinkable.swift */,
 				DA911B7E296350DB009E89F3 /* VehicleprofileAmmoDamage+ManagedObjectLinkable.swift */,
 				DA911B7A2963503F009E89F3 /* VehicleprofileAmmoPenetration+ManagedObjectLinkable.swift */,
-				DA911B7629634F27009E89F3 /* VehicleprofileArmorList+ManagedObjectLinkable.swift */,
-				DA911B8029635576009E89F3 /* VehicleprofileArmor+ManagedObjectLinkable.swift */,
 			);
 			path = mapping;
 			sourceTree = "<group>";

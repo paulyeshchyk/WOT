@@ -14,13 +14,12 @@ extension VehicleprofileArmorList: ManagedObjectPinProtocol {}
 extension VehicleprofileArmorList: ManagedObjectSocketProtocol {
 
     public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
-        if let armor = pin as? VehicleprofileArmor {
-            if (socket.keypath as? String) == #keyPath(VehicleprofileArmorList.turret) {
-                turret = armor
-            }
-            if (socket.keypath as? String) == #keyPath(VehicleprofileArmorList.hull) {
-                hull = armor
-            }
+        //
+        switch socket.keypath as? String {
+        case #keyPath(VehicleprofileArmorList.turret): turret = pin as? VehicleprofileArmor
+        case #keyPath(VehicleprofileArmorList.hull): hull = pin as? VehicleprofileArmor
+        default:
+            assertionFailure("undefiend field \(String(describing: socket))")
         }
     }
 
