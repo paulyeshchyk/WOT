@@ -101,11 +101,11 @@ extension RequestManager: RequestListenerProtocol {
             throw RequestManagerError.modelNotFound(request)
         }
 
-        guard let managedObjectExtractor = managedObjectExractableList.extractorForRequest(request) else {
+        guard let jsonExtractor = managedObjectExractableList.extractorForRequest(request) else {
             throw RequestManagerError.extractorNotFound(request)
         }
 
-        let dataAdapter = type(of: modelService).dataAdapterClass().init(modelClass: modelClass, request: request, managedObjectLinker: managedObjectCreator, jsonExtractor: managedObjectExtractor, appContext: appContext)
+        let dataAdapter = type(of: modelService).dataAdapterClass().init(modelClass: modelClass, request: request, managedObjectLinker: managedObjectCreator, jsonExtractor: jsonExtractor, appContext: appContext)
         dataAdapter.completion = { request, error in
             self.finalizeParseResponse(request: request, error: error)
         }
