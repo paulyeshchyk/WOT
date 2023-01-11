@@ -12,11 +12,12 @@ extension VehicleprofileTurret: ManagedObjectPinProtocol {}
 // MARK: - VehicleprofileTurret + ManagedObjectSocketProtocol
 
 extension VehicleprofileTurret: ManagedObjectSocketProtocol {
-    public func doLinking(_: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
+
+    public func doLinking(pin _: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
         //
     }
 
-    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
+    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

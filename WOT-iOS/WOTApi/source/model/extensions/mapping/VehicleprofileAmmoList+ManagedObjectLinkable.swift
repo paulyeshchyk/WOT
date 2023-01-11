@@ -12,13 +12,14 @@ extension VehicleprofileAmmoList: ManagedObjectPinProtocol {}
 // MARK: - VehicleprofileAmmoList + ManagedObjectSocketProtocol
 
 extension VehicleprofileAmmoList: ManagedObjectSocketProtocol {
-    public func doLinking(_ element: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
-        if let ammo = element as? VehicleprofileAmmo {
+
+    public func doLinking(pin: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
+        if let ammo = pin as? VehicleprofileAmmo {
             addToVehicleprofileAmmo(ammo)
         }
     }
 
-    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
+    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

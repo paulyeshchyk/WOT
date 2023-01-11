@@ -12,8 +12,9 @@ extension VehicleprofileArmorList: ManagedObjectPinProtocol {}
 // MARK: - VehicleprofileArmorList + ManagedObjectSocketProtocol
 
 extension VehicleprofileArmorList: ManagedObjectSocketProtocol {
-    public func doLinking(_ element: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
-        if let armor = element as? VehicleprofileArmor {
+
+    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
+        if let armor = pin as? VehicleprofileArmor {
             if (socket.keypath as? String) == #keyPath(VehicleprofileArmorList.turret) {
                 turret = armor
             }
@@ -23,7 +24,7 @@ extension VehicleprofileArmorList: ManagedObjectSocketProtocol {
         }
     }
 
-    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
+    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }

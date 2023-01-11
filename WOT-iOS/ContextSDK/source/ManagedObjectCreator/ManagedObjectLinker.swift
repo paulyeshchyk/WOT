@@ -51,7 +51,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
             completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectPinProtocol.self)))
             return
         }
-        host.doLinking(link, socket: socket)
+        host.doLinking(pin: link, socket: socket)
 
         // MARK: stash
 

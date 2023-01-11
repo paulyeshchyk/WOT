@@ -14,11 +14,12 @@ extension ModulesTree: ManagedObjectPinProtocol {}
 // MARK: - ModulesTree + ManagedObjectSocketProtocol
 
 extension ModulesTree: ManagedObjectSocketProtocol {
-    public func doLinking(_ element: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
-        if let default_profile = element as? Vehicleprofile {
+
+    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
+        if let default_profile = pin as? Vehicleprofile {
             self.default_profile = default_profile
         }
-        if let module = element as? Module {
+        if let module = pin as? Module {
             if (socket.keypath as? String) == #keyPath(ModulesTree.currentModule) {
                 self.currentModule = module
             }
@@ -27,12 +28,12 @@ extension ModulesTree: ManagedObjectSocketProtocol {
             }
         }
 
-        if let vehicle = element as? Vehicles {
+        if let vehicle = pin as? Vehicles {
             if (socket.keypath as? String) == #keyPath(ModulesTree.next_tanks) {
                 addToNext_tanks(vehicle)
             }
         }
     }
 
-    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {}
+    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {}
 }

@@ -12,35 +12,36 @@ extension Module: ManagedObjectPinProtocol {}
 // MARK: - Module + ManagedObjectSocketProtocol
 
 extension Module: ManagedObjectSocketProtocol {
-    public func doLinking(_ element: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
+
+    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
         //
-        if let engine = element as? VehicleprofileEngine {
+        if let engine = pin as? VehicleprofileEngine {
             engine.engine_id = socket.identifier as? NSDecimalNumber
             self.engine = engine
         }
         //
-        if let gun = element as? VehicleprofileGun {
+        if let gun = pin as? VehicleprofileGun {
             gun.gun_id = socket.identifier as? NSDecimalNumber
             self.gun = gun
         }
         //
-        if let radio = element as? VehicleprofileRadio {
+        if let radio = pin as? VehicleprofileRadio {
             radio.radio_id = socket.identifier as? NSDecimalNumber
             self.radio = radio
         }
         //
-        if let suspension = element as? VehicleprofileSuspension {
+        if let suspension = pin as? VehicleprofileSuspension {
             suspension.suspension_id = socket.identifier as? NSDecimalNumber
             self.suspension = suspension
         }
         //
-        if let turret = element as? VehicleprofileTurret {
+        if let turret = pin as? VehicleprofileTurret {
             turret.turret_id = socket.identifier as? NSDecimalNumber
             self.turret = turret
         }
     }
 
-    public func doLinking(_: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
+    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
         //
     }
 }
