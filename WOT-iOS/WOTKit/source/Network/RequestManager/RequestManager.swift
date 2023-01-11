@@ -194,10 +194,8 @@ extension RequestManager: RequestManagerProtocol {
         for requestID in requestIDs {
             do {
                 //
-                let request = try requestRegistrator.createRequest(forRequestId: requestID)
-                request.contextPredicate = requestParadigm.buildContextPredicate()
-                request.arguments = requestParadigm.buildRequestArguments()
-                let groupId: RequestIdType = requestParadigm.MD5.hashValue
+                let request = try createRequest(requestID: requestID, requestParadigm: requestParadigm)
+                let groupId: RequestIdType = request.MD5.hashValue
 
                 try startRequest(request, forGroupId: groupId, managedObjectCreator: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
             } catch {
@@ -205,9 +203,55 @@ extension RequestManager: RequestManagerProtocol {
             }
         }
     }
+
+    private func createRequest(requestID: RequestIdType, requestParadigm: RequestParadigmProtocol) throws -> RequestProtocol {
+        let request = try requestRegistrator.createRequest(forRequestId: requestID)
+        request.contextPredicate = requestParadigm.buildContextPredicate()
+        request.arguments = requestParadigm.buildRequestArguments(keypathPrefix: request.httpAPIQueryPrefix(), httpQueryItemName: request.httpQueryItemName)
+        return request
+    }
 }
 
 // MARK: - ResponseManagedObjectCreatorList
+
+//// MARK: - RequestArgumentsBuilder
+//
+// private class RequestArgumentsBuilder: RequestArgumentsBuilderProtocol {
+//
+//    private let modelClass: RequestableProtocol.Type
+//    private let keypathPrefix: String?
+//    private let httpQueryItemName: String
+//    private let primaryKeys: Set<ContextExpression>
+//
+//    init(modelClass: RequestableProtocol.Type, keypathPrefix: String?, httpQueryItemName: String, primaryKeys: Set<ContextExpression>) {
+//        self.modelClass = modelClass
+//        self.keypathPrefix = keypathPrefix
+//        self.httpQueryItemName = httpQueryItemName
+//        self.primaryKeys = primaryKeys
+//    }
+//
+//    func buildRequestArguments() -> RequestArguments {
+//        let fieldsKeypaths = modelClass.fieldsKeypaths()
+//        let keyPaths = fieldsKeypaths.compactMap {
+//            self.addPreffix(to: $0)
+//        }
+//
+//        let arguments = RequestArguments()
+//        arguments.setValues(keyPaths, forKey: httpQueryItemName)
+//        primaryKeys.forEach {
+//            arguments.setValues([$0.value], forKey: $0.nameAlias)
+//        }
+//        return arguments
+//    }
+//
+//    private func addPreffix(to: String) -> String {
+//        guard let preffix = keypathPrefix else {
+//            return to
+//        }
+//        return String(format: "%@%@", preffix, to)
+//    }
+//
+// }
 
 private class ResponseManagedObjectCreatorList {
 

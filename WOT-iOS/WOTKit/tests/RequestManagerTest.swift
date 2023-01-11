@@ -45,6 +45,7 @@ class RequestManagerTest: XCTestCase {
 
 class TestHttpRequest: HttpRequest {
     override var path: String { "/api" }
+    override var httpQueryItemName: String { WGWebQueryArgs.fields }
 }
 
 // MARK: - Listener

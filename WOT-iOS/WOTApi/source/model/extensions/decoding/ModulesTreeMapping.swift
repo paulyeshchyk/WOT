@@ -32,7 +32,7 @@ public extension ModulesTree {
                 let composer = LinkedLocalAsPrimaryRuleBuilder(pin: theLink)
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
-                    let requestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: WGWebQueryArgs.fields)
+                    let requestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposition: composition, httpQueryItemName: WGWebQueryArgs.fields)
                     try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
                 } catch {
                     appContext?.logInspector?.log(.error(error), sender: self)
@@ -53,7 +53,7 @@ public extension ModulesTree {
                 let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: theLink, hostObjectID: objectID)
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
-                    let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: WGWebQueryArgs.fields)
+                    let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, httpQueryItemName: WGWebQueryArgs.fields)
                     try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: nextModuleManagedObjectCreator, managedObjectExtractor: extractor, listener: self)
                 } catch {
                     appContext?.logInspector?.log(.error(error), sender: self)
@@ -71,7 +71,7 @@ public extension ModulesTree {
         let theLink = ManagedObjectLinkerPin(modelClass: Module.self, identifier: module_id, contextPredicate: map.contextPredicate)
         let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: theLink, hostObjectID: objectID)
         let composition = try composer.buildRequestPredicateComposition()
-        let moduleRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: WGWebQueryArgs.fields)
+        let moduleRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, httpQueryItemName: WGWebQueryArgs.fields)
         try appContext?.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: self)
     }
 }

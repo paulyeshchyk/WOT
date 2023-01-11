@@ -8,15 +8,23 @@
 
 import ContextSDK
 
+// MARK: - HttpRequestProtocol
+
+public protocol HttpRequestProtocol {}
+
 // MARK: - HttpRequest
 
-open class HttpRequest: Request {
+open class HttpRequest: Request, HttpRequestProtocol {
 
     override public var description: String {
         "\(type(of: self)): \(path)"
     }
 
     private var httpDataReceiver: HttpDataReceiver?
+
+    override open var httpQueryItemName: String {
+        fatalError("has not been implemented")
+    }
 
     // MARK: Lifecycle
 

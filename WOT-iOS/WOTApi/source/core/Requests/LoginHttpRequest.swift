@@ -11,11 +11,10 @@ import WOTKit
 // MARK: - LoginHttpRequest
 
 public class LoginHttpRequest: HttpRequest {
-    override public var httpMethod: HTTPMethod { return .POST }
 
-    override public var path: String {
-        return "wot/auth/login/"
-    }
+    override public var httpMethod: HTTPMethod { return .POST }
+    override public var path: String { return "wot/auth/login/" }
+    override public var httpQueryItemName: String { WGWebQueryArgs.fields }
 }
 
 // MARK: - LoginHttpRequest + ModelServiceProtocol

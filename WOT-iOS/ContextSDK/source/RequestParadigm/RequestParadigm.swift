@@ -20,9 +20,6 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
         primaryKeys.forEach {
             result += " key:\($0)"
         }
-        if let prefix = keypathPrefix {
-            result += " prefix:\(prefix)"
-        }
         return result
     }
 
@@ -35,7 +32,6 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
     // MARK: -
 
     private var requestPredicateComposition: RequestPredicateCompositionProtocol
-    private let keypathPrefix: String?
     private let httpQueryItemName: String
     private let fieldsKeypaths: [String]
 
@@ -45,10 +41,9 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
 
     // MARK: Lifecycle
 
-    public init(modelClass T: RequestableProtocol.Type, requestPredicateComposition: RequestPredicateCompositionProtocol, keypathPrefix: String?, httpQueryItemName: String) {
+    public init(modelClass T: RequestableProtocol.Type, requestPredicateComposition: RequestPredicateCompositionProtocol, httpQueryItemName: String) {
         fieldsKeypaths = T.fieldsKeypaths()
         self.requestPredicateComposition = requestPredicateComposition
-        self.keypathPrefix = keypathPrefix
         self.httpQueryItemName = httpQueryItemName
 
         modelClass = T.self
@@ -56,16 +51,21 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
 
     // MARK: Public
 
-    public func buildRequestArguments() -> RequestArguments {
+    public func buildRequestArguments(keypathPrefix: String?, httpQueryItemName: String?) -> RequestArguments {
+        let arguments = RequestArguments()
+
         let keyPaths = fieldsKeypaths.compactMap {
-            self.addPreffix(to: $0)
+            self.addPreffix(keypathPrefix: keypathPrefix, to: $0)
         }
 
-        let arguments = RequestArguments()
-        arguments.setValues(keyPaths, forKey: httpQueryItemName)
+        if let httpQueryItemName = httpQueryItemName {
+            arguments.setValues(keyPaths, forKey: httpQueryItemName)
+        }
+
         primaryKeys.forEach {
             arguments.setValues([$0.value], forKey: $0.nameAlias)
         }
+
         return arguments
     }
 
@@ -75,7 +75,7 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
 
     // MARK: Private
 
-    private func addPreffix(to: String) -> String {
+    private func addPreffix(keypathPrefix: String?, to: String) -> String {
         guard let preffix = keypathPrefix else {
             return to
         }

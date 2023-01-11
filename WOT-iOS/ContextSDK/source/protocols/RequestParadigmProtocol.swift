@@ -5,23 +5,23 @@
 //  Created by Paul on 30.12.22.
 //
 
-// MARK: - RequestArgumentsBuilder
+// MARK: - RequestArgumentsBuilderProtocol
 
 @objc
-public protocol RequestArgumentsBuilder {
-    func buildRequestArguments() -> RequestArguments
+public protocol RequestArgumentsBuilderProtocol {
+    func buildRequestArguments(keypathPrefix: String?, httpQueryItemName: String?) -> RequestArguments
 }
 
-// MARK: - ContextPredicateBuilder
+// MARK: - ContextPredicateBuilderProtocol
 
 @objc
-public protocol ContextPredicateBuilder {
+public protocol ContextPredicateBuilderProtocol {
     func buildContextPredicate() -> ContextPredicateProtocol
 }
 
 // MARK: - RequestParadigmProtocol
 
 @objc
-public protocol RequestParadigmProtocol: RequestArgumentsBuilder, ContextPredicateBuilder, MD5Protocol {
+public protocol RequestParadigmProtocol: RequestArgumentsBuilderProtocol, ContextPredicateBuilderProtocol, MD5Protocol {
     var modelClass: RequestableProtocol.Type { get }
 }

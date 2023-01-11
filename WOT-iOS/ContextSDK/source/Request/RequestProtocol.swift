@@ -19,6 +19,11 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     var contextPredicate: ContextPredicateProtocol? { get set }
     var arguments: RequestArgumentsProtocol? { get set }
 
+    // MARK: to be moved out from protocol
+
+    var httpQueryItemName: String? { get }
+    func httpAPIQueryPrefix() -> String?
+
     func addGroup(_ group: RequestIdType)
     func addListener(_ listener: RequestListenerProtocol)
     func removeGroup(_ group: RequestIdType)
@@ -67,6 +72,11 @@ open class Request: RequestProtocol, CustomStringConvertible {
     public var arguments: RequestArgumentsProtocol?
 
     public var MD5: String { uuid.MD5 }
+
+    // MARK: to be moved out from interface
+
+    open var httpQueryItemName: String? { nil }
+    open func httpAPIQueryPrefix() -> String? { nil }
 
     // MARK: - MD5Protocol
 
