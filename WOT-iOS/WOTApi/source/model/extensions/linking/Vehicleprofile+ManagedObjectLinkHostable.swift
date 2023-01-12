@@ -27,8 +27,7 @@ extension Vehicleprofile: ManagedObjectSocketProtocol {
         case #keyPath(Vehicleprofile.ammo): ammo = pin as? VehicleprofileAmmoList
         case #keyPath(Vehicleprofile.armor): armor = pin as? VehicleprofileArmorList
         case #keyPath(Vehicleprofile.modules): modules = pin as? VehicleprofileModule
-        default:
-            assertionFailure("undefiend field \(String(describing: socket))")
+        default: assertionFailure("undefiend field \(String(describing: socket))")
         }
         // swiftlint:enable cyclomatic_complexity
     }
