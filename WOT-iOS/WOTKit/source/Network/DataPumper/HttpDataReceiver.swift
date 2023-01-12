@@ -88,10 +88,12 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
 
     // MARK: Private
 
-    private func createDataTask(url: URL, completion _: @escaping () -> Void) -> URLSessionDataTask {
+    private func createDataTask(url: URL, completion: @escaping () -> Void) -> URLSessionDataTask {
         state = .started
         return URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let self = self else { return }
+            completion()
+
             DispatchQueue.main.async {
                 self.delegate?.didEnd(urlRequest: self.request, receiver: self, data: data, error: error)
             }

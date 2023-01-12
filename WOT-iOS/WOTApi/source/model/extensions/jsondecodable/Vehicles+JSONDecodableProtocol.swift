@@ -110,7 +110,7 @@ extension Vehicles {
 
 // MARK: - VehiclesJSONMappingError
 
-public enum VehiclesJSONMappingError: Error, CustomStringConvertible {
+private enum VehiclesJSONMappingError: Error, CustomStringConvertible {
     case notAJSON
     case passedInvalidModuleTreeJSON(NSDecimalNumber?)
     case passedInvalidSubModuleJSON

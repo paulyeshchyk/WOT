@@ -67,7 +67,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
             assertionFailure("objectID is not defined")
             return nil
         }
-        return context?.object(byID: objectID) as? ManagedObjectProtocol
+        return context?.object(byID: objectID)
     }
 
 }
