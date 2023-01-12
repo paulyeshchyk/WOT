@@ -13,12 +13,13 @@ extension VehicleprofileAmmo: ManagedObjectPinProtocol {}
 
 extension VehicleprofileAmmo: ManagedObjectSocketProtocol {
 
-    public func doLinking(pin: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
-        if let damage = pin as? VehicleprofileAmmoDamage {
-            self.damage = damage
-        }
-        if let penetration = pin as? VehicleprofileAmmoPenetration {
-            self.penetration = penetration
+    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
+        //
+        switch socket.keypath as? String {
+        case #keyPath(VehicleprofileAmmo.damage): damage = pin as? VehicleprofileAmmoDamage
+        case #keyPath(VehicleprofileAmmo.penetration): penetration = pin as? VehicleprofileAmmoPenetration
+        default:
+            assertionFailure("undefiend field \(String(describing: socket))")
         }
     }
 

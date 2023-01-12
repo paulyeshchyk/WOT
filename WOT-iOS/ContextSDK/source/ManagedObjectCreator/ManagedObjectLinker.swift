@@ -43,15 +43,17 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
     open func extractJSON(from _: JSON) -> JSON? { return nil }
 
     open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
-        guard let link = fetchResult.managedObject() as? ManagedObjectPinProtocol else {
+        guard let pin = fetchResult.managedObject() as? ManagedObjectPinProtocol else {
             completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectSocketProtocol.self)))
             return
         }
-        guard let host = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ManagedObjectSocketProtocol else {
+        guard let managedObject = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ManagedObjectSocketProtocol else {
             completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectPinProtocol.self)))
             return
         }
-        host.doLinking(pin: link, socket: socket)
+        //
+
+        managedObject.doLinking(pin: pin, socket: socket)
 
         // MARK: stash
 
