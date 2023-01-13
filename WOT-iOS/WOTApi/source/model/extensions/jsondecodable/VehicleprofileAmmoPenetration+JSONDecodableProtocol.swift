@@ -7,20 +7,20 @@
 //
 
 public extension VehicleprofileAmmoPenetration {
+
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
-        guard let penetrationJSON = map.jsonCollection.data() as? [Any] else {
-            throw VehicleprofileAmmoPenetrationError.arrayIsExpected(map.jsonCollection)
-        }
+    override func decode(using map: JSONMapProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
+        ///
+        let array = try map.data(ofType: [Double].self)
         //
-        guard penetrationJSON.count == 3 else {
-            throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements(penetrationJSON)
+        guard array?.count == 3 else {
+            throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements
         }
-        let intArray = NSDecimalNumberArray(array: penetrationJSON)
-        min_value = intArray.elements[0]
-        avg_value = intArray.elements[1]
-        max_value = intArray.elements[2]
+        let intArray = try NSDecimalNumberArray(array: array)
+        min_value = intArray[0]
+        avg_value = intArray[1]
+        max_value = intArray[2]
     }
 }
 
@@ -28,12 +28,12 @@ public extension VehicleprofileAmmoPenetration {
 
 private enum VehicleprofileAmmoPenetrationError: Error, CustomStringConvertible {
     case arrayIsExpected(Any)
-    case arrayIsNotContainingThreeElements([Any])
+    case arrayIsNotContainingThreeElements
 
     var description: String {
         switch self {
         case .arrayIsExpected(let object): return "[\(type(of: self))]: Array is expected, but \(type(of: object))"
-        case .arrayIsNotContainingThreeElements(let array): return "[\(type(of: self))]: Array is not containing 3 elements, but \(array.count)"
+        case .arrayIsNotContainingThreeElements: return "[\(type(of: self))]: Array is not containing 3 elements"
         }
     }
 }

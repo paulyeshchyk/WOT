@@ -7,13 +7,12 @@
 //
 
 public extension VehicleprofileAmmo {
+
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
-        guard let ammoJSON = map.jsonCollection.data() as? JSON else {
-            throw JSONManagedObjectMapError.notAnElement(map)
-        }
+    override func decode(using map: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
+        let ammoJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: ammoJSON)
         //
 
@@ -22,16 +21,16 @@ public extension VehicleprofileAmmo {
         // MARK: - Penetration
 
         let keypathPenetration = #keyPath(VehicleprofileAmmo.penetration)
-        if let jsonCustom = ammoJSON[keypathPenetration] {
+        if let jsonCustom = ammoJSON?[keypathPenetration] {
             let modelClass = VehicleprofileAmmoPenetration.self
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
-            let collection = JSONCollection(custom: jsonCustom)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: keypathPenetration)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, socket: socket)
             let extractor = PenetrationExtractor()
             let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -43,16 +42,16 @@ public extension VehicleprofileAmmo {
         // MARK: - Damage
 
         let keypathDamage = #keyPath(VehicleprofileAmmo.damage)
-        if let jsonCustom = ammoJSON[keypathDamage] {
+        if let jsonCustom = ammoJSON?[keypathDamage] {
             let modelClass = VehicleprofileAmmoDamage.self
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
-            let collection = JSONCollection(custom: jsonCustom)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: keypathDamage)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, socket: socket)
             let extractor = DamageExtractor()
             let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }

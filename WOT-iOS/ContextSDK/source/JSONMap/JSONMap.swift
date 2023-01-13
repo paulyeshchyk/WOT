@@ -5,9 +5,22 @@
 //  Created by Paul on 31.12.22.
 //
 
+// MARK: - JSONMapProtocol
+
+@objc
+public protocol JSONMapProtocol: JSONCollectionContainerProtocol, ContextPredicateContainerProtocol {
+//
+}
+
+extension JSONMapProtocol {
+    public func data<T>(ofType _: T.Type) throws -> T? {
+        try jsonCollection.data(ofType: T.self)
+    }
+}
+
 // MARK: - JSONMap
 
-public class JSONMap: JSONCollectionContainerProtocol {
+public class JSONMap: JSONMapProtocol {
 
     public let contextPredicate: ContextPredicateProtocol
     public let jsonCollection: JSONCollectionProtocol
@@ -22,6 +35,20 @@ public class JSONMap: JSONCollectionContainerProtocol {
         self.contextPredicate = contextPredicate
     }
 
+    public convenience init(element: JSON, predicate contextPredicate: ContextPredicateProtocol) throws {
+        let collection = try JSONCollection(element: element)
+        try self.init(jsonCollection: collection, predicate: contextPredicate)
+    }
+
+    public convenience init(array: [JSON], predicate contextPredicate: ContextPredicateProtocol) throws {
+        let collection = try JSONCollection(array: array)
+        try self.init(jsonCollection: collection, predicate: contextPredicate)
+    }
+
+    public convenience init(custom: Any, predicate contextPredicate: ContextPredicateProtocol) throws {
+        let collection = JSONCollection(custom: custom)
+        try self.init(jsonCollection: collection, predicate: contextPredicate)
+    }
 }
 
 // MARK: - JSONMapError

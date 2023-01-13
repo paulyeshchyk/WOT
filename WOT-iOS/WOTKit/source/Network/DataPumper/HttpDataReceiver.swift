@@ -18,9 +18,21 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
     public var description: String { "\(type(of: self)): \(String(describing: request))" }
 
     enum State {
-        case unknown
+        case notStarted
         case started
         case finished
+        case canceled
+
+        // MARK: Internal
+
+        func expandedDescription(for request: URLRequest) -> String {
+            switch self {
+            case .canceled: return "Cancel URL: \(String(describing: request.url, orValue: "unknown"))"
+            case .finished: return "Finished URL: \(String(describing: request.url, orValue: "unknown"))"
+            case .notStarted: return "Not started URL: \(String(describing: request.url, orValue: "unknown"))"
+            case .started: return "Start URL: \(String(describing: request.url, orValue: "unknown"))"
+            }
+        }
     }
 
     enum WOTWebDataPumperError: Error, CustomStringConvertible {
@@ -35,7 +47,12 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
 
     let request: URLRequest
 
-    private var state: State = .unknown
+    private var state: State = .notStarted {
+        didSet {
+            let message = state.expandedDescription(for: request)
+            context.logInspector?.log(.remoteFetch(message: message), sender: self)
+        }
+    }
 
     private let uuid: UUID = UUID()
     private var urlDataTask: URLSessionDataTask?
@@ -64,7 +81,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         let result = urlDataTask?.cancelDataTask() ?? false
         urlDataTask = nil
         if result == true {
-            context.logInspector?.log(.remoteFetch(message: "Cancel URL: \(String(describing: request.url))"), sender: self)
+            state = .canceled
             delegate?.didCancel(urlRequest: request, receiver: self, error: nil)
         }
         return result
@@ -81,7 +98,6 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         urlDataTask = createDataTask(url: url) {
             self.state = .finished
         }
-        context.logInspector?.log(.remoteFetch(message: "Start URL: \(String(describing: request.url))"), sender: self)
         delegate?.didStart(urlRequest: request, receiver: self)
         urlDataTask?.resume()
     }
@@ -91,8 +107,10 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
     private func createDataTask(url: URL, completion: @escaping () -> Void) -> URLSessionDataTask {
         state = .started
         return URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let self = self else { return }
+
             completion()
+
+            guard let self = self else { return }
 
             DispatchQueue.main.async {
                 self.delegate?.didEnd(urlRequest: self.request, receiver: self, data: data, error: error)

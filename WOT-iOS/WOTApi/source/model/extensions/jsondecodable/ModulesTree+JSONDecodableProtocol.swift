@@ -7,13 +7,12 @@
 //
 
 public extension ModulesTree {
+
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
-        guard let moduleTreeJSON = map.jsonCollection.data() as? JSON else {
-            throw JSONManagedObjectMapError.notAnElement(map)
-        }
+    override func decode(using map: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
+        let moduleTreeJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: moduleTreeJSON)
         //
 
@@ -22,7 +21,7 @@ public extension ModulesTree {
         // MARK: - NextTanks
 
         let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
-        if let nextTanks = moduleTreeJSON[nextTanksKeypath] as? [AnyObject] {
+        if let nextTanks = moduleTreeJSON?[nextTanksKeypath] as? [AnyObject] {
             let socket = JointSocket(identifier: nil, keypath: nextTanksKeypath)
             let linker = ManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: modulesTreeFetchResult, socket: socket)
             let extractor = NextVehicleExtractor()
@@ -44,7 +43,7 @@ public extension ModulesTree {
         // MARK: - NextModules
 
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
-        if let nextModules = moduleTreeJSON[nextModulesKeypath] as? [AnyObject] {
+        if let nextModules = moduleTreeJSON?[nextModulesKeypath] as? [AnyObject] {
             let socket = JointSocket(identifier: nil, keypath: nextModulesKeypath)
             let extractor = NextModuleExtractor()
             let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, masterFetchResult: modulesTreeFetchResult, socket: socket)
