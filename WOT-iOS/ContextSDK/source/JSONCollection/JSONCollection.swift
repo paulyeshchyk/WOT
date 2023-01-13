@@ -9,7 +9,7 @@
 
 public class JSONCollection: JSONCollectionProtocol {
 
-    public var collectionType: JSONCollectionType
+    private var collectionType: JSONCollectionType
 
     private var collection = [JSON]()
     private var custom: Any?
@@ -21,19 +21,19 @@ public class JSONCollection: JSONCollectionProtocol {
         collection.append(element)
     }
 
-    public init(array: [JSON]?) throws {
+    public init(array: [JSON]) throws {
         collectionType = .array
         try add(array: array)
     }
 
-    public init(custom: Any) {
+    public init(custom: Any?) {
         collectionType = .custom
         self.custom = custom
     }
 
-    // MARK: Public
+    // MARK: Private
 
-    public func add(element object: JSON?) throws {
+    private func add(element object: JSON?) throws {
         guard collectionType == .array else {
             throw JSONCollectionError.notAbleToAddElement(collectionType)
         }
@@ -43,7 +43,7 @@ public class JSONCollection: JSONCollectionProtocol {
         collection.append(element)
     }
 
-    public func add(array: [JSON]?) throws {
+    private func add(array: [JSON]?) throws {
         guard collectionType == .array else {
             throw JSONCollectionError.notAbleToAddElement(collectionType)
         }

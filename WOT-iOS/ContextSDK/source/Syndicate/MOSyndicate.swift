@@ -15,8 +15,7 @@ public class MOSyndicate {
 
     public var managedObjectLinker: ManagedObjectLinkerProtocol?
     public var managedObjectExtractor: ManagedObjectExtractable?
-    public var jsonCollection: JSONCollectionProtocol?
-    public var contextPredicate: ContextPredicateProtocol?
+    public var jsonMap: JSONMapProtocol?
     public var nspredicate: NSPredicate?
     public var modelClass: PrimaryKeypathProtocol.Type?
     public var managedObjectContext: ManagedObjectContextProtocol?
@@ -40,8 +39,7 @@ public class MOSyndicate {
         managedObjectLinkerHelper.completion = completion
 
         let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
-        mappingCoordinatorDecodeHelper.jsonCollection = jsonCollection
-        mappingCoordinatorDecodeHelper.contextPredicate = contextPredicate
+        mappingCoordinatorDecodeHelper.jsonMap = jsonMap
         mappingCoordinatorDecodeHelper.managedObjectLinker = managedObjectLinker
         mappingCoordinatorDecodeHelper.managedObjectExtractor = managedObjectExtractor
         mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
@@ -62,13 +60,8 @@ public class MOSyndicate {
 
 extension MOSyndicate {
 
-    public static func decodeAndLink(appContext: MOSyndicate.Context?, jsonCollection: JSONCollectionProtocol, managedObjectContext: ManagedObjectContextProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectLinker: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, contextPredicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) {
+    public static func decodeAndLink(appContext: MOSyndicate.Context?, jsonMap: JSONMapProtocol, managedObjectContext: ManagedObjectContextProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectLinker: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, completion: @escaping FetchResultCompletion) {
         //
-        guard let nspredicate = contextPredicate.nspredicate(operator: .and) else {
-            completion(nil, MappingCoordinatorError.noKeysDefinedForClass(String(describing: modelClass)))
-            return
-        }
-
         guard let appContext = appContext else {
             completion(nil, MappingCoordinatorError.appContextNotDefined)
             return
@@ -77,9 +70,8 @@ extension MOSyndicate {
         let moSyndicate = MOSyndicate(appContext: appContext)
         moSyndicate.managedObjectLinker = managedObjectLinker
         moSyndicate.managedObjectExtractor = managedObjectExtractor
-        moSyndicate.contextPredicate = contextPredicate
-        moSyndicate.jsonCollection = jsonCollection
-        moSyndicate.nspredicate = nspredicate
+        moSyndicate.jsonMap = jsonMap
+        moSyndicate.nspredicate = jsonMap.contextPredicate.nspredicate(operator: .and)
         moSyndicate.modelClass = modelClass
         moSyndicate.managedObjectContext = managedObjectContext
 

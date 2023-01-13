@@ -36,7 +36,10 @@ public class NSDecimalNumberArray {
 
     // MARK: Lifecycle
 
-    public init(array: [Any]) {
+    public init(array: [Any]?) throws {
+        guard let array = array else {
+            throw NSDecimalArrayConversionError.cantInitWithNil
+        }
         elements = NSDecimalNumberArray.conversion(from: array)
     }
 
@@ -69,4 +72,10 @@ public class NSDecimalNumberArray {
         }
         return result
     }
+}
+
+// MARK: - NSDecimalArrayConversionError
+
+private enum NSDecimalArrayConversionError: Error {
+    case cantInitWithNil
 }

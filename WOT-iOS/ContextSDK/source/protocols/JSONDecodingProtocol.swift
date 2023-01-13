@@ -21,13 +21,13 @@ public protocol JSONDecodableProtocol {
         & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
 
-    func decode(using: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws
+    func decode(using: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws
 }
 
 // MARK: - JSONCollectionContainerProtocol
 
 @objc
-public protocol JSONCollectionContainerProtocol: ContextPredicateContainerProtocol {
+public protocol JSONCollectionContainerProtocol {
     var jsonCollection: JSONCollectionProtocol { get }
 }
 
@@ -35,10 +35,29 @@ public protocol JSONCollectionContainerProtocol: ContextPredicateContainerProtoc
 
 @objc
 public protocol JSONCollectionProtocol {
-    var collectionType: JSONCollectionType { get }
-    func add(element: JSON?) throws
-    func add(array: [JSON]?) throws
     func data() -> Any?
+}
+
+extension JSONCollectionProtocol {
+
+    public func data<T>(ofType _: T.Type) throws -> T? {
+        let dataToReturn = data()
+        guard let resultToCheck = dataToReturn else {
+            return nil
+        }
+        guard let result = resultToCheck as? T else {
+            throw JSONCollectionDataError.cantbereturnedasrequestedtype
+        }
+        return result
+    }
+}
+
+// MARK: - JSONCollectionDataError
+
+private enum JSONCollectionDataError: Error {
+    case incorrectTypeProvided
+    case cantbereturnedasrequestedtype
+    case cantbereturnedasrequestedtypebut(JSONCollectionType)
 }
 
 // MARK: - JSONCollectionType
