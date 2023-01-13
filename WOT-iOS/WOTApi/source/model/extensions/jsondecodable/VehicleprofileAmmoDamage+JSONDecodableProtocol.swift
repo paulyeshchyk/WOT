@@ -8,15 +8,16 @@
 
 public extension VehicleprofileAmmoDamage {
 
-    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
-        guard let ammoDamageJSON = map.jsonCollection.data() as? [Any] else {
-            throw JSONManagedObjectMapError.notAnArray(map)
-        }
+    // MARK: - JSONDecodableProtocol
+
+    override func decode(using map: JSONMapProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
+        ///
+        let array = try map.data(ofType: [Double].self)
         //
-        guard ammoDamageJSON.count == 3 else {
+        guard array?.count == 3 else {
             throw VehicleprofileAmmoDamageError.arrayIsNotContainingThreeElements
         }
-        let intArray = NSDecimalNumberArray(array: ammoDamageJSON)
+        let intArray = try NSDecimalNumberArray(array: array)
         min_value = intArray.elements[0]
         avg_value = intArray.elements[1]
         max_value = intArray.elements[2]

@@ -7,13 +7,12 @@
 //
 
 public extension VehicleprofileRadio {
+
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
-        guard let radioJSON = map.jsonCollection.data() as? JSON else {
-            throw JSONManagedObjectMapError.notAnElement(map)
-        }
+    override func decode(using map: JSONMapProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
         //
+        let radioJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: radioJSON)
         //
     }

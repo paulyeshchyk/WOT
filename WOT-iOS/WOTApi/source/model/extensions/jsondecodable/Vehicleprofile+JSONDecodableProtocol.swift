@@ -7,13 +7,12 @@
 //
 
 public extension Vehicleprofile {
+
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
-        guard let profileJSON = map.jsonCollection.data() as? JSON else {
-            throw JSONManagedObjectMapError.notAnElement(map)
-        }
+    override func decode(using map: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
+        let profileJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: profileJSON)
         //
 
@@ -28,16 +27,16 @@ public extension Vehicleprofile {
         // MARK: - AmmoList
 
         let ammoKeypath = #keyPath(Vehicleprofile.ammo)
-        if let jsonArray = profileJSON[ammoKeypath] as? [JSON] {
+        if let jsonArray = profileJSON?[ammoKeypath] as? [JSON] {
             let modelClass = VehicleprofileAmmoList.self
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
-            let collection = try JSONCollection(array: jsonArray)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: ammoKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = AmmoListExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            let jsonMap = try JSONMap(array: jsonArray, predicate: composition.contextPredicate)
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -49,16 +48,16 @@ public extension Vehicleprofile {
         // MARK: - Armor
 
         let armorKeypath = #keyPath(Vehicleprofile.armor)
-        if let jsonElement = profileJSON[armorKeypath] as? JSON {
+        if let jsonElement = profileJSON?[armorKeypath] as? JSON {
             let modelClass = VehicleprofileArmorList.self
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
-            let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: armorKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extactor = ArmorListExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extactor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extactor, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -70,16 +69,16 @@ public extension Vehicleprofile {
         // MARK: - Module
 
         let modulesKeypath = #keyPath(Vehicleprofile.modules)
-        if let jsonElement = profileJSON[modulesKeypath] as? JSON {
+        if let jsonElement = profileJSON?[modulesKeypath] as? JSON {
             let modelClass = VehicleprofileModule.self
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
-            let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: modulesKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = ModuleExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -91,19 +90,19 @@ public extension Vehicleprofile {
         // MARK: - Engine
 
         let engineKeypath = #keyPath(Vehicleprofile.engine)
-        if let jsonElement = profileJSON[engineKeypath] as? JSON {
+        if let jsonElement = profileJSON?[engineKeypath] as? JSON {
             let keypath = VehicleprofileEngine.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileEngine.self
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
             let composer = RootTagRuleBuilder(pin: pin)
-            let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: engineKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = EngineExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -115,7 +114,7 @@ public extension Vehicleprofile {
         // MARK: - Gun
 
         let gunKeypath = #keyPath(Vehicleprofile.gun)
-        if let jsonElement = profileJSON[gunKeypath] as? JSON {
+        if let jsonElement = profileJSON?[gunKeypath] as? JSON {
             let modelClass = VehicleprofileGun.self
             let keypath = VehicleprofileGun.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
@@ -125,9 +124,9 @@ public extension Vehicleprofile {
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: gunKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = GunExtractor()
-            let collection = try JSONCollection(element: jsonElement)
             let objectContext = vehicleprofileFetchResult.managedObjectContext
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -139,19 +138,19 @@ public extension Vehicleprofile {
         // MARK: - Suspension
 
         let suspensionKeypath = #keyPath(Vehicleprofile.suspension)
-        if let jsonElement = profileJSON[suspensionKeypath] as? JSON {
+        if let jsonElement = profileJSON?[suspensionKeypath] as? JSON {
             let keypath = VehicleprofileSuspension.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileSuspension.self
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
             let composer = RootTagRuleBuilder(pin: pin)
-            let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: suspensionKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = SuspensionExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -163,7 +162,7 @@ public extension Vehicleprofile {
         // MARK: - Turret
 
         let turretKeypath = #keyPath(Vehicleprofile.turret)
-        if let jsonElement = profileJSON[turretKeypath] as? JSON {
+        if let jsonElement = profileJSON?[turretKeypath] as? JSON {
             let keypath = VehicleprofileTurret.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileTurret.self
@@ -173,9 +172,9 @@ public extension Vehicleprofile {
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: turretKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = TurretManagedObjectCreator()
-            let collection = try JSONCollection(element: jsonElement)
             let objectContext = vehicleprofileFetchResult.managedObjectContext
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -187,19 +186,19 @@ public extension Vehicleprofile {
         // MARK: - Radio
 
         let radioKeypath = #keyPath(Vehicleprofile.radio)
-        if let jsonElement = profileJSON[radioKeypath] as? JSON {
+        if let jsonElement = profileJSON?[radioKeypath] as? JSON {
             let keypath = VehicleprofileRadio.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileRadio.self
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
             let composer = RootTagRuleBuilder(pin: pin)
-            let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: radioKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
             let extractor = RadioExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }

@@ -21,8 +21,6 @@ class JSONSyndicate {
     let key: AnyHashable
     var jsonExtractor: ManagedObjectExtractable?
 
-    private var jsonExtraction: JSONExtraction?
-
     // MARK: Lifecycle
 
     init(appContext: JSONSyndicate.Context, json: JSON, key: AnyHashable) {
@@ -48,35 +46,34 @@ class JSONSyndicate {
         }
 
         do {
-            jsonExtraction = try jsonExtractor.extract(json: json,
-                                                       key: key,
-                                                       modelClass: modelClass,
-                                                       contextPredicate: contextPredicate)
+            let jsonMap = try jsonExtractor.extract(json: json,
+                                                    key: key,
+                                                    modelClass: modelClass,
+                                                    contextPredicate: contextPredicate)
+
+            let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
+            managedObjectLinkerHelper.managedObjectLinker = managedObjectLinker
+            managedObjectLinkerHelper.completion = completion
+
+            let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
+            mappingCoordinatorDecodeHelper.jsonMap = jsonMap
+            mappingCoordinatorDecodeHelper.managedObjectLinker = managedObjectLinker
+            mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
+                managedObjectLinkerHelper.run(fetchResult, error: error)
+            }
+
+            let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
+            datastoreFetchHelper.modelClass = modelClass
+            datastoreFetchHelper.nspredicate = jsonMap.contextPredicate[.primary]?.predicate
+            datastoreFetchHelper.completion = { fetchResult, error in
+                mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
+            }
+
+            datastoreFetchHelper.run()
         } catch {
             completion?(nil, error)
             return
         }
-
-        let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
-        managedObjectLinkerHelper.managedObjectLinker = managedObjectLinker
-        managedObjectLinkerHelper.completion = completion
-
-        let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
-        mappingCoordinatorDecodeHelper.jsonCollection = jsonExtraction?.jsonCollection
-        mappingCoordinatorDecodeHelper.contextPredicate = jsonExtraction?.contextPredicate
-        mappingCoordinatorDecodeHelper.managedObjectLinker = managedObjectLinker
-        mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
-            managedObjectLinkerHelper.run(fetchResult, error: error)
-        }
-
-        let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
-        datastoreFetchHelper.modelClass = modelClass
-        datastoreFetchHelper.nspredicate = jsonExtraction?.contextPredicate[.primary]?.predicate
-        datastoreFetchHelper.completion = { fetchResult, error in
-            mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
-        }
-
-        datastoreFetchHelper.run()
     }
 
 }
@@ -138,8 +135,7 @@ class MappingCoordinatorDecodeHelper {
 
     let appContext: Context
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
-    var jsonCollection: JSONCollectionProtocol?
-    var contextPredicate: ContextPredicateProtocol?
+    var jsonMap: JSONMapProtocol?
     var managedObjectLinker: ManagedObjectLinkerProtocol?
     var managedObjectExtractor: ManagedObjectExtractable?
 
@@ -170,7 +166,7 @@ class MappingCoordinatorDecodeHelper {
             completion?(fetchResult, error ?? MappingCoordinatorDecodeHelperError.fetchResultIsNotPresented)
             return
         }
-        guard let contextPredicate = contextPredicate else {
+        guard let jsonMap = jsonMap else {
             completion?(fetchResult, MappingCoordinatorDecodeHelperError.contextPredicateIsNotDefined)
             return
         }
@@ -181,7 +177,6 @@ class MappingCoordinatorDecodeHelper {
         }
         //
         do {
-            let jsonMap = try JSONMap(jsonCollection: jsonCollection, predicate: contextPredicate)
             try managedObject.decode(using: jsonMap, managedObjectContextContainer: fetchResult, appContext: appContext)
 
             appContext.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
