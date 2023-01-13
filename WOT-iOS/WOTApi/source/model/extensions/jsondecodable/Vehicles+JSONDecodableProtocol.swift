@@ -64,10 +64,9 @@ extension Vehicles {
 
         let vehiclesFetchResult = fetchResult(context: objectContext)
 
-        let contextPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
-        contextPredicate[.primary] = requestPredicate[.primary]?
-            .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
-            .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
+        let contextPredicate = try VehiclesModuleTreeBuilder(requestPredicate: requestPredicate, parentObjectIDList: parentObjectIDList)
+            .buildRequestPredicateComposition()
+            .contextPredicate
 
         for key in moduleTreeJSON.keys {
             if let jsonElement = moduleTreeJSON[key] as? JSON {
@@ -81,9 +80,9 @@ extension Vehicles {
     }
 
     private func submoduleMapping(objectContext: ManagedObjectContextProtocol, jsonElement: JSON, module_id: Any?, requestPredicate: ContextPredicateProtocol, masterFetchResult: FetchResultProtocol, appContext: JSONDecodableProtocol.Context?) throws {
-        let contextPredicate = ContextPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
-        contextPredicate[.primary] = ModulesTree.primaryKey(forType: .internal, andObject: module_id)
-        contextPredicate[.secondary] = requestPredicate[.primary]
+        let contextPredicate = try VehiclesModuleBuilder(requestPredicate: requestPredicate, module_id: module_id)
+            .buildRequestPredicateComposition()
+            .contextPredicate
         let modelClass = ModulesTree.self
         let socket = JointSocket(identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
         let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, socket: socket)
