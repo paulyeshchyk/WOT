@@ -24,8 +24,13 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         }
     }
 
-    public func object(byID: AnyObject) -> ManagedObjectProtocol? {
-        guard let objectID = byID as? NSManagedObjectID else {
+    private enum NSManagedObjectContextError: Error {
+        case isNotNSManagedObjectID
+        case isNotManagedObjectProtocol
+    }
+
+    public func object(managedRef: ManagedRefProtocol) -> ManagedObjectProtocol? {
+        guard let objectID = managedRef.managedObjectID as? NSManagedObjectID else {
             assertionFailure("forObjectID is not NSManagedObject")
             return nil
         }

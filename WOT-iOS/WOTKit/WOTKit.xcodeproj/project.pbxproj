@@ -29,7 +29,6 @@
 		DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E868295352FE00C60F31 /* UIImage+Resize.m */; };
 		DA913E422959C01A00D39F0E /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E412959C01A00D39F0E /* CoreDataStore.swift */; };
 		DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */; };
-		DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,7 +80,6 @@
 		DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+ObjectContextProtocol.swift"; sourceTree = "<group>"; };
 		DACDB124296050DD005BBA72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DACDB12629605129005BBA72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStoreEmptyFetchResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,7 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				DA39E31B296190CF0099D877 /* extensions */,
-				DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */,
 				DA913E412959C01A00D39F0E /* CoreDataStore.swift */,
 			);
 			path = CoreData;
@@ -449,7 +446,6 @@
 				DA81E873295352FF00C60F31 /* NSBundle+LanguageBundle.m in Sources */,
 				DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
-				DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

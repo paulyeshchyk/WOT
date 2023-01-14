@@ -28,17 +28,16 @@ public extension Vehicles {
 
         let defaultProfileKeypath = #keyPath(Vehicles.default_profile)
         if let jsonElement = vehicleJSON?[defaultProfileKeypath] as? JSON {
+            let foreignSelectKey = #keyPath(Vehicleprofile.vehicles)
             let modelClass = Vehicleprofile.self
-            let vehiclesFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
-            let builder = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
-            let composition = try builder.buildRequestPredicateComposition()
-            let socket = JointSocket(identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehiclesFetchResult, socket: socket)
-            let managedObjectExtractor = DefaultProfileExtractor()
-            let managedObjectContext = vehiclesFetchResult.managedObjectContext
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, managedRefs: [])
+            let composition = try composer.buildRequestPredicateComposition()
+            let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
 
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, completion: { _, error in
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -59,36 +58,36 @@ extension Vehicles {
             throw VehiclesJSONMappingError.passedInvalidModuleTreeJSON(tank_id)
         }
 
-        var parentObjectIDList = requestPredicate.parentObjectIDList
-        parentObjectIDList.append(objectID)
+        var parentManagedRefs = requestPredicate.managedRefs
+        parentManagedRefs.append(managedRef)
 
-        let vehiclesFetchResult = fetchResult(context: objectContext)
-
-        let contextPredicate = try VehiclesModuleTreeBuilder(requestPredicate: requestPredicate, parentObjectIDList: parentObjectIDList)
-            .buildRequestPredicateComposition()
-            .contextPredicate
+        let composer = VehiclesModuleTreeBuilder(requestPredicate: requestPredicate, managedRefs: parentManagedRefs)
+        let contextPredicate = try composer.buildRequestPredicateComposition().contextPredicate
 
         for key in moduleTreeJSON.keys {
             if let jsonElement = moduleTreeJSON[key] as? JSON {
                 let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
 
-                try submoduleMapping(objectContext: objectContext, jsonElement: jsonElement, module_id: module_id, requestPredicate: contextPredicate, masterFetchResult: vehiclesFetchResult, appContext: appContext)
+                try submoduleMapping(managedObjectContext: objectContext, jsonElement: jsonElement, module_id: module_id, requestPredicate: contextPredicate, managedRef: managedRef, appContext: appContext)
             } else {
                 appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
             }
         }
     }
 
-    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, jsonElement: JSON, module_id: Any?, requestPredicate: ContextPredicateProtocol, masterFetchResult: FetchResultProtocol, appContext: JSONDecodableProtocol.Context?) throws {
-        let contextPredicate = try VehiclesModuleBuilder(requestPredicate: requestPredicate, module_id: module_id)
-            .buildRequestPredicateComposition()
-            .contextPredicate
+    private func submoduleMapping(managedObjectContext: ManagedObjectContextProtocol, jsonElement: JSON, module_id: Any?, requestPredicate: ContextPredicateProtocol, managedRef: ManagedRefProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+        let composer = VehiclesModuleBuilder(requestPredicate: requestPredicate, module_id: module_id)
+        let composition = try composer.buildRequestPredicateComposition()
+        let keypath = #keyPath(ModulesTree.next_modules)
         let modelClass = ModulesTree.self
-        let socket = JointSocket(identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
-        let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, socket: socket)
-        let extractor = ModulesTreeExtractor()
-        let jsonMap = try JSONMap(element: jsonElement, predicate: contextPredicate)
-        MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, _ in })
+        let socket = JointSocket(managedRef: managedRef, identifier: module_id, keypath: keypath)
+        let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+        let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+        MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            if let error = error {
+                appContext?.logInspector?.log(.warning(error: error), sender: self)
+            }
+        })
     }
 }
 

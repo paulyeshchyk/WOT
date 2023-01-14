@@ -27,7 +27,6 @@ public class EventCustom: LogEventProtocol {
         eventType = loggable.type.type
         name = loggable.name
     }
-
 }
 
 // MARK: - LoggableType
@@ -49,7 +48,6 @@ public class LoggableType: CustomStringConvertible {
         let convertedName = String(describing: type)
         self.init(name: convertedName, type: type)
     }
-
 }
 
 // MARK: - LogsDefault
@@ -129,5 +127,4 @@ extension Loggable {
         let message = "\(name) Mapping \(String(describing: fetchResult)) \(String(describing: predicate))"
         return Loggable(type: .flow, message: message)
     }
-
 }

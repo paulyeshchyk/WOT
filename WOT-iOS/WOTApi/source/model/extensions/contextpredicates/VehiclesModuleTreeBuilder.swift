@@ -7,14 +7,15 @@
 
 public class VehiclesModuleTreeBuilder: RequestPredicateComposerProtocol {
     private let requestPredicate: ContextPredicateProtocol
-    private let parentObjectIDList: [AnyObject]
-    public init(requestPredicate: ContextPredicateProtocol, parentObjectIDList: [AnyObject]) {
+    private let managedRefs: [ManagedRefProtocol]
+
+    public init(requestPredicate: ContextPredicateProtocol, managedRefs: [ManagedRefProtocol]) {
         self.requestPredicate = requestPredicate
-        self.parentObjectIDList = parentObjectIDList
+        self.managedRefs = managedRefs
     }
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
-        let lookupPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
+        let lookupPredicate = ContextPredicate(managedRefs: managedRefs)
         lookupPredicate[.primary] = requestPredicate[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))

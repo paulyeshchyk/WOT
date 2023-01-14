@@ -11,7 +11,6 @@ public struct AnyCodable {
     public init<T>(_ value: T?) {
         self.value = value ?? ()
     }
-
 }
 
 // MARK: - AnyCodable + Codable

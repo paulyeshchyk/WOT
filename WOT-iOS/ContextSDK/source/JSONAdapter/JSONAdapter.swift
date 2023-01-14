@@ -83,15 +83,14 @@ public extension JSONAdapter {
 
         let dispatchGroup = DispatchGroup()
 
-        for key in json.keys {
+        let maps = jsonExtractor.getJSONMaps(json: json, modelClass: modelClass, managedRefs: request.contextPredicate?.managedRefs)
+        for jsonMap in maps {
             dispatchGroup.enter()
 
-            //
-            let syndicate = JSONSyndicate(appContext: appContext, json: json, key: key)
-            syndicate.contextPredicate = request.contextPredicate
+            let syndicate = JSONSyndicate(appContext: appContext)
+            syndicate.jsonMap = jsonMap
             syndicate.modelClass = modelClass
             syndicate.managedObjectLinker = managedObjectLinker
-            syndicate.jsonExtractor = jsonExtractor
             syndicate.completion = { _, error in
                 if let error = error {
                     self.completion?(request, error)

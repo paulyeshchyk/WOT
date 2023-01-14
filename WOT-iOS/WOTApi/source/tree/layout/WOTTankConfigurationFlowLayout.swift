@@ -60,7 +60,6 @@ public class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTank
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return layoutAttributes(in: rect)
     }
-
 }
 
 public extension WOTTankConfigurationFlowLayout {

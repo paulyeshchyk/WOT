@@ -18,5 +18,4 @@ public struct JointPin: JointPinProtocol {
         self.identifier = identifier
         self.contextPredicate = contextPredicate
     }
-
 }

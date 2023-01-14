@@ -9,15 +9,15 @@
 
 extension VehicleprofileRadio: ManagedObjectPinProtocol {}
 
-// MARK: - VehicleprofileRadio + ManagedObjectSocketProtocol
+// MARK: - VehicleprofileRadio + ManagedObjectPlugProtocol
 
-extension VehicleprofileRadio: ManagedObjectSocketProtocol {
+extension VehicleprofileRadio: ManagedObjectPlugProtocol {
 
-    public func doLinking(pin _: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
+    public func plug(pin _: ManagedObjectPinProtocol, intoSocket _: JointSocketProtocol) {
         //
     }
 
-    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
         //
     }
 }

@@ -7,7 +7,11 @@
 
 // MARK: - JSONCollection
 
-public class JSONCollection: JSONCollectionProtocol {
+public class JSONCollection: JSONCollectionProtocol, CustomStringConvertible {
+
+    public var description: String {
+        return "[\(type(of: self))] collection: \(String(describing: collection))"
+    }
 
     private var collectionType: JSONCollectionType
 
@@ -62,12 +66,11 @@ public class JSONCollection: JSONCollectionProtocol {
         case .custom: return custom
         }
     }
-
 }
 
-// MARK: - JSONCollection + DecoderContainer
+// MARK: - JSONCollection + DecoderContainerProtocol
 
-extension JSONCollection: DecoderContainer {
+extension JSONCollection: DecoderContainerProtocol {
     public func decoder() throws -> Decoder {
         let data = try JSONSerialization.data(withJSONObject: self, options: [])
         let wrapper = try JSONDecoder().decode(DecoderWrapper.self, from: data)

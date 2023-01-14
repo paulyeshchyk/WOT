@@ -49,7 +49,6 @@ public struct StringCodingKey: CodingKey, ExpressibleByStringLiteral {
         string = value
         int = nil
     }
-
 }
 
 // any json decoding

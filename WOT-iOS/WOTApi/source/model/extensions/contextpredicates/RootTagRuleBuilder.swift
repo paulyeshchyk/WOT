@@ -24,5 +24,4 @@ open class RootTagRuleBuilder: RequestPredicateComposerProtocol {
 
         return RequestPredicateComposition(objectIdentifier: pin.identifier, requestPredicate: lookupPredicate)
     }
-
 }

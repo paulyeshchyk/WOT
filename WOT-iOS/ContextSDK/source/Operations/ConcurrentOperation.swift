@@ -64,7 +64,6 @@ public class ConcurrentOperation: Operation {
         isExecuting = false
         isFinished = true
     }
-
 }
 
 // MARK: - ConcurrentOperationError
@@ -151,5 +150,4 @@ open class AsyncBlockOperation: AsyncOperation {
     override open func main(completionHandler: @escaping () -> Void) {
         closure(completionHandler)
     }
-
 }

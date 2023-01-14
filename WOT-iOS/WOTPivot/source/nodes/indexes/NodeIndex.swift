@@ -68,7 +68,6 @@ public class NodeIndex: NSObject, NodeIndexProtocol {
         }
         return result
     }
-
 }
 
 // MARK: - ObjCNodeIndex

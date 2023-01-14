@@ -8,13 +8,33 @@
 import ContextSDK
 import CoreData
 
+// MARK: - NSManagedObject + ManagedObjectProtocol
+
 extension NSManagedObject: ManagedObjectProtocol {
+    //
     public var entityName: String { return entity.name ?? "<unknown>" }
-    public var managedObjectID: AnyObject { return objectID }
+    public var managedRef: ManagedRefProtocol { return ManagedRef(modelClass: type(of: self), managedObjectID: objectID) }
     public var fetchStatus: FetchStatus { isInserted ? .inserted : .fetched }
     public var context: ManagedObjectContextProtocol? { managedObjectContext }
+    public subscript(_ kp: KeypathType) -> Any? {
+        guard let keypath = kp as? String else {
+            fatalError("invalid keypath: \(kp)")
+        }
+        return value(forKeyPath: keypath)
+    }
+}
 
-    public func fetchResult(objectID: AnyObject?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) -> FetchResultProtocol {
-        return FetchResult(objectID: objectID, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
+// MARK: - ManagedRef
+
+private class ManagedRef: ManagedRefProtocol, CustomStringConvertible {
+    var description: String {
+        return "[\(type(of: self))] modelClass: \(String(describing: modelClass))"
+    }
+
+    var modelClass: PrimaryKeypathProtocol.Type
+    var managedObjectID: AnyObject
+    init(modelClass: PrimaryKeypathProtocol.Type, managedObjectID: AnyObject) {
+        self.modelClass = modelClass
+        self.managedObjectID = managedObjectID
     }
 }
