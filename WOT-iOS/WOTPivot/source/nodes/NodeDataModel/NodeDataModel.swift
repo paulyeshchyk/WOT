@@ -82,5 +82,4 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
     public func indexPath(forNode _: NodeProtocol?) -> IndexPath? {
         return nil
     }
-
 }

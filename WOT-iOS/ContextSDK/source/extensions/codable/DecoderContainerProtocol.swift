@@ -42,5 +42,4 @@ class DecoderWrapper: Decodable {
     required init(from decoder: Decoder) throws {
         self.decoder = decoder
     }
-
 }

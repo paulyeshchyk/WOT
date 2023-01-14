@@ -82,7 +82,6 @@ class Listener: RequestManagerListenerProtocol {
     func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
         expectationDidCancel?.fulfill()
     }
-
 }
 
 // MARK: - Extractor
@@ -115,7 +114,6 @@ class Socket: JointSocketProtocol {
         self.identifier = identifier
         self.keypath = keypath
     }
-
 }
 
 // MARK: - ManagedObjectContext
@@ -185,7 +183,6 @@ class Linker: ManagedObjectLinkerProtocol {
     func process(fetchResult: FetchResultProtocol, appContext _: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
         completion(fetchResult, nil)
     }
-
 }
 
 // MARK: - AppContext
@@ -203,7 +200,6 @@ class AppContext: ResponseDataAdapterCreatorContainerProtocol, RequestManagerCon
     init() {
         hostConfiguration = HostConfiguration()
     }
-
 }
 
 // MARK: - NSManagedObjectPredicateFormat
@@ -225,7 +221,6 @@ private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
     init(keyType: PrimaryKeyType) {
         self.keyType = keyType
     }
-
 }
 
 // MARK: - HostConfiguration
@@ -258,5 +253,4 @@ public class HostConfiguration: NSObject, HostConfigurationProtocol {
         currentArguments = with?.buildQuery(custom) ?? ""
         return currentArguments
     }
-
 }

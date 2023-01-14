@@ -75,7 +75,6 @@ class JSONSyndicate {
             return
         }
     }
-
 }
 
 // MARK: - ManagedObjectLinkerHelper
@@ -122,7 +121,6 @@ class ManagedObjectLinkerHelper {
             self.completion?(fetchResult, error)
         }
     }
-
 }
 
 // MARK: - MappingCoordinatorDecodeHelper
@@ -185,7 +183,6 @@ class MappingCoordinatorDecodeHelper {
             completion?(fetchResult, error)
         }
     }
-
 }
 
 // MARK: - DatastoreFetchHelper
@@ -231,7 +228,6 @@ class DatastoreFetchHelper {
                                          self.completion?(fetchResult, error)
                                      })
     }
-
 }
 
 // MARK: - JSONSyndicateError

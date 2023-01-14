@@ -71,7 +71,6 @@ extension VehicleprofileAmmo {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         public var jsonKeyPath: KeypathType? { nil }
     }
-
 }
 
 // MARK: - VehicleprofileAmmoError

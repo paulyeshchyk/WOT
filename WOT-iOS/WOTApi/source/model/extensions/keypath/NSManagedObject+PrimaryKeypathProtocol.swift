@@ -37,7 +37,6 @@ private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
     init(keyType: PrimaryKeyType) {
         self.keyType = keyType
     }
-
 }
 
 // MARK: - NSManagedObject + PrimaryKeypathProtocol

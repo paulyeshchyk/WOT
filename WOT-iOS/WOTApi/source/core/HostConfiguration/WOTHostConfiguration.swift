@@ -37,5 +37,4 @@ public class WOTHostConfiguration: NSObject, HostConfigurationProtocol {
         currentArguments = with?.buildQuery(custom) ?? ""
         return currentArguments
     }
-
 }

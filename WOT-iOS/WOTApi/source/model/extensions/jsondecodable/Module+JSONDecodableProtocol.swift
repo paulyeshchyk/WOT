@@ -165,5 +165,4 @@ extension Module {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.turret) }
     }
-
 }

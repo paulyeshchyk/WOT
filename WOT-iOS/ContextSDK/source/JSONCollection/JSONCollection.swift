@@ -66,7 +66,6 @@ public class JSONCollection: JSONCollectionProtocol, CustomStringConvertible {
         case .custom: return custom
         }
     }
-
 }
 
 // MARK: - JSONCollection + DecoderContainerProtocol

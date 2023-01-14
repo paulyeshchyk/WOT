@@ -22,5 +22,4 @@ public class RequestPredicateComposition: NSObject, RequestPredicateCompositionP
         contextPredicate = requestPredicate
         super.init()
     }
-
 }

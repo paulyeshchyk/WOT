@@ -29,5 +29,4 @@ public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: RequestPredicateComp
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
-
 }

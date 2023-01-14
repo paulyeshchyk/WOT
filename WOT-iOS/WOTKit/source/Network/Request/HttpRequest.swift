@@ -52,7 +52,6 @@ open class HttpRequest: Request, HttpRequestProtocol {
         httpDataReceiver?.delegate = self
         httpDataReceiver?.start()
     }
-
 }
 
 // MARK: - HttpRequest + HttpDataReceiverDelegateProtocol
@@ -101,5 +100,4 @@ final private class HttpRequestCancelEvent: LogEventProtocol {
     init(reason: RequestCancelReasonProtocol) {
         self.reason = reason
     }
-
 }

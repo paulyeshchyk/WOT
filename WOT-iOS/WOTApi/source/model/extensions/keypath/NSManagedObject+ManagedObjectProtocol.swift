@@ -22,7 +22,6 @@ extension NSManagedObject: ManagedObjectProtocol {
         }
         return value(forKeyPath: keypath)
     }
-
 }
 
 // MARK: - ManagedRef
@@ -38,5 +37,4 @@ private class ManagedRef: ManagedRefProtocol, CustomStringConvertible {
         self.modelClass = modelClass
         self.managedObjectID = managedObjectID
     }
-
 }

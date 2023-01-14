@@ -38,5 +38,4 @@ public protocol WOTMetricProtocol: NSObjectProtocol {
         self.evaluator = evaluator
         self.grouppingName = grouppingName
     }
-
 }

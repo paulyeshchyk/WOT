@@ -54,5 +54,4 @@ open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
         mixture.append(with: dictionary)
         return mixture.asURLQueryString()
     }
-
 }

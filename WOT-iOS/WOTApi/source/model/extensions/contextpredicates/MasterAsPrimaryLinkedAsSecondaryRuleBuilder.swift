@@ -33,5 +33,4 @@ open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposer
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
-
 }

@@ -46,5 +46,4 @@ private class OperationQueueObserver: NSObject {
         default: break
         }
     }
-
 }

@@ -62,5 +62,4 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         }
         return context?.object(managedRef: managedRef)
     }
-
 }

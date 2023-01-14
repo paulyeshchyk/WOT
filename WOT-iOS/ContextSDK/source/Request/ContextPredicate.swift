@@ -74,5 +74,4 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
         case .or: return NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         }
     }
-
 }

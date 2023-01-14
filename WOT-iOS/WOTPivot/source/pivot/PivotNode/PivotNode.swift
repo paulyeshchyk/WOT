@@ -53,5 +53,4 @@ public class PivotNode: Node, PivotNodeProtocol {
         result.imageURL = imageURL?.copy(with: zone) as? NSURL
         return result
     }
-
 }

@@ -19,7 +19,6 @@ open class DataStore {
         self.appContext = appContext
         appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
-
 }
 
 // MARK: - DataStoreError

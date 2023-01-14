@@ -63,7 +63,6 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
     func filters() -> [NodeProtocol] {
         return [FilterPivotNode(name: "Filter")]
     }
-
 }
 
 // MARK: - SteelPivotFetchController

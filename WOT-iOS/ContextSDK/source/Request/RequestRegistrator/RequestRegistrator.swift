@@ -21,7 +21,6 @@ open class RequestRegistrator: RequestRegistratorProtocol {
     public required init(appContext: Context) {
         context = appContext
     }
-
 }
 
 // MARK: - WOTRequestBindingProtocol

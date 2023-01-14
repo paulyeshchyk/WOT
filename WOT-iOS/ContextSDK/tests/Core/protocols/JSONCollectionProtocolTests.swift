@@ -64,5 +64,4 @@ class JSONCollectionProtocolTests: XCTestCase {
             XCTFail(error.localizedDescription)
         }
     }
-
 }

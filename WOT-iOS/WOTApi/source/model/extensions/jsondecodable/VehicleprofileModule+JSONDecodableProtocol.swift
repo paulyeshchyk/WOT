@@ -104,7 +104,6 @@ extension VehicleprofileModule {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.turret) }
     }
-
 }
 
 // MARK: - VehicleprofileModule + RequestManagerListenerProtocol

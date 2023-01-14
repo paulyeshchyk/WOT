@@ -53,7 +53,6 @@ public class MOSyndicate {
         }
         datastoreFetchHelper.run()
     }
-
 }
 
 extension MOSyndicate {

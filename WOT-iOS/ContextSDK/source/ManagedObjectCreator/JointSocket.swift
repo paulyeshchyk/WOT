@@ -35,5 +35,4 @@ public class JointSocket: NSObject, JointSocketProtocol {
     public convenience init(managedRef: ManagedRefProtocol?, keypath: KeypathType) {
         self.init(managedRef: managedRef, identifier: nil, keypath: keypath)
     }
-
 }

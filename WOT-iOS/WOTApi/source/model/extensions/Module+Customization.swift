@@ -31,7 +31,6 @@ public enum ModuleType: String {
     static func value(for intValue: Int) -> ModuleType {
         return ModuleType.allTypes[intValue]
     }
-
 }
 
 // MARK: - ObjCModuleType
