@@ -22,8 +22,8 @@ public extension VehicleprofileArmorList {
             let modelClass = VehicleprofileArmor.self
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), managedRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(identifier: composition.objectIdentifier, keypath: keypathturret)
-            let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: vehicleprofileArmorListFetchResult, socket: socket)
+            let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathturret)
+            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = TurretExtractor()
             let objectContext = vehicleprofileArmorListFetchResult.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
@@ -43,8 +43,8 @@ public extension VehicleprofileArmorList {
             let modelClass = VehicleprofileArmor.self
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), managedRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(identifier: composition.objectIdentifier, keypath: keypathhull)
-            let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: vehicleprofileArmorListFetchResult, socket: socket)
+            let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathhull)
+            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = HullExtractor()
             let objectContext = vehicleprofileArmorListFetchResult.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)

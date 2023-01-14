@@ -20,6 +20,7 @@ public protocol ManagedObjectLinkerProtocol: MD5Protocol {
 public protocol JointSocketProtocol {
     var identifier: Any? { get }
     var keypath: KeypathType? { get }
+    var managedRef: ManagedRefProtocol? { get }
 }
 
 // MARK: - JointPinProtocol

@@ -16,8 +16,6 @@ public extension VehicleprofileAmmo {
         try decode(decoderContainer: ammoJSON)
         //
 
-        let vehicleprofileAmmoFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
-
         // MARK: - Penetration
 
         let keypathPenetration = #keyPath(VehicleprofileAmmo.penetration)
@@ -25,10 +23,10 @@ public extension VehicleprofileAmmo {
             let modelClass = VehicleprofileAmmoPenetration.self
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(identifier: composition.objectIdentifier, keypath: keypathPenetration)
-            let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: vehicleprofileAmmoFetchResult, socket: socket)
+            let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathPenetration)
+            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = PenetrationExtractor()
-            let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
+            let objectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)
             MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
@@ -46,10 +44,10 @@ public extension VehicleprofileAmmo {
             let modelClass = VehicleprofileAmmoDamage.self
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(identifier: composition.objectIdentifier, keypath: keypathDamage)
-            let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: vehicleprofileAmmoFetchResult, socket: socket)
+            let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathDamage)
+            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = DamageExtractor()
-            let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
+            let objectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)
             MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {

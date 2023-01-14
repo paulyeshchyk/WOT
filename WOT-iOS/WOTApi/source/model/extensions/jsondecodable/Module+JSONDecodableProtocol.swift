@@ -21,15 +21,13 @@ public extension Module {
             throw ModuleMappingError.noParentsFound
         }
 
-        let moduleFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
-
         guard let module_id = module_id else {
             throw ModuleMappingError.moduleIdNotDefined
         }
 
         let moduleDecoder = ModuleDecoder(appContext: appContext, parentHostPin: hostPin)
         moduleDecoder.module_id = module_id
-        moduleDecoder.moduleFetchResult = moduleFetchResult
+        moduleDecoder.moduleManagedRef = managedRef
         moduleDecoder.type = type
         try moduleDecoder.decode()
     }
@@ -51,7 +49,7 @@ public class ModuleDecoder {
     public let appContext: JSONDecodableProtocol.Context?
     public var modelClass: PrimaryKeypathProtocol.Type?
     public var module_id: NSDecimalNumber?
-    public var moduleFetchResult: FetchResultProtocol?
+    public var moduleManagedRef: ManagedRefProtocol?
     public let parentHostPin: JointPinProtocol
     public var type: String?
 
@@ -69,35 +67,35 @@ public class ModuleDecoder {
         switch moduleType {
         case .vehicleGun:
             let pin = JointPin(modelClass: VehicleprofileGun.self, identifier: module_id, contextPredicate: nil)
-            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.gun))
+            let socket = JointSocket(managedRef: moduleManagedRef, identifier: module_id, keypath: #keyPath(Module.gun))
             let extractor = Module.GunExtractor()
-            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, moduleFetchResult: moduleFetchResult, parentHostPin: parentHostPin)
+            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, managedRef: moduleManagedRef, parentHostPin: parentHostPin)
         case .vehicleRadio:
             let pin = JointPin(modelClass: VehicleprofileRadio.self, identifier: module_id, contextPredicate: nil)
-            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.radio))
+            let socket = JointSocket(managedRef: moduleManagedRef, identifier: module_id, keypath: #keyPath(Module.radio))
             let extractor = Module.RadioExtractor()
-            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, moduleFetchResult: moduleFetchResult, parentHostPin: parentHostPin)
+            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, managedRef: moduleManagedRef, parentHostPin: parentHostPin)
         case .vehicleEngine:
             let pin = JointPin(modelClass: VehicleprofileEngine.self, identifier: module_id, contextPredicate: nil)
-            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.engine))
+            let socket = JointSocket(managedRef: moduleManagedRef, identifier: module_id, keypath: #keyPath(Module.engine))
             let extractor = Module.EngineExtractor()
-            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, moduleFetchResult: moduleFetchResult, parentHostPin: parentHostPin)
+            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, managedRef: moduleManagedRef, parentHostPin: parentHostPin)
         case .vehicleChassis:
             let pin = JointPin(modelClass: VehicleprofileSuspension.self, identifier: module_id, contextPredicate: nil)
-            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.suspension))
+            let socket = JointSocket(managedRef: moduleManagedRef, identifier: module_id, keypath: #keyPath(Module.suspension))
             let extractor = Module.SuspensionExtractor()
-            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, moduleFetchResult: moduleFetchResult, parentHostPin: parentHostPin)
+            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, managedRef: moduleManagedRef, parentHostPin: parentHostPin)
         case .vehicleTurret:
             let pin = JointPin(modelClass: VehicleprofileTurret.self, identifier: module_id, contextPredicate: nil)
-            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.turret))
+            let socket = JointSocket(managedRef: moduleManagedRef, identifier: module_id, keypath: #keyPath(Module.turret))
             let extractor = Module.TurretExtractor()
-            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, moduleFetchResult: moduleFetchResult, parentHostPin: parentHostPin)
+            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, managedRef: moduleManagedRef, parentHostPin: parentHostPin)
         }
     }
 
-    private func fetch_module(appContext: JSONDecodableProtocol.Context?, pin: JointPinProtocol, socket: JointSocketProtocol, extractor: ManagedObjectExtractable, moduleFetchResult: FetchResultProtocol?, parentHostPin: JointPinProtocol) throws {
+    private func fetch_module(appContext: JSONDecodableProtocol.Context?, pin: JointPinProtocol, socket: JointSocketProtocol, extractor: ManagedObjectExtractable, managedRef _: ManagedRefProtocol?, parentHostPin: JointPinProtocol) throws {
         let modelClass = pin.modelClass
-        let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: moduleFetchResult, socket: socket)
+        let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
         let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
         let composition = try composer.buildRequestPredicateComposition()
 

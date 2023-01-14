@@ -5,25 +5,12 @@
 //  Created by Paul on 26.12.22.
 //
 
+// MARK: - ManagedObjectLinker
+
 open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
-
-    public enum ManagedObjectLinkerError: Error, CustomStringConvertible {
-        case unexpectedString(String)
-        case unexpectedClass(AnyClass)
-        case noManagedObjectFound
-
-        public var description: String {
-            switch self {
-            case .unexpectedString(let clazz): return "[\(type(of: self))]: Class is not supported; expected class is:[\(clazz)]"
-            case .unexpectedClass(let clazz): return "[\(type(of: self))]: Class is not supported; expected class is:[\(String(describing: clazz))]"
-            case .noManagedObjectFound: return "[\(type(of: self))] No managed object found"
-            }
-        }
-    }
 
     public let modelClass: PrimaryKeypathProtocol.Type
 
-    private var managedRef: FetchResultProtocol?
     private var socket: JointSocketProtocol
 
     public var MD5: String { uuid.MD5 }
@@ -32,8 +19,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
     // MARK: Lifecycle
 
-    public required init(modelClass: PrimaryKeypathProtocol.Type, managedRef: FetchResultProtocol?, socket: JointSocketProtocol) {
-        self.managedRef = managedRef
+    public required init(modelClass: PrimaryKeypathProtocol.Type, socket: JointSocketProtocol) {
         self.modelClass = modelClass
         self.socket = socket
     }
@@ -47,7 +33,11 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
             completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectPlugProtocol.self)))
             return
         }
-        guard let managedObject = managedRef?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ManagedObjectPlugProtocol else {
+        guard let managedRef = socket.managedRef else {
+            completion(fetchResult, ManagedObjectLinkerError.noManagedObjectFound)
+            return
+        }
+        guard let managedObject = fetchResult.managedObjectContext.object(managedRef: managedRef) as? ManagedObjectPlugProtocol else {
             completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectPinProtocol.self)))
             return
         }
@@ -59,5 +49,22 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
         appContext?.dataStore?.stash(fetchResult: fetchResult, completion: completion)
     }
+}
 
+// MARK: - ManagedObjectLinkerError
+
+private enum ManagedObjectLinkerError: Error, CustomStringConvertible {
+    case unexpectedString(String)
+    case unexpectedClass(AnyClass)
+    case noManagedObjectFound
+    case noManagedRef
+
+    public var description: String {
+        switch self {
+        case .unexpectedString(let clazz): return "[\(type(of: self))]: Class is not supported; expected class is:[\(clazz)]"
+        case .unexpectedClass(let clazz): return "[\(type(of: self))]: Class is not supported; expected class is:[\(String(describing: clazz))]"
+        case .noManagedObjectFound: return "[\(type(of: self))] No managed object found"
+        case .noManagedRef: return "[\(type(of: self))] No managedRef found"
+        }
+    }
 }

@@ -10,20 +10,18 @@ public extension ModulesTree {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
         let moduleTreeJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: moduleTreeJSON)
         //
-
-        let modulesTreeFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
 
         // MARK: - NextTanks
 
 //        let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
 //        if let nextTanks = moduleTreeJSON?[nextTanksKeypath] as? [AnyObject] {
 //            let socket = JointSocket(identifier: nil, keypath: nextTanksKeypath)
-//            let linker = ManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: modulesTreeFetchResult, socket: socket)
+//            let linker = ManagedObjectLinker(modelClass: Vehicles.self, managedRef: managedRef, socket: socket)
 //            let extractor = NextVehicleExtractor()
 //            for nextTank in nextTanks {
 //                // parents was not used for next portion of tanks
@@ -44,9 +42,9 @@ public extension ModulesTree {
 
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
         if let nextModules = moduleTreeJSON?[nextModulesKeypath] as? [AnyObject] {
-            let socket = JointSocket(identifier: nil, keypath: nextModulesKeypath)
+            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: nextModulesKeypath)
             let extractor = NextModuleExtractor()
-            let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, managedRef: modulesTreeFetchResult, socket: socket)
+            let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, socket: socket)
             for nextModuleID in nextModules {
                 let modelClass = Module.self
                 let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
@@ -65,9 +63,9 @@ public extension ModulesTree {
 
         let keypath = #keyPath(ModulesTree.currentModule)
         let modelClass = Module.self
-        let currentModuleAnchor = JointSocket(identifier: nil, keypath: keypath)
+        let currentModuleAnchor = JointSocket(managedRef: managedRef, identifier: nil, keypath: keypath)
         let extractor = CurrentModuleExtractor()
-        let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, managedRef: modulesTreeFetchResult, socket: currentModuleAnchor)
+        let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, socket: currentModuleAnchor)
         let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: map.contextPredicate)
         let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, managedRef: managedRef)
         let composition = try composer.buildRequestPredicateComposition()
