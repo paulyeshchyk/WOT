@@ -9,15 +9,15 @@
 
 extension VehicleprofileSuspension: ManagedObjectPinProtocol {}
 
-// MARK: - VehicleprofileSuspension + ManagedObjectSocketProtocol
+// MARK: - VehicleprofileSuspension + ManagedObjectPlugProtocol
 
-extension VehicleprofileSuspension: ManagedObjectSocketProtocol {
+extension VehicleprofileSuspension: ManagedObjectPlugProtocol {
 
-    public func doLinking(pin _: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
+    public func plug(pin _: ManagedObjectPinProtocol, intoSocket _: JointSocketProtocol) {
         //
     }
 
-    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
         //
     }
 }

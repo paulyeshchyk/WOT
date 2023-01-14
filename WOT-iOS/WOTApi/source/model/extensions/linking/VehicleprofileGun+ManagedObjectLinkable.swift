@@ -9,15 +9,15 @@
 
 extension VehicleprofileGun: ManagedObjectPinProtocol {}
 
-// MARK: - VehicleprofileGun + ManagedObjectSocketProtocol
+// MARK: - VehicleprofileGun + ManagedObjectPlugProtocol
 
-extension VehicleprofileGun: ManagedObjectSocketProtocol {
+extension VehicleprofileGun: ManagedObjectPlugProtocol {
 
-    public func doLinking(pin _: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
+    public func plug(pin _: ManagedObjectPinProtocol, intoSocket _: JointSocketProtocol) {
         //
     }
 
-    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
         //
     }
 }

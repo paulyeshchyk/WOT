@@ -44,16 +44,16 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
     open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
         guard let pin = fetchResult.managedObject() as? ManagedObjectPinProtocol else {
-            completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectSocketProtocol.self)))
+            completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectPlugProtocol.self)))
             return
         }
-        guard let managedObject = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ManagedObjectSocketProtocol else {
+        guard let managedObject = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ManagedObjectPlugProtocol else {
             completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectPinProtocol.self)))
             return
         }
         //
 
-        managedObject.doLinking(pin: pin, socket: socket)
+        managedObject.plug(pin: pin, intoSocket: socket)
 
         // MARK: stash
 

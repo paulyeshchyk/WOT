@@ -11,27 +11,27 @@ public protocol ManagedObjectPinProtocol {
     //
 }
 
-// MARK: - ManagedObjectSocketProtocol
+// MARK: - ManagedObjectPlugProtocol
 
-public protocol ManagedObjectSocketProtocol {
-    func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol)
-    func doLinking(pins: [ManagedObjectPinProtocol], socket: JointSocketProtocol)
+public protocol ManagedObjectPlugProtocol {
+    func plug(pin: ManagedObjectPinProtocol, intoSocket: JointSocketProtocol)
+    func plug(pins: [ManagedObjectPinProtocol], intoSocket: JointSocketProtocol)
 }
 
-// MARK: - NSSet + ManagedObjectSocketProtocol
+// MARK: - NSSet + ManagedObjectPlugProtocol
 
-extension NSSet: ManagedObjectSocketProtocol {
-    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
-        compactMap { $0 as? ManagedObjectSocketProtocol }
+extension NSSet: ManagedObjectPlugProtocol {
+    public func plug(pin: ManagedObjectPinProtocol, intoSocket: JointSocketProtocol) {
+        compactMap { $0 as? ManagedObjectPlugProtocol }
             .forEach {
-                $0.doLinking(pin: pin, socket: socket)
+                $0.plug(pin: pin, intoSocket: intoSocket)
             }
     }
 
-    public func doLinking(pins: [ManagedObjectPinProtocol], socket: JointSocketProtocol) {
-        compactMap { $0 as? ManagedObjectSocketProtocol }
+    public func plug(pins: [ManagedObjectPinProtocol], intoSocket: JointSocketProtocol) {
+        compactMap { $0 as? ManagedObjectPlugProtocol }
             .forEach {
-                $0.doLinking(pins: pins, socket: socket)
+                $0.plug(pins: pins, intoSocket: intoSocket)
             }
     }
 }
