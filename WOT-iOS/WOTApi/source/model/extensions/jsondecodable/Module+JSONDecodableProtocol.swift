@@ -97,7 +97,7 @@ public class ModuleDecoder {
 
     private func fetch_module(appContext: JSONDecodableProtocol.Context?, pin: JointPinProtocol, socket: JointSocketProtocol, extractor: ManagedObjectExtractable, moduleFetchResult: FetchResultProtocol?, parentHostPin: JointPinProtocol) throws {
         let modelClass = pin.modelClass
-        let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: moduleFetchResult, socket: socket)
+        let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: moduleFetchResult, socket: socket)
         let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
         let composition = try composer.buildRequestPredicateComposition()
 

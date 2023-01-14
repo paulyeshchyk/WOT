@@ -21,7 +21,7 @@ public extension VehicleprofileModule {
         if let gun_id = gun_id {
             let modelClass = VehicleprofileGun.self
             let socket = JointSocket(identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileModuleFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: vehicleprofileModuleFetchResult, socket: socket)
             let pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
@@ -33,7 +33,7 @@ public extension VehicleprofileModule {
         if let radio_id = radio_id {
             let modelClass = VehicleprofileRadio.self
             let socket = JointSocket(identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileModuleFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = RadioExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
@@ -45,7 +45,7 @@ public extension VehicleprofileModule {
         if let engine_id = engine_id {
             let modelClass = VehicleprofileEngine.self
             let socket = JointSocket(identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileModuleFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = EngineExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
@@ -57,7 +57,7 @@ public extension VehicleprofileModule {
         if let suspension_id = suspension_id {
             let modelClass = VehicleprofileSuspension.self
             let socket = JointSocket(identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileModuleFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = SuspensionExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
@@ -69,7 +69,7 @@ public extension VehicleprofileModule {
         if let turret_id = turret_id {
             let modelClass = VehicleprofileTurret.self
             let socket = JointSocket(identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileModuleFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: vehicleprofileModuleFetchResult, socket: socket)
             let extractor = TurretExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)

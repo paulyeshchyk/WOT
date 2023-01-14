@@ -33,7 +33,7 @@ public extension Vehicles {
             let builder = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), managedRefs: [])
             let composition = try builder.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehiclesFetchResult, socket: socket)
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, managedRef: vehiclesFetchResult, socket: socket)
             let managedObjectExtractor = DefaultProfileExtractor()
             let managedObjectContext = vehiclesFetchResult.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
@@ -85,7 +85,7 @@ extension Vehicles {
             .contextPredicate
         let modelClass = ModulesTree.self
         let socket = JointSocket(identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
-        let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: masterFetchResult, socket: socket)
+        let linker = ManagedObjectLinker(modelClass: modelClass, managedRef: masterFetchResult, socket: socket)
         let extractor = ModulesTreeExtractor()
         let jsonMap = try JSONMap(element: jsonElement, predicate: contextPredicate)
         MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, _ in })
