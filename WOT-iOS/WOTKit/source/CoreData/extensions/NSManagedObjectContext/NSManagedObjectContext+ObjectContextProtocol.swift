@@ -29,8 +29,8 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         case isNotManagedObjectProtocol
     }
 
-    public func object(managedPin: AnyObject) -> ManagedObjectProtocol? {
-        guard let objectID = managedPin as? NSManagedObjectID else {
+    public func object(managedPin: ManagedPinProtocol) -> ManagedObjectProtocol? {
+        guard let objectID = managedPin.managedObjectID as? NSManagedObjectID else {
             assertionFailure("forObjectID is not NSManagedObject")
             return nil
         }

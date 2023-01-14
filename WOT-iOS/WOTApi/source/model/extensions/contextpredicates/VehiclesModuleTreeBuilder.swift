@@ -7,9 +7,9 @@
 
 public class VehiclesModuleTreeBuilder: RequestPredicateComposerProtocol {
     private let requestPredicate: ContextPredicateProtocol
-    private let managedPins: [AnyObject]
+    private let managedPins: [ManagedPinProtocol]
 
-    public init(requestPredicate: ContextPredicateProtocol, managedPins: [AnyObject]) {
+    public init(requestPredicate: ContextPredicateProtocol, managedPins: [ManagedPinProtocol]) {
         self.requestPredicate = requestPredicate
         self.managedPins = managedPins
     }

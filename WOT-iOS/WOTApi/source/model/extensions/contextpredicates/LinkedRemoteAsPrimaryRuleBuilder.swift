@@ -9,11 +9,11 @@
 open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
-    private let hostPin: AnyObject
+    private let hostPin: ManagedPinProtocol
 
     // MARK: Lifecycle
 
-    public init(pin: JointPinProtocol, hostObjectID: AnyObject) {
+    public init(pin: JointPinProtocol, hostObjectID: ManagedPinProtocol) {
         self.pin = pin
         hostPin = hostObjectID
     }
@@ -21,7 +21,7 @@ open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
     // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
-        var parentPins = [AnyObject]()
+        var parentPins = [ManagedPinProtocol]()
         if let parents = pin.contextPredicate?.managedPins {
             parentPins.append(contentsOf: parents)
         }

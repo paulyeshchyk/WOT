@@ -50,7 +50,7 @@ public extension ModulesTree {
             for nextModuleID in nextModules {
                 let modelClass = Module.self
                 let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
-                let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin, hostPin: objectID)
+                let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin, hostPin: managedPin)
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
 
@@ -69,7 +69,7 @@ public extension ModulesTree {
         let extractor = CurrentModuleExtractor()
         let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: modulesTreeFetchResult, socket: currentModuleAnchor)
         let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: map.contextPredicate)
-        let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, hostObjectID: objectID)
+        let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, hostObjectID: managedPin)
         let composition = try composer.buildRequestPredicateComposition()
 
         try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: self)

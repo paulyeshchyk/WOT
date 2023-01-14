@@ -9,7 +9,7 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
 
     /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
     /// parents identifier has been taken from a list
-    public var managedPins: [AnyObject] = []
+    public var managedPins: [ManagedPinProtocol] = []
 
     override public var description: String {
         let objects = expressions()
@@ -27,7 +27,7 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
 
     // MARK: Lifecycle
 
-    public convenience init(managedPins idList: [AnyObject]) {
+    public convenience init(managedPins idList: [ManagedPinProtocol]) {
         self.init()
 
         managedPins.append(contentsOf: idList)

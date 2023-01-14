@@ -8,6 +8,8 @@
 public class VehiclesModuleBuilder: RequestPredicateComposerProtocol {
     private let requestPredicate: ContextPredicateProtocol
     private let module_id: Any?
+
+    #warning("module_id to be changed to pin")
     public init(requestPredicate: ContextPredicateProtocol, module_id: Any?) {
         self.requestPredicate = requestPredicate
         self.module_id = module_id

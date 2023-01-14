@@ -9,7 +9,7 @@
 
 @objc
 public protocol ContextPredicateProtocol {
-    var managedPins: [AnyObject] { get set }
+    var managedPins: [ManagedPinProtocol] { get set }
     func expressions() -> Set<ContextExpression>
     func expressions(byType: ContextExpressionType) -> Set<ContextExpression>?
     func nspredicate(operator: ContextPredicateOperator) -> NSPredicate?

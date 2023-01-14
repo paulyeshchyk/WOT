@@ -8,16 +8,17 @@
 // MARK: - ManagedObjectProtocol
 
 @objc
-public protocol ManagedObjectProtocol: FetchResultContainerProtocol {
+public protocol ManagedObjectProtocol {
     var entityName: String { get }
     var fetchStatus: FetchStatus { get }
-    var managedPin: AnyObject { get }
+    var managedPin: ManagedPinProtocol { get }
     var context: ManagedObjectContextProtocol? { get }
 }
 
 // MARK: - ManagedPinProtocol
 
-@objc protocol ManagedPinProtocol {
+@objc
+public protocol ManagedPinProtocol {
     var modelClass: PrimaryKeypathProtocol.Type { get }
     var managedObjectID: AnyObject { get }
 }

@@ -18,9 +18,9 @@ public extension Vehicleprofile {
 
         // MARK: - Link items
 
-        var parentPins = [AnyObject]()
+        var parentPins = [ManagedPinProtocol]()
         parentPins.append(contentsOf: map.contextPredicate.managedPins)
-        parentPins.append(objectID)
+        parentPins.append(managedPin)
 
         let vehicleprofileFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
 

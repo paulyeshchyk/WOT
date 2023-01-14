@@ -60,7 +60,7 @@ extension Vehicles {
         }
 
         var parentPins = requestPredicate.managedPins
-        parentPins.append(objectID)
+        parentPins.append(managedPin)
 
         let vehiclesFetchResult = fetchResult(context: objectContext)
 

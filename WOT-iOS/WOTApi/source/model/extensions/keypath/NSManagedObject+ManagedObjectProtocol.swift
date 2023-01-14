@@ -8,13 +8,23 @@
 import ContextSDK
 import CoreData
 
+// MARK: - NSManagedObject + ManagedObjectProtocol
+
 extension NSManagedObject: ManagedObjectProtocol {
     public var entityName: String { return entity.name ?? "<unknown>" }
-    public var managedPin: AnyObject { return objectID }
+    public var managedPin: ManagedPinProtocol { return ManagedPin(modelClass: type(of: self), managedObjectID: objectID) }
     public var fetchStatus: FetchStatus { isInserted ? .inserted : .fetched }
     public var context: ManagedObjectContextProtocol? { managedObjectContext }
+}
 
-    public func fetchResult(managedPin: AnyObject?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) -> FetchResultProtocol {
-        return FetchResult(managedPin: managedPin, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
+// MARK: - ManagedPin
+
+private class ManagedPin: ManagedPinProtocol {
+    var modelClass: PrimaryKeypathProtocol.Type
+    var managedObjectID: AnyObject
+    init(modelClass: PrimaryKeypathProtocol.Type, managedObjectID: AnyObject) {
+        self.modelClass = modelClass
+        self.managedObjectID = managedObjectID
     }
+
 }

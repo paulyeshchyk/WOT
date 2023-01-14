@@ -24,7 +24,7 @@ public protocol ManagedObjectContextProtocol: ManagedObjectContextLookupProtocol
 @objc
 public protocol ManagedObjectContextLookupProtocol: AnyObject {
     typealias Context = LogInspectorContainerProtocol
-    func object(managedPin: AnyObject) -> ManagedObjectProtocol?
+    func object(managedPin: ManagedPinProtocol) -> ManagedObjectProtocol?
     func findOrCreateObject(modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol?
     func execute(appContext: Context, with: @escaping (ManagedObjectContextProtocol) -> Void)
 }

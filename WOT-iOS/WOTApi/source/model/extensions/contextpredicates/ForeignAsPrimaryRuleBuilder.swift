@@ -10,11 +10,11 @@ open class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
     private var contextPredicate: ContextPredicateProtocol
     private var foreignSelectKey: String
-    private let managedPins: [AnyObject]
+    private let managedPins: [ManagedPinProtocol]
 
     // MARK: Lifecycle
 
-    public init(contextPredicate: ContextPredicateProtocol, foreignSelectKey: String, managedPins: [AnyObject]) {
+    public init(contextPredicate: ContextPredicateProtocol, foreignSelectKey: String, managedPins: [ManagedPinProtocol]) {
         self.contextPredicate = contextPredicate
         self.foreignSelectKey = foreignSelectKey
         self.managedPins = managedPins

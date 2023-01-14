@@ -48,9 +48,7 @@ public class ModuleDecoder {
 
     public let appContext: JSONDecodableProtocol.Context?
     public var modelClass: PrimaryKeypathProtocol.Type?
-    // public var extractor: ManagedObjectExtractable?
     public var module_id: NSDecimalNumber?
-    // public var keypath: KeypathType?
     public var moduleFetchResult: FetchResultProtocol?
     public let hostPin: JointPin
     public var type: String?

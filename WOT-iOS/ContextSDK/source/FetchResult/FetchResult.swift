@@ -8,13 +8,6 @@
 public typealias FetchResultCompletion = (FetchResultProtocol?, Error?) -> Void
 public typealias FetchResultThrowingCompletion = (FetchResultProtocol?, Error?) throws -> Void
 
-// MARK: - FetchResultContainerProtocol
-
-@objc
-public protocol FetchResultContainerProtocol {
-    func fetchResult(managedPin: AnyObject?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) -> FetchResultProtocol
-}
-
 // MARK: - FetchResult
 
 @objc
@@ -29,7 +22,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         return "<\(type(of: self)): context-name \(managedObjectContext.name ?? ""), entity-name \(entityName)>"
     }
 
-    private var managedPin: AnyObject?
+    private var managedPin: ManagedPinProtocol?
 
     // MARK: Lifecycle
 
@@ -37,7 +30,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         fatalError("")
     }
 
-    public required init(managedPin: AnyObject?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) {
+    public required init(managedPin: ManagedPinProtocol?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) {
         self.managedPin = managedPin
         self.predicate = predicate
         self.fetchStatus = fetchStatus
