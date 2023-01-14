@@ -20,8 +20,8 @@ public extension ModulesTree {
 
 //        let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
 //        if let nextTanks = moduleTreeJSON?[nextTanksKeypath] as? [AnyObject] {
-//            let socket = JointSocket(identifier: nil, keypath: nextTanksKeypath)
-//            let linker = ManagedObjectLinker(modelClass: Vehicles.self, managedRef: managedRef, socket: socket)
+//            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: nextTanksKeypath)
+//            let linker = ManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
 //            let extractor = NextVehicleExtractor()
 //            for nextTank in nextTanks {
 //                // parents was not used for next portion of tanks
@@ -43,15 +43,14 @@ public extension ModulesTree {
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
         if let nextModules = moduleTreeJSON?[nextModulesKeypath] as? [AnyObject] {
             let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: nextModulesKeypath)
-            let extractor = NextModuleExtractor()
             let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, socket: socket)
+            let extractor = NextModuleExtractor()
+            let modelClass = Module.self
             for nextModuleID in nextModules {
-                let modelClass = Module.self
                 let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
                 let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin, hostManagedRef: managedRef)
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
-
                     try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: nextModuleManagedObjectCreator, managedObjectExtractor: extractor, listener: self)
                 } catch {
                     appContext?.logInspector?.log(.error(error), sender: self)
@@ -61,12 +60,13 @@ public extension ModulesTree {
 
         // MARK: - CurrentModule
 
+        let identifier = value(forKeyPath: #keyPath(ModulesTree.module_id))
         let keypath = #keyPath(ModulesTree.currentModule)
         let modelClass = Module.self
         let currentModuleAnchor = JointSocket(managedRef: managedRef, identifier: nil, keypath: keypath)
         let extractor = CurrentModuleExtractor()
         let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, socket: currentModuleAnchor)
-        let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: map.contextPredicate)
+        let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
         let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, managedRef: managedRef)
         let composition = try composer.buildRequestPredicateComposition()
 

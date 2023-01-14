@@ -24,13 +24,6 @@ public protocol JSONDecodableProtocol {
     func decode(using: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws
 }
 
-// MARK: - JSONCollectionContainerProtocol
-
-@objc
-public protocol JSONCollectionContainerProtocol {
-    var jsonCollection: JSONCollectionProtocol { get }
-}
-
 // MARK: - JSONCollectionProtocol
 
 @objc

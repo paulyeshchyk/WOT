@@ -15,7 +15,20 @@ public protocol ManagedObjectExtractable {
 
 public extension ManagedObjectExtractable {
 
-    func extract(json: JSON, key: AnyHashable, modelClass: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol?) throws -> JSONMapProtocol {
+    func getJSONMaps(json: JSON, modelClass: PrimaryKeypathProtocol.Type, managedRefs: [ManagedRefProtocol]?) -> [JSONMapProtocol] {
+        var result = [JSONMapProtocol]()
+        for key in json.keys {
+            do {
+                let map = try getJSONMap(json: json, key: key, modelClass: modelClass, managedRefs: managedRefs)
+                result.append(map)
+            } catch {
+                //
+            }
+        }
+        return result
+    }
+
+    private func getJSONMap(json: JSON, key: AnyHashable, modelClass: PrimaryKeypathProtocol.Type, managedRefs: [ManagedRefProtocol]?) throws -> JSONMapProtocol {
         guard let jsonElement = json[key] as? JSON else {
             throw JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
         }
@@ -32,13 +45,11 @@ public extension ManagedObjectExtractable {
             throw JSONAdapterLinkerExtractionErrors.jsonWasNotExtracted(jsonElement)
         }
 
+        #warning("2b refactored")
         let primaryKeyPath = modelClass.primaryKeyPath(forType: linkerPrimaryKeyType)
         let ident = managedObjectJSON[primaryKeyPath] ?? key
 
-        #warning("2b refactored")
-        let managedRefs = contextPredicate?.managedRefs ?? []
-
-        let requestContextPredicate = ContextPredicate(managedRefs: managedRefs)
+        let requestContextPredicate = ContextPredicate(managedRefs: managedRefs ?? [])
         requestContextPredicate[.primary] = modelClass.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
 
         return try JSONMap(element: managedObjectJSON, predicate: requestContextPredicate)

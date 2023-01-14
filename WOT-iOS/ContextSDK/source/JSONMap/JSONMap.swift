@@ -8,8 +8,10 @@
 // MARK: - JSONMapProtocol
 
 @objc
-public protocol JSONMapProtocol: JSONCollectionContainerProtocol, ContextPredicateContainerProtocol {
+public protocol JSONMapProtocol {
     var description: String { get }
+    var contextPredicate: ContextPredicateProtocol { get }
+    var jsonCollection: JSONCollectionProtocol { get }
 }
 
 extension JSONMapProtocol {
@@ -70,8 +72,8 @@ private enum JSONMapError: Error, CustomStringConvertible {
 // MARK: - JSONManagedObjectMapError
 
 public enum JSONManagedObjectMapError: Error, CustomStringConvertible {
-    case notAnElement(JSONCollectionContainerProtocol)
-    case notAnArray(JSONCollectionContainerProtocol)
+    case notAnElement(JSONMapProtocol)
+    case notAnArray(JSONMapProtocol)
 
     public var description: String {
         switch self {

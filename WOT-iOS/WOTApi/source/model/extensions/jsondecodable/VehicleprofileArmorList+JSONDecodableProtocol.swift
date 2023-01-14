@@ -23,11 +23,10 @@ public extension VehicleprofileArmorList {
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, managedRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathturret)
-            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let extractor = TurretExtractor()
-            let objectContext = managedObjectContextContainer.managedObjectContext
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -45,11 +44,10 @@ public extension VehicleprofileArmorList {
             let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, managedRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathhull)
-            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let extractor = HullExtractor()
-            let objectContext = managedObjectContextContainer.managedObjectContext
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }

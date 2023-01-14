@@ -26,11 +26,10 @@ public extension VehicleprofileAmmo {
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: foreignPrimarySelectKey, foreignSecondarySelectKey: foreignSecondarySelectKey)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathPenetration)
-            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let extractor = PenetrationExtractor()
-            let objectContext = managedObjectContextContainer.managedObjectContext
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -49,11 +48,10 @@ public extension VehicleprofileAmmo {
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: foreignPrimarySelectKey, foreignSecondarySelectKey: foreignSecondarySelectKey)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathDamage)
-            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let extractor = DamageExtractor()
-            let objectContext = managedObjectContextContainer.managedObjectContext
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
