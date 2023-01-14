@@ -18,8 +18,9 @@ public extension VehicleprofileArmorList {
 
         let keypathturret = #keyPath(VehicleprofileArmorList.turret)
         if let jsonElement = armorListJSON?[keypathturret] as? JSON {
+            let foreignSelectKey = #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret)
             let modelClass = VehicleprofileArmor.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), managedRefs: [])
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, managedRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathturret)
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
@@ -39,8 +40,9 @@ public extension VehicleprofileArmorList {
 
         let keypathhull = #keyPath(VehicleprofileArmorList.hull)
         if let jsonElement = armorListJSON?[keypathhull] as? JSON {
+            let foreignSelectKey = #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull)
             let modelClass = VehicleprofileArmor.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), managedRefs: [])
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, managedRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathhull)
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)

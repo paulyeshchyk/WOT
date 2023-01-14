@@ -17,7 +17,7 @@ public extension Module {
         //
 
         let filteredManagedRef = map.contextPredicate.managedRefs.filter { $0.modelClass == Vehicles.self }.first
-        guard let hostPin = filteredManagedRef?.getJointPin(idKeyPath: #keyPath(Vehicles.tank_id), inContext: managedObjectContextContainer.managedObjectContext) else {
+        guard let parentHostPin = filteredManagedRef?.getJointPin(idKeyPath: #keyPath(Vehicles.tank_id), inContext: managedObjectContextContainer.managedObjectContext) else {
             throw ModuleMappingError.noParentsFound
         }
 
@@ -25,7 +25,7 @@ public extension Module {
             throw ModuleMappingError.moduleIdNotDefined
         }
 
-        let moduleDecoder = ModuleDecoder(appContext: appContext, parentHostPin: hostPin)
+        let moduleDecoder = ModuleDecoder(appContext: appContext, parentHostPin: parentHostPin)
         moduleDecoder.module_id = module_id
         moduleDecoder.moduleManagedRef = managedRef
         moduleDecoder.type = type

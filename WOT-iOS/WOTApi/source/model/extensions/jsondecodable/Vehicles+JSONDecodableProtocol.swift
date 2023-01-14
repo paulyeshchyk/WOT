@@ -28,8 +28,9 @@ public extension Vehicles {
 
         let defaultProfileKeypath = #keyPath(Vehicles.default_profile)
         if let jsonElement = vehicleJSON?[defaultProfileKeypath] as? JSON {
+            let foreignSelectKey = #keyPath(Vehicleprofile.vehicles)
             let modelClass = Vehicleprofile.self
-            let builder = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), managedRefs: [])
+            let builder = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, managedRefs: [])
             let composition = try builder.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
@@ -80,8 +81,9 @@ extension Vehicles {
         let contextPredicate = try VehiclesModuleBuilder(requestPredicate: requestPredicate, module_id: module_id)
             .buildRequestPredicateComposition()
             .contextPredicate
+        let keypath = #keyPath(ModulesTree.next_modules)
         let modelClass = ModulesTree.self
-        let socket = JointSocket(managedRef: managedRef, identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
+        let socket = JointSocket(managedRef: managedRef, identifier: module_id, keypath: keypath)
         let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
         let extractor = ModulesTreeExtractor()
         let jsonMap = try JSONMap(element: jsonElement, predicate: contextPredicate)
