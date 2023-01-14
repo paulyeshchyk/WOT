@@ -73,7 +73,7 @@
 		DACDB105295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB104295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift */; };
 		DACDB107295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB106295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift */; };
 		DACDB10A295EDDD9005BBA72 /* JSONCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB109295EDDD9005BBA72 /* JSONCollection.swift */; };
-		DACDB10C295EDE08005BBA72 /* JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB10B295EDE08005BBA72 /* JSONDecodingProtocol.swift */; };
+		DACDB10C295EDE08005BBA72 /* DecodableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB10B295EDE08005BBA72 /* DecodableProtocol.swift */; };
 		DACDB110295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB10F295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift */; };
 		DACDB12029601537005BBA72 /* ContextPredicateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB11F29601537005BBA72 /* ContextPredicateProtocol.swift */; };
 		DACDB123296023C8005BBA72 /* JSONMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB122296023C7005BBA72 /* JSONMap.swift */; };
@@ -159,7 +159,7 @@
 		DACDB104295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestArgumentsBuilderProtocol.swift; sourceTree = "<group>"; };
 		DACDB106295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPredicateComposerProtocol.swift; sourceTree = "<group>"; };
 		DACDB109295EDDD9005BBA72 /* JSONCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCollection.swift; sourceTree = "<group>"; };
-		DACDB10B295EDE08005BBA72 /* JSONDecodingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingProtocol.swift; sourceTree = "<group>"; };
+		DACDB10B295EDE08005BBA72 /* DecodableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableProtocol.swift; sourceTree = "<group>"; };
 		DACDB10F295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectLinkerProtocol.swift; sourceTree = "<group>"; };
 		DACDB11F29601537005BBA72 /* ContextPredicateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPredicateProtocol.swift; sourceTree = "<group>"; };
 		DACDB122296023C7005BBA72 /* JSONMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMap.swift; sourceTree = "<group>"; };
@@ -404,7 +404,7 @@
 				DACDB0DE295EDC94005BBA72 /* FetchResultProtocol.swift */,
 				DACDB0E6295EDC95005BBA72 /* HttpServiceProtocol.swift */,
 				DA288F672965A6CC00973561 /* JSONValueProtocol.swift */,
-				DACDB10B295EDE08005BBA72 /* JSONDecodingProtocol.swift */,
+				DACDB10B295EDE08005BBA72 /* DecodableProtocol.swift */,
 				DACDB0F0295EDC95005BBA72 /* LogInspectorProtocol.swift */,
 				DACDB0EF295EDC95005BBA72 /* ManagedObjectContextProtocol.swift */,
 				DAA3A5422969994800430492 /* ManagedObjectProtocol.swift */,
@@ -675,7 +675,7 @@
 				DA0432A529633B400092C891 /* ManagedObjectPinProtocol.swift in Sources */,
 				DACDB0FA295EDC96005BBA72 /* URLEncodedProtocol.swift in Sources */,
 				DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */,
-				DACDB10C295EDE08005BBA72 /* JSONDecodingProtocol.swift in Sources */,
+				DACDB10C295EDE08005BBA72 /* DecodableProtocol.swift in Sources */,
 				DAA3A54C296A168D00430492 /* ConcurrentOperation.swift in Sources */,
 				DAA3A5432969994800430492 /* ManagedObjectProtocol.swift in Sources */,
 				DA0E806B2950920C00B44CC6 /* PrimaryKeypathProtocol.swift in Sources */,

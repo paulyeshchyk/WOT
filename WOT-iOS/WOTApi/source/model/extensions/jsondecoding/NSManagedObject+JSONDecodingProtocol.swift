@@ -7,7 +7,7 @@
 
 import CoreData
 
-public extension JSONDecodingProtocol where Self: NSManagedObject {
+public extension DecodableProtocol where Self: NSManagedObject {
 
     func decode(decoderContainer: DecoderContainerProtocol?) throws {
         guard let decoderContainer = decoderContainer else {
