@@ -29,13 +29,12 @@ public extension Vehicles {
         let defaultProfileKeypath = #keyPath(Vehicles.default_profile)
         if let jsonElement = vehicleJSON?[defaultProfileKeypath] as? JSON {
             let modelClass = Vehicleprofile.self
-            let vehiclesFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
             let builder = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), managedRefs: [])
             let composition = try builder.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let managedObjectExtractor = DefaultProfileExtractor()
-            let managedObjectContext = vehiclesFetchResult.managedObjectContext
+            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
 
             MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, completion: { _, error in
@@ -70,19 +69,19 @@ extension Vehicles {
             if let jsonElement = moduleTreeJSON[key] as? JSON {
                 let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
 
-                try submoduleMapping(objectContext: objectContext, jsonElement: jsonElement, module_id: module_id, requestPredicate: contextPredicate, masterFetchResult: managedRef, appContext: appContext)
+                try submoduleMapping(objectContext: objectContext, jsonElement: jsonElement, module_id: module_id, requestPredicate: contextPredicate, managedRef: managedRef, appContext: appContext)
             } else {
                 appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
             }
         }
     }
 
-    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, jsonElement: JSON, module_id: Any?, requestPredicate: ContextPredicateProtocol, masterFetchResult: ManagedRefProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, jsonElement: JSON, module_id: Any?, requestPredicate: ContextPredicateProtocol, managedRef: ManagedRefProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         let contextPredicate = try VehiclesModuleBuilder(requestPredicate: requestPredicate, module_id: module_id)
             .buildRequestPredicateComposition()
             .contextPredicate
         let modelClass = ModulesTree.self
-        let socket = JointSocket(managedRef: masterFetchResult, identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
+        let socket = JointSocket(managedRef: managedRef, identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
         let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
         let extractor = ModulesTreeExtractor()
         let jsonMap = try JSONMap(element: jsonElement, predicate: contextPredicate)

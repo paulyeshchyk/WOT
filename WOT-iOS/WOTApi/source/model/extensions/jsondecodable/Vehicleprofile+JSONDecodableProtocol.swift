@@ -22,8 +22,6 @@ public extension Vehicleprofile {
         parentManagedRefs.append(contentsOf: map.contextPredicate.managedRefs)
         parentManagedRefs.append(managedRef)
 
-        let vehicleprofileFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
-
         // MARK: - AmmoList
 
         let ammoKeypath = #keyPath(Vehicleprofile.ammo)
@@ -34,7 +32,7 @@ public extension Vehicleprofile {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: ammoKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = AmmoListExtractor()
-            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            let objectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(array: jsonArray, predicate: composition.contextPredicate)
             MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
@@ -55,7 +53,7 @@ public extension Vehicleprofile {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: armorKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extactor = ArmorListExtractor()
-            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            let objectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extactor, completion: { _, error in
                 if let error = error {
@@ -76,7 +74,7 @@ public extension Vehicleprofile {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: modulesKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = ModuleExtractor()
-            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            let objectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
@@ -100,7 +98,7 @@ public extension Vehicleprofile {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: engineKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = EngineExtractor()
-            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            let objectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
@@ -124,7 +122,7 @@ public extension Vehicleprofile {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: gunKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = GunExtractor()
-            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            let objectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
@@ -148,7 +146,7 @@ public extension Vehicleprofile {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: suspensionKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = SuspensionExtractor()
-            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            let objectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
@@ -172,7 +170,7 @@ public extension Vehicleprofile {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: turretKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = TurretManagedObjectCreator()
-            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            let objectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
@@ -196,7 +194,7 @@ public extension Vehicleprofile {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: radioKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = RadioExtractor()
-            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            let objectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
                 if let error = error {
@@ -250,7 +248,6 @@ extension Vehicleprofile {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         public var jsonKeyPath: KeypathType? { nil }
     }
-
 }
 
 // MARK: - VehicleProfileMappingError
