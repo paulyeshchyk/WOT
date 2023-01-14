@@ -9,25 +9,25 @@
 open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
-    private let hostPin: ManagedPinProtocol
+    private let hostManagedRef: ManagedRefProtocol
 
     // MARK: Lifecycle
 
-    public init(pin: JointPinProtocol, hostPin: ManagedPinProtocol) {
+    public init(pin: JointPinProtocol, hostManagedRef: ManagedRefProtocol) {
         self.pin = pin
-        self.hostPin = hostPin
+        self.hostManagedRef = hostManagedRef
     }
 
     // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
-        var parentPins = [ManagedPinProtocol]()
-        if let parents = pin.contextPredicate?.managedPins {
-            parentPins.append(contentsOf: parents)
+        var parentManagedRefs = [ManagedRefProtocol]()
+        if let parents = pin.contextPredicate?.managedRefs {
+            parentManagedRefs.append(contentsOf: parents)
         }
-        parentPins.append(hostPin)
+        parentManagedRefs.append(hostManagedRef)
 
-        let lookupPredicate = ContextPredicate(managedPins: parentPins)
+        let lookupPredicate = ContextPredicate(managedRefs: parentManagedRefs)
         lookupPredicate[.primary] = pin.contextPredicate?[.primary]
         lookupPredicate[.secondary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
 

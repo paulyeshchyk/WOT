@@ -18,9 +18,9 @@ public extension Vehicleprofile {
 
         // MARK: - Link items
 
-        var parentPins = [ManagedPinProtocol]()
-        parentPins.append(contentsOf: map.contextPredicate.managedPins)
-        parentPins.append(managedPin)
+        var parentManagedRefs = [ManagedRefProtocol]()
+        parentManagedRefs.append(contentsOf: map.contextPredicate.managedRefs)
+        parentManagedRefs.append(managedRef)
 
         let vehicleprofileFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
 
@@ -29,10 +29,10 @@ public extension Vehicleprofile {
         let ammoKeypath = #keyPath(Vehicleprofile.ammo)
         if let jsonArray = profileJSON?[ammoKeypath] as? [JSON] {
             let modelClass = VehicleprofileAmmoList.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), managedPins: parentPins)
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), managedRefs: parentManagedRefs)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: ammoKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileFetchResult, socket: socket)
             let extractor = AmmoListExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             let jsonMap = try JSONMap(array: jsonArray, predicate: composition.contextPredicate)
@@ -50,10 +50,10 @@ public extension Vehicleprofile {
         let armorKeypath = #keyPath(Vehicleprofile.armor)
         if let jsonElement = profileJSON?[armorKeypath] as? JSON {
             let modelClass = VehicleprofileArmorList.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), managedPins: parentPins)
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), managedRefs: parentManagedRefs)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: armorKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileFetchResult, socket: socket)
             let extactor = ArmorListExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
@@ -71,10 +71,10 @@ public extension Vehicleprofile {
         let modulesKeypath = #keyPath(Vehicleprofile.modules)
         if let jsonElement = profileJSON?[modulesKeypath] as? JSON {
             let modelClass = VehicleprofileModule.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), managedPins: parentPins)
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), managedRefs: parentManagedRefs)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: modulesKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileFetchResult, socket: socket)
             let extractor = ModuleExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
@@ -98,7 +98,7 @@ public extension Vehicleprofile {
             let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: engineKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileFetchResult, socket: socket)
             let extractor = EngineExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
@@ -122,7 +122,7 @@ public extension Vehicleprofile {
             let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: gunKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileFetchResult, socket: socket)
             let extractor = GunExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
@@ -146,7 +146,7 @@ public extension Vehicleprofile {
             let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: suspensionKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileFetchResult, socket: socket)
             let extractor = SuspensionExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
@@ -170,7 +170,7 @@ public extension Vehicleprofile {
             let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: turretKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileFetchResult, socket: socket)
             let extractor = TurretManagedObjectCreator()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
@@ -194,7 +194,7 @@ public extension Vehicleprofile {
             let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: radioKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileFetchResult, socket: socket)
             let extractor = RadioExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)

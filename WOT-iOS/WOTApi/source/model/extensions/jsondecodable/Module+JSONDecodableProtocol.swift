@@ -16,8 +16,8 @@ public extension Module {
         try decode(decoderContainer: moduleJSON)
         //
 
-        let filteredPin = map.contextPredicate.managedPins.filter { $0.modelClass == Vehicles.self }.first
-        guard let hostPin = filteredPin?.getJointPin(idKeyPath: #keyPath(Vehicles.tank_id), inContext: managedObjectContextContainer.managedObjectContext) else {
+        let filteredManagedRef = map.contextPredicate.managedRefs.filter { $0.modelClass == Vehicles.self }.first
+        guard let hostPin = filteredManagedRef?.getJointPin(idKeyPath: #keyPath(Vehicles.tank_id), inContext: managedObjectContextContainer.managedObjectContext) else {
             throw ModuleMappingError.noParentsFound
         }
 
@@ -35,10 +35,10 @@ public extension Module {
     }
 }
 
-extension ManagedPinProtocol {
+extension ManagedRefProtocol {
 
     func getJointPin(idKeyPath: KeypathType, inContext context: ManagedObjectContextProtocol) -> JointPinProtocol {
-        let managedObject = context.object(managedPin: self)
+        let managedObject = context.object(managedRef: self)
         let identifier = managedObject?[idKeyPath]
         return JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: nil)
     }
@@ -97,7 +97,7 @@ public class ModuleDecoder {
 
     private func fetch_module(appContext: JSONDecodableProtocol.Context?, pin: JointPinProtocol, socket: JointSocketProtocol, extractor: ManagedObjectExtractable, moduleFetchResult: FetchResultProtocol?, parentHostPin: JointPinProtocol) throws {
         let modelClass = pin.modelClass
-        let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
+        let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: moduleFetchResult, socket: socket)
         let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
         let composition = try composer.buildRequestPredicateComposition()
 

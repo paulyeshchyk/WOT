@@ -23,8 +23,8 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
     public let modelClass: PrimaryKeypathProtocol.Type
 
-    public var masterFetchResult: FetchResultProtocol?
-    public var socket: JointSocketProtocol
+    private var hostPin: FetchResultProtocol?
+    private var socket: JointSocketProtocol
 
     public var MD5: String { uuid.MD5 }
 
@@ -32,8 +32,8 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
     // MARK: Lifecycle
 
-    public required init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, socket: JointSocketProtocol) {
-        self.masterFetchResult = masterFetchResult
+    public required init(modelClass: PrimaryKeypathProtocol.Type, hostPin: FetchResultProtocol?, socket: JointSocketProtocol) {
+        self.hostPin = hostPin
         self.modelClass = modelClass
         self.socket = socket
     }
@@ -47,7 +47,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
             completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectPlugProtocol.self)))
             return
         }
-        guard let managedObject = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ManagedObjectPlugProtocol else {
+        guard let managedObject = hostPin?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ManagedObjectPlugProtocol else {
             completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectPinProtocol.self)))
             return
         }

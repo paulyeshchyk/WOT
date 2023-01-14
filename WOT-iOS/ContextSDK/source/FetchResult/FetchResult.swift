@@ -22,7 +22,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         return "<\(type(of: self)): context-name \(managedObjectContext.name ?? ""), entity-name \(entityName)>"
     }
 
-    private var managedPin: ManagedPinProtocol?
+    private var managedRef: ManagedRefProtocol?
 
     // MARK: Lifecycle
 
@@ -30,8 +30,8 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         fatalError("")
     }
 
-    public required init(managedPin: ManagedPinProtocol?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) {
-        self.managedPin = managedPin
+    public required init(managedRef: ManagedRefProtocol?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) {
+        self.managedRef = managedRef
         self.predicate = predicate
         self.fetchStatus = fetchStatus
         self.managedObjectContext = managedObjectContext
@@ -42,13 +42,13 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
     // MARK: Public
 
     public func copy(with _: NSZone? = nil) -> Any {
-        let copy = FetchResult(managedPin: managedPin, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
+        let copy = FetchResult(managedRef: managedRef, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
         return copy
     }
 
     @available(*, deprecated, message: "make sure you need that")
     public func makeDublicate(managedObjectContext: ManagedObjectContextProtocol) -> FetchResultProtocol {
-        return FetchResult(managedPin: managedPin, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
+        return FetchResult(managedRef: managedRef, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
     }
 
     public func managedObject() -> ManagedObjectProtocol? {
@@ -56,11 +56,11 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
     }
 
     public func managedObject(inManagedObjectContext context: ManagedObjectContextProtocol?) -> ManagedObjectProtocol? {
-        guard let managedPin = managedPin else {
+        guard let managedRef = managedRef else {
             assertionFailure("objectID is not defined")
             return nil
         }
-        return context?.object(managedPin: managedPin)
+        return context?.object(managedRef: managedRef)
     }
 
 }

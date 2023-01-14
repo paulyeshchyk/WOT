@@ -23,7 +23,7 @@ public extension VehicleprofileAmmoList {
             let composer = VehicleprofileAmmoListAmmoRequestPredicateComposer(pin: pin, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoListFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileAmmoListFetchResult, socket: socket)
             let extractor = AmmoExtractor()
             let objectContext = vehicleprofileAmmoListFetchResult.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)

@@ -26,7 +26,7 @@ public extension VehicleprofileAmmo {
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: keypathPenetration)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileAmmoFetchResult, socket: socket)
             let extractor = PenetrationExtractor()
             let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
             let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)
@@ -47,7 +47,7 @@ public extension VehicleprofileAmmo {
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: keypathDamage)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, socket: socket)
+            let linker = ManagedObjectLinker(modelClass: modelClass, hostPin: vehicleprofileAmmoFetchResult, socket: socket)
             let extractor = DamageExtractor()
             let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
             let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)

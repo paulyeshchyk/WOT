@@ -16,7 +16,7 @@ public class VehiclesModuleBuilder: RequestPredicateComposerProtocol {
     }
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
-        let lookupPredicate = ContextPredicate(managedPins: requestPredicate.managedPins)
+        let lookupPredicate = ContextPredicate(managedRefs: requestPredicate.managedRefs)
         lookupPredicate[.primary] = ModulesTree.primaryKey(forType: .internal, andObject: module_id)
         lookupPredicate[.secondary] = requestPredicate[.primary]
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
