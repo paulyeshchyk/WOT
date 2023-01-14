@@ -13,6 +13,7 @@ public protocol ManagedObjectProtocol {
     var fetchStatus: FetchStatus { get }
     var managedPin: ManagedPinProtocol { get }
     var context: ManagedObjectContextProtocol? { get }
+    subscript(_: KeypathType) -> Any? { get }
 }
 
 // MARK: - ManagedPinProtocol
