@@ -36,9 +36,8 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
         let extractor = VehiclesPivotManagedObjectExtractor()
-        let emptyFetchResult = try appContext.dataStore?.emptyFetchResult()
-        let socket = JointSocket(identifier: nil, keypath: nil)
-        let linker = VehiclesPivotManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: emptyFetchResult, socket: socket)
+        let socket = JointSocket(managedRef: nil, identifier: nil, keypath: nil)
+        let linker = VehiclesPivotManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: linker, managedObjectExtractor: extractor, listener: listener)
     }
 
@@ -52,9 +51,8 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
         let extractor = VehiclesTreeManagedObjectExtractor()
-        let emptyFetchResult = try appContext.dataStore?.emptyFetchResult()
-        let socket = JointSocket(identifier: nil, keypath: nil)
-        let linker = VehiclesTreeManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: emptyFetchResult, socket: socket)
+        let socket = JointSocket(managedRef: nil, identifier: nil, keypath: nil)
+        let linker = VehiclesTreeManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: linker, managedObjectExtractor: extractor, listener: listener)
     }
 
@@ -82,7 +80,7 @@ extension WOTWEBRequestFactory {
 
         // MARK: Public
 
-        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
             // MARK: stash
 
             appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
@@ -97,7 +95,7 @@ extension WOTWEBRequestFactory {
 
         // MARK: Public
 
-        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
             // MARK: stash
 
             appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
@@ -130,5 +128,4 @@ extension WOTWEBRequestFactory {
             nil
         }
     }
-
 }

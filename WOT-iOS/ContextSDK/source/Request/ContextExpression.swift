@@ -68,5 +68,4 @@ public class ContextExpression: NSObject, ContextExpressionProtocol {
         newComponents.append(contentsOf: components)
         return ContextExpression(components: newComponents, value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
     }
-
 }

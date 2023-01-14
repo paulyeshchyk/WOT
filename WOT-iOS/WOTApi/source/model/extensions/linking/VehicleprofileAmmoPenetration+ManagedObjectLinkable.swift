@@ -9,15 +9,15 @@
 
 extension VehicleprofileAmmoPenetration: ManagedObjectPinProtocol {}
 
-// MARK: - VehicleprofileAmmoPenetration + ManagedObjectSocketProtocol
+// MARK: - VehicleprofileAmmoPenetration + ManagedObjectPlugProtocol
 
-extension VehicleprofileAmmoPenetration: ManagedObjectSocketProtocol {
+extension VehicleprofileAmmoPenetration: ManagedObjectPlugProtocol {
 
-    public func doLinking(pin _: ManagedObjectPinProtocol, socket _: JointSocketProtocol) {
+    public func plug(pin _: ManagedObjectPinProtocol, intoSocket _: JointSocketProtocol) {
         //
     }
 
-    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
         //
     }
 }

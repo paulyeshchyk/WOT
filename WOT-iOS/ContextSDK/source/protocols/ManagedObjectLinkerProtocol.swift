@@ -5,14 +5,14 @@
 //  Created by Paul on 19.12.22.
 //
 
-public typealias ManagedObjectLinkerContext = DataStoreContainerProtocol
 public typealias ManagedObjectLinkerCompletion = (FetchResultProtocol, Error?) -> Void
 
 // MARK: - ManagedObjectLinkerProtocol
 
 @objc
 public protocol ManagedObjectLinkerProtocol: MD5Protocol {
-    func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion)
+    typealias Context = DataStoreContainerProtocol
+    func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion)
 }
 
 // MARK: - JointSocketProtocol
@@ -20,6 +20,7 @@ public protocol ManagedObjectLinkerProtocol: MD5Protocol {
 public protocol JointSocketProtocol {
     var identifier: Any? { get }
     var keypath: KeypathType? { get }
+    var managedRef: ManagedRefProtocol? { get }
 }
 
 // MARK: - JointPinProtocol

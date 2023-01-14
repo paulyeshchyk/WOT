@@ -24,7 +24,6 @@ struct JSONCodingKeys: CodingKey {
         self.init(stringValue: "\(intValue)")
         self.intValue = intValue
     }
-
 }
 
 public extension KeyedDecodingContainer {

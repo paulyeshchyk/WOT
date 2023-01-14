@@ -27,5 +27,4 @@ public class VehicleprofileAmmoListAmmoRequestPredicateComposer: RequestPredicat
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
-
 }

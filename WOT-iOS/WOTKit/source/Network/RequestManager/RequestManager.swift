@@ -56,7 +56,6 @@ open class RequestManager: NSObject {
     public func registerModelService(_ serviceClass: ModelServiceProtocol.Type) {
         requestRegistrator.registerServiceClass(serviceClass)
     }
-
 }
 
 // MARK: - RequestManager + RequestListenerProtocol
@@ -249,7 +248,6 @@ private class ResponseManagedObjectCreatorList {
             throw AdapterLinkerListError.notRemoved(request)
         }
     }
-
 }
 
 // MARK: - ResponseManagedObjectExtractableList
@@ -286,7 +284,6 @@ private class ResponseManagedObjectExtractableList {
             throw ExtractorLinkerListError.notRemoved(request)
         }
     }
-
 }
 
 // MARK: - RequestGrouppedListenerList
@@ -347,7 +344,6 @@ private class RequestGrouppedListenerList {
             }
         }
     }
-
 }
 
 // MARK: - RequestGrouppedRequestList
@@ -429,7 +425,6 @@ private class RequestGrouppedRequestList {
             appContext.logInspector?.log(.flow(name: "group", message: "End: <\(String(describing: request))>"), sender: self)
         }
     }
-
 }
 
 // MARK: - RequestManagerError

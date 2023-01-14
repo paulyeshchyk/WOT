@@ -25,5 +25,4 @@ open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateCo
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
-
 }

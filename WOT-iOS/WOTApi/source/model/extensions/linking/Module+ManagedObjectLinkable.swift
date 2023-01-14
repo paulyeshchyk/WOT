@@ -9,35 +9,35 @@
 
 extension Module: ManagedObjectPinProtocol {}
 
-// MARK: - Module + ManagedObjectSocketProtocol
+// MARK: - Module + ManagedObjectPlugProtocol
 
-extension Module: ManagedObjectSocketProtocol {
+extension Module: ManagedObjectPlugProtocol {
 
     // swiftlint:disable cyclomatic_complexity
-    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
-        switch socket.keypath as? String {
+    public func plug(pin: ManagedObjectPinProtocol, intoSocket: JointSocketProtocol) {
+        switch intoSocket.keypath as? String {
         case #keyPath(Module.engine):
             engine = pin as? VehicleprofileEngine
-            engine?.engine_id = socket.identifier as? NSDecimalNumber
+            engine?.engine_id = intoSocket.identifier as? NSDecimalNumber
         case #keyPath(Module.radio):
             radio = pin as? VehicleprofileRadio
-            radio?.radio_id = socket.identifier as? NSDecimalNumber
+            radio?.radio_id = intoSocket.identifier as? NSDecimalNumber
         case #keyPath(Module.suspension):
             suspension = pin as? VehicleprofileSuspension
-            suspension?.suspension_id = socket.identifier as? NSDecimalNumber
+            suspension?.suspension_id = intoSocket.identifier as? NSDecimalNumber
         case #keyPath(Module.turret):
             turret = pin as? VehicleprofileTurret
-            turret?.turret_id = socket.identifier as? NSDecimalNumber
+            turret?.turret_id = intoSocket.identifier as? NSDecimalNumber
         case #keyPath(Module.gun):
             gun = pin as? VehicleprofileGun
-            gun?.gun_id = socket.identifier as? NSDecimalNumber
+            gun?.gun_id = intoSocket.identifier as? NSDecimalNumber
         default:
-            assertionFailure("undefiend field \(String(describing: socket))")
+            assertionFailure("undefiend field \(String(describing: intoSocket))")
         }
         // swiftlint:enable cyclomatic_complexity
     }
 
-    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
         //
     }
 }

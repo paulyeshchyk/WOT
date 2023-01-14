@@ -46,7 +46,6 @@ public enum LogEventType: Int, CustomStringConvertible {
         case .flow: return "flow"
         }
     }
-
 }
 
 // MARK: - LogEventProtocol
@@ -84,7 +83,6 @@ public class Loggable {
         let convertedName = String(describing: type)
         self.init(type: type, name: convertedName, message: message)
     }
-
 }
 
 // MARK: - LogInspectorProtocol

@@ -13,21 +13,20 @@ public extension VehicleprofileAmmoList {
     override func decode(using map: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
         let profilesJSON = try map.data(ofType: [JSON].self)
-        let vehicleprofileAmmoListFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
         //
         let keypath = #keyPath(VehicleprofileAmmo.type)
         try profilesJSON?.forEach { jsonElement in
+            let foreignSelectKey = #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList)
             let ammoType = jsonElement[keypath]
             let modelClass = VehicleprofileAmmo.self
             let pin = JointPin(modelClass: modelClass, identifier: ammoType, contextPredicate: map.contextPredicate)
-            let composer = VehicleprofileAmmoListAmmoRequestPredicateComposer(pin: pin, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
+            let composer = VehicleprofileAmmoListAmmoRequestPredicateComposer(pin: pin, foreignSelectKey: foreignSelectKey)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(identifier: composition.objectIdentifier)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoListFetchResult, socket: socket)
-            let extractor = AmmoExtractor()
-            let objectContext = vehicleprofileAmmoListFetchResult.managedObjectContext
+            let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier)
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, completion: { _, error in
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -44,5 +43,4 @@ extension VehicleprofileAmmoList {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         public var jsonKeyPath: KeypathType? { nil }
     }
-
 }

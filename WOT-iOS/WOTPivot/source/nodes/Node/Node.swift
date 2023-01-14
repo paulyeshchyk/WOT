@@ -123,5 +123,4 @@ open class Node: NSObject, NodeProtocol {
         self.parent = nil
         parent.unlinkChild(self)
     }
-
 }

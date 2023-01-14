@@ -5,15 +5,15 @@
 //  Created by Paul on 24.12.22.
 //
 
-// MARK: - DecoderContainer
+// MARK: - DecoderContainerProtocol
 
-public protocol DecoderContainer {
+public protocol DecoderContainerProtocol {
     func decoder() throws -> Decoder
 }
 
-// MARK: - Array + DecoderContainer
+// MARK: - Array + DecoderContainerProtocol
 
-extension Array: DecoderContainer {
+extension Array: DecoderContainerProtocol {
     public func decoder() throws -> Decoder {
         let data = try JSONSerialization.data(withJSONObject: self, options: [])
         let wrapper = try JSONDecoder().decode(DecoderWrapper.self, from: data)
@@ -21,9 +21,9 @@ extension Array: DecoderContainer {
     }
 }
 
-// MARK: - JSON + DecoderContainer
+// MARK: - JSON + DecoderContainerProtocol
 
-extension JSON: DecoderContainer {
+extension JSON: DecoderContainerProtocol {
     public func decoder() throws -> Decoder {
         let data = try JSONSerialization.data(withJSONObject: self, options: [])
         let wrapper = try JSONDecoder().decode(DecoderWrapper.self, from: data)
@@ -42,5 +42,4 @@ class DecoderWrapper: Decodable {
     required init(from decoder: Decoder) throws {
         self.decoder = decoder
     }
-
 }

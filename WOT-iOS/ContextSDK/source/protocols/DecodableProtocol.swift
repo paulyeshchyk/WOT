@@ -8,9 +8,9 @@ public typealias JSONValueType = Any
 public typealias KeypathType = Swift.AnyHashable
 public typealias JSON = [KeypathType: JSONValueType]
 
-// MARK: - JSONDecodingProtocol
+// MARK: - DecodableProtocol
 
-public protocol JSONDecodingProtocol {
+public protocol DecodableProtocol {
     func decodeWith(_ decoder: Decoder) throws
 }
 
@@ -22,13 +22,6 @@ public protocol JSONDecodableProtocol {
         & LogInspectorContainerProtocol
 
     func decode(using: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws
-}
-
-// MARK: - JSONCollectionContainerProtocol
-
-@objc
-public protocol JSONCollectionContainerProtocol {
-    var jsonCollection: JSONCollectionProtocol { get }
 }
 
 // MARK: - JSONCollectionProtocol

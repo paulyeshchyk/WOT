@@ -110,7 +110,6 @@ open class Request: RequestProtocol, CustomStringConvertible {
     open func removeListener(_ listener: RequestListenerProtocol) {
         listeners.removeAll(where: { $0.MD5 == listener.MD5 })
     }
-
 }
 
 extension Request {

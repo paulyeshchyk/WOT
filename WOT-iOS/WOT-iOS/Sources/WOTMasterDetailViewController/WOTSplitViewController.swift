@@ -43,7 +43,6 @@ struct WOTMasterDetailBehaviour {
         detailController = detail
         behaviourType = behaviour
     }
-
 }
 
 extension WOTMasterDetailBehaviour {

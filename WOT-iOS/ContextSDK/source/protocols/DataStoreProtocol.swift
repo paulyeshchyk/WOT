@@ -43,7 +43,6 @@ public protocol DataStoreProtocol {
 
     //
     func isClassValid(_: AnyObject) -> Bool
-    func emptyFetchResult() throws -> FetchResultProtocol
 }
 
 extension DataStoreProtocol {

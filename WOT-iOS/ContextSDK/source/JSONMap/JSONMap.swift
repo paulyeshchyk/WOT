@@ -8,8 +8,10 @@
 // MARK: - JSONMapProtocol
 
 @objc
-public protocol JSONMapProtocol: JSONCollectionContainerProtocol, ContextPredicateContainerProtocol {
-//
+public protocol JSONMapProtocol {
+    var description: String { get }
+    var contextPredicate: ContextPredicateProtocol { get }
+    var jsonCollection: JSONCollectionProtocol { get }
 }
 
 extension JSONMapProtocol {
@@ -21,6 +23,10 @@ extension JSONMapProtocol {
 // MARK: - JSONMap
 
 public class JSONMap: JSONMapProtocol {
+
+    public var description: String {
+        return "[\(type(of: self))]: data: \(String(describing: jsonCollection)), predicate: \(String(describing: contextPredicate))"
+    }
 
     public let contextPredicate: ContextPredicateProtocol
     public let jsonCollection: JSONCollectionProtocol
@@ -66,8 +72,8 @@ private enum JSONMapError: Error, CustomStringConvertible {
 // MARK: - JSONManagedObjectMapError
 
 public enum JSONManagedObjectMapError: Error, CustomStringConvertible {
-    case notAnElement(JSONCollectionContainerProtocol)
-    case notAnArray(JSONCollectionContainerProtocol)
+    case notAnElement(JSONMapProtocol)
+    case notAnArray(JSONMapProtocol)
 
     public var description: String {
         switch self {

@@ -100,7 +100,6 @@ class WOTTankPivotMetadatasource: PivotMetaDatasourceProtocol {
     func filters() -> [NodeProtocol] {
         return [FilterPivotNode(name: "Filter")]
     }
-
 }
 
 // MARK: - WOTTankPivotModel
@@ -182,5 +181,4 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
     func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
         //
     }
-
 }

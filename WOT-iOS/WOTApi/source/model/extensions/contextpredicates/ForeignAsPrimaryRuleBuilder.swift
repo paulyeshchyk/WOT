@@ -10,23 +10,22 @@ open class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
     private var contextPredicate: ContextPredicateProtocol
     private var foreignSelectKey: String
-    private var parentObjectIDList: [AnyObject]?
+    private let managedRefs: [ManagedRefProtocol]
 
     // MARK: Lifecycle
 
-    public init(contextPredicate: ContextPredicateProtocol, foreignSelectKey: String, parentObjectIDList: [AnyObject]?) {
+    public init(contextPredicate: ContextPredicateProtocol, foreignSelectKey: String, managedRefs: [ManagedRefProtocol]) {
         self.contextPredicate = contextPredicate
         self.foreignSelectKey = foreignSelectKey
-        self.parentObjectIDList = parentObjectIDList
+        self.managedRefs = managedRefs
     }
 
     // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
-        let lookupPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
+        let lookupPredicate = ContextPredicate(managedRefs: managedRefs)
         lookupPredicate[.primary] = contextPredicate[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
-
 }

@@ -10,7 +10,7 @@ import ContextSDK
 
 // MARK: - JSONDecodingProtocol
 
-extension VehicleprofileEngine: JSONDecodingProtocol {
+extension VehicleprofileEngine: DecodableProtocol {
     public func decodeWith(_ decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
         //

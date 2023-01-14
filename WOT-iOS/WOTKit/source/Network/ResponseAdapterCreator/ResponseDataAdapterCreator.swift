@@ -33,5 +33,4 @@ public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
     public init(appContext: Context) {
         self.appContext = appContext
     }
-
 }

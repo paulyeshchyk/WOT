@@ -16,17 +16,12 @@ class JSONSyndicate {
     var managedObjectLinker: ManagedObjectLinkerProtocol?
     let appContext: JSONSyndicate.Context
     var modelClass: PrimaryKeypathProtocol.Type?
-    var contextPredicate: ContextPredicateProtocol?
-    let json: JSON
-    let key: AnyHashable
-    var jsonExtractor: ManagedObjectExtractable?
+    var jsonMap: JSONMapProtocol?
 
     // MARK: Lifecycle
 
-    init(appContext: JSONSyndicate.Context, json: JSON, key: AnyHashable) {
+    init(appContext: JSONSyndicate.Context) {
         self.appContext = appContext
-        self.json = json
-        self.key = key
     }
 
     // MARK: Internal
@@ -40,42 +35,27 @@ class JSONSyndicate {
             completion?(nil, JSONSyndicateError.managedObjectLinkerIsNotPresented)
             return
         }
-        guard let jsonExtractor = jsonExtractor else {
-            completion?(nil, JSONSyndicateError.jsonExtractorIsNotPresented)
-            return
+
+        let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
+        managedObjectLinkerHelper.managedObjectLinker = managedObjectLinker
+        managedObjectLinkerHelper.completion = completion
+
+        let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
+        mappingCoordinatorDecodeHelper.jsonMap = jsonMap
+        mappingCoordinatorDecodeHelper.managedObjectLinker = managedObjectLinker
+        mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
+            managedObjectLinkerHelper.run(fetchResult, error: error)
         }
 
-        do {
-            let jsonMap = try jsonExtractor.extract(json: json,
-                                                    key: key,
-                                                    modelClass: modelClass,
-                                                    contextPredicate: contextPredicate)
-
-            let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
-            managedObjectLinkerHelper.managedObjectLinker = managedObjectLinker
-            managedObjectLinkerHelper.completion = completion
-
-            let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
-            mappingCoordinatorDecodeHelper.jsonMap = jsonMap
-            mappingCoordinatorDecodeHelper.managedObjectLinker = managedObjectLinker
-            mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
-                managedObjectLinkerHelper.run(fetchResult, error: error)
-            }
-
-            let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
-            datastoreFetchHelper.modelClass = modelClass
-            datastoreFetchHelper.nspredicate = jsonMap.contextPredicate[.primary]?.predicate
-            datastoreFetchHelper.completion = { fetchResult, error in
-                mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
-            }
-
-            datastoreFetchHelper.run()
-        } catch {
-            completion?(nil, error)
-            return
+        let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
+        datastoreFetchHelper.modelClass = modelClass
+        datastoreFetchHelper.nspredicate = jsonMap?.contextPredicate[.primary]?.predicate
+        datastoreFetchHelper.completion = { fetchResult, error in
+            mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
         }
+
+        datastoreFetchHelper.run()
     }
-
 }
 
 // MARK: - ManagedObjectLinkerHelper
@@ -86,7 +66,7 @@ class ManagedObjectLinkerHelper {
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
 
-    let appContext: Context
+    private let appContext: Context?
     var managedObjectLinker: ManagedObjectLinkerProtocol?
 
     private enum ManagedObjectLinkerHelperError: Error, CustomStringConvertible {
@@ -103,7 +83,7 @@ class ManagedObjectLinkerHelper {
 
     // MARK: Lifecycle
 
-    init(appContext: ManagedObjectLinkerHelper.Context) {
+    init(appContext: ManagedObjectLinkerHelper.Context?) {
         self.appContext = appContext
     }
 
@@ -122,7 +102,6 @@ class ManagedObjectLinkerHelper {
             self.completion?(fetchResult, error)
         }
     }
-
 }
 
 // MARK: - MappingCoordinatorDecodeHelper
@@ -133,11 +112,10 @@ class MappingCoordinatorDecodeHelper {
         & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
 
-    let appContext: Context
+    private let appContext: Context?
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var jsonMap: JSONMapProtocol?
     var managedObjectLinker: ManagedObjectLinkerProtocol?
-    var managedObjectExtractor: ManagedObjectExtractable?
 
     private enum MappingCoordinatorDecodeHelperError: Error, CustomStringConvertible {
         case fetchResultIsNotPresented
@@ -155,7 +133,7 @@ class MappingCoordinatorDecodeHelper {
 
     // MARK: Lifecycle
 
-    init(appContext: MappingCoordinatorDecodeHelper.Context) {
+    init(appContext: MappingCoordinatorDecodeHelper.Context?) {
         self.appContext = appContext
     }
 
@@ -179,14 +157,13 @@ class MappingCoordinatorDecodeHelper {
         do {
             try managedObject.decode(using: jsonMap, managedObjectContextContainer: fetchResult, appContext: appContext)
 
-            appContext.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
+            appContext?.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
                 self.completion?(fetchResult, error)
             }
         } catch {
             completion?(fetchResult, error)
         }
     }
-
 }
 
 // MARK: - DatastoreFetchHelper
@@ -194,7 +171,7 @@ class MappingCoordinatorDecodeHelper {
 class DatastoreFetchHelper {
     typealias Context = DataStoreContainerProtocol
 
-    let appContext: Context
+    private let appContext: Context?
     var nspredicate: NSPredicate?
     var modelClass: PrimaryKeypathProtocol.Type?
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
@@ -213,7 +190,7 @@ class DatastoreFetchHelper {
     // MARK: Lifecycle
 
     //
-    init(appContext: DatastoreFetchHelper.Context) {
+    init(appContext: DatastoreFetchHelper.Context?) {
         self.appContext = appContext
     }
 
@@ -225,14 +202,13 @@ class DatastoreFetchHelper {
             return
         }
 
-        appContext.dataStore?.fetch(modelClass: modelClass,
-                                    nspredicate: nspredicate,
-                                    managedObjectContext: managedObjectContext,
-                                    completion: { fetchResult, error in
-                                        self.completion?(fetchResult, error)
-                                    })
+        appContext?.dataStore?.fetch(modelClass: modelClass,
+                                     nspredicate: nspredicate,
+                                     managedObjectContext: managedObjectContext,
+                                     completion: { fetchResult, error in
+                                         self.completion?(fetchResult, error)
+                                     })
     }
-
 }
 
 // MARK: - JSONSyndicateError

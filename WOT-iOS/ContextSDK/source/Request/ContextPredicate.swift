@@ -9,7 +9,7 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
 
     /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
     /// parents identifier has been taken from a list
-    public var parentObjectIDList: [AnyObject] = []
+    public var managedRefs: [ManagedRefProtocol] = []
 
     override public var description: String {
         let objects = expressions()
@@ -27,12 +27,10 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
 
     // MARK: Lifecycle
 
-    public convenience init(parentObjectIDList idList: [AnyObject]?) {
+    public convenience init(managedRefs idList: [ManagedRefProtocol]) {
         self.init()
 
-        if let compacted = idList?.compactMap({ $0 }) {
-            parentObjectIDList.append(contentsOf: compacted)
-        }
+        managedRefs.append(contentsOf: idList)
     }
 
     // MARK: Public
@@ -76,5 +74,4 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
         case .or: return NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         }
     }
-
 }

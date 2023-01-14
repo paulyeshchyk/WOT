@@ -19,7 +19,6 @@ open class DataStore {
         self.appContext = appContext
         appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
-
 }
 
 // MARK: - DataStoreError
@@ -49,10 +48,6 @@ private enum DataStoreError: Error, CustomStringConvertible {
 extension DataStore: DataStoreProtocol {
 
     open func isClassValid(_: AnyObject) -> Bool {
-        fatalError("has not been implemented")
-    }
-
-    open func emptyFetchResult() throws -> FetchResultProtocol {
         fatalError("has not been implemented")
     }
 

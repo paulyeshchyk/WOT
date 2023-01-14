@@ -21,7 +21,7 @@ class RequestManagerTest: XCTestCase {
         let socket = Socket(identifier: "AnchorID", keypath: #keyPath(Anchor.keypath))
         let objectID = ObjectID()
         let extractor = Extractor()
-        let fetchResult = FetchResult(objectID: objectID, managedObjectContext: managedObjectContext, predicate: nil, fetchStatus: .fetched)
+        let fetchResult = FetchResult(managedPin: objectID, managedObjectContext: managedObjectContext, predicate: nil, fetchStatus: .fetched)
         let linker = Linker(modelClass: PrimaryKeypath.self, masterFetchResult: fetchResult, socket: socket)
         let request = TestHttpRequest(context: appContext)
         let listener = Listener()
@@ -82,7 +82,6 @@ class Listener: RequestManagerListenerProtocol {
     func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
         expectationDidCancel?.fulfill()
     }
-
 }
 
 // MARK: - Extractor
@@ -115,7 +114,6 @@ class Socket: JointSocketProtocol {
         self.identifier = identifier
         self.keypath = keypath
     }
-
 }
 
 // MARK: - ManagedObjectContext
@@ -182,10 +180,9 @@ class Linker: ManagedObjectLinkerProtocol {
 
     // MARK: Internal
 
-    func process(fetchResult: FetchResultProtocol, appContext _: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
+    func process(fetchResult: FetchResultProtocol, appContext _: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
         completion(fetchResult, nil)
     }
-
 }
 
 // MARK: - AppContext
@@ -203,7 +200,6 @@ class AppContext: ResponseDataAdapterCreatorContainerProtocol, RequestManagerCon
     init() {
         hostConfiguration = HostConfiguration()
     }
-
 }
 
 // MARK: - NSManagedObjectPredicateFormat
@@ -225,7 +221,6 @@ private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
     init(keyType: PrimaryKeyType) {
         self.keyType = keyType
     }
-
 }
 
 // MARK: - HostConfiguration
@@ -258,5 +253,4 @@ public class HostConfiguration: NSObject, HostConfigurationProtocol {
         currentArguments = with?.buildQuery(custom) ?? ""
         return currentArguments
     }
-
 }

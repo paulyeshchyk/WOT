@@ -10,7 +10,7 @@ import ContextSDK
 
 // MARK: - JSONDecodingProtocol
 
-extension VehicleprofileAmmoPenetration: JSONDecodingProtocol {
+extension VehicleprofileAmmoPenetration: DecodableProtocol {
     public func decodeWith(_: Decoder) throws {
 //        let intArray = try DecimalArray(from: decoder)
 //        self.min_value = intArray.elements[0].asDecimal

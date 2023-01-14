@@ -9,28 +9,27 @@
 open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
-    private let hostObjectID: AnyObject
+    private let managedRef: ManagedRefProtocol
 
     // MARK: Lifecycle
 
-    public init(pin: JointPinProtocol, hostObjectID: AnyObject) {
+    public init(pin: JointPinProtocol, managedRef: ManagedRefProtocol) {
         self.pin = pin
-        self.hostObjectID = hostObjectID
+        self.managedRef = managedRef
     }
 
     // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
-        var parentObjectIDList = [AnyObject]()
-        if let parents = pin.contextPredicate?.parentObjectIDList {
-            parentObjectIDList.append(contentsOf: parents)
+        var parentManagedRefs = [ManagedRefProtocol]()
+        if let parents = pin.contextPredicate?.managedRefs {
+            parentManagedRefs.append(contentsOf: parents)
         }
-        parentObjectIDList.append(hostObjectID)
+        parentManagedRefs.append(managedRef)
 
-        let lookupPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
+        let lookupPredicate = ContextPredicate(managedRefs: parentManagedRefs)
         lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
-
 }

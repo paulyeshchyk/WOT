@@ -8,11 +8,20 @@
 // MARK: - ManagedObjectProtocol
 
 @objc
-public protocol ManagedObjectProtocol: FetchResultContainerProtocol {
+public protocol ManagedObjectProtocol {
     var entityName: String { get }
     var fetchStatus: FetchStatus { get }
-    var managedObjectID: AnyObject { get }
+    var managedRef: ManagedRefProtocol { get }
     var context: ManagedObjectContextProtocol? { get }
+    subscript(_: KeypathType) -> Any? { get }
+}
+
+// MARK: - ManagedRefProtocol
+
+@objc
+public protocol ManagedRefProtocol {
+    var modelClass: PrimaryKeypathProtocol.Type { get }
+    var managedObjectID: AnyObject { get }
 }
 
 // MARK: - FetchStatus
@@ -27,7 +36,8 @@ public enum FetchStatus: Int {
 }
 
 extension ManagedObjectProtocol {
+    //
     public func fetchResult(context: ManagedObjectContextProtocol, predicate: NSPredicate? = nil, fetchStatus: FetchStatus? = nil) -> FetchResultProtocol {
-        return FetchResult(objectID: managedObjectID, managedObjectContext: context, predicate: predicate, fetchStatus: fetchStatus ?? self.fetchStatus)
+        return FetchResult(managedRef: managedRef, managedObjectContext: context, predicate: predicate, fetchStatus: fetchStatus ?? self.fetchStatus)
     }
 }

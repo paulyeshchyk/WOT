@@ -26,7 +26,6 @@ final class EventRequestListenerStart: LogEventProtocol {
     public required init?(_ request: RequestProtocol, listener: RequestListenerProtocol) {
         message = "Listener: \(String(describing: listener)); reacts on request: \(String(describing: request))"
     }
-
 }
 
 // MARK: - EventRequestListenerCancel
@@ -52,7 +51,6 @@ final class EventRequestListenerCancel: LogEventProtocol {
         }
         self.message = message
     }
-
 }
 
 // MARK: - EventRequestListenerEnd
@@ -73,5 +71,4 @@ final class EventRequestListenerEnd: LogEventProtocol {
     public required init?(_ request: RequestProtocol, listener: RequestListenerProtocol) {
         message = "Listener: \(String(describing: listener)); reacts on request: \(String(describing: request))"
     }
-
 }

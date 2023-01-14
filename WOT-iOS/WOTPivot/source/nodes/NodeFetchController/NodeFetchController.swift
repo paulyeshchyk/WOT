@@ -65,7 +65,6 @@ open class NodeFetchController: NSObject {
             }
         }
     }
-
 }
 
 // MARK: - NodeFetchControllerError

@@ -9,26 +9,26 @@
 
 extension Vehicles: ManagedObjectPinProtocol {}
 
-// MARK: - Vehicles + ManagedObjectSocketProtocol
+// MARK: - Vehicles + ManagedObjectPlugProtocol
 
-extension Vehicles: ManagedObjectSocketProtocol {
+extension Vehicles: ManagedObjectPlugProtocol {
 
-    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
+    public func plug(pin: ManagedObjectPinProtocol, intoSocket: JointSocketProtocol) {
         //
-        switch socket.keypath as? String {
+        switch intoSocket.keypath as? String {
         case #keyPath(Vehicles.default_profile):
             default_profile = pin as? Vehicleprofile
-            modules_tree?.doLinking(pin: pin, socket: socket)
+            modules_tree?.plug(pin: pin, intoSocket: intoSocket)
         case #keyPath(ModulesTree.next_modules):
             if let modules_tree = pin as? ModulesTree {
                 addToModules_tree(modules_tree)
             }
         default:
-            assertionFailure("undefiend field \(String(describing: socket))")
+            assertionFailure("undefiend field \(String(describing: intoSocket))")
         }
     }
 
-    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
         //
     }
 }

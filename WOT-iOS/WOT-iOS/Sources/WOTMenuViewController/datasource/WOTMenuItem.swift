@@ -37,5 +37,4 @@ class WOTMenuItem: NSObject {
         icon = image
         userDependence = dependence
     }
-
 }

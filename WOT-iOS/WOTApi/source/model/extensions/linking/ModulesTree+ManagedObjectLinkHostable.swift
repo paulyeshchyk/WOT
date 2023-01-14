@@ -11,15 +11,15 @@ import ContextSDK
 
 extension ModulesTree: ManagedObjectPinProtocol {}
 
-// MARK: - ModulesTree + ManagedObjectSocketProtocol
+// MARK: - ModulesTree + ManagedObjectPlugProtocol
 
-extension ModulesTree: ManagedObjectSocketProtocol {
+extension ModulesTree: ManagedObjectPlugProtocol {
 
     // swiftlint:disable cyclomatic_complexity
-    public func doLinking(pin: ManagedObjectPinProtocol, socket: JointSocketProtocol) {
+    public func plug(pin: ManagedObjectPinProtocol, intoSocket: JointSocketProtocol) {
         //
 
-        switch socket.keypath as? String {
+        switch intoSocket.keypath as? String {
         case #keyPath(ModulesTree.default_profile):
             default_profile = pin as? Vehicleprofile
         case #keyPath(ModulesTree.currentModule):
@@ -33,10 +33,10 @@ extension ModulesTree: ManagedObjectSocketProtocol {
                 addToNext_tanks(vehicle)
             }
         default:
-            assertionFailure("undefiend field \(String(describing: socket))")
+            assertionFailure("undefiend field \(String(describing: intoSocket))")
         }
         // swiftlint:enable cyclomatic_complexity
     }
 
-    public func doLinking(pins _: [ManagedObjectPinProtocol], socket _: JointSocketProtocol) {}
+    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {}
 }
