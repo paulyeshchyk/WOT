@@ -9,7 +9,7 @@ import CoreData
 
 public extension JSONDecodingProtocol where Self: NSManagedObject {
 
-    func decode(decoderContainer: DecoderContainer?) throws {
+    func decode(decoderContainer: DecoderContainerProtocol?) throws {
         guard let decoderContainer = decoderContainer else {
             throw JSONDecodingError.containerIsNil
         }

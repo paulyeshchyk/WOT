@@ -65,9 +65,9 @@ public class JSONCollection: JSONCollectionProtocol {
 
 }
 
-// MARK: - JSONCollection + DecoderContainer
+// MARK: - JSONCollection + DecoderContainerProtocol
 
-extension JSONCollection: DecoderContainer {
+extension JSONCollection: DecoderContainerProtocol {
     public func decoder() throws -> Decoder {
         let data = try JSONSerialization.data(withJSONObject: self, options: [])
         let wrapper = try JSONDecoder().decode(DecoderWrapper.self, from: data)

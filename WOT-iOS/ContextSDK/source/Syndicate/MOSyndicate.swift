@@ -41,7 +41,6 @@ public class MOSyndicate {
         let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
         mappingCoordinatorDecodeHelper.jsonMap = jsonMap
         mappingCoordinatorDecodeHelper.managedObjectLinker = managedObjectLinker
-        mappingCoordinatorDecodeHelper.managedObjectExtractor = managedObjectExtractor
         mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
             managedObjectLinkerHelper.run(fetchResult, error: error)
         }

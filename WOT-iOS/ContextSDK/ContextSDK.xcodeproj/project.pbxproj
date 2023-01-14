@@ -49,7 +49,7 @@
 		DA81E5202952FFDC00C60F31 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E51E2952FFDC00C60F31 /* AnyCodable.swift */; };
 		DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E51F2952FFDC00C60F31 /* Coding.swift */; };
 		DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */; };
-		DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */; };
+		DA84BF402957327F00BAC71D /* DecoderContainerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84BF3F2957327F00BAC71D /* DecoderContainerProtocol.swift */; };
 		DAA3A5432969994800430492 /* ManagedObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A5422969994800430492 /* ManagedObjectProtocol.swift */; };
 		DAA3A5462969F54C00430492 /* JSONSyndicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A5452969F54C00430492 /* JSONSyndicate.swift */; };
 		DAA3A54C296A168D00430492 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A54B296A168D00430492 /* ConcurrentOperation.swift */; };
@@ -135,7 +135,7 @@
 		DA81E51E2952FFDC00C60F31 /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		DA81E51F2952FFDC00C60F31 /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+Decode.swift"; sourceTree = "<group>"; };
-		DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderContainer.swift; sourceTree = "<group>"; };
+		DA84BF3F2957327F00BAC71D /* DecoderContainerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderContainerProtocol.swift; sourceTree = "<group>"; };
 		DAA3A5422969994800430492 /* ManagedObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectProtocol.swift; sourceTree = "<group>"; };
 		DAA3A5452969F54C00430492 /* JSONSyndicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSyndicate.swift; sourceTree = "<group>"; };
 		DAA3A54B296A168D00430492 /* ConcurrentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentOperation.swift; sourceTree = "<group>"; };
@@ -463,7 +463,7 @@
 				DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */,
 				DA81E51E2952FFDC00C60F31 /* AnyCodable.swift */,
 				DA81E51F2952FFDC00C60F31 /* Coding.swift */,
-				DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */,
+				DA84BF3F2957327F00BAC71D /* DecoderContainerProtocol.swift */,
 			);
 			path = codable;
 			sourceTree = "<group>";
@@ -652,7 +652,7 @@
 				DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */,
 				DA56E2AB296B22FA001D9DD4 /* MOSyndicate.swift in Sources */,
-				DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */,
+				DA84BF402957327F00BAC71D /* DecoderContainerProtocol.swift in Sources */,
 				DACDB0F3295EDC96005BBA72 /* RequestManagerProtocol.swift in Sources */,
 				DACDB0F9295EDC96005BBA72 /* HttpServiceProtocol.swift in Sources */,
 				DA32CEB129641C48007726AD /* ManagedObjectExtractable.swift in Sources */,

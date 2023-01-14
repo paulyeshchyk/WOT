@@ -137,7 +137,6 @@ class MappingCoordinatorDecodeHelper {
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var jsonMap: JSONMapProtocol?
     var managedObjectLinker: ManagedObjectLinkerProtocol?
-    var managedObjectExtractor: ManagedObjectExtractable?
 
     private enum MappingCoordinatorDecodeHelperError: Error, CustomStringConvertible {
         case fetchResultIsNotPresented
