@@ -86,7 +86,7 @@ class ManagedObjectLinkerHelper {
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
 
-    let appContext: Context
+    private let appContext: Context?
     var managedObjectLinker: ManagedObjectLinkerProtocol?
 
     private enum ManagedObjectLinkerHelperError: Error, CustomStringConvertible {
@@ -103,7 +103,7 @@ class ManagedObjectLinkerHelper {
 
     // MARK: Lifecycle
 
-    init(appContext: ManagedObjectLinkerHelper.Context) {
+    init(appContext: ManagedObjectLinkerHelper.Context?) {
         self.appContext = appContext
     }
 
@@ -133,7 +133,7 @@ class MappingCoordinatorDecodeHelper {
         & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
 
-    let appContext: Context
+    private let appContext: Context?
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var jsonMap: JSONMapProtocol?
     var managedObjectLinker: ManagedObjectLinkerProtocol?
@@ -154,7 +154,7 @@ class MappingCoordinatorDecodeHelper {
 
     // MARK: Lifecycle
 
-    init(appContext: MappingCoordinatorDecodeHelper.Context) {
+    init(appContext: MappingCoordinatorDecodeHelper.Context?) {
         self.appContext = appContext
     }
 
@@ -178,7 +178,7 @@ class MappingCoordinatorDecodeHelper {
         do {
             try managedObject.decode(using: jsonMap, managedObjectContextContainer: fetchResult, appContext: appContext)
 
-            appContext.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
+            appContext?.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
                 self.completion?(fetchResult, error)
             }
         } catch {
@@ -193,7 +193,7 @@ class MappingCoordinatorDecodeHelper {
 class DatastoreFetchHelper {
     typealias Context = DataStoreContainerProtocol
 
-    let appContext: Context
+    private let appContext: Context?
     var nspredicate: NSPredicate?
     var modelClass: PrimaryKeypathProtocol.Type?
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
@@ -212,7 +212,7 @@ class DatastoreFetchHelper {
     // MARK: Lifecycle
 
     //
-    init(appContext: DatastoreFetchHelper.Context) {
+    init(appContext: DatastoreFetchHelper.Context?) {
         self.appContext = appContext
     }
 
@@ -224,12 +224,12 @@ class DatastoreFetchHelper {
             return
         }
 
-        appContext.dataStore?.fetch(modelClass: modelClass,
-                                    nspredicate: nspredicate,
-                                    managedObjectContext: managedObjectContext,
-                                    completion: { fetchResult, error in
-                                        self.completion?(fetchResult, error)
-                                    })
+        appContext?.dataStore?.fetch(modelClass: modelClass,
+                                     nspredicate: nspredicate,
+                                     managedObjectContext: managedObjectContext,
+                                     completion: { fetchResult, error in
+                                         self.completion?(fetchResult, error)
+                                     })
     }
 
 }

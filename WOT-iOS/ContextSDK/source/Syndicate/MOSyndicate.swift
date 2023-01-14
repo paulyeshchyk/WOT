@@ -22,17 +22,16 @@ public class MOSyndicate {
 
     public var completion: ((FetchResultProtocol?, Error?) -> Void)?
 
-    let appContext: Context
+    private let appContext: Context?
 
     // MARK: Lifecycle
 
-    public init(appContext: Context) {
+    public init(appContext: Context?) {
         self.appContext = appContext
     }
 
     // MARK: Public
 
-    //
     public func run() {
         let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
         managedObjectLinkerHelper.managedObjectLinker = managedObjectLinker
@@ -60,12 +59,6 @@ public class MOSyndicate {
 extension MOSyndicate {
 
     public static func decodeAndLink(appContext: MOSyndicate.Context?, jsonMap: JSONMapProtocol, managedObjectContext: ManagedObjectContextProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectLinker: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, completion: @escaping FetchResultCompletion) {
-        //
-        guard let appContext = appContext else {
-            completion(nil, MappingCoordinatorError.appContextNotDefined)
-            return
-        }
-
         let moSyndicate = MOSyndicate(appContext: appContext)
         moSyndicate.managedObjectLinker = managedObjectLinker
         moSyndicate.managedObjectExtractor = managedObjectExtractor
