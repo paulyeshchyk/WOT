@@ -12,7 +12,7 @@ public typealias FetchResultThrowingCompletion = (FetchResultProtocol?, Error?) 
 
 @objc
 public protocol FetchResultContainerProtocol {
-    func fetchResult(objectID: AnyObject?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) -> FetchResultProtocol
+    func fetchResult(managedPin: AnyObject?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) -> FetchResultProtocol
 }
 
 // MARK: - FetchResult
@@ -29,7 +29,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         return "<\(type(of: self)): context-name \(managedObjectContext.name ?? ""), entity-name \(entityName)>"
     }
 
-    private var objectID: AnyObject?
+    private var managedPin: AnyObject?
 
     // MARK: Lifecycle
 
@@ -37,8 +37,8 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         fatalError("")
     }
 
-    public required init(objectID: AnyObject?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) {
-        self.objectID = objectID
+    public required init(managedPin: AnyObject?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) {
+        self.managedPin = managedPin
         self.predicate = predicate
         self.fetchStatus = fetchStatus
         self.managedObjectContext = managedObjectContext
@@ -49,13 +49,13 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
     // MARK: Public
 
     public func copy(with _: NSZone? = nil) -> Any {
-        let copy = FetchResult(objectID: objectID, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
+        let copy = FetchResult(managedPin: managedPin, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
         return copy
     }
 
     @available(*, deprecated, message: "make sure you need that")
     public func makeDublicate(managedObjectContext: ManagedObjectContextProtocol) -> FetchResultProtocol {
-        return FetchResult(objectID: objectID, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
+        return FetchResult(managedPin: managedPin, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
     }
 
     public func managedObject() -> ManagedObjectProtocol? {
@@ -63,11 +63,11 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
     }
 
     public func managedObject(inManagedObjectContext context: ManagedObjectContextProtocol?) -> ManagedObjectProtocol? {
-        guard let objectID = objectID else {
+        guard let managedPin = managedPin else {
             assertionFailure("objectID is not defined")
             return nil
         }
-        return context?.object(byID: objectID)
+        return context?.object(managedPin: managedPin)
     }
 
 }

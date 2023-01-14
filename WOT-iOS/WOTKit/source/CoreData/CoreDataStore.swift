@@ -82,12 +82,6 @@ open class CoreDataStore: DataStore {
     override public func isClassValid(_ clazz: AnyObject) -> Bool {
         return (clazz is NSManagedObject.Type) ? true : false
     }
-
-    override public func emptyFetchResult() throws -> FetchResultProtocol {
-        let inManagedObjectContext = workingContext()
-        return try EmptyFetchResult(inManagedObjectContext: inManagedObjectContext)
-    }
-
 }
 
 extension CoreDataStore {

@@ -7,15 +7,15 @@
 
 public class VehiclesModuleTreeBuilder: RequestPredicateComposerProtocol {
     private let requestPredicate: ContextPredicateProtocol
-    private let pins: [AnyObject]
+    private let managedPins: [AnyObject]
 
-    public init(requestPredicate: ContextPredicateProtocol, pins: [AnyObject]) {
+    public init(requestPredicate: ContextPredicateProtocol, managedPins: [AnyObject]) {
         self.requestPredicate = requestPredicate
-        self.pins = pins
+        self.managedPins = managedPins
     }
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
-        let lookupPredicate = ContextPredicate(pins: pins)
+        let lookupPredicate = ContextPredicate(managedPins: managedPins)
         lookupPredicate[.primary] = requestPredicate[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))

@@ -11,8 +11,15 @@
 public protocol ManagedObjectProtocol: FetchResultContainerProtocol {
     var entityName: String { get }
     var fetchStatus: FetchStatus { get }
-    var managedObjectID: AnyObject { get }
+    var managedPin: AnyObject { get }
     var context: ManagedObjectContextProtocol? { get }
+}
+
+// MARK: - ManagedPinProtocol
+
+@objc protocol ManagedPinProtocol {
+    var modelClass: PrimaryKeypathProtocol.Type { get }
+    var managedObjectID: AnyObject { get }
 }
 
 // MARK: - FetchStatus
@@ -28,6 +35,6 @@ public enum FetchStatus: Int {
 
 extension ManagedObjectProtocol {
     public func fetchResult(context: ManagedObjectContextProtocol, predicate: NSPredicate? = nil, fetchStatus: FetchStatus? = nil) -> FetchResultProtocol {
-        return FetchResult(objectID: managedObjectID, managedObjectContext: context, predicate: predicate, fetchStatus: fetchStatus ?? self.fetchStatus)
+        return FetchResult(managedPin: managedPin, managedObjectContext: context, predicate: predicate, fetchStatus: fetchStatus ?? self.fetchStatus)
     }
 }

@@ -16,8 +16,9 @@ public extension Module {
         try decode(decoderContainer: moduleJSON)
         //
 
-        let parentsAsVehicles = map.contextPredicate.pins
-            .compactMap { managedObjectContextContainer.managedObjectContext.object(byID: $0) as? Vehicles }
+        let parentsAsVehicles = map.contextPredicate.managedPins.compactMap {
+            managedObjectContextContainer.managedObjectContext.object(managedPin: $0) as? Vehicles
+        }
         let parents = parentsAsVehicles.compactMap { $0.tank_id }
 
         let moduleFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)

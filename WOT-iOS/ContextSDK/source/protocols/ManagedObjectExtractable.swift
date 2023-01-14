@@ -36,9 +36,9 @@ public extension ManagedObjectExtractable {
         let ident = managedObjectJSON[primaryKeyPath] ?? key
 
         #warning("2b refactored")
-        let parents = contextPredicate?.pins ?? []
+        let managedPins = contextPredicate?.managedPins ?? []
 
-        let requestContextPredicate = ContextPredicate(pins: parents)
+        let requestContextPredicate = ContextPredicate(managedPins: managedPins)
         requestContextPredicate[.primary] = modelClass.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
 
         return try JSONMap(element: managedObjectJSON, predicate: requestContextPredicate)

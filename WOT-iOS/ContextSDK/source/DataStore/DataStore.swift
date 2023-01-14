@@ -52,10 +52,6 @@ extension DataStore: DataStoreProtocol {
         fatalError("has not been implemented")
     }
 
-    open func emptyFetchResult() throws -> FetchResultProtocol {
-        fatalError("has not been implemented")
-    }
-
     @objc
     open func newPrivateContext() -> ManagedObjectContextProtocol {
         fatalError("has not been implemented")

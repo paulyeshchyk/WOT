@@ -21,7 +21,7 @@ class RequestManagerTest: XCTestCase {
         let socket = Socket(identifier: "AnchorID", keypath: #keyPath(Anchor.keypath))
         let objectID = ObjectID()
         let extractor = Extractor()
-        let fetchResult = FetchResult(objectID: objectID, managedObjectContext: managedObjectContext, predicate: nil, fetchStatus: .fetched)
+        let fetchResult = FetchResult(managedPin: objectID, managedObjectContext: managedObjectContext, predicate: nil, fetchStatus: .fetched)
         let linker = Linker(modelClass: PrimaryKeypath.self, masterFetchResult: fetchResult, socket: socket)
         let request = TestHttpRequest(context: appContext)
         let listener = Listener()

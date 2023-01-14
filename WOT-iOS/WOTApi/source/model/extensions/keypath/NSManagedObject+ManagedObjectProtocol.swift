@@ -10,11 +10,11 @@ import CoreData
 
 extension NSManagedObject: ManagedObjectProtocol {
     public var entityName: String { return entity.name ?? "<unknown>" }
-    public var managedObjectID: AnyObject { return objectID }
+    public var managedPin: AnyObject { return objectID }
     public var fetchStatus: FetchStatus { isInserted ? .inserted : .fetched }
     public var context: ManagedObjectContextProtocol? { managedObjectContext }
 
-    public func fetchResult(objectID: AnyObject?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) -> FetchResultProtocol {
-        return FetchResult(objectID: objectID, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
+    public func fetchResult(managedPin: AnyObject?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) -> FetchResultProtocol {
+        return FetchResult(managedPin: managedPin, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
     }
 }

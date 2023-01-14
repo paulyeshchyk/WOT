@@ -19,7 +19,7 @@ public extension Vehicleprofile {
         // MARK: - Link items
 
         var parentPins = [AnyObject]()
-        parentPins.append(contentsOf: map.contextPredicate.pins)
+        parentPins.append(contentsOf: map.contextPredicate.managedPins)
         parentPins.append(objectID)
 
         let vehicleprofileFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
@@ -29,7 +29,7 @@ public extension Vehicleprofile {
         let ammoKeypath = #keyPath(Vehicleprofile.ammo)
         if let jsonArray = profileJSON?[ammoKeypath] as? [JSON] {
             let modelClass = VehicleprofileAmmoList.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), pins: parentPins)
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), managedPins: parentPins)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: ammoKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
@@ -50,7 +50,7 @@ public extension Vehicleprofile {
         let armorKeypath = #keyPath(Vehicleprofile.armor)
         if let jsonElement = profileJSON?[armorKeypath] as? JSON {
             let modelClass = VehicleprofileArmorList.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), pins: parentPins)
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), managedPins: parentPins)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: armorKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
@@ -71,7 +71,7 @@ public extension Vehicleprofile {
         let modulesKeypath = #keyPath(Vehicleprofile.modules)
         if let jsonElement = profileJSON?[modulesKeypath] as? JSON {
             let modelClass = VehicleprofileModule.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), pins: parentPins)
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), managedPins: parentPins)
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: modulesKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, socket: socket)
