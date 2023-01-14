@@ -182,7 +182,7 @@ class Linker: ManagedObjectLinkerProtocol {
 
     // MARK: Internal
 
-    func process(fetchResult: FetchResultProtocol, appContext _: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
+    func process(fetchResult: FetchResultProtocol, appContext _: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
         completion(fetchResult, nil)
     }
 

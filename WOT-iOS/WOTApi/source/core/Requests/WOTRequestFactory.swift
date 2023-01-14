@@ -80,7 +80,7 @@ extension WOTWEBRequestFactory {
 
         // MARK: Public
 
-        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
             // MARK: stash
 
             appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
@@ -95,7 +95,7 @@ extension WOTWEBRequestFactory {
 
         // MARK: Public
 
-        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
             // MARK: stash
 
             appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in

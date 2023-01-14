@@ -42,7 +42,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
     open func extractJSON(from _: JSON) -> JSON? { return nil }
 
-    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
+    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
         guard let pin = fetchResult.managedObject() as? ManagedObjectPinProtocol else {
             completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectSocketProtocol.self)))
             return
