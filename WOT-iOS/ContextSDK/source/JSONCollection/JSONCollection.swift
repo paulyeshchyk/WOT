@@ -7,7 +7,11 @@
 
 // MARK: - JSONCollection
 
-public class JSONCollection: JSONCollectionProtocol {
+public class JSONCollection: JSONCollectionProtocol, CustomStringConvertible {
+
+    public var description: String {
+        return "[\(type(of: self))] collection: \(String(describing: collection))"
+    }
 
     private var collectionType: JSONCollectionType
 

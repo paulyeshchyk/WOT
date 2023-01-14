@@ -9,7 +9,7 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
 
     /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
     /// parents identifier has been taken from a list
-    public var parentObjectIDList: [AnyObject] = []
+    public var pins: [AnyObject] = []
 
     override public var description: String {
         let objects = expressions()
@@ -27,12 +27,10 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
 
     // MARK: Lifecycle
 
-    public convenience init(parentObjectIDList idList: [AnyObject]?) {
+    public convenience init(pins idList: [AnyObject]) {
         self.init()
 
-        if let compacted = idList?.compactMap({ $0 }) {
-            parentObjectIDList.append(contentsOf: compacted)
-        }
+        pins.append(contentsOf: idList)
     }
 
     // MARK: Public

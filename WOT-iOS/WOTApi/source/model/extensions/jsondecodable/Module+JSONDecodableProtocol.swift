@@ -16,7 +16,7 @@ public extension Module {
         try decode(decoderContainer: moduleJSON)
         //
 
-        let parentsAsVehicles = map.contextPredicate.parentObjectIDList
+        let parentsAsVehicles = map.contextPredicate.pins
             .compactMap { managedObjectContextContainer.managedObjectContext.object(byID: $0) as? Vehicles }
         let parents = parentsAsVehicles.compactMap { $0.tank_id }
 
@@ -33,61 +33,84 @@ public extension Module {
 
         let hostPin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
 
-        let moduleType = VehicleModuleType.fromString(type)
+        let moduleDecoder = ModuleDecoder(appContext: appContext, hostPin: hostPin)
+        moduleDecoder.module_id = module_id
+        moduleDecoder.moduleFetchResult = moduleFetchResult
+        moduleDecoder.type = type
+        try moduleDecoder.decode()
+    }
+}
+
+// MARK: - ModuleDecoder
+
+public class ModuleDecoder {
+
+    public let appContext: JSONDecodableProtocol.Context?
+    public var modelClass: PrimaryKeypathProtocol.Type?
+    // public var extractor: ManagedObjectExtractable?
+    public var module_id: NSDecimalNumber?
+    // public var keypath: KeypathType?
+    public var moduleFetchResult: FetchResultProtocol?
+    public let hostPin: JointPin
+    public var type: String?
+
+    init(appContext: JSONDecodableProtocol.Context?, hostPin: JointPin) {
+        self.appContext = appContext
+        self.hostPin = hostPin
+    }
+
+    deinit {
+        //
+    }
+
+    func decode() throws {
+        let moduleType = try VehicleModuleType.fromString(type)
         switch moduleType {
         case .vehicleGun:
-            let modelClass = VehicleprofileGun.self
-            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.gun))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
-            let extractor = GunExtractor()
-            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
-            let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
-            let composition = try composer.buildRequestPredicateComposition()
-
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try fetch_module(appContext: appContext, modelClass: VehicleprofileGun.self, extractor: Module.GunExtractor(), module_id: module_id, keypath: #keyPath(Module.gun), moduleFetchResult: moduleFetchResult, hostPin: hostPin)
         case .vehicleRadio:
-            let modelClass = VehicleprofileRadio.self
-            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.radio))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
-            let extractor = RadioExtractor()
-            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
-            let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
-            let composition = try composer.buildRequestPredicateComposition()
-
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try fetch_module(appContext: appContext, modelClass: VehicleprofileRadio.self, extractor: Module.RadioExtractor(), module_id: module_id, keypath: #keyPath(Module.radio), moduleFetchResult: moduleFetchResult, hostPin: hostPin)
         case .vehicleEngine:
-            let modelClass = VehicleprofileEngine.self
-            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.engine))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
-            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
-            let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
-            let composition = try composer.buildRequestPredicateComposition()
-            let extractor = EngineExtractor()
-
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try fetch_module(appContext: appContext, modelClass: VehicleprofileEngine.self, extractor: Module.EngineExtractor(), module_id: module_id, keypath: #keyPath(Module.engine), moduleFetchResult: moduleFetchResult, hostPin: hostPin)
         case .vehicleChassis:
-            let modelClass = VehicleprofileSuspension.self
-            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.suspension))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
-            let extractor = SuspensionExtractor()
-            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
-            let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
-            let composition = try composer.buildRequestPredicateComposition()
-
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try fetch_module(appContext: appContext, modelClass: VehicleprofileSuspension.self, extractor: Module.SuspensionExtractor(), module_id: module_id, keypath: #keyPath(Module.suspension), moduleFetchResult: moduleFetchResult, hostPin: hostPin)
         case .vehicleTurret:
-            let modelClass = VehicleprofileTurret.self
-            let socket = JointSocket(identifier: module_id, keypath: #keyPath(Module.turret))
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
-            let extractor = TurretExtractor()
-            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
-            let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
-            let composition = try composer.buildRequestPredicateComposition()
-
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
-        default:
-            throw ModuleMappingError.unexpectedModuleType(moduleType)
+            try fetch_module(appContext: appContext, modelClass: VehicleprofileTurret.self, extractor: Module.TurretExtractor(), module_id: module_id, keypath: #keyPath(Module.turret), moduleFetchResult: moduleFetchResult, hostPin: hostPin)
         }
+    }
+
+    private func fetch_module(appContext: JSONDecodableProtocol.Context?, modelClass: PrimaryKeypathProtocol.Type, extractor: ManagedObjectExtractable, module_id: NSDecimalNumber?, keypath: KeypathType, moduleFetchResult: FetchResultProtocol?, hostPin: JointPin) throws {
+        let socket = JointSocket(identifier: module_id, keypath: keypath)
+        let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
+        let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
+        let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
+        let composition = try composer.buildRequestPredicateComposition()
+
+        try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+    }
+}
+
+// MARK: - ModuleDecoder + RequestManagerListenerProtocol
+
+extension ModuleDecoder: RequestManagerListenerProtocol {
+    public var MD5: String {
+        "ModuleDecoder"
+    }
+
+    public func requestManager(_: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error _: Error?) {}
+    public func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {}
+    public func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {}
+}
+
+extension Module {
+    private func fetch_module(appContext: JSONDecodableProtocol.Context?, modelClass: PrimaryKeypathProtocol.Type, extractor: ManagedObjectExtractable, module_id: NSDecimalNumber, keypath: KeypathType, moduleFetchResult: FetchResultProtocol, hostPin: JointPin) throws {
+        let socket = JointSocket(identifier: module_id, keypath: keypath)
+        let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, socket: socket)
+        let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
+        let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, hostPin: hostPin)
+        let composition = try composer.buildRequestPredicateComposition()
+
+        try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
     }
 }
 
@@ -113,32 +136,31 @@ extension Module: RequestManagerListenerProtocol {
 private enum ModuleMappingError: Error {
     case noParentsFound
     case moduleIdNotDefined
-    case unexpectedModuleType(VehicleModuleType)
 }
 
 extension Module {
 
-    private class EngineExtractor: ManagedObjectExtractable {
+    class EngineExtractor: ManagedObjectExtractable {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.engine) }
     }
 
-    private class GunExtractor: ManagedObjectExtractable {
+    class GunExtractor: ManagedObjectExtractable {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.gun) }
     }
 
-    private class RadioExtractor: ManagedObjectExtractable {
+    class RadioExtractor: ManagedObjectExtractable {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.radio) }
     }
 
-    private class SuspensionExtractor: ManagedObjectExtractable {
+    class SuspensionExtractor: ManagedObjectExtractable {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.suspension) }
     }
 
-    private class TurretExtractor: ManagedObjectExtractable {
+    class TurretExtractor: ManagedObjectExtractable {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.turret) }
     }

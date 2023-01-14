@@ -21,9 +21,11 @@ public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: RequestPredicateComp
     // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
+        let pinModelClass = pin.modelClass
+        let hostPinModelClass = hostPin.modelClass
         let lookupPredicate = ContextPredicate()
-        lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
-        lookupPredicate[.secondary] = hostPin.modelClass.primaryKey(forType: .internal, andObject: hostPin.identifier)
+        lookupPredicate[.primary] = pinModelClass.primaryKey(forType: .external, andObject: pin.identifier)
+        lookupPredicate[.secondary] = hostPinModelClass.primaryKey(forType: .internal, andObject: hostPin.identifier)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }

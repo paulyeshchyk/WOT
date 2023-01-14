@@ -20,25 +20,25 @@ public extension ModulesTree {
 
         // MARK: - NextTanks
 
-        let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
-        if let nextTanks = moduleTreeJSON?[nextTanksKeypath] as? [AnyObject] {
-            let socket = JointSocket(identifier: nil, keypath: nextTanksKeypath)
-            let linker = ManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: modulesTreeFetchResult, socket: socket)
-            let extractor = NextVehicleExtractor()
-            for nextTank in nextTanks {
-                // parents was not used for next portion of tanks
-                let pin = JointPin(modelClass: Vehicles.self, identifier: nextTank, contextPredicate: nil)
-                let composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
-                do {
-                    let modelClass = Vehicles.self
-                    let composition = try composer.buildRequestPredicateComposition()
-
-                    try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
-                } catch {
-                    appContext?.logInspector?.log(.error(error), sender: self)
-                }
-            }
-        }
+//        let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
+//        if let nextTanks = moduleTreeJSON?[nextTanksKeypath] as? [AnyObject] {
+//            let socket = JointSocket(identifier: nil, keypath: nextTanksKeypath)
+//            let linker = ManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: modulesTreeFetchResult, socket: socket)
+//            let extractor = NextVehicleExtractor()
+//            for nextTank in nextTanks {
+//                // parents was not used for next portion of tanks
+//                let pin = JointPin(modelClass: Vehicles.self, identifier: nextTank, contextPredicate: nil)
+//                let composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
+//                do {
+//                    let modelClass = Vehicles.self
+//                    let composition = try composer.buildRequestPredicateComposition()
+//
+//                    try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+//                } catch {
+//                    appContext?.logInspector?.log(.error(error), sender: self)
+//                }
+//            }
+//        }
 
         // MARK: - NextModules
 
@@ -50,7 +50,7 @@ public extension ModulesTree {
             for nextModuleID in nextModules {
                 let modelClass = Module.self
                 let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
-                let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin, hostObjectID: objectID)
+                let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin, hostPin: objectID)
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
 

@@ -25,13 +25,11 @@ public extension ModulesTree {
 // MARK: - VehicleModuleType
 
 public enum VehicleModuleType: String {
-    case unknown
     case vehicleChassis
     case vehicleEngine
     case vehicleRadio
     case vehicleTurret
     case vehicleGun
-    case tank
 
     var index: Int {
         if let result = VehicleModuleType.allTypes.firstIndex(of: self) {
@@ -40,16 +38,16 @@ public enum VehicleModuleType: String {
         fatalError("VehicleModuleType.alltypes has no value:\(self)")
     }
 
-    private static var allTypes: [VehicleModuleType] = [.unknown, .vehicleChassis, .vehicleEngine, .vehicleRadio, .vehicleTurret, .vehicleGun, .tank]
+    private static var allTypes: [VehicleModuleType] = [.vehicleChassis, .vehicleEngine, .vehicleRadio, .vehicleTurret, .vehicleGun]
 
     // MARK: Public
 
-    public static func fromString(_ string: String?) -> VehicleModuleType {
+    public static func fromString(_ string: String?) throws -> VehicleModuleType {
         guard let string = string else {
-            fatalError("incompatible module type: nil")
+            throw ModuleMappingError.cantUseNil
         }
         guard let result = VehicleModuleType(rawValue: string) else {
-            fatalError("incompatible module type: \(string)")
+            throw ModuleMappingError.unexpectedModuleType(string)
         }
         return result
     }
@@ -59,7 +57,13 @@ public enum VehicleModuleType: String {
     static func value(for intValue: Int) -> VehicleModuleType {
         return VehicleModuleType.allTypes[intValue]
     }
+}
 
+// MARK: - ModuleMappingError
+
+private enum ModuleMappingError: Error {
+    case cantUseNil
+    case unexpectedModuleType(String)
 }
 
 // MARK: - ObjCVehicleModuleType

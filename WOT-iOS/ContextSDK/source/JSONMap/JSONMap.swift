@@ -9,7 +9,7 @@
 
 @objc
 public protocol JSONMapProtocol: JSONCollectionContainerProtocol, ContextPredicateContainerProtocol {
-//
+    var description: String { get }
 }
 
 extension JSONMapProtocol {
@@ -21,6 +21,10 @@ extension JSONMapProtocol {
 // MARK: - JSONMap
 
 public class JSONMap: JSONMapProtocol {
+
+    public var description: String {
+        return "[\(type(of: self))]: data: \(String(describing: jsonCollection)), predicate: \(String(describing: contextPredicate))"
+    }
 
     public let contextPredicate: ContextPredicateProtocol
     public let jsonCollection: JSONCollectionProtocol

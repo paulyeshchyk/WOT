@@ -30,7 +30,7 @@ public extension Vehicles {
         if let jsonElement = vehicleJSON?[defaultProfileKeypath] as? JSON {
             let modelClass = Vehicleprofile.self
             let vehiclesFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
-            let builder = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
+            let builder = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), pins: [])
             let composition = try builder.buildRequestPredicateComposition()
             let socket = JointSocket(identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehiclesFetchResult, socket: socket)
@@ -59,12 +59,12 @@ extension Vehicles {
             throw VehiclesJSONMappingError.passedInvalidModuleTreeJSON(tank_id)
         }
 
-        var parentObjectIDList = requestPredicate.parentObjectIDList
-        parentObjectIDList.append(objectID)
+        var parentPins = requestPredicate.pins
+        parentPins.append(objectID)
 
         let vehiclesFetchResult = fetchResult(context: objectContext)
 
-        let contextPredicate = try VehiclesModuleTreeBuilder(requestPredicate: requestPredicate, parentObjectIDList: parentObjectIDList)
+        let contextPredicate = try VehiclesModuleTreeBuilder(requestPredicate: requestPredicate, pins: parentPins)
             .buildRequestPredicateComposition()
             .contextPredicate
 
