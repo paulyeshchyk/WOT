@@ -34,10 +34,9 @@ public extension Vehicles {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
 
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -75,7 +74,7 @@ extension Vehicles {
         }
     }
 
-    private func submoduleMapping(managedObjectContext: ManagedObjectContextProtocol, jsonElement: JSON, module_id: Any?, requestPredicate: ContextPredicateProtocol, managedRef: ManagedRefProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    private func submoduleMapping(managedObjectContext _: ManagedObjectContextProtocol, jsonElement: JSON, module_id: Any?, requestPredicate: ContextPredicateProtocol, managedRef: ManagedRefProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         let composer = VehiclesModuleBuilder(requestPredicate: requestPredicate, module_id: module_id)
         let composition = try composer.buildRequestPredicateComposition()
         let keypath = #keyPath(ModulesTree.next_modules)
@@ -83,7 +82,7 @@ extension Vehicles {
         let socket = JointSocket(managedRef: managedRef, identifier: module_id, keypath: keypath)
         let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
         let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-        MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+        JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
             if let error = error {
                 appContext?.logInspector?.log(.warning(error: error), sender: self)
             }

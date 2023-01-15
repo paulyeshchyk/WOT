@@ -10,7 +10,7 @@ public extension Vehicleprofile {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
         let profileJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: profileJSON)
@@ -32,9 +32,8 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: ammoKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(array: jsonArray, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -53,9 +52,8 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: armorKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -74,9 +72,8 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: modulesKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -97,9 +94,8 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: engineKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -120,9 +116,8 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: gunKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -143,9 +138,8 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: suspensionKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -166,9 +160,8 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: turretKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -189,9 +182,8 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: radioKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }

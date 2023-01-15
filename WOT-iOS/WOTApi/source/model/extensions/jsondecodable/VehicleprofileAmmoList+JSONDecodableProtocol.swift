@@ -10,7 +10,7 @@ public extension VehicleprofileAmmoList {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
         let profilesJSON = try map.data(ofType: [JSON].self)
         //
@@ -24,9 +24,8 @@ public extension VehicleprofileAmmoList {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let managedObjectContext = managedObjectContextContainer.managedObjectContext
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            MOSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }

@@ -7,20 +7,20 @@
 
 // MARK: - JSONSyndicate
 
-class JSONSyndicate {
-    typealias Context = DataStoreContainerProtocol
+public class JSONSyndicate {
+    public typealias Context = DataStoreContainerProtocol
         & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var managedObjectLinker: ManagedObjectLinkerProtocol?
-    let appContext: JSONSyndicate.Context
+    let appContext: JSONSyndicate.Context?
     var modelClass: PrimaryKeypathProtocol.Type?
     var jsonMap: JSONMapProtocol?
 
     // MARK: Lifecycle
 
-    init(appContext: JSONSyndicate.Context) {
+    init(appContext: JSONSyndicate.Context?) {
         self.appContext = appContext
     }
 
@@ -49,12 +49,27 @@ class JSONSyndicate {
 
         let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
         datastoreFetchHelper.modelClass = modelClass
-        datastoreFetchHelper.nspredicate = jsonMap?.contextPredicate[.primary]?.predicate
+        datastoreFetchHelper.nspredicate = jsonMap?.contextPredicate.nspredicate(operator: .and)
         datastoreFetchHelper.completion = { fetchResult, error in
             mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
         }
 
         datastoreFetchHelper.run()
+    }
+}
+
+extension JSONSyndicate {
+
+    public static func decodeAndLink(appContext: JSONSyndicate.Context?, jsonMap: JSONMapProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectLinker: ManagedObjectLinkerProtocol?, completion: @escaping FetchResultCompletion) {
+        let jsonSyndicate = JSONSyndicate(appContext: appContext)
+        jsonSyndicate.jsonMap = jsonMap
+        jsonSyndicate.modelClass = modelClass
+        jsonSyndicate.managedObjectLinker = managedObjectLinker
+
+        jsonSyndicate.completion = { fetchResult, error in
+            completion(fetchResult, error)
+        }
+        jsonSyndicate.run()
     }
 }
 
