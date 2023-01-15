@@ -8,16 +8,9 @@
 import ContextSDK
 import CoreData
 
-extension NSManagedObject: JSONDecodableProtocol {
-    private enum NSManagedObjectJSONMappableError: Error, CustomStringConvertible {
-        case shouldBeOverriden(String)
+// MARK: - NSManagedObject + JSONDecodableProtocol
 
-        var description: String {
-            switch self {
-            case .shouldBeOverriden(let text): return "\(type(of: self)): '\(text)' should be overridden"
-            }
-        }
-    }
+extension NSManagedObject: JSONDecodableProtocol {
 
     public enum DataFieldsKeys: String, CodingKey {
         case hasChanges
@@ -27,6 +20,18 @@ extension NSManagedObject: JSONDecodableProtocol {
 
     @objc
     open func decode(using _: JSONMapProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
-        throw NSManagedObjectJSONMappableError.shouldBeOverriden("\(type(of: self))::\(#function)")
+        throw NSManagedObjectJSONMappableError.hasNotBeenImplemented("\(type(of: self))::\(#function)")
+    }
+}
+
+// MARK: - NSManagedObjectJSONMappableError
+
+private enum NSManagedObjectJSONMappableError: Error, CustomStringConvertible {
+    case hasNotBeenImplemented(String)
+
+    var description: String {
+        switch self {
+        case .hasNotBeenImplemented(let text): return "\(type(of: self)): '\(text)' has not been implemented"
+        }
     }
 }
