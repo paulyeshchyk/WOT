@@ -25,7 +25,7 @@ public extension VehicleprofileModule {
             let composition = try composer.buildRequestPredicateComposition()
 
             let extractor = GunExtractor()
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
         if let radio_id = radio_id {
@@ -37,7 +37,7 @@ public extension VehicleprofileModule {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
 
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
         if let engine_id = engine_id {
@@ -49,7 +49,7 @@ public extension VehicleprofileModule {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
 
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
         if let suspension_id = suspension_id {
@@ -61,7 +61,7 @@ public extension VehicleprofileModule {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
 
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
         if let turret_id = turret_id {
@@ -73,7 +73,7 @@ public extension VehicleprofileModule {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
 
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
     }
 }
@@ -103,21 +103,5 @@ extension VehicleprofileModule {
     private class TurretExtractor: ManagedObjectExtractable {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.turret) }
-    }
-}
-
-// MARK: - VehicleprofileModule + RequestManagerListenerProtocol
-
-extension VehicleprofileModule: RequestManagerListenerProtocol {
-    public func requestManager(_: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error _: Error?) {
-        //
-    }
-
-    public func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {
-        //
-    }
-
-    public func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
-        //
     }
 }

@@ -33,6 +33,10 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
         managedRefs.append(contentsOf: idList)
     }
 
+    deinit {
+        //
+    }
+
     // MARK: Public
 
     public subscript(pkType: ContextExpressionType) -> ContextExpressionProtocol? {

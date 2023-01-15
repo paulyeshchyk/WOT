@@ -55,6 +55,10 @@ public class JSONMap: JSONMapProtocol {
         let collection = JSONCollection(custom: custom)
         try self.init(jsonCollection: collection, predicate: contextPredicate)
     }
+
+    deinit {
+        //
+    }
 }
 
 // MARK: - JSONMapError

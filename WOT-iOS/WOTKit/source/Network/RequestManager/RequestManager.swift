@@ -118,8 +118,8 @@ extension RequestManager: RequestListenerProtocol {
 
         if let error = error {
             appContext.logInspector?.log(.error(error), sender: self)
-            return
         }
+        //
         do {
             try managedObjectExractableList.removeExtractorForRequest(request)
         } catch {
@@ -189,15 +189,18 @@ extension RequestManager: RequestManagerProtocol {
         guard !requestIDs.isEmpty else {
             throw RequestManagerError.requestsNotRegistered(modelClass)
         }
-        for requestID in requestIDs {
-            do {
-                //
-                let request = try createRequest(modelClass: modelClass, requestID: requestID, contextPredicate: contextPredicate)
-                let groupId: RequestIdType = request.MD5.hashValue
 
-                try startRequest(request, forGroupId: groupId, managedObjectCreator: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
-            } catch {
-                appContext.logInspector?.log(.error(error), sender: self)
+        DispatchQueue.main.async {
+            for requestID in requestIDs {
+                do {
+                    //
+                    let request = try self.createRequest(modelClass: modelClass, requestID: requestID, contextPredicate: contextPredicate)
+                    let groupId: RequestIdType = request.MD5.hashValue
+
+                    try self.startRequest(request, forGroupId: groupId, managedObjectCreator: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
+                } catch {
+                    self.appContext.logInspector?.log(.error(error), sender: self)
+                }
             }
         }
     }

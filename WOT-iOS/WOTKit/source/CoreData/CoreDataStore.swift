@@ -38,9 +38,7 @@ open class CoreDataStore: DataStore {
         return coordinator
     }()
 
-    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(parent: self.masterContext)
-
-    private lazy var masterContext: NSManagedObjectContext = CoreDataStore.masterContext(persistentStoreCoordinator: self.persistentStoreCoordinator)
+    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(persistentStoreCoordinator: self.persistentStoreCoordinator)
 
     private lazy var managedObjectModel: NSManagedObjectModel? = {
         guard let modelURL = self.modelURL else {
@@ -53,7 +51,7 @@ open class CoreDataStore: DataStore {
 
     @objc
     override public func newPrivateContext() -> ManagedObjectContextProtocol {
-        CoreDataStore.privateQueueConcurrencyContext(parent: mainContext)
+        CoreDataStore.privateQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
     }
 
     @objc
@@ -85,26 +83,19 @@ open class CoreDataStore: DataStore {
 }
 
 extension CoreDataStore {
-    private static func mainQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
+    //
+    private static func mainQueueConcurrencyContext(persistentStoreCoordinator: NSPersistentStoreCoordinator?) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.name = "Main <\(UUID().MD5)>"
-        managedObjectContext.parent = parent
+        managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
         managedObjectContext.undoManager = nil
         return managedObjectContext
     }
 
-    private static func privateQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
+    private static func privateQueueConcurrencyContext(persistentStoreCoordinator: NSPersistentStoreCoordinator?) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.name = "Private <\(UUID().MD5)>"
-        managedObjectContext.parent = parent
-        managedObjectContext.undoManager = nil
-        return managedObjectContext
-    }
-
-    private static func masterContext(persistentStoreCoordinator: NSPersistentStoreCoordinator) -> NSManagedObjectContext {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
-        managedObjectContext.name = "Master <\(UUID().MD5)>"
         managedObjectContext.undoManager = nil
         return managedObjectContext
     }

@@ -190,7 +190,6 @@ class DatastoreFetchHelper {
     var nspredicate: NSPredicate?
     var modelClass: PrimaryKeypathProtocol.Type?
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
-    var managedObjectContext: ManagedObjectContextProtocol?
 
     private enum DatastoreFetchHelperError: Error, CustomStringConvertible {
         case modelClassIsNotDefined
@@ -204,7 +203,6 @@ class DatastoreFetchHelper {
 
     // MARK: Lifecycle
 
-    //
     init(appContext: DatastoreFetchHelper.Context?) {
         self.appContext = appContext
     }
@@ -219,7 +217,6 @@ class DatastoreFetchHelper {
 
         appContext?.dataStore?.fetch(modelClass: modelClass,
                                      nspredicate: nspredicate,
-                                     managedObjectContext: managedObjectContext,
                                      completion: { fetchResult, error in
                                          self.completion?(fetchResult, error)
                                      })

@@ -115,23 +115,6 @@ extension ModuleDecoder: RequestManagerListenerProtocol {
     public func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {}
 }
 
-// MARK: - Module + RequestManagerListenerProtocol
-
-extension Module: RequestManagerListenerProtocol {
-
-    public func requestManager(_: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error _: Error?) {
-        //
-    }
-
-    public func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {
-        //
-    }
-
-    public func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
-        //
-    }
-}
-
 // MARK: - ModuleMappingError
 
 private enum ModuleMappingError: Error {

@@ -24,11 +24,6 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         }
     }
 
-    private enum NSManagedObjectContextError: Error {
-        case isNotNSManagedObjectID
-        case isNotManagedObjectProtocol
-    }
-
     public func object(managedRef: ManagedRefProtocol) -> ManagedObjectProtocol? {
         guard let objectID = managedRef.managedObjectID as? NSManagedObjectID else {
             assertionFailure("forObjectID is not NSManagedObject")
@@ -62,35 +57,43 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
     }
 
     public func save(appContext: ManagedObjectContextSaveProtocol.Context?, completion block: @escaping ThrowableCompletion) {
-        let privateCompletion: ThrowableCompletion = { error in
-            self.perform {
-                block(error)
-            }
-        }
         guard hasChanges else {
-            privateCompletion(nil)
+            perform { block(nil) }
             return
         }
 
-        let performStartTime = Date()
-        appContext?.logInspector?.log(.sqlite(message: LogMessages.performAndWait_start(self).description), sender: self)
-        performAndWait {
-            do {
-                appContext?.logInspector?.log(.sqlite(message: LogMessages.performAndWait_done(performStartTime, self).description), sender: self)
-
-                appContext?.logInspector?.log(.sqlite(message: LogMessages.save_start(self).description), sender: self)
-                try self.save()
-                appContext?.logInspector?.log(.sqlite(message: LogMessages.save_done(self).description), sender: self)
-
-                if let parent = self.parent {
-                    parent.save(appContext: appContext, completion: privateCompletion)
-                } else {
-                    privateCompletion(nil)
-                }
-            } catch {
-                appContext?.logInspector?.log(.sqlite(message: LogMessages.save_fail(self).description), sender: self)
-                privateCompletion(error)
+        guard concurrencyType == .privateQueueConcurrencyType else {
+            perform {
+                block(NSManagedObjectContextError.isNotPrivateQueueConcurrencyType)
             }
+            return
+        }
+
+        let executionStartTime = Date()
+        appContext?.logInspector?.log(.sqlite(message: LogMessages.perform4Save_start(self).description), sender: self)
+
+        perform {
+            self._save(appContext: appContext) { error in
+                appContext?.logInspector?.log(.sqlite(message: LogMessages.perform4Save_done(executionStartTime, self).description), sender: self)
+                block(error)
+            }
+        }
+    }
+
+    private func _save(appContext: ManagedObjectContextSaveProtocol.Context?, completion block: @escaping ThrowableCompletion) {
+        let executionStartTime = Date()
+        do {
+            appContext?.logInspector?.log(.sqlite(message: LogMessages.save_start(self).description), sender: self)
+            try save()
+            appContext?.logInspector?.log(.sqlite(message: LogMessages.save_done(executionStartTime, self).description), sender: self)
+
+            if let parent = parent {
+                parent.save(appContext: appContext, completion: block)
+            } else {
+                block(nil)
+            }
+        } catch {
+            appContext?.logInspector?.log(.sqlite(message: LogMessages.save_fail(executionStartTime, self).description), sender: self)
         }
     }
 
@@ -143,18 +146,30 @@ extension NSManagedObjectContext {
     }
 }
 
+// MARK: - NSManagedObjectContextError
+
+private enum NSManagedObjectContextError: Error, CustomStringConvertible {
+    case isNotPrivateQueueConcurrencyType
+
+    var description: String {
+        switch self {
+        case .isNotPrivateQueueConcurrencyType: return "Save operation must be performed only in context with concurrency type: PrivateQueueConcurrencyType"
+        }
+    }
+}
+
 // MARK: - LogMessages
 
 private enum LogMessages: CustomStringConvertible {
     case perform_start(UUID, NSManagedObjectContext)
     case perform_done(Date, UUID, NSManagedObjectContext)
-    case performAndWait_start(NSManagedObjectContext)
-    case performAndWait_done(Date, NSManagedObjectContext)
+    case perform4Save_start(NSManagedObjectContext)
+    case perform4Save_done(Date, NSManagedObjectContext)
     case select_fail(NSPredicate?, NSManagedObjectContext)
     case select_done(NSPredicate?, NSManagedObjectContext)
     case save_start(NSManagedObjectContext)
-    case save_done(NSManagedObjectContext)
-    case save_fail(NSManagedObjectContext)
+    case save_done(Date, NSManagedObjectContext)
+    case save_fail(Date, NSManagedObjectContext)
     case insert_start(AnyObject)
     case insert_fail(AnyObject)
     case insert_done(AnyObject)
@@ -163,13 +178,13 @@ private enum LogMessages: CustomStringConvertible {
         switch self {
         case .perform_start(let uuid, let context): return "perform-start; in: \(context.name ?? "<unknown>"), operation: \(uuid.MD5))"
         case .perform_done(let date, let uuid, let context): return "perform-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>"), operation: \(uuid.MD5)"
-        case .performAndWait_start(let context): return "perform_and_wait-start; in: \(context.name ?? "<unknown>"))"
-        case .performAndWait_done(let date, let context): return "perform_and_wait-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
+        case .perform4Save_start(let context): return "perform_for_save-start; in: \(context.name ?? "<unknown>"))"
+        case .perform4Save_done(let date, let context): return "perform_for_save-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
         case .select_done(let predicate, let context): return "select done; predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
         case .select_fail(let predicate, let context): return "select fail; predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
         case .save_start(let context): return "save-start; in: \(context.name ?? "<unknown>")"
-        case .save_done(let context): return "save-done; in: \(context.name ?? "<unknown>")"
-        case .save_fail(let context): return "save-fail; in: \(context.name ?? "<unknown>")"
+        case .save_done(let date, let context): return "save-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
+        case .save_fail(let date, let context): return "save-fail; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
         case .insert_start(let type): return "insert-start; type: \(type)"
         case .insert_fail(let type): return "insert-fail; type: \(type)"
         case .insert_done(let type): return "insert-done; type: \(type)"

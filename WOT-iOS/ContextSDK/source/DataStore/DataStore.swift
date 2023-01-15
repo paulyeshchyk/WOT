@@ -81,7 +81,7 @@ extension DataStore: DataStoreProtocol {
         }
     }
 
-    public func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, managedObjectContext: ManagedObjectContextProtocol?, completion: @escaping FetchResultCompletion) {
+    public func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, completion: @escaping FetchResultCompletion) {
         //
         guard isClassValid(modelClass) else {
             completion(nil, DataStoreError.notManagedObjectType(modelClass))
@@ -100,17 +100,8 @@ extension DataStore: DataStoreProtocol {
                 return
             }
             self.stash(managedObjectContext: privateManagedObjectContext) { context, error in
-                guard error == nil else {
-                    completion(nil, error)
-                    return
-                }
-                let originalFetchResult = managedObject.fetchResult(context: context)
-
-                let finalManagedObjectContext = managedObjectContext ?? self.workingContext()
-                finalManagedObjectContext.execute(appContext: self.appContext) { context in
-                    let fetchResult = originalFetchResult.makeDublicate(managedObjectContext: context)
-                    completion(fetchResult, nil)
-                }
+                let fetchResult = managedObject.fetchResult(context: context)
+                completion(fetchResult, error)
             }
         }
     }

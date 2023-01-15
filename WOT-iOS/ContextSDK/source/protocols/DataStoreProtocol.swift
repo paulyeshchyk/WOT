@@ -34,7 +34,7 @@ public protocol DataStoreProtocol {
     @objc func fetchResultController(fetchRequest: AnyObject, managedObjectContext: ManagedObjectContextProtocol) throws -> AnyObject
     @objc func mainContextFetchResultController(fetchRequest: AnyObject, sectionNameKeyPath: String?, cacheName name: String?) throws -> AnyObject
 
-    func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, managedObjectContext: ManagedObjectContextProtocol?, completion: @escaping FetchResultCompletion)
+    func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, completion: @escaping FetchResultCompletion)
 
     func stash(managedObject: ManagedObjectProtocol, completion: @escaping DatastoreManagedObjectCompletion)
     func stash(managedObjectContext: ManagedObjectContextProtocol, completion: @escaping ThrowableContextCompletion)

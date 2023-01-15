@@ -31,7 +31,7 @@ public extension ModulesTree {
                     let modelClass = Vehicles.self
                     let composition = try composer.buildRequestPredicateComposition()
 
-                    try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+                    try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
                 } catch {
                     appContext?.logInspector?.log(.error(error), sender: self)
                 }
@@ -51,7 +51,7 @@ public extension ModulesTree {
                 let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin, hostManagedRef: managedRef)
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
-                    try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: nextModuleManagedObjectCreator, managedObjectExtractor: extractor, listener: self)
+                    try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: nextModuleManagedObjectCreator, managedObjectExtractor: extractor, listener: nil)
                 } catch {
                     appContext?.logInspector?.log(.error(error), sender: self)
                 }
@@ -70,7 +70,7 @@ public extension ModulesTree {
         let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, managedRef: managedRef)
         let composition = try composer.buildRequestPredicateComposition()
 
-        try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: self)
+        try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: nil)
     }
 }
 
@@ -89,21 +89,5 @@ extension ModulesTree {
     private class CurrentModuleExtractor: ManagedObjectExtractable {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         public var jsonKeyPath: KeypathType? { nil }
-    }
-}
-
-// MARK: - ModulesTree + RequestManagerListenerProtocol
-
-extension ModulesTree: RequestManagerListenerProtocol {
-    public func requestManager(_: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error _: Error?) {
-        //
-    }
-
-    public func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {
-        //
-    }
-
-    public func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
-        //
     }
 }
