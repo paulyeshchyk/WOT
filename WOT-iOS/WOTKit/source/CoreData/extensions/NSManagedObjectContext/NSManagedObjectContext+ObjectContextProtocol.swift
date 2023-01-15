@@ -14,13 +14,13 @@ import CoreData
 extension NSManagedObjectContext: ManagedObjectContextProtocol {
     // MARK: - ManagedObjectContextLookupProtocol
 
-    public func execute(appContext: ManagedObjectContextLookupProtocol.Context, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
+    public func execute(appContext: ManagedObjectContextLookupProtocol.Context?, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
         let uuid = UUID()
         let executionStartTime = Date()
-        appContext.logInspector?.log(.sqlite(message: LogMessages.execute_start(uuid, self).description), sender: self)
+        appContext?.logInspector?.log(.sqlite(message: LogMessages.perform_start(uuid, self).description), sender: self)
         perform {
+            appContext?.logInspector?.log(.sqlite(message: LogMessages.perform_done(executionStartTime, uuid, self).description), sender: self)
             block(self)
-            appContext.logInspector?.log(.sqlite(message: LogMessages.execute_done(executionStartTime, uuid, self).description), sender: self)
         }
     }
 
@@ -41,16 +41,16 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return result
     }
 
-    public func findOrCreateObject(appContext: ManagedObjectContextLookupProtocol.Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
+    public func findOrCreateObject(appContext: ManagedObjectContextLookupProtocol.Context?, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
         do {
             guard let foundObject = try lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
-                appContext.logInspector?.log(.sqlite(message: LogMessages.select_fail(predicate, self).description), sender: self)
+                appContext?.logInspector?.log(.sqlite(message: LogMessages.select_fail(predicate, self).description), sender: self)
                 return insertNewObject(appContext: appContext, forType: modelClass)
             }
-            appContext.logInspector?.log(.sqlite(message: LogMessages.select_done(predicate, self).description), sender: self)
+            appContext?.logInspector?.log(.sqlite(message: LogMessages.select_done(predicate, self).description), sender: self)
             return foundObject
         } catch {
-            appContext.logInspector?.log(.error(error), sender: self)
+            appContext?.logInspector?.log(.error(error), sender: self)
             return nil
         }
     }
@@ -61,7 +61,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return hasChanges
     }
 
-    public func save(appContext: ManagedObjectContextSaveProtocol.Context, completion block: @escaping ThrowableCompletion) {
+    public func save(appContext: ManagedObjectContextSaveProtocol.Context?, completion block: @escaping ThrowableCompletion) {
         let privateCompletion: ThrowableCompletion = { error in
             self.perform {
                 block(error)
@@ -72,11 +72,15 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
             return
         }
 
-        appContext.logInspector?.log(.sqlite(message: LogMessages.save_start(self).description), sender: self)
+        let performStartTime = Date()
+        appContext?.logInspector?.log(.sqlite(message: LogMessages.performAndWait_start(self).description), sender: self)
         performAndWait {
             do {
+                appContext?.logInspector?.log(.sqlite(message: LogMessages.performAndWait_done(performStartTime, self).description), sender: self)
+
+                appContext?.logInspector?.log(.sqlite(message: LogMessages.save_start(self).description), sender: self)
                 try self.save()
-                appContext.logInspector?.log(.sqlite(message: LogMessages.save_done(self).description), sender: self)
+                appContext?.logInspector?.log(.sqlite(message: LogMessages.save_done(self).description), sender: self)
 
                 if let parent = self.parent {
                     parent.save(appContext: appContext, completion: privateCompletion)
@@ -84,7 +88,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
                     privateCompletion(nil)
                 }
             } catch {
-                appContext.logInspector?.log(.sqlite(message: LogMessages.save_fail(self).description), sender: self)
+                appContext?.logInspector?.log(.sqlite(message: LogMessages.save_fail(self).description), sender: self)
                 privateCompletion(error)
             }
         }
@@ -126,11 +130,11 @@ extension NSManagedObjectContext {
         return try fetch(request).last as? ManagedObjectProtocol
     }
 
-    private func insertNewObject<T>(appContext: ManagedObjectContextLookupProtocol.Context, forType: AnyObject) -> T? {
-        appContext.logInspector?.log(.sqlite(message: LogMessages.insert_start(forType).description), sender: self)
+    private func insertNewObject<T>(appContext: ManagedObjectContextLookupProtocol.Context?, forType: AnyObject) -> T? {
+        appContext?.logInspector?.log(.sqlite(message: LogMessages.insert_start(forType).description), sender: self)
         let result = NSEntityDescription.insertNewObject(forEntityName: String(describing: forType), into: self) as? T
         let endMessage = (result == nil) ? LogMessages.insert_fail(forType) : LogMessages.insert_done(forType)
-        appContext.logInspector?.log(.sqlite(message: endMessage.description), sender: self)
+        appContext?.logInspector?.log(.sqlite(message: endMessage.description), sender: self)
         return result
     }
 
@@ -142,8 +146,10 @@ extension NSManagedObjectContext {
 // MARK: - LogMessages
 
 private enum LogMessages: CustomStringConvertible {
-    case execute_start(UUID, NSManagedObjectContext)
-    case execute_done(Date, UUID, NSManagedObjectContext)
+    case perform_start(UUID, NSManagedObjectContext)
+    case perform_done(Date, UUID, NSManagedObjectContext)
+    case performAndWait_start(NSManagedObjectContext)
+    case performAndWait_done(Date, NSManagedObjectContext)
     case select_fail(NSPredicate?, NSManagedObjectContext)
     case select_done(NSPredicate?, NSManagedObjectContext)
     case save_start(NSManagedObjectContext)
@@ -155,8 +161,10 @@ private enum LogMessages: CustomStringConvertible {
 
     var description: String {
         switch self {
-        case .execute_start(let uuid, let context): return "exec-start; in: \(context.name ?? "<unknown>"), operation: \(uuid.MD5))"
-        case .execute_done(let date, let uuid, let context): return "exec-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>"), operation: \(uuid.MD5)"
+        case .perform_start(let uuid, let context): return "perform-start; in: \(context.name ?? "<unknown>"), operation: \(uuid.MD5))"
+        case .perform_done(let date, let uuid, let context): return "perform-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>"), operation: \(uuid.MD5)"
+        case .performAndWait_start(let context): return "perform_and_wait-start; in: \(context.name ?? "<unknown>"))"
+        case .performAndWait_done(let date, let context): return "perform_and_wait-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
         case .select_done(let predicate, let context): return "select done; predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
         case .select_fail(let predicate, let context): return "select fail; predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
         case .save_start(let context): return "save-start; in: \(context.name ?? "<unknown>")"

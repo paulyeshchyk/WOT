@@ -116,22 +116,22 @@ extension Request {
     // MARK: - StartableProtocol
 
     open func cancel(byReason _: RequestCancelReasonProtocol) throws {
-        throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
+        throw RequestError.hasNotBeenImplemented("\(type(of: self))::\(#function)")
     }
 
     open func start() throws {
-        throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
+        throw RequestError.hasNotBeenImplemented("\(type(of: self))::\(#function)")
     }
 }
 
 // MARK: - RequestError
 
 private enum RequestError: Error, CustomStringConvertible {
-    case shouldBeOverriden(String)
+    case hasNotBeenImplemented(String)
 
     var description: String {
         switch self {
-        case .shouldBeOverriden(let text): return "\(type(of: self)): '\(text)' should be overridden"
+        case .hasNotBeenImplemented(let text): return "\(type(of: self)): '\(text)' has not been implemented"
         }
     }
 }

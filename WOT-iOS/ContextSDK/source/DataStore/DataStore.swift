@@ -11,13 +11,13 @@ open class DataStore {
 
     public typealias Context = LogInspectorContainerProtocol
 
-    public let appContext: Context
+    public let appContext: Context?
 
     // MARK: Lifecycle
 
-    public required init(appContext: Context) {
+    public required init(appContext: Context?) {
         self.appContext = appContext
-        appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
+        self.appContext?.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
 }
 

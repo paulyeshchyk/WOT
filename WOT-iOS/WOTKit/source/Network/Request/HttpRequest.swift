@@ -81,7 +81,7 @@ extension HttpRequest: HttpDataReceiverDelegateProtocol {
 
 extension HttpRequest: HttpServiceProtocol {
     open var httpMethod: ContextSDK.HTTPMethod { return .POST }
-    open var path: String { fatalError("WOTWEBRequest:path need to be overriden") }
+    open var path: String { fatalError("WOTWEBRequest:path has not been implemented") }
     open var httpBodyData: Data? { nil }
 }
 

@@ -46,17 +46,17 @@
 }
 
 - (id<NodeProtocol> _Nonnull)createEmptyNode {
-    NSAssert(NO, @"not overriden yet");
+    NSAssert(NO, @"has not been implemented yet");
     return [[Node alloc] initWithName: @""];
 }
 
 - (id<NodeProtocol> _Nonnull)createNodeGroupWithName:(NSString * _Nonnull)name fetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
-    NSAssert(NO, @"not overriden yet");
+    NSAssert(NO, @"has not been implemented yet");
     return [[Node alloc] initWithName: @""];
 }
 
 - (NSArray<id<NodeProtocol>> * _Nonnull)createNodesWithFetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
-    NSAssert(NO, @"not overriden yet");
+    NSAssert(NO, @"has not been implemented yet");
     return @[[[Node alloc] initWithName: @""]];
 }
 

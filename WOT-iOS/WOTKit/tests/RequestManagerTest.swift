@@ -131,7 +131,7 @@ class ManagedObjectContext: ManagedObjectContextProtocol {
         nil
     }
 
-    func execute(appContext _: Context, with _: @escaping (ManagedObjectContextProtocol) -> Void) {
+    func execute(appContext _: Context?, with _: @escaping (ManagedObjectContextProtocol) -> Void) {
         // with()
     }
 
@@ -139,7 +139,7 @@ class ManagedObjectContext: ManagedObjectContextProtocol {
         false
     }
 
-    func save(appContext _: Context, completion block: @escaping ThrowableCompletion) {
+    func save(appContext _: Context?, completion block: @escaping ThrowableCompletion) {
         block(nil)
     }
 }
