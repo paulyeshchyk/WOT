@@ -7,15 +7,15 @@
 
 import CoreData
 
-public extension DecodableProtocol where Self: NSManagedObject {
-
-    func decode(decoderContainer: DecoderContainerProtocol?) throws {
-        guard let decoderContainer = decoderContainer else {
-            throw JSONDecodingError.containerIsNil
-        }
-        try decodeWith(decoderContainer.decoder())
-    }
-}
+// public extension DecodableProtocol where Self: NSManagedObject {
+//
+//    func decode(decoderContainer: DecoderContainerProtocol?) throws {
+//        guard let decoderContainer = decoderContainer else {
+//            throw JSONDecodingError.containerIsNil
+//        }
+//        try decodeWith(decoderContainer.decoder())
+//    }
+// }
 
 // MARK: - JSONDecodingError
 

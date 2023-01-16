@@ -11,7 +11,10 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension ModulesTree: DecodableProtocol {
-    public func decodeWith(_ decoder: Decoder) throws {
+    public func decodeWith(_ decoder: DecoderObjC) throws {
+        guard let decoder = decoder as? Decoder else {
+            throw DecodableProtocolErrors.notADecoder
+        }
         let fieldsContainer = try decoder.container(keyedBy: Fields.self)
         //
         name = try fieldsContainer.decodeIfPresent(String.self, forKey: .name)

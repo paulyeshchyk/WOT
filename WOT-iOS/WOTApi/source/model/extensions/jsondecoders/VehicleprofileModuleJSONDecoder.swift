@@ -8,21 +8,22 @@
 // MARK: - VehicleprofileModuleJSONDecoder
 
 class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
+    private let appContext: JSONDecoderProtocol.Context?
+    required init(appContext: JSONDecoderProtocol.Context?) {
+        self.appContext = appContext
+    }
 
-    var managedObject: (VehicleprofileModule & DecodableProtocol & ManagedObjectProtocol)?
+    var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, appContext: (DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol)?, forDepthLevel _: DecodingDepthLevel?) throws {
-        guard let managedObject = managedObject else {
-            return
-        }
+    func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
         //
         let element = try map.data(ofType: JSON.self)
-        try managedObject.decode(decoderContainer: element)
+        try managedObject?.decode(decoderContainer: element)
         //
 
-        if let gun_id = managedObject.gun_id {
+        if let gun_id = element?[#keyPath(VehicleprofileModule.gun_id)] {
             let modelClass = VehicleprofileGun.self
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
@@ -32,9 +33,9 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
-        if let radio_id = managedObject.radio_id {
+        if let radio_id = element?[#keyPath(VehicleprofileModule.radio_id)] {
             let modelClass = VehicleprofileRadio.self
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = VehicleprofileModule.RadioExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
@@ -44,9 +45,9 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
-        if let engine_id = managedObject.engine_id {
+        if let engine_id = element?[#keyPath(VehicleprofileModule.engine_id)] {
             let modelClass = VehicleprofileEngine.self
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = VehicleprofileModule.EngineExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
@@ -56,9 +57,9 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
-        if let suspension_id = managedObject.suspension_id {
+        if let suspension_id = element?[#keyPath(VehicleprofileModule.suspension_id)] {
             let modelClass = VehicleprofileSuspension.self
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = VehicleprofileModule.SuspensionExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
@@ -68,9 +69,9 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
-        if let turret_id = managedObject.turret_id {
+        if let turret_id = element?[#keyPath(VehicleprofileModule.turret_id)] {
             let modelClass = VehicleprofileTurret.self
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = VehicleprofileModule.TurretExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)

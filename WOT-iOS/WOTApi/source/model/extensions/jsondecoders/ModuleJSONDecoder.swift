@@ -8,17 +8,17 @@
 // MARK: - ModuleJSONDecoder
 
 class ModuleJSONDecoder: JSONDecoderProtocol {
+    private let appContext: JSONDecoderProtocol.Context?
+    required init(appContext: JSONDecoderProtocol.Context?) {
+        self.appContext = appContext
+    }
 
-    var managedObject: (Module & DecodableProtocol & ManagedObjectProtocol)?
+    var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, appContext: (DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol)?, forDepthLevel _: DecodingDepthLevel?) throws {
-        guard let managedObject = managedObject else {
-            return
-        }
-
+    func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
         //
         let element = try map.data(ofType: JSON.self)
-        try managedObject.decode(decoderContainer: element)
+        try managedObject?.decode(decoderContainer: element)
         //
 
         let filteredJsonRef = map.contextPredicate.jsonRefs.filter { $0.modelClass == Vehicles.self }.first
@@ -30,10 +30,12 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
             throw ModuleMappingError.moduleIdNotDefined
         }
 
+        let type = element?[#keyPath(Module.type)]
+
         let moduleDecoder = ModuleDecoder(appContext: appContext, parentHostPin: parentHostPin)
         moduleDecoder.module_id = module_id
-        moduleDecoder.moduleManagedRef = managedObject.managedRef
-        moduleDecoder.type = managedObject.type
+        moduleDecoder.moduleManagedRef = managedObject?.managedRef
+        moduleDecoder.type = type
         try moduleDecoder.decode()
     }
 }
@@ -65,7 +67,7 @@ public class ModuleDecoder {
     public var module_id: JSONValueType?
     public var moduleManagedRef: ManagedRefProtocol?
     public let parentHostPin: JointPinProtocol
-    public var type: String?
+    public var type: JSONValueType?
 
     init(appContext: JSONDecoderProtocol.Context?, parentHostPin: JointPinProtocol) {
         self.appContext = appContext

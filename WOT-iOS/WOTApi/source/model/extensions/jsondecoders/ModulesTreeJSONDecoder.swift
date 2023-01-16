@@ -8,16 +8,17 @@
 // MARK: - ModulesTreeJSONDecoder
 
 class ModulesTreeJSONDecoder: JSONDecoderProtocol {
+    private let appContext: JSONDecoderProtocol.Context?
+    required init(appContext: JSONDecoderProtocol.Context?) {
+        self.appContext = appContext
+    }
 
-    var managedObject: (NSManagedObject & DecodableProtocol & ManagedObjectProtocol)?
+    var managedObject: ManagedAndDecodableObjectType?
 
     func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
-        guard let managedObject = managedObject else {
-            return
-        }
         //
         let moduleTreeJSON = try map.data(ofType: JSON.self)
-        try managedObject.decode(decoderContainer: moduleTreeJSON)
+        try managedObject?.decode(decoderContainer: moduleTreeJSON)
         let jsonRef = try JSONRef(element: moduleTreeJSON, modelClass: ModulesTree.self)
         //
 
@@ -25,7 +26,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
         let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
         if let nextTanks = moduleTreeJSON?[nextTanksKeypath] as? [AnyObject] {
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: nil, keypath: nextTanksKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: nil, keypath: nextTanksKeypath)
             let linker = ManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
             let extractor = NextVehicleExtractor()
             for nextTank in nextTanks {
@@ -47,7 +48,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
         if let nextModules = moduleTreeJSON?[nextModulesKeypath] as? [AnyObject] {
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: nil, keypath: nextModulesKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: nil, keypath: nextModulesKeypath)
             let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, socket: socket)
             let extractor = NextModuleExtractor()
             let modelClass = Module.self
@@ -68,7 +69,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         let currentModuleKeypath = #keyPath(ModulesTree.currentModule)
         if let identifier = moduleTreeJSON?[#keyPath(ModulesTree.module_id)] {
             let modelClass = Module.self
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: nil, keypath: currentModuleKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: nil, keypath: currentModuleKeypath)
             let extractor = CurrentModuleExtractor()
             let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)

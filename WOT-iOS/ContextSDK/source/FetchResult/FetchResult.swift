@@ -51,15 +51,15 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         return FetchResult(managedRef: managedRef, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
     }
 
-    public func managedObject() -> ManagedObjectProtocol? {
+    public func managedObject() -> ManagedAndDecodableObjectType? {
         return managedObject(inManagedObjectContext: managedObjectContext)
     }
 
-    public func managedObject(inManagedObjectContext context: ManagedObjectContextProtocol?) -> ManagedObjectProtocol? {
+    public func managedObject(inManagedObjectContext context: ManagedObjectContextProtocol?) -> ManagedAndDecodableObjectType? {
         guard let managedRef = managedRef else {
             assertionFailure("objectID is not defined")
             return nil
         }
-        return context?.object(managedRef: managedRef)
+        return context?.object(managedRef: managedRef) as? ManagedAndDecodableObjectType
     }
 }

@@ -8,24 +8,22 @@
 // MARK: - VehicleprofileAmmoPenetrationJSONDecoder
 
 class VehicleprofileAmmoPenetrationJSONDecoder: JSONDecoderProtocol {
+    private let appContext: JSONDecoderProtocol.Context?
+    required init(appContext: JSONDecoderProtocol.Context?) {
+        self.appContext = appContext
+    }
 
-    var managedObject: (VehicleprofileAmmoPenetration & DecodableProtocol & ManagedObjectProtocol)?
+    var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, appContext _: (DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol)?, forDepthLevel _: DecodingDepthLevel?) throws {
-        guard let managedObject = managedObject else {
-            return
-        }
-
-        //
-        let array = try map.data(ofType: [Double].self)
-        //
-        guard array?.count == 3 else {
-            throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements
-        }
-        let intArray = try NSDecimalNumberArray(array: array)
-        managedObject.min_value = intArray[0]
-        managedObject.avg_value = intArray[1]
-        managedObject.max_value = intArray[2]
+    func decode(using _: JSONMapProtocol, appContext _: JSONDecoderProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
+//        let array = try map.data(ofType: [Double].self)
+//        //
+//        guard array?.count == 3 else {
+//            throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements
+//        }
+//        managedObject.min_value = array?[0].asDecimal
+//        managedObject.avg_value = array?[1].asDecimal
+//        managedObject.max_value = array?[2].asDecimal
     }
 }
 

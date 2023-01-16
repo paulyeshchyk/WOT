@@ -80,6 +80,8 @@
 		DADD69702974F0D000EFC36D /* DatastoreFetchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD696F2974F0D000EFC36D /* DatastoreFetchHelper.swift */; };
 		DADD69722974F10600EFC36D /* ManagedObjectLinkerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69712974F10600EFC36D /* ManagedObjectLinkerHelper.swift */; };
 		DADD69752975088E00EFC36D /* JSONRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69742975088E00EFC36D /* JSONRef.swift */; };
+		DADD6999297563BD00EFC36D /* JSONDecodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD6998297563BD00EFC36D /* JSONDecodeManager.swift */; };
+		DADD699E2975680200EFC36D /* DecoderManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD699D2975680200EFC36D /* DecoderManagerProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +171,8 @@
 		DADD696F2974F0D000EFC36D /* DatastoreFetchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatastoreFetchHelper.swift; sourceTree = "<group>"; };
 		DADD69712974F10600EFC36D /* ManagedObjectLinkerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectLinkerHelper.swift; sourceTree = "<group>"; };
 		DADD69742975088E00EFC36D /* JSONRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONRef.swift; sourceTree = "<group>"; };
+		DADD6998297563BD00EFC36D /* JSONDecodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodeManager.swift; sourceTree = "<group>"; };
+		DADD699D2975680200EFC36D /* DecoderManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderManagerProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +249,7 @@
 				DA0E806F2950931B00B44CC6 /* FetchResult */,
 				DA0BC5A42952E9EC00E01D54 /* JSONAdapter */,
 				DACDB108295EDDC1005BBA72 /* JSONCollection */,
+				DADD6997297563A500EFC36D /* JSONDecode */,
 				DACDB121296023B2005BBA72 /* JSONMap */,
 				DADD69732975087A00EFC36D /* JSONRef */,
 				DACDB0D4295DBB66005BBA72 /* LogInspector */,
@@ -408,6 +413,7 @@
 				DACDB0EE295EDC95005BBA72 /* ContextControllerProtocol.swift */,
 				DACDB11F29601537005BBA72 /* ContextPredicateProtocol.swift */,
 				DACDB0EC295EDC95005BBA72 /* DataStoreProtocol.swift */,
+				DADD699D2975680200EFC36D /* DecoderManagerProtocol.swift */,
 				DACDB0DE295EDC94005BBA72 /* FetchResultProtocol.swift */,
 				DACDB0E6295EDC95005BBA72 /* HttpServiceProtocol.swift */,
 				DA288F672965A6CC00973561 /* JSONValueProtocol.swift */,
@@ -526,6 +532,14 @@
 				DADD69742975088E00EFC36D /* JSONRef.swift */,
 			);
 			path = JSONRef;
+			sourceTree = "<group>";
+		};
+		DADD6997297563A500EFC36D /* JSONDecode */ = {
+			isa = PBXGroup;
+			children = (
+				DADD6998297563BD00EFC36D /* JSONDecodeManager.swift */,
+			);
+			path = JSONDecode;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -666,6 +680,7 @@
 				DACDB12029601537005BBA72 /* ContextPredicateProtocol.swift in Sources */,
 				DACDB10A295EDDD9005BBA72 /* JSONCollection.swift in Sources */,
 				DACDB0F1295EDC96005BBA72 /* FetchResultProtocol.swift in Sources */,
+				DADD699E2975680200EFC36D /* DecoderManagerProtocol.swift in Sources */,
 				DA81E5102952FE6700C60F31 /* Date+Elapsed.swift in Sources */,
 				DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				DAC55BC32974F047008166BE /* ManagedObjectDecodeHelper.swift in Sources */,
@@ -711,6 +726,7 @@
 				DA2C28F42959F55D00D18A6E /* ManagedObjectLinker.swift in Sources */,
 				DA81E4F02952FDD800C60F31 /* JSONAdapter.swift in Sources */,
 				DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */,
+				DADD6999297563BD00EFC36D /* JSONDecodeManager.swift in Sources */,
 				DA2C28F12959F0DD00D18A6E /* DataStore.swift in Sources */,
 				DACDB0F2295EDC96005BBA72 /* ModelServiceProtocol.swift in Sources */,
 				DA0E80532950688500B44CC6 /* NSDictionary+Append.swift in Sources */,

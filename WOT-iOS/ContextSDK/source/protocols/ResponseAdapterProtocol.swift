@@ -13,6 +13,7 @@ public protocol ResponseAdapterProtocol {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestManagerContainerProtocol
+        & DecoderManagerContainerProtocol
 
     typealias OnComplete = (RequestProtocol, Error?) -> Void
 

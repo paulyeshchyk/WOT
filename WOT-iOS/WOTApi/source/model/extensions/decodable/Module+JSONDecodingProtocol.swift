@@ -11,7 +11,10 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension Module: DecodableProtocol {
-    public func decodeWith(_ decoder: Decoder) throws {
+    public func decodeWith(_ decoder: DecoderObjC) throws {
+        guard let decoder = decoder as? Decoder else {
+            throw DecodableProtocolErrors.notADecoder
+        }
         let container = try decoder.container(keyedBy: Fields.self)
         //
         module_id = try container.decodeIfPresent(Int.self, forKey: .module_id)?.asDecimal

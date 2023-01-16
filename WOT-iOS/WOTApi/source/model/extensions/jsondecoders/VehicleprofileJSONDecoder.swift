@@ -8,16 +8,17 @@
 // MARK: - VehicleprofileJSONDecoder
 
 class VehicleprofileJSONDecoder: JSONDecoderProtocol {
+    private let appContext: JSONDecoderProtocol.Context?
+    required init(appContext: JSONDecoderProtocol.Context?) {
+        self.appContext = appContext
+    }
 
-    var managedObject: (Vehicleprofile & DecodableProtocol & ManagedObjectProtocol)?
+    var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, appContext: (DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol)?, forDepthLevel: DecodingDepthLevel?) throws {
-        guard let managedObject = managedObject else {
-            return
-        }
+    func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
         //
         let element = try map.data(ofType: JSON.self)
-        try managedObject.decode(decoderContainer: element)
+        try managedObject?.decode(decoderContainer: element)
         let jsonRef = try JSONRef(element: element, modelClass: Vehicleprofile.self)
         //
 
@@ -27,6 +28,8 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         parentJSonRefs.append(contentsOf: map.contextPredicate.jsonRefs)
         parentJSonRefs.append(jsonRef)
 
+        let tank_id = element?[#keyPath(Vehicleprofile.tank_id)] as? NSDecimalNumber
+
         // MARK: - AmmoList
 
         let ammoKeypath = #keyPath(Vehicleprofile.ammo)
@@ -35,7 +38,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileAmmoList.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: ammoKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: ammoKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(array: jsonArray, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -46,7 +49,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noAmmoList(managedObject.tank_id)), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noAmmoList(tank_id)), sender: self)
         }
 
         // MARK: - Armor
@@ -57,7 +60,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileArmorList.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: armorKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: armorKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -68,7 +71,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noArmor(managedObject.tank_id)), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noArmor(tank_id)), sender: self)
         }
 
         // MARK: - Module
@@ -79,7 +82,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileModule.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: modulesKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: modulesKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -90,7 +93,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noModule(managedObject.tank_id)), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noModule(tank_id)), sender: self)
         }
 
         // MARK: - Engine
@@ -103,7 +106,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
             let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: engineKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: engineKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -114,7 +117,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noEngine(managedObject.tank_id)), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noEngine(tank_id)), sender: self)
         }
 
         // MARK: - Gun
@@ -127,7 +130,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
             let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: gunKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: gunKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -138,7 +141,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noGun(managedObject.tank_id)), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noGun(tank_id)), sender: self)
         }
 
         // MARK: - Suspension
@@ -151,7 +154,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
             let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: suspensionKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: suspensionKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -162,7 +165,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noSuspension(managedObject.tank_id)), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noSuspension(tank_id)), sender: self)
         }
 
         // MARK: - Turret
@@ -175,7 +178,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
             let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: turretKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: turretKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -186,7 +189,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(managedObject.tank_id)), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
         }
 
         // MARK: - Radio
@@ -199,7 +202,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
             let composer = RootTagRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: radioKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: radioKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -210,7 +213,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(managedObject.tank_id)), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
         }
     }
 }

@@ -11,7 +11,10 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension VehicleprofileEngine: DecodableProtocol {
-    public func decodeWith(_ decoder: Decoder) throws {
+    public func decodeWith(_ decoder: DecoderObjC) throws {
+        guard let decoder = decoder as? Decoder else {
+            throw DecodableProtocolErrors.notADecoder
+        }
         let container = try decoder.container(keyedBy: Fields.self)
         //
         name = try container.decodeAnyIfPresent(String.self, forKey: .name)

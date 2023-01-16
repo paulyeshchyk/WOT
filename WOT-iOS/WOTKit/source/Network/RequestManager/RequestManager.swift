@@ -18,6 +18,7 @@ open class RequestManager: NSObject {
         & RequestManagerContainerProtocol
         & HostConfigurationContainerProtocol
         & ResponseDataAdapterCreatorContainerProtocol
+        & DecoderManagerContainerProtocol
 
     override public var description: String { String(describing: type(of: self)) }
 

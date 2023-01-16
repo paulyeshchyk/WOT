@@ -33,13 +33,13 @@ extension JSON: DecoderContainerProtocol {
 
 // MARK: - DecoderWrapper
 
-class DecoderWrapper: Decodable {
+public class DecoderWrapper: Decodable {
 
-    let decoder: Decoder
+    public let decoder: Decoder
 
     // MARK: Lifecycle
 
-    required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         self.decoder = decoder
     }
 }

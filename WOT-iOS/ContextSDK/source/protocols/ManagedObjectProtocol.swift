@@ -16,6 +16,8 @@ public protocol ManagedObjectProtocol {
     subscript(_: KeypathType) -> Any? { get }
 }
 
+public typealias ManagedAndDecodableObjectType = (DecodableProtocol & ManagedObjectProtocol)
+
 // MARK: - ManagedRefProtocol
 
 @objc

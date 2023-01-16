@@ -8,16 +8,17 @@
 // MARK: - VehicleprofileAmmoJSONDecoder
 
 class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
+    private let appContext: JSONDecoderProtocol.Context?
+    required init(appContext: JSONDecoderProtocol.Context?) {
+        self.appContext = appContext
+    }
 
-    var managedObject: (VehicleprofileAmmo & DecodableProtocol & ManagedObjectProtocol)?
+    var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, appContext: (DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol)?, forDepthLevel: DecodingDepthLevel?) throws {
-        guard let managedObject = managedObject else {
-            return
-        }
+    func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
         //
         let ammoJSON = try map.data(ofType: JSON.self)
-        try managedObject.decode(decoderContainer: ammoJSON)
+        try managedObject?.decode(decoderContainer: ammoJSON)
         //
 
         // MARK: - Penetration
@@ -29,7 +30,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileAmmoPenetration.self
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(jsonMap: map, foreignPrimarySelectKey: foreignPrimarySelectKey, foreignSecondarySelectKey: foreignSecondarySelectKey)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: keypathPenetration)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: keypathPenetration)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -52,7 +53,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileAmmoDamage.self
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(jsonMap: map, foreignPrimarySelectKey: foreignPrimarySelectKey, foreignSecondarySelectKey: foreignSecondarySelectKey)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: keypathDamage)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: keypathDamage)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next

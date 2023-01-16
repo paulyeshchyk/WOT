@@ -20,6 +20,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var sessionManager: SessionManagerProtocol?
     public var logInspector: LogInspectorProtocol?
     public var dataStore: DataStoreProtocol?
+    public var decoderManager: DecoderManagerProtocol?
     public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
     // MARK: Public
@@ -33,6 +34,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
         dataStore = WOTDataStore(appContext: self)
         responseDataAdapterCreator = ResponseDataAdapterCreator(appContext: self)
         requestManager = WOTRequestManager(appContext: self)
+        decoderManager = WOTDecoderManager()
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = WOTDrawerViewController.newDrawer()

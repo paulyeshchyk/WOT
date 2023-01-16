@@ -11,7 +11,10 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension Vehicles: DecodableProtocol {
-    public func decodeWith(_ decoder: Decoder) throws {
+    public func decodeWith(_ decoder: DecoderObjC) throws {
+        guard let decoder = decoder as? Decoder else {
+            throw DecodableProtocolErrors.notADecoder
+        }
         let container = try decoder.container(keyedBy: Fields.self)
         //
         tier = try container.decodeIfPresent(Int.self, forKey: .tier)?.asDecimal
@@ -26,5 +29,8 @@ extension Vehicles: DecodableProtocol {
         is_premium = try container.decodeIfPresent(Bool.self, forKey: .is_premium)?.asDecimal
         is_premium_igr = try container.decodeIfPresent(Bool.self, forKey: .is_premium_igr)?.asDecimal
         is_gift = try container.decodeIfPresent(Bool.self, forKey: .is_gift)?.asDecimal
+        if let set = modules_tree {
+            removeFromModules_tree(set)
+        }
     }
 }

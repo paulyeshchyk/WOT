@@ -12,6 +12,7 @@ public class JSONSyndicate {
     public typealias Context = DataStoreContainerProtocol
         & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
+        & DecoderManagerContainerProtocol
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var linker: ManagedObjectLinkerProtocol?

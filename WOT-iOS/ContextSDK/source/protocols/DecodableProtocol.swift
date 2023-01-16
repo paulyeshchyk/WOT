@@ -10,8 +10,40 @@ public typealias JSON = [KeypathType: JSONValueType]
 
 // MARK: - DecodableProtocol
 
+public typealias DecoderObjC = Any
+
+// MARK: - DecodableProtocol
+
+@objc
 public protocol DecodableProtocol {
-    func decodeWith(_ decoder: Decoder) throws
+    func decodeWith(_ decoder: DecoderObjC) throws
+}
+
+// MARK: - DecodableProtocolErrors
+
+public enum DecodableProtocolErrors: Error {
+    case notADecoder
+}
+
+extension DecodableProtocol {
+    public func decode(decoderContainer: DecoderContainerProtocol?) throws {
+        guard let decoderContainer = decoderContainer else {
+            throw DecodableProtocolError.containerIsNil
+        }
+        try decodeWith(decoderContainer.decoder())
+    }
+}
+
+// MARK: - DecodableProtocolError
+
+private enum DecodableProtocolError: Error, CustomStringConvertible {
+    case containerIsNil
+
+    public var description: String {
+        switch self {
+        case .containerIsNil: return "[\(type(of: self))]: Container is nil"
+        }
+    }
 }
 
 // MARK: - DecodingDepthLevel
@@ -36,16 +68,19 @@ public class DecodingDepthLevel: NSObject, RawRepresentable {
     public func maxReached() -> Bool {
         rawValue < 2// (Int.max - 1)
     }
-
 }
 
 // MARK: - JSONDecoderProtocol
 
-public protocol JSONDecoderProtocol {
+@objc
+public protocol JSONDecoderProtocol: AnyObject {
     typealias Context = DataStoreContainerProtocol
         & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
+        & DecoderManagerContainerProtocol
 
+    var managedObject: ManagedAndDecodableObjectType? { get set }
+    init(appContext: Context?)
     func decode(using: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws
 }
 

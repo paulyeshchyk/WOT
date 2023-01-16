@@ -8,13 +8,14 @@
 // MARK: - VehicleprofileArmorListJSONDecoder
 
 class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
+    private let appContext: JSONDecoderProtocol.Context?
+    required init(appContext: JSONDecoderProtocol.Context?) {
+        self.appContext = appContext
+    }
 
-    var managedObject: (VehicleprofileArmorList & DecodableProtocol & ManagedObjectProtocol)?
+    var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, appContext: (DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol)?, forDepthLevel: DecodingDepthLevel?) throws {
-        guard let managedObject = managedObject else {
-            return
-        }
+    func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
         //
         let armorListJSON = try map.data(ofType: JSON.self)
         // ??? try managedObject.decode(decoderContainer: armorListJSON)
@@ -27,7 +28,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileArmor.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: keypathturret)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: keypathturret)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -49,7 +50,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileArmor.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: keypathhull)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: keypathhull)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next

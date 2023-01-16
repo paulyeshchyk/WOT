@@ -12,6 +12,7 @@ class ManagedObjectDecodeHelper {
     typealias Context = DataStoreContainerProtocol
         & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
+        & DecoderManagerContainerProtocol
 
     private let appContext: Context?
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
@@ -35,14 +36,26 @@ class ManagedObjectDecodeHelper {
             return
         }
 
-        guard let managedObject = fetchResult.managedObject() as? JSONDecoderProtocol else {
+        guard let managedObject = fetchResult.managedObject() else {
             completion?(fetchResult, Errors.fetchResultIsNotJSONDecodable(fetchResult))
             return
         }
+
+        guard let modelClass = type(of: managedObject) as? PrimaryKeypathProtocol.Type else {
+            completion?(fetchResult, nil)
+            return
+        }
+        guard let decoderType = appContext?.decoderManager?.jsonDecoder(for: modelClass) else {
+            completion?(fetchResult, nil)
+            return
+        }
+
         //
         do {
             #warning("Provide crc check")
-            try managedObject.decode(using: jsonMap, appContext: appContext, forDepthLevel: DecodingDepthLevel.initial)
+            let decoder = decoderType.init(appContext: appContext)
+            decoder.managedObject = managedObject
+            try decoder.decode(using: jsonMap, appContext: appContext, forDepthLevel: DecodingDepthLevel.initial)
 
             appContext?.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
                 self.completion?(fetchResult, error)

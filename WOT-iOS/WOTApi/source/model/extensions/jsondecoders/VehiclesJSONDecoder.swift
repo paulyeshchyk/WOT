@@ -8,26 +8,25 @@
 // MARK: - VehiclesJSONDecoder
 
 class VehiclesJSONDecoder: JSONDecoderProtocol {
+    private let appContext: JSONDecoderProtocol.Context?
+    required init(appContext: JSONDecoderProtocol.Context?) {
+        self.appContext = appContext
+    }
 
-    var managedObject: (Vehicles & DecodableProtocol & ManagedObjectProtocol)?
+    var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using jsonMap: JSONMapProtocol, appContext: (DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol)?, forDepthLevel: DecodingDepthLevel?) throws {
-        guard let managedObject = managedObject else {
-            return
-        }
+    func decode(using jsonMap: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
         //
         let element = try jsonMap.data(ofType: JSON.self)
-        try managedObject.decode(decoderContainer: element)
+        try managedObject?.decode(decoderContainer: element)
         let jsonRef = try JSONRef(element: element, modelClass: Vehicles.self)
         //
+
+        let tank_id = element?[#keyPath(Vehicles.tank_id)] as? NSDecimalNumber
 
         // MARK: - ModulesTree
 
         if let modulesTreeJSON = element?[#keyPath(Vehicles.modules_tree)] as? JSON {
-            if let set = managedObject.modules_tree {
-                managedObject.removeFromModules_tree(set)
-            }
-
             var parentJSONRefs = jsonMap.contextPredicate.jsonRefs
             parentJSONRefs.append(jsonRef)
 
@@ -42,7 +41,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     let composition = try composer.buildRequestPredicateComposition()
                     let keypath = #keyPath(ModulesTree.next_modules)
                     let modelClass = ModulesTree.self
-                    let socket = JointSocket(managedRef: managedObject.managedRef, identifier: module_id, keypath: keypath)
+                    let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: module_id, keypath: keypath)
                     let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
                     let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
                     let decodingDepthLevel = forDepthLevel?.next
@@ -53,11 +52,11 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                         }
                     })
                 } else {
-                    appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(managedObject.tank_id)), sender: self)
+                    appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
                 }
             }
         } else {
-            appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(managedObject.tank_id)), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
         }
 
         // MARK: - DefaultProfile
@@ -68,7 +67,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             let modelClass = Vehicleprofile.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: jsonMap, foreignSelectKey: foreignSelectKey, jsonRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject.managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
+            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -79,7 +78,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.profileNotFound(managedObject.tank_id)), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
         }
     }
 }
