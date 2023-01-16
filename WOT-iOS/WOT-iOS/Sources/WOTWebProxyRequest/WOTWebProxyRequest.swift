@@ -85,9 +85,9 @@ public class WOTWebProxyRequest: HttpRequest {
      */
 }
 
-// MARK: - WOTWebProxyRequest + ModelServiceProtocol
+// MARK: - WOTWebProxyRequest + RequestModelServiceProtocol
 
-extension WOTWebProxyRequest: ModelServiceProtocol {
+extension WOTWebProxyRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         JSONAdapter.self
     }

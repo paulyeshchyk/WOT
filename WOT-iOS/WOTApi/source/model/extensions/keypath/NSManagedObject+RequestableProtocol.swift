@@ -8,7 +8,7 @@
 import ContextSDK
 import CoreData
 
-extension NSManagedObject: RequestableProtocol {
+extension NSManagedObject: FetchableProtocol {
     @objc
     open class func dataFieldsKeypaths() -> [String] {
         return []

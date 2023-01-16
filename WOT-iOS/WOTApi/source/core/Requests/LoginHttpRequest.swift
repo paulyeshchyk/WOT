@@ -17,9 +17,9 @@ public class LoginHttpRequest: HttpRequest {
     override public var httpQueryItemName: String { WGWebQueryArgs.fields }
 }
 
-// MARK: - LoginHttpRequest + ModelServiceProtocol
+// MARK: - LoginHttpRequest + RequestModelServiceProtocol
 
-extension LoginHttpRequest: ModelServiceProtocol {
+extension LoginHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

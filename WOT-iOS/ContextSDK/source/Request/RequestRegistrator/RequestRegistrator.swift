@@ -13,7 +13,7 @@ open class RequestRegistrator: RequestRegistratorProtocol {
     public typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
 
     private let context: Context
-    private var registeredModelService: [RequestIdType: ModelServiceProtocol.Type] = .init()
+    private var registeredModelService: [RequestIdType: RequestModelServiceProtocol.Type] = .init()
     private var registeredModelClass: [RequestIdType: PrimaryKeypathProtocol.Type] = .init()
 
     // MARK: Lifecycle
@@ -50,14 +50,14 @@ public extension RequestRegistrator {
         }
     }
 
-    func registerServiceClass(_ modelServiceClass: ModelServiceProtocol.Type) {
+    func registerServiceClass(_ modelServiceClass: RequestModelServiceProtocol.Type) {
         let modelClass = modelServiceClass.modelClass()
         let registrationID = modelServiceClass.registrationID()
         registeredModelService[registrationID] = modelServiceClass
         registeredModelClass[registrationID] = modelClass
     }
 
-    func requestClass(for requestId: RequestIdType) -> ModelServiceProtocol.Type? {
+    func requestClass(for requestId: RequestIdType) -> RequestModelServiceProtocol.Type? {
         return registeredModelService[requestId]
     }
 

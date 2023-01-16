@@ -14,19 +14,14 @@ import CoreData
 extension NSManagedObjectContext: ManagedObjectContextProtocol {
     // MARK: - ManagedObjectContextLookupProtocol
 
-    public func execute(appContext: ManagedObjectContextLookupProtocol.Context, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
+    public func execute(appContext: ManagedObjectContextLookupProtocol.Context?, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
         let uuid = UUID()
         let executionStartTime = Date()
-        appContext.logInspector?.log(.sqlite(message: "exec start operation: \(uuid.MD5), in: \(String(describing: self))"), sender: self)
+        appContext?.logInspector?.log(.sqlite(message: LogMessages.perform_start(uuid, self).description), sender: self)
         perform {
+            appContext?.logInspector?.log(.sqlite(message: LogMessages.perform_done(executionStartTime, uuid, self).description), sender: self)
             block(self)
-            appContext.logInspector?.log(.sqlite(message: "exec end (\(Date().elapsed(from: executionStartTime))s) operation: \(uuid.MD5), in: \(String(describing: self))"), sender: self)
         }
-    }
-
-    private enum NSManagedObjectContextError: Error {
-        case isNotNSManagedObjectID
-        case isNotManagedObjectProtocol
     }
 
     public func object(managedRef: ManagedRefProtocol) -> ManagedObjectProtocol? {
@@ -41,11 +36,18 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return result
     }
 
-    public func findOrCreateObject(modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
-        guard let foundObject = try? lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
-            return insertNewObject(forType: modelClass)
+    public func findOrCreateObject(appContext: ManagedObjectContextLookupProtocol.Context?, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
+        do {
+            guard let foundObject = try lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
+                appContext?.logInspector?.log(.sqlite(message: LogMessages.select_fail(predicate, self).description), sender: self)
+                return insertNewObject(appContext: appContext, forType: modelClass)
+            }
+            appContext?.logInspector?.log(.sqlite(message: LogMessages.select_done(predicate, self).description), sender: self)
+            return foundObject
+        } catch {
+            appContext?.logInspector?.log(.error(error), sender: self)
+            return nil
         }
-        return foundObject
     }
 
     // MARK: - ManagedObjectContextSaveProtocol
@@ -54,32 +56,44 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return hasChanges
     }
 
-    public func save(appContext: ManagedObjectContextSaveProtocol.Context, completion block: @escaping ThrowableCompletion) {
-        let privateCompletion: ThrowableCompletion = { error in
-            self.perform {
-                block(error)
-            }
-        }
+    public func save(appContext: ManagedObjectContextSaveProtocol.Context?, completion block: @escaping ThrowableCompletion) {
         guard hasChanges else {
-            privateCompletion(nil)
+            perform { block(nil) }
             return
         }
 
-        appContext.logInspector?.log(.sqlite(message: "save-start"), sender: self)
-        performAndWait {
-            do {
-                try self.save()
-                appContext.logInspector?.log(.sqlite(message: "save-end"), sender: self)
-
-                if let parent = self.parent {
-                    parent.save(appContext: appContext, completion: privateCompletion)
-                } else {
-                    privateCompletion(nil)
-                }
-            } catch {
-                appContext.logInspector?.log(.sqlite(message: "save-fail"), sender: self)
-                privateCompletion(error)
+        guard concurrencyType == .privateQueueConcurrencyType else {
+            perform {
+                block(NSManagedObjectContextError.isNotPrivateQueueConcurrencyType)
             }
+            return
+        }
+
+        let executionStartTime = Date()
+        appContext?.logInspector?.log(.sqlite(message: LogMessages.perform4Save_start(self).description), sender: self)
+
+        perform {
+            self._save(appContext: appContext) { error in
+                appContext?.logInspector?.log(.sqlite(message: LogMessages.perform4Save_done(executionStartTime, self).description), sender: self)
+                block(error)
+            }
+        }
+    }
+
+    private func _save(appContext: ManagedObjectContextSaveProtocol.Context?, completion block: @escaping ThrowableCompletion) {
+        let executionStartTime = Date()
+        do {
+            appContext?.logInspector?.log(.sqlite(message: LogMessages.save_start(self).description), sender: self)
+            try save()
+            appContext?.logInspector?.log(.sqlite(message: LogMessages.save_done(executionStartTime, self).description), sender: self)
+
+            if let parent = parent {
+                parent.save(appContext: appContext, completion: block)
+            } else {
+                block(nil)
+            }
+        } catch {
+            appContext?.logInspector?.log(.sqlite(message: LogMessages.save_fail(executionStartTime, self).description), sender: self)
         }
     }
 
@@ -119,11 +133,61 @@ extension NSManagedObjectContext {
         return try fetch(request).last as? ManagedObjectProtocol
     }
 
-    private func insertNewObject<T>(forType: AnyObject) -> T? {
-        return NSEntityDescription.insertNewObject(forEntityName: String(describing: forType), into: self) as? T
+    private func insertNewObject<T>(appContext: ManagedObjectContextLookupProtocol.Context?, forType: AnyObject) -> T? {
+        appContext?.logInspector?.log(.sqlite(message: LogMessages.insert_start(forType).description), sender: self)
+        let result = NSEntityDescription.insertNewObject(forEntityName: String(describing: forType), into: self) as? T
+        let endMessage = (result == nil) ? LogMessages.insert_fail(forType) : LogMessages.insert_done(forType)
+        appContext?.logInspector?.log(.sqlite(message: endMessage.description), sender: self)
+        return result
     }
 
     private func entityDescription(forType: AnyObject) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: String(describing: forType), in: self)
+    }
+}
+
+// MARK: - NSManagedObjectContextError
+
+private enum NSManagedObjectContextError: Error, CustomStringConvertible {
+    case isNotPrivateQueueConcurrencyType
+
+    var description: String {
+        switch self {
+        case .isNotPrivateQueueConcurrencyType: return "Save operation must be performed only in context with concurrency type: PrivateQueueConcurrencyType"
+        }
+    }
+}
+
+// MARK: - LogMessages
+
+private enum LogMessages: CustomStringConvertible {
+    case perform_start(UUID, NSManagedObjectContext)
+    case perform_done(Date, UUID, NSManagedObjectContext)
+    case perform4Save_start(NSManagedObjectContext)
+    case perform4Save_done(Date, NSManagedObjectContext)
+    case select_fail(NSPredicate?, NSManagedObjectContext)
+    case select_done(NSPredicate?, NSManagedObjectContext)
+    case save_start(NSManagedObjectContext)
+    case save_done(Date, NSManagedObjectContext)
+    case save_fail(Date, NSManagedObjectContext)
+    case insert_start(AnyObject)
+    case insert_fail(AnyObject)
+    case insert_done(AnyObject)
+
+    var description: String {
+        switch self {
+        case .perform_start(let uuid, let context): return "perform-start; in: \(context.name ?? "<unknown>"), operation: \(uuid.MD5))"
+        case .perform_done(let date, let uuid, let context): return "perform-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>"), operation: \(uuid.MD5)"
+        case .perform4Save_start(let context): return "perform_for_save-start; in: \(context.name ?? "<unknown>"))"
+        case .perform4Save_done(let date, let context): return "perform_for_save-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
+        case .select_done(let predicate, let context): return "select done; predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
+        case .select_fail(let predicate, let context): return "select fail; predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
+        case .save_start(let context): return "save-start; in: \(context.name ?? "<unknown>")"
+        case .save_done(let date, let context): return "save-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
+        case .save_fail(let date, let context): return "save-fail; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
+        case .insert_start(let type): return "insert-start; type: \(type)"
+        case .insert_fail(let type): return "insert-fail; type: \(type)"
+        case .insert_done(let type): return "insert-done; type: \(type)"
+        }
     }
 }
