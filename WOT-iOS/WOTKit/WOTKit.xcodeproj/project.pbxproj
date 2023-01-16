@@ -29,6 +29,10 @@
 		DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E868295352FE00C60F31 /* UIImage+Resize.m */; };
 		DA913E422959C01A00D39F0E /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E412959C01A00D39F0E /* CoreDataStore.swift */; };
 		DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */; };
+		DAC55BBB2974E3DB008166BE /* ResponseManagedObjectLinkerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC55BBA2974E3DB008166BE /* ResponseManagedObjectLinkerList.swift */; };
+		DAC55BBD2974E402008166BE /* ResponseManagedObjectExtractorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC55BBC2974E402008166BE /* ResponseManagedObjectExtractorList.swift */; };
+		DAC55BBF2974E41E008166BE /* RequestGrouppedListenerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC55BBE2974E41E008166BE /* RequestGrouppedListenerList.swift */; };
+		DAC55BC12974E444008166BE /* RequestGrouppedRequestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC55BC02974E444008166BE /* RequestGrouppedRequestList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +82,10 @@
 		DA81E868295352FE00C60F31 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		DA913E412959C01A00D39F0E /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+ObjectContextProtocol.swift"; sourceTree = "<group>"; };
+		DAC55BBA2974E3DB008166BE /* ResponseManagedObjectLinkerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseManagedObjectLinkerList.swift; sourceTree = "<group>"; };
+		DAC55BBC2974E402008166BE /* ResponseManagedObjectExtractorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseManagedObjectExtractorList.swift; sourceTree = "<group>"; };
+		DAC55BBE2974E41E008166BE /* RequestGrouppedListenerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestGrouppedListenerList.swift; sourceTree = "<group>"; };
+		DAC55BC02974E444008166BE /* RequestGrouppedRequestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestGrouppedRequestList.swift; sourceTree = "<group>"; };
 		DACDB124296050DD005BBA72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DACDB12629605129005BBA72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,6 +190,7 @@
 		1D60E560245FE7E4007E5CA8 /* RequestManager */ = {
 			isa = PBXGroup;
 			children = (
+				DAC55BB92974E3C7008166BE /* list */,
 				1D60E562245FE7E4007E5CA8 /* RequestManager.swift */,
 				DA12D06F29621B3C0077F664 /* RequestManagerLogEvents.swift */,
 			);
@@ -274,6 +283,17 @@
 				DA81E868295352FE00C60F31 /* UIImage+Resize.m */,
 			);
 			path = UIImage;
+			sourceTree = "<group>";
+		};
+		DAC55BB92974E3C7008166BE /* list */ = {
+			isa = PBXGroup;
+			children = (
+				DAC55BBA2974E3DB008166BE /* ResponseManagedObjectLinkerList.swift */,
+				DAC55BBC2974E402008166BE /* ResponseManagedObjectExtractorList.swift */,
+				DAC55BBE2974E41E008166BE /* RequestGrouppedListenerList.swift */,
+				DAC55BC02974E444008166BE /* RequestGrouppedRequestList.swift */,
+			);
+			path = list;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -435,14 +455,18 @@
 				DA913E422959C01A00D39F0E /* CoreDataStore.swift in Sources */,
 				1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */,
 				1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */,
+				DAC55BBD2974E402008166BE /* ResponseManagedObjectExtractorList.swift in Sources */,
 				DA12D07029621B3C0077F664 /* RequestManagerLogEvents.swift in Sources */,
 				1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */,
 				DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */,
 				1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */,
 				1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */,
 				DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */,
+				DAC55BC12974E444008166BE /* RequestGrouppedRequestList.swift in Sources */,
 				1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */,
 				DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */,
+				DAC55BBF2974E41E008166BE /* RequestGrouppedListenerList.swift in Sources */,
+				DAC55BBB2974E3DB008166BE /* ResponseManagedObjectLinkerList.swift in Sources */,
 				DA81E873295352FF00C60F31 /* NSBundle+LanguageBundle.m in Sources */,
 				DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,

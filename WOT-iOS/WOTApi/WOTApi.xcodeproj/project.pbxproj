@@ -610,6 +610,8 @@
 			children = (
 				DA2625402971A0CB00CB3AED /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift */,
 				DA26253A2971A0CB00CB3AED /* ForeignAsPrimaryRuleBuilder.swift */,
+				DA26254E2971A32100CB3AED /* VehiclesModuleBuilder.swift */,
+				DA26254C2971A16000CB3AED /* VehiclesModuleTreeBuilder.swift */,
 				DA2625422971A0CB00CB3AED /* LinkedLocalAsPrimaryRuleBuilder.swift */,
 				DA26253B2971A0CB00CB3AED /* LinkedRemoteAsPrimaryRuleBuilder.swift */,
 				DA2625412971A0CB00CB3AED /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift */,
@@ -617,8 +619,6 @@
 				DA26253D2971A0CB00CB3AED /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */,
 				DA26253E2971A0CB00CB3AED /* RootTagRuleBuilder.swift */,
 				DA26253F2971A0CB00CB3AED /* VehicleprofileAmmoListAmmoRequestPredicateComposer.swift */,
-				DA26254C2971A16000CB3AED /* VehiclesModuleTreeBuilder.swift */,
-				DA26254E2971A32100CB3AED /* VehiclesModuleBuilder.swift */,
 			);
 			path = contextpredicates;
 			sourceTree = "<group>";

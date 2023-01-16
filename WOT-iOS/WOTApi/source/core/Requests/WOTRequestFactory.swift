@@ -39,6 +39,7 @@ public class WOTWEBRequestFactory: NSObject {
         let socket = JointSocket(managedRef: nil, identifier: nil, keypath: nil)
         let linker = VehiclesPivotManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: linker, managedObjectExtractor: extractor, listener: listener)
+//        try appContext.requestManager?.fetchRemote(modelClass: Vehicles.self, contextPredicate: nil, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc
@@ -54,6 +55,7 @@ public class WOTWEBRequestFactory: NSObject {
         let socket = JointSocket(managedRef: nil, identifier: nil, keypath: nil)
         let linker = VehiclesTreeManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: linker, managedObjectExtractor: extractor, listener: listener)
+//        try appContext.requestManager?.fetchRemote(modelClass: Vehicles.self, contextPredicate: nil, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc
