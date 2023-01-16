@@ -17,11 +17,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var hostConfiguration: HostConfigurationProtocol?
     public var requestManager: RequestManagerProtocol?
     public var requestListener: RequestListenerProtocol?
-    public var sessionManager: SessionManagerProtocol?
     public var logInspector: LogInspectorProtocol?
     public var dataStore: DataStoreProtocol?
     public var decoderManager: DecoderManagerProtocol?
-    public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
     // MARK: Public
 
@@ -30,9 +28,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
         logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
 
         hostConfiguration = WOTHostConfiguration()
-        sessionManager = SessionManager()
         dataStore = WOTDataStore(appContext: self)
-        responseDataAdapterCreator = ResponseDataAdapterCreator(appContext: self)
         requestManager = WOTRequestManager(appContext: self)
         decoderManager = WOTDecoderManager()
 
@@ -43,7 +39,3 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
         return true
     }
 }
-
-// MARK: - AppDelegate + ResponseDataAdapterCreatorContainerProtocol
-
-extension AppDelegate: ResponseDataAdapterCreatorContainerProtocol {}

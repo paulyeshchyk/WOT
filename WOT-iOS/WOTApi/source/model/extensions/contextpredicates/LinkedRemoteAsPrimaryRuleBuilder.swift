@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
+open class LinkedRemoteAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
     private let jsonRef: JSONRefProtocol
@@ -20,7 +20,7 @@ open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
         var parentJsonRefs = [JSONRefProtocol]()
         if let parentJSONRef = pin.contextPredicate?.jsonRefs {
             parentJsonRefs.append(contentsOf: parentJSONRef)
@@ -29,6 +29,6 @@ open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
         let lookupPredicate = ContextPredicate(jsonRefs: parentJsonRefs)
         lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
 
-        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

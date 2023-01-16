@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-open class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
+open class LinkedLocalAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
 
@@ -18,10 +18,10 @@ open class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate(jsonRefs: [])
         lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .internal, andObject: pin.identifier)
 
-        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

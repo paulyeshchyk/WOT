@@ -17,9 +17,9 @@ public class VehiclesHttpRequest: HttpRequest {
     override public var httpQueryItemName: String { WGWebQueryArgs.fields }
 }
 
-// MARK: - VehiclesHttpRequest + ModelServiceProtocol
+// MARK: - VehiclesHttpRequest + RequestModelServiceProtocol
 
-extension VehiclesHttpRequest: ModelServiceProtocol {
+extension VehiclesHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

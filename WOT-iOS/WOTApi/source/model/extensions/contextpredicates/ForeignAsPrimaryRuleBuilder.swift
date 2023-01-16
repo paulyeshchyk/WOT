@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-open class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
+open class ForeignAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private var foreignSelectKey: String
     private let jsonRefs: [JSONRefProtocol]
@@ -22,10 +22,10 @@ open class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate(jsonRefs: jsonRefs)
         lookupPredicate[.primary] = jsonMap.contextPredicate[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
 
-        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

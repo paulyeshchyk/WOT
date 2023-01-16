@@ -501,6 +501,8 @@
 		DADD699329755E4400EFC36D /* VehicleprofileAmmoDamageJSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleprofileAmmoDamageJSONDecoder.swift; sourceTree = "<group>"; };
 		DADD699529755ED700EFC36D /* VehicleprofileAmmoPenetrationJSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleprofileAmmoPenetrationJSONDecoder.swift; sourceTree = "<group>"; };
 		DADD699B297564E000EFC36D /* WOTDecoderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDecoderManager.swift; sourceTree = "<group>"; };
+		DADD69C22975AF1B00EFC36D /* SessionManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManagerProtocol.swift; sourceTree = "<group>"; };
+		DADD69C32975AF1B00EFC36D /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -548,6 +550,7 @@
 		DA0BC4C72952E0A100E01D54 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				DADD69C42975AF1B00EFC36D /* SessionManager */,
 				DA39E2A529615C390099D877 /* core */,
 				DA39E2A829615CBC0099D877 /* pivot */,
 				DA39E31929618BED0099D877 /* tree */,
@@ -1138,6 +1141,15 @@
 				DADD699B297564E000EFC36D /* WOTDecoderManager.swift */,
 			);
 			path = DecoderManager;
+			sourceTree = "<group>";
+		};
+		DADD69C42975AF1B00EFC36D /* SessionManager */ = {
+			isa = PBXGroup;
+			children = (
+				DADD69C22975AF1B00EFC36D /* SessionManagerProtocol.swift */,
+				DADD69C32975AF1B00EFC36D /* SessionManager.swift */,
+			);
+			path = SessionManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

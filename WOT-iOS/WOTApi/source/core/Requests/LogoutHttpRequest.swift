@@ -17,9 +17,9 @@ public class LogoutHttpRequest: HttpRequest {
     override public var httpQueryItemName: String { WGWebQueryArgs.fields }
 }
 
-// MARK: - LogoutHttpRequest + ModelServiceProtocol
+// MARK: - LogoutHttpRequest + RequestModelServiceProtocol
 
-extension LogoutHttpRequest: ModelServiceProtocol {
+extension LogoutHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

@@ -18,9 +18,9 @@ public class VehicleprofileEnginesHttpRequest: HttpRequest {
     override public func httpAPIQueryPrefix() -> String? { "engine." }
 }
 
-// MARK: - VehicleprofileEnginesHttpRequest + ModelServiceProtocol
+// MARK: - VehicleprofileEnginesHttpRequest + RequestModelServiceProtocol
 
-extension VehicleprofileEnginesHttpRequest: ModelServiceProtocol {
+extension VehicleprofileEnginesHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

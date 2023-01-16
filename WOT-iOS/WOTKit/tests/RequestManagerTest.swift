@@ -187,13 +187,12 @@ class Linker: ManagedObjectLinkerProtocol {
 
 // MARK: - AppContext
 
-class AppContext: ResponseDataAdapterCreatorContainerProtocol, RequestManagerContainerProtocol, DataStoreContainerProtocol, HostConfigurationContainerProtocol, LogInspectorContainerProtocol {
+class AppContext: RequestManagerContainerProtocol, DataStoreContainerProtocol, HostConfigurationContainerProtocol, LogInspectorContainerProtocol {
 
     var dataStore: DataStoreProtocol?
     var hostConfiguration: HostConfigurationProtocol?
     var logInspector: LogInspectorProtocol?
     var requestManager: RequestManagerProtocol?
-    var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
     // MARK: Lifecycle
 
