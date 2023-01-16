@@ -18,6 +18,7 @@ public class JSONSyndicate {
     let appContext: JSONSyndicate.Context?
     var modelClass: PrimaryKeypathProtocol.Type?
     var jsonMap: JSONMapProtocol?
+    var decodeDepthLevel: DecodingDepthLevel?
 
     // MARK: Lifecycle
 
@@ -28,11 +29,16 @@ public class JSONSyndicate {
     // MARK: Internal
 
     func run() {
+        guard decodeDepthLevel?.maxReached() ?? false else {
+            completion?(nil, Errors.reachedMaxDecodingDepthLevel)
+            return
+        }
+
         let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
         managedObjectLinkerHelper.linker = linker
         managedObjectLinkerHelper.completion = completion
 
-        let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
+        let mappingCoordinatorDecodeHelper = ManagedObjectDecodeHelper(appContext: appContext)
         mappingCoordinatorDecodeHelper.jsonMap = jsonMap
         mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
             managedObjectLinkerHelper.run(fetchResult, error: error)
@@ -51,11 +57,12 @@ public class JSONSyndicate {
 
 extension JSONSyndicate {
 
-    public static func decodeAndLink(appContext: JSONSyndicate.Context?, jsonMap: JSONMapProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectLinker: ManagedObjectLinkerProtocol?, completion: @escaping FetchResultCompletion) {
+    public static func decodeAndLink(appContext: JSONSyndicate.Context?, jsonMap: JSONMapProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectLinker: ManagedObjectLinkerProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
         let jsonSyndicate = JSONSyndicate(appContext: appContext)
         jsonSyndicate.jsonMap = jsonMap
         jsonSyndicate.modelClass = modelClass
         jsonSyndicate.linker = managedObjectLinker
+        jsonSyndicate.decodeDepthLevel = decodingDepthLevel
 
         jsonSyndicate.completion = { fetchResult, error in
             completion(fetchResult, error)
@@ -70,10 +77,12 @@ extension JSONSyndicate {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
         case jsonExtractorIsNotPresented
+        case reachedMaxDecodingDepthLevel
 
         public var description: String {
             switch self {
             case .jsonExtractorIsNotPresented: return "\(type(of: self)): json extrator is not presented"
+            case .reachedMaxDecodingDepthLevel: return "\(type(of: self)): Reached max decoding depth level"
             }
         }
     }

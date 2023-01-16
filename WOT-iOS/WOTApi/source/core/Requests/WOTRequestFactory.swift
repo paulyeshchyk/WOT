@@ -33,7 +33,7 @@ public class WOTWEBRequestFactory: NSObject {
             throw HttpRequestFactoryError.objectNotDefined
         }
         let arguments = RequestArguments()
-        arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
+        arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
         let extractor = VehiclesPivotManagedObjectExtractor()
         let socket = JointSocket(managedRef: nil, identifier: nil, keypath: nil)

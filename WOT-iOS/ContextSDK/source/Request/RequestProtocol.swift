@@ -18,6 +18,7 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     var listeners: [RequestListenerProtocol] { get }
     var contextPredicate: ContextPredicateProtocol? { get set }
     var arguments: RequestArgumentsProtocol? { get set }
+    var decodingDepthLevel: DecodingDepthLevel? { get set }
 
     // MARK: to be moved out from protocol
 
@@ -59,6 +60,8 @@ open class Request: RequestProtocol, CustomStringConvertible {
         }
     }
 
+    public var decodingDepthLevel: DecodingDepthLevel?
+
     public let appContext: RequestProtocol.Context
 
     // MARK: - RequestProtocol
@@ -86,6 +89,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     public required init(context: RequestProtocol.Context) {
         appContext = context
+        decodingDepthLevel = DecodingDepthLevel.initial
         context.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
 

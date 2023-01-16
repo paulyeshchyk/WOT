@@ -10,7 +10,7 @@ public extension VehicleprofileEngine {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, appContext _: JSONDecodableProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
         //
         let engineJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: engineJSON)

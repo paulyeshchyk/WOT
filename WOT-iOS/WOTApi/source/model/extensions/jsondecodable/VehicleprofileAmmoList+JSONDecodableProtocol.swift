@@ -10,7 +10,7 @@ public extension VehicleprofileAmmoList {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
         //
         let profilesJSON = try map.data(ofType: [JSON].self)
         //
@@ -25,7 +25,9 @@ public extension VehicleprofileAmmoList {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            let decodingDepthLevel = forDepthLevel?.next
+
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }

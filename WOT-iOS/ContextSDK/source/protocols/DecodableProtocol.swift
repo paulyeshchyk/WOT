@@ -14,6 +14,31 @@ public protocol DecodableProtocol {
     func decodeWith(_ decoder: Decoder) throws
 }
 
+// MARK: - DecodingDepthLevel
+
+@objc
+public class DecodingDepthLevel: NSObject, RawRepresentable {
+    public required init?(rawValue: Int) {
+        self.rawValue = rawValue
+        super.init()
+    }
+
+    public var rawValue: Int
+
+    public static let initial: DecodingDepthLevel? = DecodingDepthLevel(rawValue: 0)
+
+    public typealias RawValue = Int
+
+    public var next: DecodingDepthLevel? { DecodingDepthLevel(rawValue: rawValue + 1) }
+
+    // MARK: Public
+
+    public func maxReached() -> Bool {
+        rawValue < 1// (Int.max - 1)
+    }
+
+}
+
 // MARK: - JSONDecodableProtocol
 
 public protocol JSONDecodableProtocol {
@@ -21,7 +46,7 @@ public protocol JSONDecodableProtocol {
         & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
 
-    func decode(using: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?) throws
+    func decode(using: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws
 }
 
 // MARK: - JSONCollectionProtocol

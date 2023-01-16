@@ -19,7 +19,7 @@ extension NSManagedObject: JSONDecodableProtocol {
     public typealias Fields = DataFieldsKeys
 
     @objc
-    open func decode(using _: JSONMapProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
+    open func decode(using _: JSONMapProtocol, appContext _: JSONDecodableProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
         throw NSManagedObjectJSONMappableError.hasNotBeenImplemented("\(type(of: self))::\(#function)")
     }
 }

@@ -10,7 +10,7 @@ public extension Vehicles {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using jsonMap: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using jsonMap: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
         //
         let vehicleJSON = try jsonMap.data(ofType: JSON.self)
         try decode(decoderContainer: vehicleJSON)
@@ -41,7 +41,9 @@ public extension Vehicles {
                     let socket = JointSocket(managedRef: managedRef, identifier: module_id, keypath: keypath)
                     let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
                     let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
-                    JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+                    let decodingDepthLevel = forDepthLevel?.next
+
+                    JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                         if let error = error {
                             appContext?.logInspector?.log(.warning(error: error), sender: self)
                         }
@@ -65,8 +67,9 @@ public extension Vehicles {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            let decodingDepthLevel = forDepthLevel?.next
 
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -111,8 +114,8 @@ private enum VehiclesJSONMappingError: Error, CustomStringConvertible {
         case .passedInvalidModuleTreeJSON(let profileID): return "[\(type(of: self))]: Passed invalid module tree json for \(profileID ?? -1)"
         case .passedInvalidSubModuleJSON: return "[\(type(of: self))]: Passed invalid submodule json"
         case .passedInvalidModuleId: return "[\(type(of: self))]: Passed invalid module id"
-        case .profileNotFound(let id): return "[\(type(of: self))]: Profile not defined in json for \(id ?? -1)"
-        case .moduleTreeNotFound(let id): return "[\(type(of: self))]: Module tree not defined in json for \(id ?? -1)"
+        case .profileNotFound(let id): return "[\(type(of: self))]: Profile is not defined in json for \(id ?? -1)"
+        case .moduleTreeNotFound(let id): return "[\(type(of: self))]: Module tree is not defined in json for \(id ?? -1)"
         }
     }
 }

@@ -1,13 +1,13 @@
 //
-//  MappingCoordinatorDecodeHelper.swift
+//  ManagedObjectDecodeHelper.swift
 //  ContextSDK
 //
 //  Created by Paul on 16.01.23.
 //
 
-// MARK: - MappingCoordinatorDecodeHelper
+// MARK: - ManagedObjectDecodeHelper
 
-class MappingCoordinatorDecodeHelper {
+class ManagedObjectDecodeHelper {
 
     typealias Context = DataStoreContainerProtocol
         & RequestManagerContainerProtocol
@@ -19,7 +19,7 @@ class MappingCoordinatorDecodeHelper {
 
     // MARK: Lifecycle
 
-    init(appContext: MappingCoordinatorDecodeHelper.Context?) {
+    init(appContext: ManagedObjectDecodeHelper.Context?) {
         self.appContext = appContext
     }
 
@@ -41,7 +41,8 @@ class MappingCoordinatorDecodeHelper {
         }
         //
         do {
-            try managedObject.decode(using: jsonMap, appContext: appContext)
+            #warning("Provide crc check")
+            try managedObject.decode(using: jsonMap, appContext: appContext, forDepthLevel: DecodingDepthLevel.initial)
 
             appContext?.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
                 self.completion?(fetchResult, error)
@@ -52,9 +53,9 @@ class MappingCoordinatorDecodeHelper {
     }
 }
 
-// MARK: - %t + MappingCoordinatorDecodeHelper.Errors
+// MARK: - %t + ManagedObjectDecodeHelper.Errors
 
-extension MappingCoordinatorDecodeHelper {
+extension ManagedObjectDecodeHelper {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
         case fetchResultIsNotPresented

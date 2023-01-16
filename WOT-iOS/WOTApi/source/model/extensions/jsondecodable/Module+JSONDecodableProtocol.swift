@@ -10,7 +10,7 @@ public extension Module {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
         //
         let moduleJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: moduleJSON)

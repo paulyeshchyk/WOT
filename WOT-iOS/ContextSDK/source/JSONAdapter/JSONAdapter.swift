@@ -89,6 +89,7 @@ public extension JSONAdapter {
             dispatchGroup.enter()
 
             let syndicate = JSONSyndicate(appContext: appContext)
+            syndicate.decodeDepthLevel = request.decodingDepthLevel
             syndicate.jsonMap = jsonMap
             syndicate.modelClass = modelClass
             syndicate.linker = linker
