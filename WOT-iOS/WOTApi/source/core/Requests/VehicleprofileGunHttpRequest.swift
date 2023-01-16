@@ -18,9 +18,9 @@ public class VehicleprofileGunHttpRequest: HttpRequest {
     override public func httpAPIQueryPrefix() -> String? { "gun." }
 }
 
-// MARK: - VehicleprofileGunHttpRequest + ModelServiceProtocol
+// MARK: - VehicleprofileGunHttpRequest + RequestModelServiceProtocol
 
-extension VehicleprofileGunHttpRequest: ModelServiceProtocol {
+extension VehicleprofileGunHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

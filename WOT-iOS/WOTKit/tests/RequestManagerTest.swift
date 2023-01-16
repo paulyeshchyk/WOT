@@ -131,7 +131,7 @@ class ManagedObjectContext: ManagedObjectContextProtocol {
         nil
     }
 
-    func execute(appContext _: Context, with _: @escaping (ManagedObjectContextProtocol) -> Void) {
+    func execute(appContext _: Context?, with _: @escaping (ManagedObjectContextProtocol) -> Void) {
         // with()
     }
 
@@ -139,7 +139,7 @@ class ManagedObjectContext: ManagedObjectContextProtocol {
         false
     }
 
-    func save(appContext _: Context, completion block: @escaping ThrowableCompletion) {
+    func save(appContext _: Context?, completion block: @escaping ThrowableCompletion) {
         block(nil)
     }
 }
@@ -187,13 +187,12 @@ class Linker: ManagedObjectLinkerProtocol {
 
 // MARK: - AppContext
 
-class AppContext: ResponseDataAdapterCreatorContainerProtocol, RequestManagerContainerProtocol, DataStoreContainerProtocol, HostConfigurationContainerProtocol, LogInspectorContainerProtocol {
+class AppContext: RequestManagerContainerProtocol, DataStoreContainerProtocol, HostConfigurationContainerProtocol, LogInspectorContainerProtocol {
 
     var dataStore: DataStoreProtocol?
     var hostConfiguration: HostConfigurationProtocol?
     var logInspector: LogInspectorProtocol?
     var requestManager: RequestManagerProtocol?
-    var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
     // MARK: Lifecycle
 

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
+public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
     private let parentHostPin: JointPinProtocol
@@ -20,13 +20,13 @@ public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: RequestPredicateComp
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
         let pinModelClass = pin.modelClass
         let parentHostPinModelClass = parentHostPin.modelClass
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = pinModelClass.primaryKey(forType: .external, andObject: pin.identifier)
         lookupPredicate[.secondary] = parentHostPinModelClass.primaryKey(forType: .internal, andObject: parentHostPin.identifier)
 
-        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

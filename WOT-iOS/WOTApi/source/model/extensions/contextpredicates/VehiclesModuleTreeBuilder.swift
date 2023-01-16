@@ -5,20 +5,20 @@
 //  Created by Paul on 13.01.23.
 //
 
-public class VehiclesModuleTreeBuilder: RequestPredicateComposerProtocol {
-    private let requestPredicate: ContextPredicateProtocol
-    private let managedRefs: [ManagedRefProtocol]
+public class VehiclesModuleTreeBuilder: FetchRequestPredicateComposerProtocol {
+    private let jsonMap: JSONMapProtocol
+    private let jsonRefs: [JSONRefProtocol]
 
-    public init(requestPredicate: ContextPredicateProtocol, managedRefs: [ManagedRefProtocol]) {
-        self.requestPredicate = requestPredicate
-        self.managedRefs = managedRefs
+    public init(jsonMap: JSONMapProtocol, jsonRefs: [JSONRefProtocol]) {
+        self.jsonMap = jsonMap
+        self.jsonRefs = jsonRefs
     }
 
-    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
-        let lookupPredicate = ContextPredicate(managedRefs: managedRefs)
-        lookupPredicate[.primary] = requestPredicate[.primary]?
+    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+        let lookupPredicate = ContextPredicate(jsonRefs: jsonRefs)
+        lookupPredicate[.primary] = jsonMap.contextPredicate[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
-        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

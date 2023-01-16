@@ -6,27 +6,27 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: RequestPredicateComposerProtocol {
+public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
-    private var contextPredicate: ContextPredicateProtocol
+    private var jsonMap: JSONMapProtocol
     private var foreignPrimarySelectKey: String
     private var foreignSecondarySelectKey: String
 
     // MARK: Lifecycle
 
-    public init(contextPredicate: ContextPredicateProtocol, foreignPrimarySelectKey: String, foreignSecondarySelectKey: String) {
-        self.contextPredicate = contextPredicate
+    public init(jsonMap: JSONMapProtocol, foreignPrimarySelectKey: String, foreignSecondarySelectKey: String) {
+        self.jsonMap = jsonMap
         self.foreignPrimarySelectKey = foreignPrimarySelectKey
         self.foreignSecondarySelectKey = foreignSecondarySelectKey
     }
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
-        lookupPredicate[.primary] = contextPredicate[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
-        lookupPredicate[.secondary] = contextPredicate[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)
+        lookupPredicate[.primary] = jsonMap.contextPredicate[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
+        lookupPredicate[.secondary] = jsonMap.contextPredicate[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)
 
-        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

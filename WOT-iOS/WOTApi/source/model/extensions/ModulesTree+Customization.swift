@@ -42,8 +42,8 @@ public enum VehicleModuleType: String {
 
     // MARK: Public
 
-    public static func fromString(_ string: String?) throws -> VehicleModuleType {
-        guard let string = string else {
+    public static func fromString(_ string: JSONValueType?) throws -> VehicleModuleType {
+        guard let string = string as? String else {
             throw ModuleMappingError.cantUseNil
         }
         guard let result = VehicleModuleType(rawValue: string) else {

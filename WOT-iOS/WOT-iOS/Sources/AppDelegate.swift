@@ -17,22 +17,20 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var hostConfiguration: HostConfigurationProtocol?
     public var requestManager: RequestManagerProtocol?
     public var requestListener: RequestListenerProtocol?
-    public var sessionManager: SessionManagerProtocol?
     public var logInspector: LogInspectorProtocol?
     public var dataStore: DataStoreProtocol?
-    public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
+    public var decoderManager: DecoderManagerProtocol?
 
     // MARK: Public
 
     public func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        let logPriorities: [LogEventType]? = [.error, .warning, .flow, .custom, .remoteFetch]
+        let logPriorities: [LogEventType]? = [.error, .warning, .flow, .custom, .remoteFetch, .sqlite]
         logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
 
         hostConfiguration = WOTHostConfiguration()
-        sessionManager = SessionManager()
         dataStore = WOTDataStore(appContext: self)
-        responseDataAdapterCreator = ResponseDataAdapterCreator(appContext: self)
         requestManager = WOTRequestManager(appContext: self)
+        decoderManager = WOTDecoderManager()
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = WOTDrawerViewController.newDrawer()
@@ -41,7 +39,3 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
         return true
     }
 }
-
-// MARK: - AppDelegate + ResponseDataAdapterCreatorContainerProtocol
-
-extension AppDelegate: ResponseDataAdapterCreatorContainerProtocol {}

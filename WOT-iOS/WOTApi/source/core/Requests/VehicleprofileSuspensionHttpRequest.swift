@@ -18,9 +18,9 @@ public class VehicleprofileSuspensionHttpRequest: HttpRequest {
     override public func httpAPIQueryPrefix() -> String? { "suspension." }
 }
 
-// MARK: - VehicleprofileSuspensionHttpRequest + ModelServiceProtocol
+// MARK: - VehicleprofileSuspensionHttpRequest + RequestModelServiceProtocol
 
-extension VehicleprofileSuspensionHttpRequest: ModelServiceProtocol {
+extension VehicleprofileSuspensionHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

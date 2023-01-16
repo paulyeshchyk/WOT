@@ -6,30 +6,29 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
+open class LinkedRemoteAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
-    private let managedRef: ManagedRefProtocol
+    private let jsonRef: JSONRefProtocol
 
     // MARK: Lifecycle
 
-    public init(pin: JointPinProtocol, managedRef: ManagedRefProtocol) {
+    public init(pin: JointPinProtocol, jsonRef: JSONRefProtocol) {
         self.pin = pin
-        self.managedRef = managedRef
+        self.jsonRef = jsonRef
     }
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
-        var parentManagedRefs = [ManagedRefProtocol]()
-        if let parents = pin.contextPredicate?.managedRefs {
-            parentManagedRefs.append(contentsOf: parents)
+    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+        var parentJsonRefs = [JSONRefProtocol]()
+        if let parentJSONRef = pin.contextPredicate?.jsonRefs {
+            parentJsonRefs.append(contentsOf: parentJSONRef)
         }
-        parentManagedRefs.append(managedRef)
 
-        let lookupPredicate = ContextPredicate(managedRefs: parentManagedRefs)
+        let lookupPredicate = ContextPredicate(jsonRefs: parentJsonRefs)
         lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
 
-        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

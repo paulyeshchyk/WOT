@@ -18,9 +18,9 @@ public class VehicleprofileRadiosHttpRequest: HttpRequest {
     override public func httpAPIQueryPrefix() -> String? { "radio." }
 }
 
-// MARK: - VehicleprofileRadiosHttpRequest + ModelServiceProtocol
+// MARK: - VehicleprofileRadiosHttpRequest + RequestModelServiceProtocol
 
-extension VehicleprofileRadiosHttpRequest: ModelServiceProtocol {
+extension VehicleprofileRadiosHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

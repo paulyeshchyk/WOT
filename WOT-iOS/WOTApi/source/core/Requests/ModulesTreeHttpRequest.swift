@@ -17,9 +17,9 @@ public class ModulesTreeHttpRequest: HttpRequest {
     override public var httpQueryItemName: String { WGWebQueryArgs.fields }
 }
 
-// MARK: - ModulesTreeHttpRequest + ModelServiceProtocol
+// MARK: - ModulesTreeHttpRequest + RequestModelServiceProtocol
 
-extension ModulesTreeHttpRequest: ModelServiceProtocol {
+extension ModulesTreeHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

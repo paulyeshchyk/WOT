@@ -6,31 +6,28 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposerProtocol {
+open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
-    private let hostManagedRef: ManagedRefProtocol
 
     // MARK: Lifecycle
 
-    public init(pin: JointPinProtocol, hostManagedRef: ManagedRefProtocol) {
+    public init(pin: JointPinProtocol) {
         self.pin = pin
-        self.hostManagedRef = hostManagedRef
     }
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
-        var parentManagedRefs = [ManagedRefProtocol]()
-        if let parents = pin.contextPredicate?.managedRefs {
-            parentManagedRefs.append(contentsOf: parents)
+    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+        var parentJSONRefs = [JSONRefProtocol]()
+        if let parentJson = pin.contextPredicate?.jsonRefs {
+            parentJSONRefs.append(contentsOf: parentJson)
         }
-        parentManagedRefs.append(hostManagedRef)
 
-        let lookupPredicate = ContextPredicate(managedRefs: parentManagedRefs)
+        let lookupPredicate = ContextPredicate(jsonRefs: parentJSONRefs)
         lookupPredicate[.primary] = pin.contextPredicate?[.primary]
         lookupPredicate[.secondary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
 
-        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

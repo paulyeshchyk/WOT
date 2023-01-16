@@ -18,9 +18,9 @@ public class VehicleprofileTurretsHttpRequest: HttpRequest {
     override public func httpAPIQueryPrefix() -> String? { "turret." }
 }
 
-// MARK: - VehicleprofileTurretsHttpRequest + ModelServiceProtocol
+// MARK: - VehicleprofileTurretsHttpRequest + RequestModelServiceProtocol
 
-extension VehicleprofileTurretsHttpRequest: ModelServiceProtocol {
+extension VehicleprofileTurretsHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

@@ -6,7 +6,7 @@
 //
 //
 
-public class VehicleprofileAmmoListAmmoRequestPredicateComposer: RequestPredicateComposerProtocol {
+public class VehicleprofileAmmoListAmmoRequestPredicateComposer: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
     private var foreignSelectKey: String
@@ -20,11 +20,11 @@ public class VehicleprofileAmmoListAmmoRequestPredicateComposer: RequestPredicat
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = pin.contextPredicate?[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
         lookupPredicate[.secondary] = pin.modelClass.primaryKey(forType: .internal, andObject: pin.identifier)
 
-        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }
