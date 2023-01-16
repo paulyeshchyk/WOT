@@ -34,19 +34,19 @@ public class DecodingDepthLevel: NSObject, RawRepresentable {
     // MARK: Public
 
     public func maxReached() -> Bool {
-        rawValue < 1// (Int.max - 1)
+        rawValue < 2// (Int.max - 1)
     }
 
 }
 
-// MARK: - JSONDecodableProtocol
+// MARK: - JSONDecoderProtocol
 
-public protocol JSONDecodableProtocol {
+public protocol JSONDecoderProtocol {
     typealias Context = DataStoreContainerProtocol
         & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
 
-    func decode(using: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws
+    func decode(using: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws
 }
 
 // MARK: - JSONCollectionProtocol

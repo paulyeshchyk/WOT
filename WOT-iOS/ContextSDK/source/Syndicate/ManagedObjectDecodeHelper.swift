@@ -35,7 +35,7 @@ class ManagedObjectDecodeHelper {
             return
         }
 
-        guard let managedObject = fetchResult.managedObject() as? JSONDecodableProtocol else {
+        guard let managedObject = fetchResult.managedObject() as? JSONDecoderProtocol else {
             completion?(fetchResult, Errors.fetchResultIsNotJSONDecodable(fetchResult))
             return
         }

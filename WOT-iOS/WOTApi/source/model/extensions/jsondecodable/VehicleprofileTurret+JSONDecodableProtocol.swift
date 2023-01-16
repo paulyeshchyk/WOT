@@ -10,10 +10,9 @@ public extension VehicleprofileTurret {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, appContext _: JSONDecodableProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
-        //
-        let turretJSON = try map.data(ofType: JSON.self)
-        try decode(decoderContainer: turretJSON)
-        //
+    override func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
+        let decoder = VehicleprofileTurretJSONDecoder()
+        decoder.managedObject = self
+        try decoder.decode(using: map, appContext: appContext, forDepthLevel: forDepthLevel)
     }
 }

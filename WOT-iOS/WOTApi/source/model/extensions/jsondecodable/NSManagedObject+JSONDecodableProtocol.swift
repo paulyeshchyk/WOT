@@ -8,9 +8,9 @@
 import ContextSDK
 import CoreData
 
-// MARK: - NSManagedObject + JSONDecodableProtocol
+// MARK: - NSManagedObject + JSONDecoderProtocol
 
-extension NSManagedObject: JSONDecodableProtocol {
+extension NSManagedObject: JSONDecoderProtocol {
 
     public enum DataFieldsKeys: String, CodingKey {
         case hasChanges
@@ -19,7 +19,7 @@ extension NSManagedObject: JSONDecodableProtocol {
     public typealias Fields = DataFieldsKeys
 
     @objc
-    open func decode(using _: JSONMapProtocol, appContext _: JSONDecodableProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
+    open func decode(using _: JSONMapProtocol, appContext _: JSONDecoderProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
         throw NSManagedObjectJSONMappableError.hasNotBeenImplemented("\(type(of: self))::\(#function)")
     }
 }

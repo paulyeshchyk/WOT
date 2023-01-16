@@ -10,10 +10,9 @@ public extension VehicleprofileArmor {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, appContext _: JSONDecodableProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
-        //
-        let armorJSON = try map.data(ofType: JSON.self)
-        try decode(decoderContainer: armorJSON)
-        //
+    override func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
+        let decoder = VehicleprofileArmorJSONDecoder()
+        decoder.managedObject = self
+        try decoder.decode(using: map, appContext: appContext, forDepthLevel: forDepthLevel)
     }
 }

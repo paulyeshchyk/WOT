@@ -10,10 +10,9 @@ public extension VehicleprofileSuspension {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, appContext _: JSONDecodableProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
-        //
-        let suspensionJSON = try map.data(ofType: JSON.self)
-        try decode(decoderContainer: suspensionJSON)
-        //
+    override func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
+        let decoder = VehicleprofileSuspensionJSONDecoder()
+        decoder.managedObject = self
+        try decoder.decode(using: map, appContext: appContext, forDepthLevel: forDepthLevel)
     }
 }
