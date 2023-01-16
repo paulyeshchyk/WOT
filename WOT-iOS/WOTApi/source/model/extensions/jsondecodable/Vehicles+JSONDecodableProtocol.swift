@@ -20,7 +20,7 @@ public extension Vehicles {
         // MARK: - ModulesTree
 
         if let modulesTreeJSON = vehicleJSON?[#keyPath(Vehicles.modules_tree)] as? JSON {
-            try modulesTreeMapping(jSON: modulesTreeJSON, vehicleJSONRef: jsonRef, requestPredicate: map.contextPredicate, appContext: appContext)
+            try modulesTreeMapping(jSON: modulesTreeJSON, vehicleJSONRef: jsonRef, jsonMap: map, appContext: appContext)
         } else {
             appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
         }
@@ -31,7 +31,7 @@ public extension Vehicles {
         if let jsonElement = vehicleJSON?[defaultProfileKeypath] as? JSON {
             let foreignSelectKey = #keyPath(Vehicleprofile.vehicles)
             let modelClass = Vehicleprofile.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, managedRefs: [], jsonRefs: [])
+            let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
@@ -49,7 +49,7 @@ public extension Vehicles {
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(jSON: JSON?, vehicleJSONRef: JSONRefProtocol, requestPredicate: ContextPredicateProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    private func modulesTreeMapping(jSON: JSON?, vehicleJSONRef: JSONRefProtocol, jsonMap: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         if let set = modules_tree {
             removeFromModules_tree(set)
         }
@@ -58,13 +58,10 @@ extension Vehicles {
             throw VehiclesJSONMappingError.passedInvalidModuleTreeJSON(tank_id)
         }
 
-        var parentManagedRefs = requestPredicate.managedRefs
-        parentManagedRefs.append(managedRef)
-
-        var parentJSONRefs = requestPredicate.jsonRefs
+        var parentJSONRefs = jsonMap.contextPredicate.jsonRefs
         parentJSONRefs.append(vehicleJSONRef)
 
-        let composer = VehiclesModuleTreeBuilder(requestPredicate: requestPredicate, managedRefs: parentManagedRefs, jsonRefs: parentJSONRefs)
+        let composer = VehiclesModuleTreeBuilder(jsonMap: jsonMap, jsonRefs: parentJSONRefs)
         let contextPredicate = try composer.buildRequestPredicateComposition().contextPredicate
 
         for key in moduleTreeJSON.keys {

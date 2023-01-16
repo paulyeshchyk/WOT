@@ -21,13 +21,15 @@ public extension Module {
             throw ModuleMappingError.noParentsFound
         }
 
-        if let module_id = moduleJSON?[#keyPath(Module.module_id)] {
-            let moduleDecoder = ModuleDecoder(appContext: appContext, parentHostPin: parentHostPin)
-            moduleDecoder.module_id = module_id
-            moduleDecoder.moduleManagedRef = managedRef
-            moduleDecoder.type = type
-            try moduleDecoder.decode()
+        guard let module_id = moduleJSON?[#keyPath(Module.module_id)] else {
+            throw ModuleMappingError.moduleIdNotDefined
         }
+
+        let moduleDecoder = ModuleDecoder(appContext: appContext, parentHostPin: parentHostPin)
+        moduleDecoder.module_id = module_id
+        moduleDecoder.moduleManagedRef = managedRef
+        moduleDecoder.type = type
+        try moduleDecoder.decode()
     }
 }
 

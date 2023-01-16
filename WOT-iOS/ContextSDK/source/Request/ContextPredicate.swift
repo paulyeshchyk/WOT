@@ -9,8 +9,6 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
 
     /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
     /// parents identifier has been taken from a list
-    public var managedRefs: [ManagedRefProtocol] = []
-
     public var jsonRefs: [JSONRefProtocol] = []
 
     override public var description: String {
@@ -29,10 +27,9 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
 
     // MARK: Lifecycle
 
-    public convenience init(managedRefs idList: [ManagedRefProtocol], jsonRefs json: [JSONRefProtocol]) {
+    public convenience init(jsonRefs json: [JSONRefProtocol]) {
         self.init()
 
-        managedRefs.append(contentsOf: idList)
         jsonRefs.append(contentsOf: json)
     }
 

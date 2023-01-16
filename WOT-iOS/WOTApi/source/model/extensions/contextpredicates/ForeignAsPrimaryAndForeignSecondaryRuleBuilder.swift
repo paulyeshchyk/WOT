@@ -8,14 +8,14 @@
 
 public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: RequestPredicateComposerProtocol {
 
-    private var contextPredicate: ContextPredicateProtocol
+    private var jsonMap: JSONMapProtocol
     private var foreignPrimarySelectKey: String
     private var foreignSecondarySelectKey: String
 
     // MARK: Lifecycle
 
-    public init(contextPredicate: ContextPredicateProtocol, foreignPrimarySelectKey: String, foreignSecondarySelectKey: String) {
-        self.contextPredicate = contextPredicate
+    public init(jsonMap: JSONMapProtocol, foreignPrimarySelectKey: String, foreignSecondarySelectKey: String) {
+        self.jsonMap = jsonMap
         self.foreignPrimarySelectKey = foreignPrimarySelectKey
         self.foreignSecondarySelectKey = foreignSecondarySelectKey
     }
@@ -24,8 +24,8 @@ public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: RequestPredicateCom
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
-        lookupPredicate[.primary] = contextPredicate[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
-        lookupPredicate[.secondary] = contextPredicate[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)
+        lookupPredicate[.primary] = jsonMap.contextPredicate[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
+        lookupPredicate[.secondary] = jsonMap.contextPredicate[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
