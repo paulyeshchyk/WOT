@@ -10,7 +10,7 @@ public extension Vehicles {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, fetchResult _: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
         let vehicleJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: vehicleJSON)

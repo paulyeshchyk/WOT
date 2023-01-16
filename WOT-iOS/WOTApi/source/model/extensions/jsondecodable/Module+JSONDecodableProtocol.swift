@@ -10,14 +10,14 @@ public extension Module {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, fetchResult: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
         let moduleJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: moduleJSON)
         //
 
         let filteredManagedRef = map.contextPredicate.managedRefs.filter { $0.modelClass == Vehicles.self }.first
-        guard let parentHostPin = filteredManagedRef?.getJointPin(idKeyPath: #keyPath(Vehicles.tank_id), inContext: managedObjectContextContainer.managedObjectContext) else {
+        guard let parentHostPin = filteredManagedRef?.getJointPin(idKeyPath: #keyPath(Vehicles.tank_id), inContext: fetchResult.managedObjectContext) else {
             throw ModuleMappingError.noParentsFound
         }
 

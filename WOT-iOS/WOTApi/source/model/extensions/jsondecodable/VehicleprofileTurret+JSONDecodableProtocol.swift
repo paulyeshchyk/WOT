@@ -10,7 +10,7 @@ public extension VehicleprofileTurret {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, fetchResult _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
         //
         let turretJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: turretJSON)
