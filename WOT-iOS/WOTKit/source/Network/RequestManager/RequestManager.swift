@@ -86,10 +86,6 @@ extension RequestManager: RequestListenerProtocol {
     }
 
     private func parseResponse(request: RequestProtocol, data: Data?) throws {
-        guard let linker = linkerList.linkerForRequest(request) else {
-            throw Errors.adapterNotFound(request)
-        }
-
         guard let modelService = request as? ModelServiceProtocol else {
             throw Errors.modelNotFound(request)
         }
@@ -98,11 +94,10 @@ extension RequestManager: RequestListenerProtocol {
             throw Errors.modelNotFound(request)
         }
 
-        guard let extractor = extractorList.extractorForRequest(request) else {
-            throw Errors.extractorNotFound(request)
-        }
-
-        let dataAdapter = type(of: modelService).dataAdapterClass().init(modelClass: modelClass, request: request, managedObjectLinker: linker, jsonExtractor: extractor, appContext: appContext)
+        let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext, modelClass: modelClass)
+        dataAdapter.request = request
+        dataAdapter.linker = linkerList.linkerForRequest(request)
+        dataAdapter.extractor = extractorList.extractorForRequest(request)
         dataAdapter.completion = { request, error in
             self.finalizeParseResponse(request: request, error: error)
         }
@@ -220,7 +215,6 @@ extension RequestManager: RequestManagerProtocol {
 extension RequestManager {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
-        case extractorNotFound(RequestProtocol)
         case adapterNotFound(RequestProtocol)
         case modelNotFound(RequestProtocol)
         case notAModelService(RequestProtocol)
@@ -236,7 +230,6 @@ extension RequestManager {
 
         public var description: String {
             switch self {
-            case .extractorNotFound(let request): return "\(type(of: self)): Extractor not found for request: \(String(describing: request))"
             case .notAModelService(let request): return "\(type(of: self)): Not a model service: \(String(describing: request))"
             case .adapterNotFound(let request): return "\(type(of: self)): Adapter not found for request: \(String(describing: request))"
             case .modelNotFound(let request): return "\(type(of: self)): Model not found for request: \(String(describing: request))"

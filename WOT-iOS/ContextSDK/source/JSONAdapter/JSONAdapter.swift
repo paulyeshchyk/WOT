@@ -24,26 +24,23 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     // MARK: DataAdapterProtocol -
 
     private let uuid = UUID()
-    private var managedObjectLinker: ManagedObjectLinkerProtocol
-    private var jsonExtractor: ManagedObjectExtractable
 
-    private let appContext: JSONAdapterProtocol.Context
-    private let modelClass: PrimaryKeypathProtocol.Type
-    private let request: RequestProtocol
+    private let appContext: JSONAdapterProtocol.Context?
+    public let modelClass: PrimaryKeypathProtocol.Type
+    public var request: RequestProtocol?
+    public var linker: ManagedObjectLinkerProtocol?
+    public var extractor: ManagedObjectExtractable?
 
     // MARK: Lifecycle
 
-    public required init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, jsonExtractor: ManagedObjectExtractable, appContext: JSONAdapterProtocol.Context) {
-        self.modelClass = modelClass
-        self.request = request
-        self.managedObjectLinker = managedObjectLinker
-        self.jsonExtractor = jsonExtractor
+    public required init(appContext: JSONAdapterProtocol.Context, modelClass: PrimaryKeypathProtocol.Type) {
         self.appContext = appContext
+        self.modelClass = modelClass
         appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
 
     deinit {
-        appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
+//        appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
     }
 
     // MARK: Open
@@ -56,7 +53,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     public func decode(data: Data?, fromRequest request: RequestProtocol) {
         guard let data = data else {
-            didFinish(request: request, data: nil, error: JSONAdapterError.dataIsNil)
+            didFinish(request: request, data: nil, error: Errors.dataIsNil)
             return
         }
         let decoder = JSONDecoder()
@@ -64,7 +61,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
             let result = try decodedObject(jsonDecoder: decoder, from: data)
             didFinish(request: request, data: result, error: nil)
         } catch {
-            let exception = JSONAdapterError.responseError(request, error)
+            let exception = Errors.responseError(request, error)
             didFinish(request: request, data: nil, error: exception)
         }
     }
@@ -77,20 +74,24 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 public extension JSONAdapter {
     func didFinish(request: RequestProtocol, data: JSON?, error: Error?) {
         guard error == nil, let json = data else {
-            completion?(request, error ?? JSONAdapterError.jsonIsNil)
+            completion?(request, error ?? Errors.jsonIsNil)
+            return
+        }
+        guard let extractor = extractor else {
+            completion?(request, Errors.extractorNotFound(request))
             return
         }
 
         let dispatchGroup = DispatchGroup()
 
-        let maps = jsonExtractor.getJSONMaps(json: json, modelClass: modelClass, managedRefs: request.contextPredicate?.managedRefs)
-        for jsonMap in maps {
+        let maps = extractor.getJSONMaps(json: json, modelClass: modelClass, managedRefs: request.contextPredicate?.managedRefs)
+        maps.forEach { jsonMap in
             dispatchGroup.enter()
 
             let syndicate = JSONSyndicate(appContext: appContext)
             syndicate.jsonMap = jsonMap
             syndicate.modelClass = modelClass
-            syndicate.managedObjectLinker = managedObjectLinker
+            syndicate.linker = linker
             syndicate.completion = { _, error in
                 if let error = error {
                     self.completion?(request, error)
@@ -106,28 +107,31 @@ public extension JSONAdapter {
     }
 }
 
-// MARK: - JSONAdapterError
+// MARK: - %t + JSONAdapter.Errors
 
-private enum JSONAdapterError: Error, CustomStringConvertible {
-    case jsonIsNil
-    case dataIsNil
-    case adapterIsNil
-    case notMainThread
-    case fetchResultIsNotPresented
-    case jsonByKeyWasNotFound(JSON, AnyHashable)
-    case notSupportedType(AnyClass)
-    case responseError(RequestProtocol, Error)
+extension JSONAdapter {
+    // Errors
+    private enum Errors: Error, CustomStringConvertible {
+        case jsonIsNil
+        case dataIsNil
+        case notMainThread
+        case fetchResultIsNotPresented
+        case jsonByKeyWasNotFound(JSON, AnyHashable)
+        case notSupportedType(AnyClass)
+        case responseError(RequestProtocol, Error)
+        case extractorNotFound(RequestProtocol)
 
-    public var description: String {
-        switch self {
-        case .adapterIsNil: return "\(type(of: self)): Adapter is nil"
-        case .jsonIsNil: return "\(type(of: self)): JSON is nil"
-        case .dataIsNil: return "\(type(of: self)): Data is nil"
-        case .notSupportedType(let clazz): return "\(type(of: self)): \(type(of: clazz)) can't be adapted"
-        case .jsonByKeyWasNotFound(let json, let key): return "\(type(of: self)): json was not found for key:\(key)); {\(json)}"
-        case .notMainThread: return "\(type(of: self)): Not main thread"
-        case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
-        case .responseError(let request, let error): return "[\(String(describing: request))]: \(String(describing: error))"
+        public var description: String {
+            switch self {
+            case .jsonIsNil: return "\(type(of: self)): JSON is nil"
+            case .dataIsNil: return "\(type(of: self)): Data is nil"
+            case .notSupportedType(let clazz): return "\(type(of: self)): \(type(of: clazz)) can't be adapted"
+            case .jsonByKeyWasNotFound(let json, let key): return "\(type(of: self)): json was not found for key:\(key)); {\(json)}"
+            case .notMainThread: return "\(type(of: self)): Not main thread"
+            case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
+            case .responseError(let request, let error): return "[\(String(describing: request))]: \(String(describing: error))"
+            case .extractorNotFound(let request): return "\(type(of: self)): Extractor not found for request: \(String(describing: request))"
+            }
         }
     }
 }

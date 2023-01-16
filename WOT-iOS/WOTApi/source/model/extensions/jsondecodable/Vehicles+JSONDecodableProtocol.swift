@@ -10,7 +10,7 @@ public extension Vehicles {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
         let vehicleJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: vehicleJSON)
@@ -19,7 +19,7 @@ public extension Vehicles {
         // MARK: - ModulesTree
 
         if let modulesTreeJSON = vehicleJSON?[#keyPath(Vehicles.modules_tree)] as? JSON {
-            try modulesTreeMapping(objectContext: managedObjectContextContainer.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.contextPredicate, appContext: appContext)
+            try modulesTreeMapping(jSON: modulesTreeJSON, requestPredicate: map.contextPredicate, appContext: appContext)
         } else {
             appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
         }
@@ -48,7 +48,7 @@ public extension Vehicles {
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: ContextPredicateProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    private func modulesTreeMapping(jSON: JSON?, requestPredicate: ContextPredicateProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         if let set = modules_tree {
             removeFromModules_tree(set)
         }
@@ -67,14 +67,14 @@ extension Vehicles {
             if let jsonElement = moduleTreeJSON[key] as? JSON {
                 let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
 
-                try submoduleMapping(managedObjectContext: objectContext, jsonElement: jsonElement, module_id: module_id, requestPredicate: contextPredicate, managedRef: managedRef, appContext: appContext)
+                try submoduleMapping(jsonElement: jsonElement, module_id: module_id, requestPredicate: contextPredicate, managedRef: managedRef, appContext: appContext)
             } else {
                 appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
             }
         }
     }
 
-    private func submoduleMapping(managedObjectContext _: ManagedObjectContextProtocol, jsonElement: JSON, module_id: Any?, requestPredicate: ContextPredicateProtocol, managedRef: ManagedRefProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    private func submoduleMapping(jsonElement: JSON, module_id: Any?, requestPredicate: ContextPredicateProtocol, managedRef: ManagedRefProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         let composer = VehiclesModuleBuilder(requestPredicate: requestPredicate, module_id: module_id)
         let composition = try composer.buildRequestPredicateComposition()
         let keypath = #keyPath(ModulesTree.next_modules)

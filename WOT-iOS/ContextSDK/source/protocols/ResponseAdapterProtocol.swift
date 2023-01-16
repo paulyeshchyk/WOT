@@ -9,6 +9,7 @@
 
 @objc
 public protocol ResponseAdapterProtocol {
+
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestManagerContainerProtocol
@@ -17,8 +18,12 @@ public protocol ResponseAdapterProtocol {
 
     var responseClass: AnyClass { get }
     var completion: ResponseAdapterProtocol.OnComplete? { get set }
+    var modelClass: PrimaryKeypathProtocol.Type { get }
+    var request: RequestProtocol? { get set }
+    var linker: ManagedObjectLinkerProtocol? { get set }
+    var extractor: ManagedObjectExtractable? { get set }
 
-    init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, jsonExtractor: ManagedObjectExtractable, appContext: Context)
+    init(appContext: Context, modelClass: PrimaryKeypathProtocol.Type)
 
     func decode(data: Data?, fromRequest request: RequestProtocol)
 }

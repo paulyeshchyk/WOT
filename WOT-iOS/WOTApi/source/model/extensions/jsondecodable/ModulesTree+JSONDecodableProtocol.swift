@@ -60,17 +60,18 @@ public extension ModulesTree {
 
         // MARK: - CurrentModule
 
-        let identifier = value(forKeyPath: #keyPath(ModulesTree.module_id))
-        let keypath = #keyPath(ModulesTree.currentModule)
-        let modelClass = Module.self
-        let currentModuleAnchor = JointSocket(managedRef: managedRef, identifier: nil, keypath: keypath)
-        let extractor = CurrentModuleExtractor()
-        let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, socket: currentModuleAnchor)
-        let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
-        let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, managedRef: managedRef)
-        let composition = try composer.buildRequestPredicateComposition()
+        let currentModuleKeypath = #keyPath(ModulesTree.currentModule)
+        if let identifier = moduleTreeJSON?[#keyPath(ModulesTree.module_id)] {
+            let modelClass = Module.self
+            let currentModuleAnchor = JointSocket(managedRef: managedRef, identifier: nil, keypath: currentModuleKeypath)
+            let extractor = CurrentModuleExtractor()
+            let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, socket: currentModuleAnchor)
+            let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
+            let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, managedRef: managedRef)
+            let composition = try composer.buildRequestPredicateComposition()
 
-        try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: nil)
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: nil)
+        }
     }
 }
 

@@ -8,12 +8,13 @@
 // MARK: - JSONSyndicate
 
 public class JSONSyndicate {
+
     public typealias Context = DataStoreContainerProtocol
         & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
-    var managedObjectLinker: ManagedObjectLinkerProtocol?
+    var linker: ManagedObjectLinkerProtocol?
     let appContext: JSONSyndicate.Context?
     var modelClass: PrimaryKeypathProtocol.Type?
     var jsonMap: JSONMapProtocol?
@@ -27,22 +28,12 @@ public class JSONSyndicate {
     // MARK: Internal
 
     func run() {
-        guard let modelClass = modelClass else {
-            completion?(nil, JSONSyndicateError.modelClassIsNotDefined)
-            return
-        }
-        guard let managedObjectLinker = managedObjectLinker else {
-            completion?(nil, JSONSyndicateError.managedObjectLinkerIsNotPresented)
-            return
-        }
-
         let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
-        managedObjectLinkerHelper.managedObjectLinker = managedObjectLinker
+        managedObjectLinkerHelper.linker = linker
         managedObjectLinkerHelper.completion = completion
 
         let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
         mappingCoordinatorDecodeHelper.jsonMap = jsonMap
-        mappingCoordinatorDecodeHelper.managedObjectLinker = managedObjectLinker
         mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
             managedObjectLinkerHelper.run(fetchResult, error: error)
         }
@@ -64,7 +55,7 @@ extension JSONSyndicate {
         let jsonSyndicate = JSONSyndicate(appContext: appContext)
         jsonSyndicate.jsonMap = jsonMap
         jsonSyndicate.modelClass = modelClass
-        jsonSyndicate.managedObjectLinker = managedObjectLinker
+        jsonSyndicate.linker = managedObjectLinker
 
         jsonSyndicate.completion = { fetchResult, error in
             completion(fetchResult, error)
@@ -73,168 +64,17 @@ extension JSONSyndicate {
     }
 }
 
-// MARK: - ManagedObjectLinkerHelper
+// MARK: - %t + JSONSyndicate.Errors
 
-class ManagedObjectLinkerHelper {
-
-    typealias Context = (DataStoreContainerProtocol)
-
-    var completion: ((FetchResultProtocol?, Error?) -> Void)?
-
-    private let appContext: Context?
-    var managedObjectLinker: ManagedObjectLinkerProtocol?
-
-    private enum ManagedObjectLinkerHelperError: Error, CustomStringConvertible {
-        case managedObjectLinkerIsNotPresented
-        case fetchResultIsNotPresented
+extension JSONSyndicate {
+    // Errors
+    private enum Errors: Error, CustomStringConvertible {
+        case jsonExtractorIsNotPresented
 
         public var description: String {
             switch self {
-            case .managedObjectLinkerIsNotPresented: return "\(type(of: self)): managed object linker is not presented"
-            case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
+            case .jsonExtractorIsNotPresented: return "\(type(of: self)): json extrator is not presented"
             }
-        }
-    }
-
-    // MARK: Lifecycle
-
-    init(appContext: ManagedObjectLinkerHelper.Context?) {
-        self.appContext = appContext
-    }
-
-    // MARK: Internal
-
-    func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
-        guard let fetchResult = fetchResult, error == nil else {
-            completion?(fetchResult, error ?? ManagedObjectLinkerHelperError.fetchResultIsNotPresented)
-            return
-        }
-        guard let managedObjectLinker = managedObjectLinker else {
-            completion?(fetchResult, ManagedObjectLinkerHelperError.managedObjectLinkerIsNotPresented)
-            return
-        }
-        managedObjectLinker.process(fetchResult: fetchResult, appContext: appContext) { fetchResult, error in
-            self.completion?(fetchResult, error)
-        }
-    }
-}
-
-// MARK: - MappingCoordinatorDecodeHelper
-
-class MappingCoordinatorDecodeHelper {
-
-    typealias Context = DataStoreContainerProtocol
-        & RequestManagerContainerProtocol
-        & LogInspectorContainerProtocol
-
-    private let appContext: Context?
-    var completion: ((FetchResultProtocol?, Error?) -> Void)?
-    var jsonMap: JSONMapProtocol?
-    var managedObjectLinker: ManagedObjectLinkerProtocol?
-
-    private enum MappingCoordinatorDecodeHelperError: Error, CustomStringConvertible {
-        case fetchResultIsNotPresented
-        case contextPredicateIsNotDefined
-        case fetchResultIsNotJSONDecodable(FetchResultProtocol?)
-
-        public var description: String {
-            switch self {
-            case .fetchResultIsNotJSONDecodable(let fetchResult): return "[\(type(of: self))]: fetch result(\(type(of: fetchResult)) is not JSONDecodableProtocol"
-            case .contextPredicateIsNotDefined: return "\(type(of: self)): Context predicate is not defined"
-            case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
-            }
-        }
-    }
-
-    // MARK: Lifecycle
-
-    init(appContext: MappingCoordinatorDecodeHelper.Context?) {
-        self.appContext = appContext
-    }
-
-    // MARK: Internal
-
-    func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
-        guard let fetchResult = fetchResult, error == nil else {
-            completion?(fetchResult, error ?? MappingCoordinatorDecodeHelperError.fetchResultIsNotPresented)
-            return
-        }
-        guard let jsonMap = jsonMap else {
-            completion?(fetchResult, MappingCoordinatorDecodeHelperError.contextPredicateIsNotDefined)
-            return
-        }
-
-        guard let managedObject = fetchResult.managedObject() as? JSONDecodableProtocol else {
-            completion?(fetchResult, MappingCoordinatorDecodeHelperError.fetchResultIsNotJSONDecodable(fetchResult))
-            return
-        }
-        //
-        do {
-            try managedObject.decode(using: jsonMap, managedObjectContextContainer: fetchResult, appContext: appContext)
-
-            appContext?.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
-                self.completion?(fetchResult, error)
-            }
-        } catch {
-            completion?(fetchResult, error)
-        }
-    }
-}
-
-// MARK: - DatastoreFetchHelper
-
-class DatastoreFetchHelper {
-    typealias Context = DataStoreContainerProtocol
-
-    private let appContext: Context?
-    var nspredicate: NSPredicate?
-    var modelClass: PrimaryKeypathProtocol.Type?
-    var completion: ((FetchResultProtocol?, Error?) -> Void)?
-
-    private enum DatastoreFetchHelperError: Error, CustomStringConvertible {
-        case modelClassIsNotDefined
-
-        public var description: String {
-            switch self {
-            case .modelClassIsNotDefined: return "\(type(of: self)): modelClass is not defined"
-            }
-        }
-    }
-
-    // MARK: Lifecycle
-
-    init(appContext: DatastoreFetchHelper.Context?) {
-        self.appContext = appContext
-    }
-
-    // MARK: Internal
-
-    func run() {
-        guard let modelClass = modelClass else {
-            completion?(nil, DatastoreFetchHelperError.modelClassIsNotDefined)
-            return
-        }
-
-        appContext?.dataStore?.fetch(modelClass: modelClass,
-                                     nspredicate: nspredicate,
-                                     completion: { fetchResult, error in
-                                         self.completion?(fetchResult, error)
-                                     })
-    }
-}
-
-// MARK: - JSONSyndicateError
-
-private enum JSONSyndicateError: Error, CustomStringConvertible {
-    case managedObjectLinkerIsNotPresented
-    case modelClassIsNotDefined
-    case jsonExtractorIsNotPresented
-
-    public var description: String {
-        switch self {
-        case .jsonExtractorIsNotPresented: return "\(type(of: self)): json extrator is not presented"
-        case .managedObjectLinkerIsNotPresented: return "\(type(of: self)): managed object linker is not presented"
-        case .modelClassIsNotDefined: return "\(type(of: self)): modelClass is not defined"
         }
     }
 }
