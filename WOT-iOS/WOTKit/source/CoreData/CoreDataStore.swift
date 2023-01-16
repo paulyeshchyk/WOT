@@ -49,9 +49,11 @@ open class CoreDataStore: DataStore {
 
     // MARK: Public
 
+    private lazy var privateContext: ManagedObjectContextProtocol = CoreDataStore.privateQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
+
     @objc
     override public func newPrivateContext() -> ManagedObjectContextProtocol {
-        CoreDataStore.privateQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
+        privateContext
     }
 
     @objc

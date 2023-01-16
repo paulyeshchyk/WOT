@@ -6,7 +6,7 @@
 //
 
 class VehicleprofileRadioJSONDecoder: JSONDecoderProtocol {
-    private let appContext: JSONDecoderProtocol.Context?
+    private weak var appContext: JSONDecoderProtocol.Context?
     required init(appContext: JSONDecoderProtocol.Context?) {
         self.appContext = appContext
     }
