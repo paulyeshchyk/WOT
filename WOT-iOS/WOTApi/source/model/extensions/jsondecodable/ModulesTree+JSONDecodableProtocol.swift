@@ -63,9 +63,9 @@ public extension ModulesTree {
         let currentModuleKeypath = #keyPath(ModulesTree.currentModule)
         if let identifier = moduleTreeJSON?[#keyPath(ModulesTree.module_id)] {
             let modelClass = Module.self
-            let currentModuleAnchor = JointSocket(managedRef: managedRef, identifier: nil, keypath: currentModuleKeypath)
+            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: currentModuleKeypath)
             let extractor = CurrentModuleExtractor()
-            let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, socket: currentModuleAnchor)
+            let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
             let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, managedRef: managedRef)
             let composition = try composer.buildRequestPredicateComposition()

@@ -35,7 +35,7 @@ public class JSONMap: JSONMapProtocol {
 
     public init(jsonCollection: JSONCollectionProtocol?, predicate contextPredicate: ContextPredicateProtocol) throws {
         guard let jsonCollection = jsonCollection else {
-            throw JSONMapError.jsonIsNil
+            throw Errors.jsonIsNil
         }
         self.jsonCollection = jsonCollection
         self.contextPredicate = contextPredicate
@@ -61,14 +61,16 @@ public class JSONMap: JSONMapProtocol {
     }
 }
 
-// MARK: - JSONMapError
+// MARK: - %t + JSONMap.Errors
 
-private enum JSONMapError: Error, CustomStringConvertible {
-    case jsonIsNil
+extension JSONMap {
+    private enum Errors: Error, CustomStringConvertible {
+        case jsonIsNil
 
-    public var description: String {
-        switch self {
-        case .jsonIsNil: return "[\(type(of: self))]: json is nil"
+        public var description: String {
+            switch self {
+            case .jsonIsNil: return "[\(type(of: self))]: json is nil"
+            }
         }
     }
 }

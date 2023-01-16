@@ -79,6 +79,7 @@
 		DACDB123296023C8005BBA72 /* JSONMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB122296023C7005BBA72 /* JSONMap.swift */; };
 		DADD69702974F0D000EFC36D /* DatastoreFetchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD696F2974F0D000EFC36D /* DatastoreFetchHelper.swift */; };
 		DADD69722974F10600EFC36D /* ManagedObjectLinkerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69712974F10600EFC36D /* ManagedObjectLinkerHelper.swift */; };
+		DADD69752975088E00EFC36D /* JSONRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69742975088E00EFC36D /* JSONRef.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +168,7 @@
 		DACDB122296023C7005BBA72 /* JSONMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMap.swift; sourceTree = "<group>"; };
 		DADD696F2974F0D000EFC36D /* DatastoreFetchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatastoreFetchHelper.swift; sourceTree = "<group>"; };
 		DADD69712974F10600EFC36D /* ManagedObjectLinkerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectLinkerHelper.swift; sourceTree = "<group>"; };
+		DADD69742975088E00EFC36D /* JSONRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONRef.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +246,7 @@
 				DA0BC5A42952E9EC00E01D54 /* JSONAdapter */,
 				DACDB108295EDDC1005BBA72 /* JSONCollection */,
 				DACDB121296023B2005BBA72 /* JSONMap */,
+				DADD69732975087A00EFC36D /* JSONRef */,
 				DACDB0D4295DBB66005BBA72 /* LogInspector */,
 				DA81E4F12952FE3500C60F31 /* LogEvents */,
 				DA2C28F22959F55200D18A6E /* ManagedObjectCreator */,
@@ -517,6 +520,14 @@
 			path = JSONMap;
 			sourceTree = "<group>";
 		};
+		DADD69732975087A00EFC36D /* JSONRef */ = {
+			isa = PBXGroup;
+			children = (
+				DADD69742975088E00EFC36D /* JSONRef.swift */,
+			);
+			path = JSONRef;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -666,6 +677,7 @@
 				DA32CEB129641C48007726AD /* ManagedObjectExtractable.swift in Sources */,
 				DA288F682965A6CC00973561 /* JSONValueProtocol.swift in Sources */,
 				DA0E806129508C1F00B44CC6 /* RequestArguments.swift in Sources */,
+				DADD69752975088E00EFC36D /* JSONRef.swift in Sources */,
 				DA1F5516295C60C3009BC8D9 /* NSDecimalNumber+Conversion.swift in Sources */,
 				DA0E806729508CB900B44CC6 /* HostConfigurationProtocol.swift in Sources */,
 				DA81E5202952FFDC00C60F31 /* AnyCodable.swift in Sources */,
