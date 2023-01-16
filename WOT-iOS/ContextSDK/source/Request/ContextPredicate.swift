@@ -11,6 +11,8 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
     /// parents identifier has been taken from a list
     public var managedRefs: [ManagedRefProtocol] = []
 
+    public var jsonRefs: [JSONRefProtocol] = []
+
     override public var description: String {
         let objects = expressions()
         guard !objects.isEmpty else {
@@ -27,10 +29,11 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
 
     // MARK: Lifecycle
 
-    public convenience init(managedRefs idList: [ManagedRefProtocol]) {
+    public convenience init(managedRefs idList: [ManagedRefProtocol], jsonRefs json: [JSONRefProtocol]) {
         self.init()
 
         managedRefs.append(contentsOf: idList)
+        jsonRefs.append(contentsOf: json)
     }
 
     deinit {

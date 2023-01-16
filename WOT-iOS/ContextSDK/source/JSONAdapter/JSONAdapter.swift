@@ -84,7 +84,7 @@ public extension JSONAdapter {
 
         let dispatchGroup = DispatchGroup()
 
-        let maps = extractor.getJSONMaps(json: json, modelClass: modelClass, managedRefs: request.contextPredicate?.managedRefs)
+        let maps = extractor.getJSONMaps(json: json, modelClass: modelClass, managedRefs: request.contextPredicate?.managedRefs, jsonRefs: request.contextPredicate?.jsonRefs)
         maps.forEach { jsonMap in
             dispatchGroup.enter()
 

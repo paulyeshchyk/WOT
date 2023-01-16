@@ -10,7 +10,7 @@ public extension VehicleprofileAmmo {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, fetchResult _: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
         let ammoJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: ammoJSON)

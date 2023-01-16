@@ -15,11 +15,11 @@ public protocol ManagedObjectExtractable {
 
 public extension ManagedObjectExtractable {
 
-    func getJSONMaps(json: JSON, modelClass: PrimaryKeypathProtocol.Type, managedRefs: [ManagedRefProtocol]?) -> [JSONMapProtocol] {
+    func getJSONMaps(json: JSON, modelClass: PrimaryKeypathProtocol.Type, managedRefs: [ManagedRefProtocol]?, jsonRefs: [JSONRefProtocol]?) -> [JSONMapProtocol] {
         var result = [JSONMapProtocol]()
         for key in json.keys {
             do {
-                let map = try getJSONMap(json: json, key: key, modelClass: modelClass, managedRefs: managedRefs)
+                let map = try getJSONMap(json: json, key: key, modelClass: modelClass, managedRefs: managedRefs, jsonRefs: jsonRefs)
                 result.append(map)
             } catch {
                 //
@@ -28,7 +28,7 @@ public extension ManagedObjectExtractable {
         return result
     }
 
-    private func getJSONMap(json: JSON, key: AnyHashable, modelClass: PrimaryKeypathProtocol.Type, managedRefs: [ManagedRefProtocol]?) throws -> JSONMapProtocol {
+    private func getJSONMap(json: JSON, key: AnyHashable, modelClass: PrimaryKeypathProtocol.Type, managedRefs: [ManagedRefProtocol]?, jsonRefs: [JSONRefProtocol]?) throws -> JSONMapProtocol {
         guard let jsonElement = json[key] as? JSON else {
             throw JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
         }
@@ -49,7 +49,7 @@ public extension ManagedObjectExtractable {
         let primaryKeyPath = modelClass.primaryKeyPath(forType: linkerPrimaryKeyType)
         let ident = managedObjectJSON[primaryKeyPath] ?? key
 
-        let requestContextPredicate = ContextPredicate(managedRefs: managedRefs ?? [])
+        let requestContextPredicate = ContextPredicate(managedRefs: managedRefs ?? [], jsonRefs: jsonRefs ?? [])
         requestContextPredicate[.primary] = modelClass.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
 
         return try JSONMap(element: managedObjectJSON, predicate: requestContextPredicate)

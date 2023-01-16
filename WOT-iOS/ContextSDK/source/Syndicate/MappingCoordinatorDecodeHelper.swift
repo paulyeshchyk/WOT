@@ -41,7 +41,7 @@ class MappingCoordinatorDecodeHelper {
         }
         //
         do {
-            try managedObject.decode(using: jsonMap, fetchResult: fetchResult, appContext: appContext)
+            try managedObject.decode(using: jsonMap, appContext: appContext)
 
             appContext?.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
                 self.completion?(fetchResult, error)

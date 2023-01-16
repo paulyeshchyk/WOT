@@ -9,7 +9,11 @@
 
 @objc
 public protocol ContextPredicateProtocol {
+    //
+    @available(*, deprecated)
     var managedRefs: [ManagedRefProtocol] { get set }
+    var jsonRefs: [JSONRefProtocol] { get set }
+
     func expressions() -> Set<ContextExpression>
     func expressions(byType: ContextExpressionType) -> Set<ContextExpression>?
     func nspredicate(operator: ContextPredicateOperator) -> NSPredicate?

@@ -10,26 +10,24 @@ public extension Module {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, fetchResult: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
         let moduleJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: moduleJSON)
         //
 
-        let filteredManagedRef = map.contextPredicate.managedRefs.filter { $0.modelClass == Vehicles.self }.first
-        guard let parentHostPin = filteredManagedRef?.getJointPin(idKeyPath: #keyPath(Vehicles.tank_id), inContext: fetchResult.managedObjectContext) else {
+        let filteredJsonRef = map.contextPredicate.jsonRefs.filter { $0.modelClass == Vehicles.self }.first
+        guard let parentHostPin = filteredJsonRef?.getJointPin(idKeyPath: #keyPath(Vehicles.tank_id)) else {
             throw ModuleMappingError.noParentsFound
         }
 
-        guard let module_id = module_id else {
-            throw ModuleMappingError.moduleIdNotDefined
+        if let module_id = moduleJSON?[#keyPath(Module.module_id)] {
+            let moduleDecoder = ModuleDecoder(appContext: appContext, parentHostPin: parentHostPin)
+            moduleDecoder.module_id = module_id
+            moduleDecoder.moduleManagedRef = managedRef
+            moduleDecoder.type = type
+            try moduleDecoder.decode()
         }
-
-        let moduleDecoder = ModuleDecoder(appContext: appContext, parentHostPin: parentHostPin)
-        moduleDecoder.module_id = module_id
-        moduleDecoder.moduleManagedRef = managedRef
-        moduleDecoder.type = type
-        try moduleDecoder.decode()
     }
 }
 
@@ -42,13 +40,22 @@ extension ManagedRefProtocol {
     }
 }
 
+extension JSONRefProtocol {
+    func getJointPin(idKeyPath: KeypathType) -> JointPinProtocol {
+        let json = jsonCollection.data() as? JSON
+        let identifier = json?[idKeyPath]
+        return JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: nil)
+    }
+
+}
+
 // MARK: - ModuleDecoder
 
 public class ModuleDecoder {
 
     public let appContext: JSONDecodableProtocol.Context?
     public var modelClass: PrimaryKeypathProtocol.Type?
-    public var module_id: NSDecimalNumber?
+    public var module_id: JSONValueType?
     public var moduleManagedRef: ManagedRefProtocol?
     public let parentHostPin: JointPinProtocol
     public var type: String?

@@ -10,10 +10,11 @@ public extension ModulesTree {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, fetchResult _: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
         let moduleTreeJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: moduleTreeJSON)
+        let jsonRef = try JSONRef(element: moduleTreeJSON, modelClass: ModulesTree.self)
         //
 
         // MARK: - NextTanks
@@ -67,7 +68,7 @@ public extension ModulesTree {
             let extractor = CurrentModuleExtractor()
             let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
-            let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, managedRef: managedRef)
+            let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, managedRef: managedRef, jsonRef: jsonRef)
             let composition = try composer.buildRequestPredicateComposition()
 
             try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: nil)

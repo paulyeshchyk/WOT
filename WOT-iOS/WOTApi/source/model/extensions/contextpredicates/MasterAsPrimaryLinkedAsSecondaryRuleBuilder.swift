@@ -27,7 +27,12 @@ open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposer
         }
         parentManagedRefs.append(hostManagedRef)
 
-        let lookupPredicate = ContextPredicate(managedRefs: parentManagedRefs)
+        var parentJSONRefs = [JSONRefProtocol]()
+        if let parentJson = pin.contextPredicate?.jsonRefs {
+            parentJSONRefs.append(contentsOf: parentJson)
+        }
+
+        let lookupPredicate = ContextPredicate(managedRefs: parentManagedRefs, jsonRefs: parentJSONRefs)
         lookupPredicate[.primary] = pin.contextPredicate?[.primary]
         lookupPredicate[.secondary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
 

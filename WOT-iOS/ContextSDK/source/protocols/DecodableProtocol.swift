@@ -21,7 +21,7 @@ public protocol JSONDecodableProtocol {
         & RequestManagerContainerProtocol
         & LogInspectorContainerProtocol
 
-    func decode(using: JSONMapProtocol, fetchResult: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws
+    func decode(using: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?) throws
 }
 
 // MARK: - JSONCollectionProtocol

@@ -10,16 +10,17 @@ public extension Vehicles {
 
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONMapProtocol, fetchResult _: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    override func decode(using map: JSONMapProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         //
         let vehicleJSON = try map.data(ofType: JSON.self)
         try decode(decoderContainer: vehicleJSON)
+        let jsonRef = try JSONRef(element: vehicleJSON, modelClass: Vehicles.self)
         //
 
         // MARK: - ModulesTree
 
         if let modulesTreeJSON = vehicleJSON?[#keyPath(Vehicles.modules_tree)] as? JSON {
-            try modulesTreeMapping(jSON: modulesTreeJSON, requestPredicate: map.contextPredicate, appContext: appContext)
+            try modulesTreeMapping(jSON: modulesTreeJSON, vehicleJSONRef: jsonRef, requestPredicate: map.contextPredicate, appContext: appContext)
         } else {
             appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
         }
@@ -30,7 +31,7 @@ public extension Vehicles {
         if let jsonElement = vehicleJSON?[defaultProfileKeypath] as? JSON {
             let foreignSelectKey = #keyPath(Vehicleprofile.vehicles)
             let modelClass = Vehicleprofile.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, managedRefs: [])
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, managedRefs: [], jsonRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
@@ -48,7 +49,7 @@ public extension Vehicles {
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(jSON: JSON?, requestPredicate: ContextPredicateProtocol, appContext: JSONDecodableProtocol.Context?) throws {
+    private func modulesTreeMapping(jSON: JSON?, vehicleJSONRef: JSONRefProtocol, requestPredicate: ContextPredicateProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         if let set = modules_tree {
             removeFromModules_tree(set)
         }
@@ -60,7 +61,10 @@ extension Vehicles {
         var parentManagedRefs = requestPredicate.managedRefs
         parentManagedRefs.append(managedRef)
 
-        let composer = VehiclesModuleTreeBuilder(requestPredicate: requestPredicate, managedRefs: parentManagedRefs)
+        var parentJSONRefs = requestPredicate.jsonRefs
+        parentJSONRefs.append(vehicleJSONRef)
+
+        let composer = VehiclesModuleTreeBuilder(requestPredicate: requestPredicate, managedRefs: parentManagedRefs, jsonRefs: parentJSONRefs)
         let contextPredicate = try composer.buildRequestPredicateComposition().contextPredicate
 
         for key in moduleTreeJSON.keys {

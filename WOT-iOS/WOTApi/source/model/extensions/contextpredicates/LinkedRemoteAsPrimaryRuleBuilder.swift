@@ -10,12 +10,14 @@ open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
     private let managedRef: ManagedRefProtocol
+    private let jsonRef: JSONRefProtocol
 
     // MARK: Lifecycle
 
-    public init(pin: JointPinProtocol, managedRef: ManagedRefProtocol) {
+    public init(pin: JointPinProtocol, managedRef: ManagedRefProtocol, jsonRef: JSONRefProtocol) {
         self.pin = pin
         self.managedRef = managedRef
+        self.jsonRef = jsonRef
     }
 
     // MARK: Public
@@ -27,7 +29,12 @@ open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
         }
         parentManagedRefs.append(managedRef)
 
-        let lookupPredicate = ContextPredicate(managedRefs: parentManagedRefs)
+        var parentJsonRefs = [JSONRefProtocol]()
+        if let parentJSONRef = pin.contextPredicate?.jsonRefs {
+            parentJsonRefs.append(contentsOf: parentJSONRef)
+        }
+
+        let lookupPredicate = ContextPredicate(managedRefs: parentManagedRefs, jsonRefs: parentJsonRefs)
         lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
