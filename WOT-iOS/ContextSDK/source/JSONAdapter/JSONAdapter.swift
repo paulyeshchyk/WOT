@@ -24,12 +24,12 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     // MARK: DataAdapterProtocol -
 
     private let uuid = UUID()
-
     private let appContext: JSONAdapterProtocol.Context?
+
     public let modelClass: PrimaryKeypathProtocol.Type
-    public var request: RequestProtocol?
-    public var linker: ManagedObjectLinkerProtocol?
-    public var extractor: ManagedObjectExtractable?
+    public weak var request: RequestProtocol?
+    public weak var linker: ManagedObjectLinkerProtocol?
+    public weak var extractor: ManagedObjectExtractable?
 
     // MARK: Lifecycle
 
@@ -40,7 +40,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     }
 
     deinit {
-//        appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
+        appContext?.logInspector?.log(.destruction(type(of: self)), sender: self)
     }
 
     // MARK: Open

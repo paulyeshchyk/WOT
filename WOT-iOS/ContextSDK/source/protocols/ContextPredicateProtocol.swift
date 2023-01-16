@@ -10,7 +10,7 @@
 @objc
 public protocol ContextPredicateProtocol {
     //
-    var jsonRefs: [JSONRefProtocol] { get set }
+    var jsonRefs: [JSONRefProtocol] { get }
 
     func expressions() -> Set<ContextExpression>
     func expressions(byType: ContextExpressionType) -> Set<ContextExpression>?
