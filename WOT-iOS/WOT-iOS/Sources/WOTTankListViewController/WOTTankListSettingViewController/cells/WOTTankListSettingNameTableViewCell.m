@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankListSettingNameTableViewCell.h"
-#import <WOTKit/WOTKit.h>
+#import "NSBundle+LanguageBundle.h"
 #import <WOTApi/WOTApi-Swift.h>
 
 @interface WOTTankListSettingNameTableViewCell ()

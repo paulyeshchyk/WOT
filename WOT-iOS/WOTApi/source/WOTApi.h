@@ -42,3 +42,4 @@ FOUNDATION_EXPORT const unsigned char WOTApiVersionString[];
 #import <WOTApi/WOTTurretsArmorForeheadCompareFieldExpression.h>
 #import <WOTApi/WOTTurretsCircularVisionRadiusCompareFieldExpression.h>
 #import <WOTApi/WOTTurretsRotationSpeedCompareFieldExpression.h>
+#import <WOTApi/UIColor+HSB.h>

@@ -9,11 +9,11 @@
 #import "WOTDrawerViewController.h"
 #import "MMDrawerVisualState.h"
 #import <WOT-Swift.h>
-#import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi.h>
 #import "UIBarButtonItem+EventBlock.h"
 #import "UIToolbar+WOT.h"
 #import "UINavigationBar+WOT.h"
+#import "NSBundle+LanguageBundle.h"
 
 
 @interface WOTDrawerViewController ()<WOTMenuDelegate>

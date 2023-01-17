@@ -8,17 +8,18 @@
 // MARK: - VehicleprofileAmmoListJSONDecoder
 
 class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
-    private let appContext: JSONDecoderProtocol.Context?
+
+    private weak var appContext: JSONDecoderProtocol.Context?
+
     required init(appContext: JSONDecoderProtocol.Context?) {
         self.appContext = appContext
     }
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws {
         //
         let profilesJSON = try map.data(ofType: [JSON].self)
-        // ??? try managedObject.decode(decoderContainer: element)
 
         //
         let keypath = #keyPath(VehicleprofileAmmo.type)
@@ -29,14 +30,16 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
             let pin = JointPin(modelClass: modelClass, identifier: ammoType, contextPredicate: map.contextPredicate)
             let composer = VehicleprofileAmmoListAmmoRequestPredicateComposer(pin: pin, foreignSelectKey: foreignSelectKey)
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier)
+            let managedRef = try managedObject?.managedRef()
+
+            let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         }

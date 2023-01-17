@@ -18,12 +18,8 @@
 		1D8ACF0322A9284D00CF309B /* steel in Resources */ = {isa = PBXBuildFile; fileRef = 1D8ACF0222A9284D00CF309B /* steel */; };
 		DA0BC4A52952DBC400E01D54 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4A42952DBC400E01D54 /* ContextSDK.framework */; };
 		DA0BC4A62952DBC400E01D54 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4A42952DBC400E01D54 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DA0BC4A82952DBCD00E01D54 /* WOTData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4A72952DBCD00E01D54 /* WOTData.framework */; };
-		DA0BC4A92952DBCD00E01D54 /* WOTData.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4A72952DBCD00E01D54 /* WOTData.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA0BC4AB2952DBD600E01D54 /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4AA2952DBD600E01D54 /* WOTPivot.framework */; };
 		DA0BC4AC2952DBD600E01D54 /* WOTPivot.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4AA2952DBD600E01D54 /* WOTPivot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DA0BC4B12952DBFF00E01D54 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4B02952DBFF00E01D54 /* WOTKit.framework */; };
-		DA0BC4B22952DBFF00E01D54 /* WOTKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4B02952DBFF00E01D54 /* WOTKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,8 +41,6 @@
 			files = (
 				DA0BC4A62952DBC400E01D54 /* ContextSDK.framework in Embed Frameworks */,
 				DA0BC4AC2952DBD600E01D54 /* WOTPivot.framework in Embed Frameworks */,
-				DA0BC4B22952DBFF00E01D54 /* WOTKit.framework in Embed Frameworks */,
-				DA0BC4A92952DBCD00E01D54 /* WOTData.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,8 +74,6 @@
 			files = (
 				DA0BC4A52952DBC400E01D54 /* ContextSDK.framework in Frameworks */,
 				DA0BC4AB2952DBD600E01D54 /* WOTPivot.framework in Frameworks */,
-				DA0BC4B12952DBFF00E01D54 /* WOTKit.framework in Frameworks */,
-				DA0BC4A82952DBCD00E01D54 /* WOTData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

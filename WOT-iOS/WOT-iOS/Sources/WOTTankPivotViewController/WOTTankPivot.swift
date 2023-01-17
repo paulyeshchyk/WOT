@@ -8,7 +8,6 @@
 
 import ContextSDK
 import WOTApi
-import WOTKit
 import WOTPivot
 
 // MARK: - WOTTankPivotNodeCreator

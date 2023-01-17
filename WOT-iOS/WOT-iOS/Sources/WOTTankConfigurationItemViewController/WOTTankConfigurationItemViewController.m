@@ -13,7 +13,7 @@
 #import <WOTPivot/WOTPivot.h>
 #import <WOTApi/WOTApi.h>
 #import "UIImageView+WebCache.h"
-#import <WOTKit/WOTKit.h>
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankConfigurationItemViewController () <UITableViewDataSource, UITableViewDelegate>
 

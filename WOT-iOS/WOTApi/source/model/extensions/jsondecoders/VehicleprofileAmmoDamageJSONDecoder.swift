@@ -8,22 +8,21 @@
 // MARK: - VehicleprofileAmmoDamageJSONDecoder
 
 class VehicleprofileAmmoDamageJSONDecoder: JSONDecoderProtocol {
-    private let appContext: JSONDecoderProtocol.Context?
+
+    private weak var appContext: JSONDecoderProtocol.Context?
+
     required init(appContext: JSONDecoderProtocol.Context?) {
         self.appContext = appContext
     }
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using _: JSONMapProtocol, appContext _: JSONDecoderProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
-//        let array = try map.data(ofType: [Double].self)
+    func decode(using map: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
         //
-//        guard array?.count == 3 else {
-//            throw VehicleprofileAmmoDamageError.arrayIsNotContainingThreeElements
-//        }
-//        managedObject.min_value = array?[0].asDecimal
-//        managedObject.avg_value = array?[1].asDecimal
-//        managedObject.max_value = array?[2].asDecimal
+        let array = try map.data(ofType: [Double].self)
+        let ammoDamage = try MinAvgMax(array)
+        try managedObject?.decode(decoderContainer: ammoDamage)
+        //
     }
 }
 

@@ -11,9 +11,6 @@
       location = "group:WOTPivot/WOTPivot.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:WOTKit/WOTKit.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:WOTApi/WOTApi.xcodeproj">
    </FileRef>
    <FileRef

@@ -16,7 +16,6 @@
 #import "WOTTankModuleTreeViewController.h"
 #import <ContextSDK/ContextSDK-Swift.h>
 #import <WOTApi/WOTApi.h>
-#import <WOTKit/WOTKit.h>
 #import <WOTPivot/WOTPivot-Swift.h>
 #import <WOTPivot/WOTPivot.h>
 

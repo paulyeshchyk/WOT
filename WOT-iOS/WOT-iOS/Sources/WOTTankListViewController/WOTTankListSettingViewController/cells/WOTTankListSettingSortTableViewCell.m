@@ -7,8 +7,8 @@
 //
 
 #import "WOTTankListSettingSortTableViewCell.h"
-#import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi-Swift.h>
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankListSettingSortTableViewCell ()
 

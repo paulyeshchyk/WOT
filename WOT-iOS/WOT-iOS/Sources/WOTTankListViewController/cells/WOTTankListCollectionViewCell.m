@@ -8,7 +8,6 @@
 
 #import "WOTTankListCollectionViewCell.h"
 #import <WOTPivot/WOTPivot.h>
-#import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi.h>
 #import "UIImageView+WebCache.h"
 

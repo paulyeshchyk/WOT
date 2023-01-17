@@ -11,11 +11,24 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension VehicleprofileTurret: DecodableProtocol {
+    //
+    enum DataFieldsKeys: String, CodingKey, CaseIterable {
+        case traverse_left_arc
+        case traverse_speed
+        case weight
+        case view_range
+        case hp
+        case tier
+        case name
+        case tag
+        case traverse_right_arc
+    }
+
     public func decodeWith(_ decoder: DecoderObjC) throws {
         guard let decoder = decoder as? Decoder else {
             throw DecodableProtocolErrors.notADecoder
         }
-        let container = try decoder.container(keyedBy: Fields.self)
+        let container = try decoder.container(keyedBy: DataFieldsKeys.self)
         //
         name = try container.decodeAnyIfPresent(String.self, forKey: .name)
         tag = try container.decodeAnyIfPresent(String.self, forKey: .tag)

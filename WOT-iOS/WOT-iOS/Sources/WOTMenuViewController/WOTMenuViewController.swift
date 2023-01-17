@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import WOTKit
-
 // MARK: - WOTMenuDelegate
 
 @objc

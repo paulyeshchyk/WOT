@@ -78,7 +78,7 @@ public protocol JSONDecoderProtocol: AnyObject {
 
     var managedObject: ManagedAndDecodableObjectType? { get set }
     init(appContext: Context?)
-    func decode(using: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws
+    func decode(using: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws
 }
 
 // MARK: - JSONCollectionProtocol

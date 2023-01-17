@@ -7,7 +7,6 @@
 //
 
 #import "WOTLanguageDatasource.h"
-#import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi-Swift.h>
 
 @interface WOTLanguage : NSObject

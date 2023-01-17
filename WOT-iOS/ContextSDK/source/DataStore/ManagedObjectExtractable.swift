@@ -52,7 +52,7 @@ public extension ManagedObjectExtractable {
         let requestContextPredicate = ContextPredicate(jsonRefs: jsonRefs ?? [])
         requestContextPredicate[.primary] = modelClass.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
 
-        return try JSONMap(element: managedObjectJSON, predicate: requestContextPredicate)
+        return try JSONMap(data: managedObjectJSON, predicate: requestContextPredicate)
     }
 }
 
