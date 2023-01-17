@@ -43,7 +43,8 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     let composition = try composer.buildRequestPredicateComposition()
                     let keypath = #keyPath(ModulesTree.next_modules)
                     let modelClass = ModulesTree.self
-                    let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: module_id, keypath: keypath)
+                    let managedRef = try managedObject?.managedRef()
+                    let socket = JointSocket(managedRef: managedRef, identifier: module_id, keypath: keypath)
                     let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
                     let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
                     let decodingDepthLevel = forDepthLevel?.next
@@ -69,7 +70,8 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             let modelClass = Vehicleprofile.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: jsonMap, foreignSelectKey: foreignSelectKey, jsonRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
+            let managedRef = try managedObject?.managedRef()
+            let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next

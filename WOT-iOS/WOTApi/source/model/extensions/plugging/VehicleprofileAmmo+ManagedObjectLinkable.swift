@@ -18,8 +18,7 @@ extension VehicleprofileAmmo: ManagedObjectPlugProtocol {
         switch intoSocket.keypath as? String {
         case #keyPath(VehicleprofileAmmo.damage): damage = pin as? VehicleprofileAmmoDamage
         case #keyPath(VehicleprofileAmmo.penetration): penetration = pin as? VehicleprofileAmmoPenetration
-        default:
-            assertionFailure("undefiend field \(String(describing: intoSocket))")
+        default: assertionFailure("undefiend field \(String(describing: intoSocket))")
         }
     }
 

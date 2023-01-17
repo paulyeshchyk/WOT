@@ -6,12 +6,21 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-// MARK: - KeypathProtocol
+// MARK: - FetchableProtocol
 
-public extension VehicleprofileAmmoPenetration {
+extension VehicleprofileAmmoPenetration: FetchableProtocol {
 
-    @objc
-    override static func dataFieldsKeypaths() -> [String] {
+    public class func dataFieldsKeypaths() -> [String] {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
+    }
+
+    public class func relationFieldsKeypaths() -> [String] {
+        return []
+    }
+
+    public class func fieldsKeypaths() -> [String] {
+        let fields = dataFieldsKeypaths()
+        let relations = relationFieldsKeypaths()
+        return fields + relations
     }
 }

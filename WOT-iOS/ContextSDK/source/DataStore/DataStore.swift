@@ -100,8 +100,12 @@ extension DataStore: DataStoreProtocol {
                 return
             }
             self.stash(managedObjectContext: privateManagedObjectContext) { context, error in
-                let fetchResult = managedObject.fetchResult(context: context)
-                completion(fetchResult, error)
+                do {
+                    let fetchResult = try managedObject.fetchResult(context: context)
+                    completion(fetchResult, error)
+                } catch {
+                    completion(nil, error)
+                }
             }
         }
     }

@@ -9,18 +9,21 @@
 
 @objc
 public protocol JSONRefProtocol {
+    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
+
     var jsonCollection: JSONCollectionProtocol { get }
-    var modelClass: PrimaryKeypathProtocol.Type { get }
+    var modelClass: ModelClassType { get }
 }
 
 // MARK: - JSONRef
 
 public class JSONRef: JSONRefProtocol {
+    public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     public var jsonCollection: JSONCollectionProtocol
-    public var modelClass: PrimaryKeypathProtocol.Type
+    public var modelClass: ModelClassType
 
-    public init(jsonCollection: JSONCollectionProtocol?, modelClass: PrimaryKeypathProtocol.Type) throws {
+    public init(jsonCollection: JSONCollectionProtocol?, modelClass: ModelClassType) throws {
         guard let jsonCollection = jsonCollection else {
             throw Errors.jsonIsNil
         }
@@ -28,7 +31,7 @@ public class JSONRef: JSONRefProtocol {
         self.modelClass = modelClass
     }
 
-    public convenience init(data: Any?, modelClass: PrimaryKeypathProtocol.Type) throws {
+    public convenience init(data: Any?, modelClass: ModelClassType) throws {
         guard let custom = data else { throw Errors.customIsNil }
         let collection = JSONCollection(data: custom)
         try self.init(jsonCollection: collection, modelClass: modelClass)

@@ -25,7 +25,9 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
 
         if let gun_id = element?[#keyPath(VehicleprofileModule.gun_id)] {
             let modelClass = VehicleprofileGun.self
-            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
+            let managedRef = try managedObject?.managedRef()
+
+            let socket = JointSocket(managedRef: managedRef, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
@@ -37,7 +39,9 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
 
         if let radio_id = element?[#keyPath(VehicleprofileModule.radio_id)] {
             let modelClass = VehicleprofileRadio.self
-            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
+            let managedRef = try managedObject?.managedRef()
+
+            let socket = JointSocket(managedRef: managedRef, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = VehicleprofileModule.RadioExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
@@ -49,7 +53,9 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
 
         if let engine_id = element?[#keyPath(VehicleprofileModule.engine_id)] {
             let modelClass = VehicleprofileEngine.self
-            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
+            let managedRef = try managedObject?.managedRef()
+
+            let socket = JointSocket(managedRef: managedRef, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = VehicleprofileModule.EngineExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
@@ -61,7 +67,9 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
 
         if let suspension_id = element?[#keyPath(VehicleprofileModule.suspension_id)] {
             let modelClass = VehicleprofileSuspension.self
-            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
+            let managedRef = try managedObject?.managedRef()
+
+            let socket = JointSocket(managedRef: managedRef, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = VehicleprofileModule.SuspensionExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
@@ -73,7 +81,9 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
 
         if let turret_id = element?[#keyPath(VehicleprofileModule.turret_id)] {
             let modelClass = VehicleprofileTurret.self
-            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
+            let managedRef = try managedObject?.managedRef()
+
+            let socket = JointSocket(managedRef: managedRef, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
             let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let extractor = VehicleprofileModule.TurretExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)

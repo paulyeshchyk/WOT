@@ -5,8 +5,6 @@
 //  Created by Paul on 2.01.23.
 //
 
-import ContextSDK
-
 // MARK: - Vehicleprofile + ManagedObjectPinProtocol
 
 extension Vehicleprofile: ManagedObjectPinProtocol {}

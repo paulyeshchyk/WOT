@@ -29,7 +29,9 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileArmor.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: keypathturret)
+            let managedRef = try managedObject?.managedRef()
+
+            let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathturret)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
@@ -51,7 +53,9 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileArmor.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: keypathhull)
+            let managedRef = try managedObject?.managedRef()
+
+            let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathhull)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next

@@ -6,24 +6,21 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import ContextSDK
+// MARK: - FetchableProtocol
 
-// MARK: - KeypathProtocol
+extension VehicleprofileTurret: FetchableProtocol {
 
-public extension VehicleprofileTurret {
-
-    @objc
-    override static func dataFieldsKeypaths() -> [String] {
+    public class func dataFieldsKeypaths() -> [String] {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override class func primaryKeyPath(forType: PrimaryKeyType) -> String {
-        // id was used when quering remote module
-        // tag was used when parsed response vehicleprofile-suspension
-        switch forType {
-        case .external: return #keyPath(VehicleprofileTurret.turret_id)
-        case .internal: return #keyPath(VehicleprofileTurret.tag)
-        default: fatalError("unknown type should never be used")
-        }
+    public class func relationFieldsKeypaths() -> [String] {
+        return []
+    }
+
+    public class func fieldsKeypaths() -> [String] {
+        let fields = dataFieldsKeypaths()
+        let relations = relationFieldsKeypaths()
+        return fields + relations
     }
 }

@@ -38,7 +38,9 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
         moduleDecoder.module_id = module_id
         moduleDecoder.parentHostPin = parentHostPin
         moduleDecoder.type = type
-        try moduleDecoder.decode(moduleManagedRef: managedObject?.managedRef)
+        let managedRef = try managedObject?.managedRef()
+
+        try moduleDecoder.decode(moduleManagedRef: managedRef)
     }
 }
 

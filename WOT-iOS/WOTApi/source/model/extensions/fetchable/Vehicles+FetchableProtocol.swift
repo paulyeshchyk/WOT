@@ -6,27 +6,21 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import ContextSDK
+// MARK: - FetchableProtocol
 
-// MARK: - KeypathProtocol
-
-public extension Vehicles {
+extension Vehicles: FetchableProtocol {
     //
-    @objc
-    override static func dataFieldsKeypaths() -> [String] {
+    public class func dataFieldsKeypaths() -> [String] {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
-    @objc
-    override static func relationFieldsKeypaths() -> [String] {
+    public class func relationFieldsKeypaths() -> [String] {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override static func primaryKeyPath(forType: PrimaryKeyType) -> String {
-        switch forType {
-        case .external: return #keyPath(Vehicles.tank_id)
-        case .internal: return #keyPath(Vehicles.tank_id)
-        default: fatalError("unknown type should never be used")
-        }
+    public class func fieldsKeypaths() -> [String] {
+        let fields = dataFieldsKeypaths()
+        let relations = relationFieldsKeypaths()
+        return fields + relations
     }
 }

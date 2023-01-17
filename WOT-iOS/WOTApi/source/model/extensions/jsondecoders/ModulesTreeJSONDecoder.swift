@@ -54,7 +54,9 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let jsonRef = try JSONRef(data: moduleTreeJSON, modelClass: ModulesTree.self)
             let currentModuleKeypath = #keyPath(ModulesTree.currentModule)
             let modelClass = Module.self
-            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: nil, keypath: currentModuleKeypath)
+            let managedRef = try managedObject?.managedRef()
+
+            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: currentModuleKeypath)
             let extractor = CurrentModuleExtractor()
             let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, socket: socket)
             let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
@@ -69,14 +71,16 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
     private func fetchNextModule(nextModuleID: JSONValueType?, map: JSONMapProtocol) {
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
-        let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: nil, keypath: nextModulesKeypath)
-        let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, socket: socket)
-        let extractor = NextModuleExtractor()
-        let modelClass = Module.self
-
-        let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
-        let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
         do {
+            let managedRef = try managedObject?.managedRef()
+
+            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: nextModulesKeypath)
+            let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, socket: socket)
+            let extractor = NextModuleExtractor()
+            let modelClass = Module.self
+
+            let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
+            let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
             try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: nextModuleManagedObjectCreator, managedObjectExtractor: extractor, listener: nil)
         } catch {
@@ -86,14 +90,16 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
     private func fetchNextTank(tank_id: JSONValueType?) {
         let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
-        let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: nil, keypath: nextTanksKeypath)
-        let linker = ManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
-        let extractor = NextVehicleExtractor()
-        // parents was not used for next portion of tanks
-        let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
-        let composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
-        let modelClass = Vehicles.self
         do {
+            let managedRef = try managedObject?.managedRef()
+
+            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: nextTanksKeypath)
+            let linker = ManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
+            let extractor = NextVehicleExtractor()
+            // parents was not used for next portion of tanks
+            let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
+            let composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
+            let modelClass = Vehicles.self
             let composition = try composer.buildRequestPredicateComposition()
             try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         } catch {

@@ -8,16 +8,6 @@
 import ContextSDK
 import CoreData
 
-extension PrimaryKeyType {
-    var nsManagedObjectFormat: PredicateFormat {
-        switch self {
-        case .external: return .external
-        case .internal: return .internal
-        default: fatalError("unknown type should never be used")
-        }
-    }
-}
-
 // MARK: - NSManagedObject + PrimaryKeypathProtocol
 
 extension NSManagedObject: PrimaryKeypathProtocol {
@@ -29,18 +19,21 @@ extension NSManagedObject: PrimaryKeypathProtocol {
         return NSManagedObjectPredicateFormat(keyType: forType)
     }
 
-    open class func predicate(for ident: AnyObject?, andType: PrimaryKeyType) -> NSPredicate? {
-        guard let ident = ident as? String else { return nil }
-        let keyName = primaryKeyPath(forType: .internal)
-        let predicateTemplate = predicateFormat(forType: andType).template
-        return NSPredicate(format: predicateTemplate, keyName, ident)
-    }
-
     open class func primaryKey(forType: PrimaryKeyType, andObject: JSONValueType?) -> ContextExpressionProtocol? {
         guard let ident = andObject else { return nil }
         let keyName = primaryKeyPath(forType: forType)
         let predicateTemplate = predicateFormat(forType: forType).template
         return ContextExpression(name: keyName, value: ident, nameAlias: keyName, predicateFormat: predicateTemplate)
+    }
+}
+
+extension PrimaryKeyType {
+    var nsManagedObjectFormat: PredicateFormat {
+        switch self {
+        case .external: return .external
+        case .internal: return .internal
+        default: fatalError("unknown type should never be used")
+        }
     }
 }
 

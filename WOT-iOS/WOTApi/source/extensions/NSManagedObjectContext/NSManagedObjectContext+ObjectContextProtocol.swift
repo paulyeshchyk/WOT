@@ -29,11 +29,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
             assertionFailure("forObjectID is not NSManagedObject")
             return nil
         }
-        guard let result = object(with: objectID) as? ManagedObjectProtocol else {
-            assertionFailure("forObjectID is not ManagedObjectProtocol")
-            return nil
-        }
-        return result
+        return object(with: objectID)
     }
 
     public func findOrCreateObject(appContext: ManagedObjectContextLookupProtocol.Context?, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {

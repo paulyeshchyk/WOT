@@ -8,6 +8,7 @@
 import WOTPivot
 
 extension ModulesTree: WOTTreeModulesTreeProtocol {
+
     public func moduleType() -> String? {
         return type
     }
