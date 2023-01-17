@@ -8,8 +8,6 @@
 
 import ContextSDK
 
-// import WOTKit
-
 // MARK: - KeypathProtocol
 
 public extension ModulesTree {

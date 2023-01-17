@@ -8,7 +8,6 @@
 
 #import "WOTTankListSettingsDatasource+TableView.h"
 #import <ContextSDK/ContextSDK-Swift.h>
-#import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi.h>
 
 @implementation WOTTankListSettingsDatasource (TableView)

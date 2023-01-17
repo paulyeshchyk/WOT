@@ -5,7 +5,6 @@
 //  Created by Paul on 21.12.22.
 //
 
-import WOTKit
 import WOTPivot
 
 extension ModulesTree: WOTTreeModulesTreeProtocol {

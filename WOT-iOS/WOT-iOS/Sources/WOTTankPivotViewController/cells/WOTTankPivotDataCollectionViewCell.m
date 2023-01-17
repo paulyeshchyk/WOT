@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankPivotDataCollectionViewCell.h"
-#import <WOTKit/WOTKit.h>
+#import <WOTApi/WOTApi.h>
 
 @interface WOTTankPivotDataCollectionViewCell ()
 

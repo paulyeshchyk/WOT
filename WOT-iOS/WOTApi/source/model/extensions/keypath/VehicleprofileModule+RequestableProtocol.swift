@@ -7,7 +7,6 @@
 //
 
 import ContextSDK
-import WOTKit
 
 // MARK: - KeypathProtocol
 

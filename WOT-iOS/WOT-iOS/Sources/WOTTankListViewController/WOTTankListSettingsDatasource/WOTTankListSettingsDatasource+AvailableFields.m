@@ -7,8 +7,8 @@
 //
 
 #import "WOTTankListSettingsDatasource+AvailableFields.h"
-#import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi.h>
+#import "NSBundle+LanguageBundle.h"
 
 @implementation WOTTankListSettingsDatasource (AvailableFields)
 

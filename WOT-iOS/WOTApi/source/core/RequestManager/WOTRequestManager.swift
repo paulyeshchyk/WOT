@@ -5,8 +5,6 @@
 //  Created by Paul on 30.12.22.
 //
 
-import WOTKit
-
 final public class WOTRequestManager: RequestManager {
     public required init(appContext: RequestManager.Context) {
         super.init(appContext: appContext)

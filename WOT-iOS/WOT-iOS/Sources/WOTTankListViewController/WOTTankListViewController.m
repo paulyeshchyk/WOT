@@ -16,8 +16,10 @@
 #import "WOTTankListCollectionViewHeader.h"
 #import "WOTTankDetailViewController.h"
 #import "WOTTankListSearchBar.h"
-#import <WOTKit/WOTKit.h>
+#import "NSBundle+LanguageBundle.h"
 #import "UIBarButtonItem+EventBlock.h"
+#import "UIImage+Resize.h"
+
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 

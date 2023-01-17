@@ -27,6 +27,7 @@ open class CoreDataStore: DataStore {
         guard let model = self.managedObjectModel else {
             abort()
         }
+        appContext?.logInspector?.log(.custom("sqlite url: \(String(describing: sqliteURL))"), sender: self)
 
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
         do {

@@ -7,7 +7,6 @@
 //
 
 #import "WOTSessionManager.h"
-#import <WOTKit/WOTKit.h>
 #import <ContextSDK/ContextSDK-Swift.h>
 
 @interface WOTSessionManager ()

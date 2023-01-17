@@ -14,3 +14,5 @@
 #import "WOTDrawerViewController.h"
 #import "UIToolbar+WOT.h"
 #import "UINavigationBar+WOT.h"
+#import "NSBundle+LanguageBundle.h"
+#import "UIImage+Resize.h"
