@@ -166,7 +166,7 @@ extension RequestManager: RequestManagerProtocol {
         try requestRegistrator.createRequest(forRequestId: forRequestId)
     }
 
-    public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
+    public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
         //
         try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
 
@@ -180,7 +180,7 @@ extension RequestManager: RequestManagerProtocol {
 
         try extractorList.addExtractor(managedObjectExtractor, forRequest: request)
 
-        try linkerList.addLinker(managedObjectCreator, forRequest: request)
+        try linkerList.addLinker(managedObjectLinker, forRequest: request)
 
         try request.start()
     }
@@ -198,7 +198,7 @@ extension RequestManager: RequestManagerProtocol {
                     let request = try self.createRequest(modelClass: modelClass, requestID: requestID, contextPredicate: contextPredicate)
                     let groupId: RequestIdType = request.MD5.hashValue
 
-                    try self.startRequest(request, forGroupId: groupId, managedObjectCreator: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
+                    try self.startRequest(request, forGroupId: groupId, managedObjectLinker: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
                 } catch {
                     self.appContext.logInspector?.log(.error(error), sender: self)
                 }
