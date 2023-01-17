@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankPivotFixedCollectionViewCell.h"
-#import <WOTKit/WOTKit.h>
+#import <WOTApi/WOTApi.h>
 
 @interface WOTTankPivotFixedCollectionViewCell()
 

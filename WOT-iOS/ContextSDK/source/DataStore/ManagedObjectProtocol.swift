@@ -11,8 +11,8 @@
 public protocol ManagedObjectProtocol {
     var entityName: String { get }
     var fetchStatus: FetchStatus { get }
-    var managedRef: ManagedRefProtocol { get }
     var context: ManagedObjectContextProtocol? { get }
+    func managedRef() throws -> ManagedRefProtocol
     subscript(_: KeypathType) -> Any? { get }
 }
 
@@ -22,7 +22,9 @@ public typealias ManagedAndDecodableObjectType = (DecodableProtocol & ManagedObj
 
 @objc
 public protocol ManagedRefProtocol {
-    var modelClass: PrimaryKeypathProtocol.Type { get }
+    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
+
+    var modelClass: ModelClassType { get }
     var managedObjectID: AnyObject { get }
 }
 
@@ -39,7 +41,8 @@ public enum FetchStatus: Int {
 
 extension ManagedObjectProtocol {
     //
-    public func fetchResult(context: ManagedObjectContextProtocol, predicate: NSPredicate? = nil, fetchStatus: FetchStatus? = nil) -> FetchResultProtocol {
+    public func fetchResult(context: ManagedObjectContextProtocol, predicate: NSPredicate? = nil, fetchStatus: FetchStatus? = nil) throws -> FetchResultProtocol {
+        let managedRef = try managedRef()
         return FetchResult(managedRef: managedRef, managedObjectContext: context, predicate: predicate, fetchStatus: fetchStatus ?? self.fetchStatus)
     }
 }

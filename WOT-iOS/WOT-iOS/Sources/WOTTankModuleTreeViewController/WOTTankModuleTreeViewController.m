@@ -15,10 +15,10 @@
 #import <WOTPivot/WOTPivot.h>
 #import <WOTApi/WOTApi.h>
 #import "UIImageView+WebCache.h"
-#import <WOTKit/WOTKit.h>
 #import <ContextSDK/ContextSDK-Swift.h>
 #import "UIToolbar+WOT.h"
 #import "UINavigationBar+WOT.h"
+#import "NSBundle+LanguageBundle.h"
 
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<NodeCreatorProtocol>

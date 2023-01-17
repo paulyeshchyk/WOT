@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
-
 // MARK: - ModulesHttpRequest
 
 public class ModulesHttpRequest: HttpRequest {

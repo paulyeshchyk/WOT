@@ -6,14 +6,15 @@
 //
 
 public struct JointPin: JointPinProtocol {
+    public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
-    public let modelClass: PrimaryKeypathProtocol.Type
+    public let modelClass: ModelClassType
     public let identifier: JSONValueType?
     public let contextPredicate: ContextPredicateProtocol?
 
     // MARK: Lifecycle
 
-    public init(modelClass: PrimaryKeypathProtocol.Type, identifier: JSONValueType?, contextPredicate: ContextPredicateProtocol?) {
+    public init(modelClass: ModelClassType, identifier: JSONValueType?, contextPredicate: ContextPredicateProtocol?) {
         self.modelClass = modelClass
         self.identifier = identifier
         self.contextPredicate = contextPredicate

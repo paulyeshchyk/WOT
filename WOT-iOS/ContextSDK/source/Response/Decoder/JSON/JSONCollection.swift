@@ -10,59 +10,40 @@
 public class JSONCollection: JSONCollectionProtocol, CustomStringConvertible {
 
     public var description: String {
-        return "[\(type(of: self))] collection: \(String(describing: collection))"
+        let collectionDescription: String
+        switch collectionType {
+        case .custom: collectionDescription = String(describing: custom, orValue: "<NULL>")
+        default: collectionDescription = String(describing: collection)
+        }
+        return "[\(type(of: self))] collectionType: \(String(describing: collectionType)), collection: \(collectionDescription)"
     }
 
     private var collectionType: JSONCollectionType
-
-    private var collection = [JSON]()
+    private var collection: [JSON]?
     private var custom: Any?
 
     // MARK: Lifecycle
 
-    public init(element: JSON) throws {
-        collectionType = .element
-        collection.append(element)
-    }
-
-    public init(array: [JSON]) throws {
-        collectionType = .array
-        try add(array: array)
-    }
-
-    public init(custom: Any?) {
-        collectionType = .custom
-        self.custom = custom
-    }
-
-    // MARK: Private
-
-    private func add(element object: JSON?) throws {
-        guard collectionType == .array else {
-            throw JSONCollectionError.notAbleToAddElement(collectionType)
-        }
-        guard let element = object else {
-            throw JSONCollectionError.notAbleToAddNilElement
-        }
-        collection.append(element)
-    }
-
-    private func add(array: [JSON]?) throws {
-        guard collectionType == .array else {
-            throw JSONCollectionError.notAbleToAddElement(collectionType)
-        }
-        guard let objects = array else {
-            throw JSONCollectionError.nilArray
-        }
-        for object in objects {
-            try add(element: object)
+    public init(data: Any?) {
+        if let jsonArray = data as? [JSON] {
+            collectionType = .array
+            collection = [JSON]()
+            collection?.append(contentsOf: jsonArray)
+        } else if let jsonElement = data as? JSON {
+            collectionType = .element
+            collection = [JSON]()
+            collection?.append(jsonElement)
+        } else {
+            collectionType = .custom
+            collection = nil
+            custom = data
         }
     }
 
     public func data() -> Any? {
         switch collectionType {
         case .array: return collection
-        case .element: return collection.first
+        case .element: return collection?.first
         case .custom: return custom
         }
     }

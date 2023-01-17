@@ -8,18 +8,20 @@
 // MARK: - VehiclesJSONDecoder
 
 class VehiclesJSONDecoder: JSONDecoderProtocol {
-    private let appContext: JSONDecoderProtocol.Context?
+
+    private weak var appContext: JSONDecoderProtocol.Context?
+
     required init(appContext: JSONDecoderProtocol.Context?) {
         self.appContext = appContext
     }
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using jsonMap: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
+    func decode(using jsonMap: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws {
         //
         let element = try jsonMap.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
-        let jsonRef = try JSONRef(element: element, modelClass: Vehicles.self)
+        let jsonRef = try JSONRef(data: element, modelClass: Vehicles.self)
         //
 
         let tank_id = element?[#keyPath(Vehicles.tank_id)] as? NSDecimalNumber
@@ -41,14 +43,15 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     let composition = try composer.buildRequestPredicateComposition()
                     let keypath = #keyPath(ModulesTree.next_modules)
                     let modelClass = ModulesTree.self
-                    let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: module_id, keypath: keypath)
+                    let managedRef = try managedObject?.managedRef()
+                    let socket = JointSocket(managedRef: managedRef, identifier: module_id, keypath: keypath)
                     let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-                    let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+                    let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
                     let decodingDepthLevel = forDepthLevel?.next
 
                     JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                         if let error = error {
-                            appContext?.logInspector?.log(.warning(error: error), sender: self)
+                            self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                         }
                     })
                 } else {
@@ -67,14 +70,15 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             let modelClass = Vehicleprofile.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: jsonMap, foreignSelectKey: foreignSelectKey, jsonRefs: [])
             let composition = try composer.buildRequestPredicateComposition()
-            let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
+            let managedRef = try managedObject?.managedRef()
+            let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {

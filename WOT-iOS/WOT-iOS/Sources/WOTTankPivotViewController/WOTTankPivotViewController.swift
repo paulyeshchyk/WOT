@@ -6,7 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import WOTKit
 import WOTPivot
 
 // MARK: - PivotViewController

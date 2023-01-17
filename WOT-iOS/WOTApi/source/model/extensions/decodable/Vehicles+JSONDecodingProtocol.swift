@@ -11,11 +11,38 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension Vehicles: DecodableProtocol {
+
+    enum DataFieldsKeys: String, CodingKey, CaseIterable {
+        case is_gift
+        case is_premium
+        case is_premium_igr
+        case is_wheeled
+        case name
+        case nation
+        case price_credit
+        case price_gold
+        case short_name
+        case tag
+        case tank_id
+        case tier
+        case type
+    }
+
+    enum RelativeKeys: String, CodingKey, CaseIterable {
+        case default_profile
+        case engines
+        case guns
+        case radios
+        case modules_tree
+        case suspensions
+        case turrets
+    }
+
     public func decodeWith(_ decoder: DecoderObjC) throws {
         guard let decoder = decoder as? Decoder else {
             throw DecodableProtocolErrors.notADecoder
         }
-        let container = try decoder.container(keyedBy: Fields.self)
+        let container = try decoder.container(keyedBy: DataFieldsKeys.self)
         //
         tier = try container.decodeIfPresent(Int.self, forKey: .tier)?.asDecimal
         name = try container.decodeIfPresent(String.self, forKey: .name)

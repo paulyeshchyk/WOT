@@ -7,7 +7,7 @@
 //
 
 #import "WOTNode+PivotFactory.h"
-#import <WOTKit/WOTKit.h>
+#import <WOTApi/WOTApi.h>
 #import <WOTApi/WOTApi-Swift.h>
 #import <UIKit/UIKit.h>
 

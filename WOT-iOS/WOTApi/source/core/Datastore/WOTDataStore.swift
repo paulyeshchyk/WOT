@@ -7,7 +7,6 @@
 //
 
 import ContextSDK
-import WOTKit
 
 final public class WOTDataStore: CoreDataStore {
     override public var applicationDocumentsDirectoryURL: URL? {

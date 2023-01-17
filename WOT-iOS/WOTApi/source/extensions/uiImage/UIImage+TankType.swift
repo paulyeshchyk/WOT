@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WOTKit
 
 public extension UIImage {
     @objc

@@ -7,7 +7,8 @@
 //
 
 #import "WOTTankListSortHeaderView.h"
-#import <WOTKit/WOTKit.h>
+#import "NSBundle+LanguageBundle.h"
+
 
 @interface WOTTankListSortHeaderView ()
 
