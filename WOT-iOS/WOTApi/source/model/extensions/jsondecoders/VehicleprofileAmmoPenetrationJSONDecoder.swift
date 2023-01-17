@@ -17,15 +17,10 @@ class VehicleprofileAmmoPenetrationJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using _: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
-//        let array = try map.data(ofType: [Double].self)
-//        //
-//        guard array?.count == 3 else {
-//            throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements
-//        }
-//        managedObject.min_value = array?[0].asDecimal
-//        managedObject.avg_value = array?[1].asDecimal
-//        managedObject.max_value = array?[2].asDecimal
+    func decode(using map: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
+        let array = try map.data(ofType: [Double].self)
+        let ammoPenetration = try MinAvgMax(array)
+        try managedObject?.decode(decoderContainer: ammoPenetration)
     }
 }
 

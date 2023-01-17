@@ -53,6 +53,7 @@
 		DAA3A54C296A168D00430492 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A54B296A168D00430492 /* ConcurrentOperation.swift */; };
 		DAA3A54E296A16D800430492 /* OperationQueueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A54D296A16D800430492 /* OperationQueueObserver.swift */; };
 		DAA56E5729767D120092DA17 /* RequestManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E5529767CF00092DA17 /* RequestManagerTest.swift */; };
+		DAA56E5A2976B9770092DA17 /* MinAvgMax.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E592976B9760092DA17 /* MinAvgMax.swift */; };
 		DAC55BC32974F047008166BE /* ManagedObjectDecodeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC55BC22974F047008166BE /* ManagedObjectDecodeHelper.swift */; };
 		DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */; };
 		DACDB0D8295DBB66005BBA72 /* LogInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D6295DBB66005BBA72 /* LogInspector.swift */; };
@@ -152,6 +153,7 @@
 		DAA3A54B296A168D00430492 /* ConcurrentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentOperation.swift; sourceTree = "<group>"; };
 		DAA3A54D296A16D800430492 /* OperationQueueObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationQueueObserver.swift; sourceTree = "<group>"; };
 		DAA56E5529767CF00092DA17 /* RequestManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManagerTest.swift; sourceTree = "<group>"; };
+		DAA56E592976B9760092DA17 /* MinAvgMax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinAvgMax.swift; sourceTree = "<group>"; };
 		DAC55BC22974F047008166BE /* ManagedObjectDecodeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectDecodeHelper.swift; sourceTree = "<group>"; };
 		DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogWrapper.swift; sourceTree = "<group>"; };
 		DACDB0D6295DBB66005BBA72 /* LogInspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInspector.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 		DA0E80512950685200B44CC6 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DAA56E582976B9650092DA17 /* Array */,
 				DA288E762964C70600973561 /* NSThread */,
 				DA81E51D2952FFDC00C60F31 /* codable */,
 				DA1F5514295C60AE009BC8D9 /* Numbers */,
@@ -440,6 +443,14 @@
 				DAA56E5529767CF00092DA17 /* RequestManagerTest.swift */,
 			);
 			path = RequestManager;
+			sourceTree = "<group>";
+		};
+		DAA56E582976B9650092DA17 /* Array */ = {
+			isa = PBXGroup;
+			children = (
+				DAA56E592976B9760092DA17 /* MinAvgMax.swift */,
+			);
+			path = Array;
 			sourceTree = "<group>";
 		};
 		DACDB0D4295DBB66005BBA72 /* LogInspector */ = {
@@ -755,6 +766,7 @@
 				DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */,
 				DADD69BD29759D5D00EFC36D /* HttpDataReceiver.swift in Sources */,
 				DA0E807E2950A6D200B44CC6 /* FetchRequestPredicateComposition.swift in Sources */,
+				DAA56E5A2976B9770092DA17 /* MinAvgMax.swift in Sources */,
 				DA0432A529633B400092C891 /* ManagedObjectPinProtocol.swift in Sources */,
 				DACDB0FA295EDC96005BBA72 /* URLEncodedProtocol.swift in Sources */,
 				DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */,
