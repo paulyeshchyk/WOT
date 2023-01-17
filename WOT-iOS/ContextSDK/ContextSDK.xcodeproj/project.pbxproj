@@ -54,6 +54,8 @@
 		DAA3A54E296A16D800430492 /* OperationQueueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A54D296A16D800430492 /* OperationQueueObserver.swift */; };
 		DAA56E5729767D120092DA17 /* RequestManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E5529767CF00092DA17 /* RequestManagerTest.swift */; };
 		DAA56E5A2976B9770092DA17 /* MinAvgMax.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E592976B9760092DA17 /* MinAvgMax.swift */; };
+		DAA56E7B2976E3790092DA17 /* ResponseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E7A2976E3790092DA17 /* ResponseManager.swift */; };
+		DAA56E7E2976EC3B0092DA17 /* ResponseManagerListenerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E7D2976EC3B0092DA17 /* ResponseManagerListenerList.swift */; };
 		DAC55BC32974F047008166BE /* ManagedObjectDecodeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC55BC22974F047008166BE /* ManagedObjectDecodeHelper.swift */; };
 		DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */; };
 		DACDB0D8295DBB66005BBA72 /* LogInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D6295DBB66005BBA72 /* LogInspector.swift */; };
@@ -154,6 +156,8 @@
 		DAA3A54D296A16D800430492 /* OperationQueueObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationQueueObserver.swift; sourceTree = "<group>"; };
 		DAA56E5529767CF00092DA17 /* RequestManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManagerTest.swift; sourceTree = "<group>"; };
 		DAA56E592976B9760092DA17 /* MinAvgMax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinAvgMax.swift; sourceTree = "<group>"; };
+		DAA56E7A2976E3790092DA17 /* ResponseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseManager.swift; sourceTree = "<group>"; };
+		DAA56E7D2976EC3B0092DA17 /* ResponseManagerListenerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseManagerListenerList.swift; sourceTree = "<group>"; };
 		DAC55BC22974F047008166BE /* ManagedObjectDecodeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectDecodeHelper.swift; sourceTree = "<group>"; };
 		DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogWrapper.swift; sourceTree = "<group>"; };
 		DACDB0D6295DBB66005BBA72 /* LogInspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInspector.swift; sourceTree = "<group>"; };
@@ -453,6 +457,14 @@
 			path = Array;
 			sourceTree = "<group>";
 		};
+		DAA56E7C2976EC240092DA17 /* lists */ = {
+			isa = PBXGroup;
+			children = (
+				DAA56E7D2976EC3B0092DA17 /* ResponseManagerListenerList.swift */,
+			);
+			path = lists;
+			sourceTree = "<group>";
+		};
 		DACDB0D4295DBB66005BBA72 /* LogInspector */ = {
 			isa = PBXGroup;
 			children = (
@@ -546,6 +558,8 @@
 		DADD69C82975AFB100EFC36D /* Response */ = {
 			isa = PBXGroup;
 			children = (
+				DAA56E7A2976E3790092DA17 /* ResponseManager.swift */,
+				DAA56E7C2976EC240092DA17 /* lists */,
 				DADD69CA2975B7BD00EFC36D /* Adapter */,
 				DAA3A5442969F53900430492 /* Syndicate */,
 				DADD69CB2975B80800EFC36D /* Decoder */,
@@ -724,6 +738,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAA56E7E2976EC3B0092DA17 /* ResponseManagerListenerList.swift in Sources */,
 				DACDB103295EDC96005BBA72 /* LogInspectorProtocol.swift in Sources */,
 				DA288E782964C72000973561 /* NSThread+Execution.swift in Sources */,
 				DA288F752965D8FB00973561 /* EventCustom.swift in Sources */,
@@ -790,6 +805,7 @@
 				DADD6999297563BD00EFC36D /* DecoderManager.swift in Sources */,
 				DA2C28F12959F0DD00D18A6E /* DataStore.swift in Sources */,
 				DACDB0F2295EDC96005BBA72 /* RequestModelServiceProtocol.swift in Sources */,
+				DAA56E7B2976E3790092DA17 /* ResponseManager.swift in Sources */,
 				DA0E80532950688500B44CC6 /* NSDictionary+Append.swift in Sources */,
 				DA0E806429508C4700B44CC6 /* RequestProtocol.swift in Sources */,
 				DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */,

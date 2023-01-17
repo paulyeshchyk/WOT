@@ -299,6 +299,7 @@
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest error:(NSError * _Nullable)error{
     [self reloadModel];
+    [requestManager removeListener: self];
 }
 
 
@@ -307,7 +308,7 @@
 }
 
 - (void)requestManager:(id<RequestManagerProtocol>)requestManager didCancelRequest:(id<RequestProtocol>)didCancelRequest reason:(id<RequestCancelReasonProtocol>)reason {
-    
+    [requestManager removeListener: self];
 }
 
 #pragma mark -

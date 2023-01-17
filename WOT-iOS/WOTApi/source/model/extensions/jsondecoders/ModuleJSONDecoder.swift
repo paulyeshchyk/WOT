@@ -45,7 +45,6 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
 }
 
 extension ManagedRefProtocol {
-
     func getJointPin(idKeyPath: KeypathType, inContext context: ManagedObjectContextProtocol) -> JointPinProtocol {
         let managedObject = context.object(managedRef: self)
         let identifier = managedObject?[idKeyPath]
@@ -132,9 +131,14 @@ extension ModuleDecoder: RequestManagerListenerProtocol {
         "ModuleDecoder"
     }
 
-    public func requestManager(_: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error _: Error?) {}
+    public func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error _: Error?) {
+        requestManager.removeListener(self)
+    }
+
     public func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {}
-    public func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {}
+    public func requestManager(_ requestManager: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
+        requestManager.removeListener(self)
+    }
 }
 
 // MARK: - ModuleMappingError

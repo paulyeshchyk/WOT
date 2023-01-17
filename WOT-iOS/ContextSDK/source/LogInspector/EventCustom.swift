@@ -31,7 +31,7 @@ public class EventCustom: LogEventProtocol {
 
 // MARK: - LoggableType
 
-public class LoggableType: CustomStringConvertible {
+public struct LoggableType: CustomStringConvertible {
     public var name: String
     public var type: LogEventType
 
@@ -44,7 +44,7 @@ public class LoggableType: CustomStringConvertible {
         self.type = type
     }
 
-    convenience init(type: LogEventType) {
+    init(type: LogEventType) {
         let convertedName = String(describing: type)
         self.init(name: convertedName, type: type)
     }

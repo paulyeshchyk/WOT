@@ -11,6 +11,7 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension UserSession: DecodableProtocol {
+
     public func decodeWith(_: DecoderObjC) throws {
         //
     }

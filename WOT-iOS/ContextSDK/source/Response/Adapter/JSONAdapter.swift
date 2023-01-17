@@ -72,6 +72,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 }
 
 public extension JSONAdapter {
+    //
     func didFinish(request: RequestProtocol, data: JSON?, error: Error?) {
         guard error == nil, let json = data else {
             completion?(request, error ?? Errors.jsonIsNil)
