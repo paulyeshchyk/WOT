@@ -11,6 +11,12 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension VehicleprofileAmmoDamage: DecodableProtocol {
+    //
+    enum DataFieldsKeys: String, CodingKey, CaseIterable {
+        case min_value
+        case avg_value
+        case max_value
+    }
 
     public func decodeWith(_ decoder: DecoderObjC) throws {
         guard let decoder = decoder as? Decoder else {

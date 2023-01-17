@@ -18,27 +18,6 @@ extension PrimaryKeyType {
     }
 }
 
-// MARK: - NSManagedObjectPredicateFormat
-
-private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
-
-    public var template: String {
-        switch keyType {
-        case .external: return "%K == %@"
-        case .internal: return "%K = %@"
-        default: fatalError("unknown type should never be used")
-        }
-    }
-
-    private let keyType: PrimaryKeyType
-
-    // MARK: Lifecycle
-
-    init(keyType: PrimaryKeyType) {
-        self.keyType = keyType
-    }
-}
-
 // MARK: - NSManagedObject + PrimaryKeypathProtocol
 
 extension NSManagedObject: PrimaryKeypathProtocol {
@@ -62,5 +41,26 @@ extension NSManagedObject: PrimaryKeypathProtocol {
         let keyName = primaryKeyPath(forType: forType)
         let predicateTemplate = predicateFormat(forType: forType).template
         return ContextExpression(name: keyName, value: ident, nameAlias: keyName, predicateFormat: predicateTemplate)
+    }
+}
+
+// MARK: - NSManagedObjectPredicateFormat
+
+private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
+
+    public var template: String {
+        switch keyType {
+        case .external: return "%K == %@"
+        case .internal: return "%K = %@"
+        default: fatalError("unknown type should never be used")
+        }
+    }
+
+    private let keyType: PrimaryKeyType
+
+    // MARK: Lifecycle
+
+    init(keyType: PrimaryKeyType) {
+        self.keyType = keyType
     }
 }

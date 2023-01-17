@@ -11,21 +11,6 @@ import ContextSDK
 // MARK: - KeypathProtocol
 
 public extension VehicleprofileGun {
-    //
-    typealias Fields = DataFieldsKeys
-    enum DataFieldsKeys: String, CodingKey, CaseIterable {
-        case move_down_arc
-        case caliber
-        case name
-        case weight
-        case move_up_arc
-        case fire_rate
-        case dispersion
-        case tag
-        case reload_time
-        case tier
-        case aim_time
-    }
 
     @objc
     override class func dataFieldsKeypaths() -> [String] {

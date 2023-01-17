@@ -12,33 +12,6 @@ import ContextSDK
 
 public extension Vehicles {
     //
-    typealias Fields = DataFieldsKeys
-    enum DataFieldsKeys: String, CodingKey, CaseIterable {
-        case is_gift
-        case is_premium
-        case is_premium_igr
-        case is_wheeled
-        case name
-        case nation
-        case price_credit
-        case price_gold
-        case short_name
-        case tag
-        case tank_id
-        case tier
-        case type
-    }
-
-    enum RelativeKeys: String, CodingKey, CaseIterable {
-        case default_profile
-        case engines
-        case guns
-        case radios
-        case modules_tree
-        case suspensions
-        case turrets
-    }
-
     @objc
     override static func dataFieldsKeypaths() -> [String] {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }

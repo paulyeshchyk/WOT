@@ -20,7 +20,6 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
     func decode(using map: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws {
         //
         let armorListJSON = try map.data(ofType: JSON.self)
-        // ??? try managedObject.decode(decoderContainer: armorListJSON)
 
         // MARK: - turret
 

@@ -11,11 +11,27 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension Module: DecodableProtocol {
+    //
+    enum DataFieldsKeys: String, CodingKey, CaseIterable {
+        case name
+        case nation
+        case tier
+        case type
+        case price_credit
+        case weight
+        case image
+        case module_id
+    }
+
+    enum RelativeKeys: String, CodingKey, CaseIterable {
+        case tanks
+    }
+
     public func decodeWith(_ decoder: DecoderObjC) throws {
         guard let decoder = decoder as? Decoder else {
             throw DecodableProtocolErrors.notADecoder
         }
-        let container = try decoder.container(keyedBy: Fields.self)
+        let container = try decoder.container(keyedBy: DataFieldsKeys.self)
         //
         module_id = try container.decodeIfPresent(Int.self, forKey: .module_id)?.asDecimal
         name = try container.decodeIfPresent(String.self, forKey: .name)

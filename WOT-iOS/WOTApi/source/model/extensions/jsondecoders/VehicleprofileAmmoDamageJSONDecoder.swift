@@ -18,9 +18,11 @@ class VehicleprofileAmmoDamageJSONDecoder: JSONDecoderProtocol {
     var managedObject: ManagedAndDecodableObjectType?
 
     func decode(using map: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
+        //
         let array = try map.data(ofType: [Double].self)
         let ammoDamage = try MinAvgMax(array)
         try managedObject?.decode(decoderContainer: ammoDamage)
+        //
     }
 }
 

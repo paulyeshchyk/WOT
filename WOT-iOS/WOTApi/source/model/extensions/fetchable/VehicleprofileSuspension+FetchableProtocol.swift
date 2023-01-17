@@ -11,17 +11,6 @@ import ContextSDK
 // MARK: - KeypathProtocol
 
 public extension VehicleprofileSuspension {
-    //
-    typealias Fields = DataFieldsKeys
-    enum DataFieldsKeys: String, CodingKey, CaseIterable {
-        case tier
-        case traverse_speed
-        case name
-        case load_limit
-        case weight
-        case steering_lock_angle
-        case tag
-    }
 
     @objc
     override class func dataFieldsKeypaths() -> [String] {

@@ -11,19 +11,6 @@ import ContextSDK
 // MARK: - KeypathProtocol
 
 public extension VehicleprofileTurret {
-    //
-    typealias Fields = DataFieldsKeys
-    enum DataFieldsKeys: String, CodingKey, CaseIterable {
-        case traverse_left_arc
-        case traverse_speed
-        case weight
-        case view_range
-        case hp
-        case tier
-        case name
-        case tag
-        case traverse_right_arc
-    }
 
     @objc
     override static func dataFieldsKeypaths() -> [String] {

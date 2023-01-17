@@ -9,13 +9,6 @@
 // MARK: - KeypathProtocol
 
 public extension VehicleprofileAmmoDamage {
-    //
-    typealias Fields = DataFieldsKeys
-    enum DataFieldsKeys: String, CodingKey, CaseIterable {
-        case min_value
-        case avg_value
-        case max_value
-    }
 
     @objc
     override static func dataFieldsKeypaths() -> [String] {

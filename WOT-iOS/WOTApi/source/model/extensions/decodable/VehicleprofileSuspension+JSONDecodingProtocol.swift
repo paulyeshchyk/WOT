@@ -11,11 +11,22 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension VehicleprofileSuspension: DecodableProtocol {
+    //
+    enum DataFieldsKeys: String, CodingKey, CaseIterable {
+        case tier
+        case traverse_speed
+        case name
+        case load_limit
+        case weight
+        case steering_lock_angle
+        case tag
+    }
+
     public func decodeWith(_ decoder: DecoderObjC) throws {
         guard let decoder = decoder as? Decoder else {
             throw DecodableProtocolErrors.notADecoder
         }
-        let container = try decoder.container(keyedBy: Fields.self)
+        let container = try decoder.container(keyedBy: DataFieldsKeys.self)
         //
         name = try container.decodeAnyIfPresent(String.self, forKey: .name)
         tag = try container.decodeAnyIfPresent(String.self, forKey: .tag)

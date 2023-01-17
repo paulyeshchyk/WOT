@@ -12,22 +12,6 @@ import ContextSDK
 
 public extension Module {
     //
-    typealias Fields = DataFieldsKeys
-    enum DataFieldsKeys: String, CodingKey, CaseIterable {
-        case name
-        case nation
-        case tier
-        case type
-        case price_credit
-        case weight
-        case image
-        case module_id
-    }
-
-    enum RelativeKeys: String, CodingKey, CaseIterable {
-        case tanks
-    }
-
     @objc
     override static func relationFieldsKeypaths() -> [String] {
         return RelativeKeys.allCases.compactMap { $0.rawValue }

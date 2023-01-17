@@ -1,5 +1,5 @@
 //
-//  VehicleprofileRadio+KeypathProtocol.swift
+//  VehicleprofileEngine+KeypathProtocol.swift
 //  WOTData
 //
 //  Created by Pavel Yeshchyk on 5/4/20.
@@ -10,16 +10,7 @@ import ContextSDK
 
 // MARK: - KeypathProtocol
 
-public extension VehicleprofileRadio {
-    //
-    typealias Fields = DataFieldsKeys
-    enum DataFieldsKeys: String, CodingKey, CaseIterable {
-        case tier
-        case signal_range
-        case tag
-        case weight
-        case name
-    }
+public extension VehicleprofileEngine {
 
     @objc
     override class func dataFieldsKeypaths() -> [String] {
@@ -28,10 +19,10 @@ public extension VehicleprofileRadio {
 
     override class func primaryKeyPath(forType: PrimaryKeyType) -> String {
         // id was used when quering remote module
-        // tag was used when parsed response vehicleprofile-radio
+        // tag was used when parsed response vehicleprofile-engine
         switch forType {
-        case .external: return #keyPath(VehicleprofileRadio.radio_id)
-        case .internal: return #keyPath(VehicleprofileRadio.tag)
+        case .external: return #keyPath(VehicleprofileEngine.engine_id)
+        case .internal: return #keyPath(VehicleprofileEngine.tag)
         default: fatalError("unknown type should never be used")
         }
     }

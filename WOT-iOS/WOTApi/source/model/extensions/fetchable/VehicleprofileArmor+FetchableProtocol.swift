@@ -9,13 +9,6 @@
 // MARK: - KeypathProtocol
 
 public extension VehicleprofileArmor {
-    //
-    typealias Fields = DataFieldsKeys
-    enum DataFieldsKeys: String, CodingKey, CaseIterable {
-        case front
-        case sides
-        case rear
-    }
 
     @objc
     override static func dataFieldsKeypaths() -> [String] {

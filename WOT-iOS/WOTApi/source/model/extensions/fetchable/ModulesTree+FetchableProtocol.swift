@@ -11,23 +11,6 @@ import ContextSDK
 // MARK: - KeypathProtocol
 
 public extension ModulesTree {
-    //
-    typealias Fields = DataFieldsKeys
-    enum DataFieldsKeys: String, CodingKey, CaseIterable {
-        case module_id
-        case name
-        case price_credit
-        case price_xp
-        case is_default
-        case type
-    }
-
-    enum RelativeKeys: String, CodingKey, CaseIterable {
-        case default_profile
-        case next_modules
-        case next_tanks
-        case currentModule
-    }
 
     @objc
     override static func dataFieldsKeypaths() -> [String] {
