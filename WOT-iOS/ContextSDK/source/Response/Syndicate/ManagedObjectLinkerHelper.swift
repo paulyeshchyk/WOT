@@ -15,6 +15,7 @@ class ManagedObjectLinkerHelper {
 
     private let appContext: Context?
     var linker: ManagedObjectLinkerProtocol?
+    var modelClass: (PrimaryKeypathProtocol & FetchableProtocol).Type?
 
     // MARK: Lifecycle
 
@@ -27,6 +28,10 @@ class ManagedObjectLinkerHelper {
     func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
         guard let fetchResult = fetchResult, error == nil else {
             completion?(fetchResult, error ?? Errors.fetchResultIsNotPresented)
+            return
+        }
+        guard let _ = modelClass else {
+            completion?(fetchResult, Errors.modelClassIsNotDefined)
             return
         }
         guard let linker = linker else {
@@ -49,10 +54,12 @@ extension ManagedObjectLinkerHelper {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
         case managedObjectLinkerIsNotPresented
+        case modelClassIsNotDefined
         case fetchResultIsNotPresented
 
         public var description: String {
             switch self {
+            case .modelClassIsNotDefined: return "\(type(of: self)): modelclass is not presented"
             case .managedObjectLinkerIsNotPresented: return "\(type(of: self)): managed object linker is not presented"
             case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
             }

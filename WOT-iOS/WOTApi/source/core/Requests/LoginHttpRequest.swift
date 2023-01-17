@@ -22,7 +22,7 @@ extension LoginHttpRequest: RequestModelServiceProtocol {
         WGAPIResponseJSONAdapter.self
     }
 
-    public static func modelClass() -> PrimaryKeypathProtocol.Type? {
+    public static func modelClass() -> ModelClassType? {
         return nil
     }
 

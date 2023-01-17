@@ -15,16 +15,18 @@ public protocol ResponseAdapterProtocol {
         & RequestManagerContainerProtocol
         & DecoderManagerContainerProtocol
 
+    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
+
     typealias OnComplete = (RequestProtocol, Error?) -> Void
 
     var responseClass: AnyClass { get }
     var completion: ResponseAdapterProtocol.OnComplete? { get set }
-    var modelClass: PrimaryKeypathProtocol.Type { get }
+    var modelClass: ModelClassType { get }
     var request: RequestProtocol? { get set }
     var linker: ManagedObjectLinkerProtocol? { get set }
     var extractor: ManagedObjectExtractable? { get set }
 
-    init(appContext: Context, modelClass: PrimaryKeypathProtocol.Type)
+    init(appContext: Context, modelClass: ModelClassType)
 
     func decode(data: Data?, fromRequest request: RequestProtocol)
 }

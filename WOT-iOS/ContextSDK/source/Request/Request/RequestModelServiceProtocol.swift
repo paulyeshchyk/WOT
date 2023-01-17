@@ -7,7 +7,9 @@
 
 @objc
 public protocol RequestModelServiceProtocol: AnyObject {
+    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
+
     static func registrationID() -> RequestIdType
-    static func modelClass() -> PrimaryKeypathProtocol.Type?
+    static func modelClass() -> ModelClassType?
     static func dataAdapterClass() -> ResponseAdapterProtocol.Type
 }
