@@ -8,14 +8,16 @@
 // MARK: - VehicleprofileJSONDecoder
 
 class VehicleprofileJSONDecoder: JSONDecoderProtocol {
+
     private weak var appContext: JSONDecoderProtocol.Context?
+
     required init(appContext: JSONDecoderProtocol.Context?) {
         self.appContext = appContext
     }
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws {
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
@@ -45,7 +47,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
@@ -67,7 +69,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
@@ -89,7 +91,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
@@ -113,7 +115,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
@@ -137,7 +139,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
@@ -161,7 +163,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
@@ -185,7 +187,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
@@ -209,7 +211,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {

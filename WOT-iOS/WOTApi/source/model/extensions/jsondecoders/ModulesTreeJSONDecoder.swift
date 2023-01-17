@@ -17,7 +17,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, appContext _: JSONDecoderProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
         //
         let moduleTreeJSON = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: moduleTreeJSON)
@@ -26,7 +26,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         // MARK: - NextTanks
 
         let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
-        if let nextTanks = moduleTreeJSON?[nextTanksKeypath] as? [AnyObject] {
+        if let nextTanks = moduleTreeJSON?[nextTanksKeypath] as? [JSONValueType] {
             for nextTank in nextTanks {
                 fetchNextTank(tank_id: nextTank)
             }
@@ -35,7 +35,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         // MARK: - NextModules
 
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
-        if let nextModules = moduleTreeJSON?[nextModulesKeypath] as? [AnyObject] {
+        if let nextModules = moduleTreeJSON?[nextModulesKeypath] as? [JSONValueType] {
             for nextModuleID in nextModules {
                 fetchNextModule(nextModuleID: nextModuleID, map: map)
             }

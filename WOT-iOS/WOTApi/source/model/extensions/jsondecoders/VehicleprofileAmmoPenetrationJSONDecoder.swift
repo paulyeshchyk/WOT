@@ -8,14 +8,16 @@
 // MARK: - VehicleprofileAmmoPenetrationJSONDecoder
 
 class VehicleprofileAmmoPenetrationJSONDecoder: JSONDecoderProtocol {
+
     private weak var appContext: JSONDecoderProtocol.Context?
+
     required init(appContext: JSONDecoderProtocol.Context?) {
         self.appContext = appContext
     }
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using _: JSONMapProtocol, appContext _: JSONDecoderProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
+    func decode(using _: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
 //        let array = try map.data(ofType: [Double].self)
 //        //
 //        guard array?.count == 3 else {

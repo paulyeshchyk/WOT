@@ -8,14 +8,16 @@
 // MARK: - ModuleJSONDecoder
 
 class ModuleJSONDecoder: JSONDecoderProtocol {
+
     private weak var appContext: JSONDecoderProtocol.Context?
+
     required init(appContext: JSONDecoderProtocol.Context?) {
         self.appContext = appContext
     }
 
     weak var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, appContext: JSONDecoderProtocol.Context?, forDepthLevel _: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)

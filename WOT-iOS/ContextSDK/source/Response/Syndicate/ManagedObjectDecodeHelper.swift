@@ -55,7 +55,7 @@ class ManagedObjectDecodeHelper {
             #warning("Provide crc check")
             let decoder = decoderType.init(appContext: appContext)
             decoder.managedObject = managedObject
-            try decoder.decode(using: jsonMap, appContext: appContext, forDepthLevel: DecodingDepthLevel.initial)
+            try decoder.decode(using: jsonMap, forDepthLevel: DecodingDepthLevel.initial)
 
             appContext?.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
                 self.completion?(fetchResult, error)
