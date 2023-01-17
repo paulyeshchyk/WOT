@@ -34,7 +34,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: keypathPenetration)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
@@ -57,7 +57,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: keypathDamage)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(custom: jsonCustom, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in

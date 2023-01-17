@@ -21,7 +21,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
-        let jsonRef = try JSONRef(element: element, modelClass: Vehicleprofile.self)
+        let jsonRef = try JSONRef(data: element, modelClass: Vehicleprofile.self)
         //
 
         // MARK: - Link items
@@ -42,7 +42,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: ammoKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(array: jsonArray, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonArray, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
@@ -64,7 +64,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: armorKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
@@ -86,7 +86,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: modulesKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
@@ -110,7 +110,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: engineKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
@@ -134,7 +134,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: gunKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
@@ -158,7 +158,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: suspensionKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
@@ -182,7 +182,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: turretKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
@@ -206,7 +206,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: radioKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in

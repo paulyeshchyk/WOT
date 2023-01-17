@@ -28,21 +28,9 @@ public class JSONRef: JSONRefProtocol {
         self.modelClass = modelClass
     }
 
-    public convenience init(element: JSON?, modelClass: PrimaryKeypathProtocol.Type) throws {
-        guard let element = element else { throw Errors.jsonIsNil }
-        let collection = try JSONCollection(element: element)
-        try self.init(jsonCollection: collection, modelClass: modelClass)
-    }
-
-    public convenience init(array: [JSON]?, modelClass: PrimaryKeypathProtocol.Type) throws {
-        guard let array = array else { throw Errors.arrayIsNil }
-        let collection = try JSONCollection(array: array)
-        try self.init(jsonCollection: collection, modelClass: modelClass)
-    }
-
-    public convenience init(custom: Any?, modelClass: PrimaryKeypathProtocol.Type) throws {
-        guard let custom = custom else { throw Errors.customIsNil }
-        let collection = JSONCollection(custom: custom)
+    public convenience init(data: Any?, modelClass: PrimaryKeypathProtocol.Type) throws {
+        guard let custom = data else { throw Errors.customIsNil }
+        let collection = JSONCollection(data: custom)
         try self.init(jsonCollection: collection, modelClass: modelClass)
     }
 }

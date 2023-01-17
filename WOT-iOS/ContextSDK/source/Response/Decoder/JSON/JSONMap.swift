@@ -40,18 +40,8 @@ public class JSONMap: JSONMapProtocol, CustomStringConvertible {
         self.contextPredicate = contextPredicate
     }
 
-    public convenience init(element: JSON, predicate contextPredicate: ContextPredicateProtocol) throws {
-        let collection = try JSONCollection(element: element)
-        try self.init(jsonCollection: collection, predicate: contextPredicate)
-    }
-
-    public convenience init(array: [JSON], predicate contextPredicate: ContextPredicateProtocol) throws {
-        let collection = try JSONCollection(array: array)
-        try self.init(jsonCollection: collection, predicate: contextPredicate)
-    }
-
-    public convenience init(custom: Any, predicate contextPredicate: ContextPredicateProtocol) throws {
-        let collection = JSONCollection(custom: custom)
+    public convenience init(data: Any, predicate contextPredicate: ContextPredicateProtocol) throws {
+        let collection = JSONCollection(data: data)
         try self.init(jsonCollection: collection, predicate: contextPredicate)
     }
 

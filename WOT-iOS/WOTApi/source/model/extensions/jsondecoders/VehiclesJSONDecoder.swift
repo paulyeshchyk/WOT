@@ -21,7 +21,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
         //
         let element = try jsonMap.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
-        let jsonRef = try JSONRef(element: element, modelClass: Vehicles.self)
+        let jsonRef = try JSONRef(data: element, modelClass: Vehicles.self)
         //
 
         let tank_id = element?[#keyPath(Vehicles.tank_id)] as? NSDecimalNumber
@@ -45,7 +45,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     let modelClass = ModulesTree.self
                     let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: module_id, keypath: keypath)
                     let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-                    let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+                    let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
                     let decodingDepthLevel = forDepthLevel?.next
 
                     JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
@@ -71,7 +71,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let jsonMap = try JSONMap(element: jsonElement, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in

@@ -51,7 +51,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
     private func fetchCurrentModule(identifier: JSONValueType?, map: JSONMapProtocol, moduleTreeJSON: JSON?) {
         do {
-            let jsonRef = try JSONRef(element: moduleTreeJSON, modelClass: ModulesTree.self)
+            let jsonRef = try JSONRef(data: moduleTreeJSON, modelClass: ModulesTree.self)
             let currentModuleKeypath = #keyPath(ModulesTree.currentModule)
             let modelClass = Module.self
             let socket = JointSocket(managedRef: managedObject?.managedRef, identifier: nil, keypath: currentModuleKeypath)
