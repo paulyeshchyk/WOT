@@ -10,7 +10,12 @@
 public class JSONCollection: JSONCollectionProtocol, CustomStringConvertible {
 
     public var description: String {
-        return "[\(type(of: self))] collection: \(String(describing: collection))"
+        let collectionDescription: String
+        switch collectionType {
+        case .custom: collectionDescription = String(describing: custom, orValue: "<NULL>")
+        default: collectionDescription = String(describing: collection)
+        }
+        return "[\(type(of: self))] collectionType: \(String(describing: collectionType)), collection: \(collectionDescription)"
     }
 
     private var collectionType: JSONCollectionType
