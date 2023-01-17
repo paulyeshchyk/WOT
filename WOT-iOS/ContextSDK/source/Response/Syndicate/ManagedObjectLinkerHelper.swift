@@ -33,8 +33,12 @@ class ManagedObjectLinkerHelper {
             completion?(fetchResult, Errors.managedObjectLinkerIsNotPresented)
             return
         }
-        linker.process(fetchResult: fetchResult, appContext: appContext) { fetchResult, error in
-            self.completion?(fetchResult, error)
+        do {
+            try linker.process(fetchResult: fetchResult, appContext: appContext) { fetchResult, error in
+                self.completion?(fetchResult, error)
+            }
+        } catch {
+            completion?(fetchResult, error)
         }
     }
 }

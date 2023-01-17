@@ -24,7 +24,7 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
         //
 
         let filteredJsonRef = map.contextPredicate.jsonRefs.filter { $0.modelClass == Vehicles.self }.first
-        guard let parentHostPin = filteredJsonRef?.getJointPin(idKeyPath: #keyPath(Vehicles.tank_id)) else {
+        guard let parentHostPin = try filteredJsonRef?.getJointPin(idKeyPath: #keyPath(Vehicles.tank_id)) else {
             throw ModuleMappingError.noParentsFound
         }
 
@@ -38,22 +38,24 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
         moduleDecoder.module_id = module_id
         moduleDecoder.parentHostPin = parentHostPin
         moduleDecoder.type = type
-        let managedRef = try managedObject?.managedRef()
+        guard let managedRef = try managedObject?.managedRef() else {
+            throw ModuleMappingError.invalidManagedRef
+        }
 
         try moduleDecoder.decode(moduleManagedRef: managedRef)
     }
 }
 
 extension ManagedRefProtocol {
-    func getJointPin(idKeyPath: KeypathType, inContext context: ManagedObjectContextProtocol) -> JointPinProtocol {
-        let managedObject = context.object(managedRef: self)
-        let identifier = managedObject?[idKeyPath]
+    func getJointPin(idKeyPath: KeypathType, inContext context: ManagedObjectContextProtocol) throws -> JointPinProtocol {
+        let managedObject = try context.object(managedRef: self)
+        let identifier = managedObject[idKeyPath]
         return JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: nil)
     }
 }
 
 extension JSONRefProtocol {
-    func getJointPin(idKeyPath: KeypathType) -> JointPinProtocol {
+    func getJointPin(idKeyPath: KeypathType) throws -> JointPinProtocol {
         let json = jsonCollection.data() as? JSON
         let identifier = json?[idKeyPath]
         return JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: nil)
@@ -79,7 +81,7 @@ public class ModuleDecoder {
         //
     }
 
-    func decode(moduleManagedRef: ManagedRefProtocol?) throws {
+    func decode(moduleManagedRef: ManagedRefProtocol) throws {
         let moduleType = try VehicleModuleType.fromString(type)
         switch moduleType {
         case .vehicleGun:
@@ -116,7 +118,8 @@ public class ModuleDecoder {
         }
 
         let modelClass = pin.modelClass
-        let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+        let linker = ManagedObjectLinker(modelClass: modelClass)
+        linker.socket = socket
         let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
         let composition = try composer.buildRequestPredicateComposition()
 
@@ -146,6 +149,7 @@ extension ModuleDecoder: RequestManagerListenerProtocol {
 private enum ModuleMappingError: Error {
     case noParentsFound
     case moduleIdNotDefined
+    case invalidManagedRef
 }
 
 extension Module {

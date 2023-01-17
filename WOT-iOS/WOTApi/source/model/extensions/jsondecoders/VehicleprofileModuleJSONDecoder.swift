@@ -27,8 +27,9 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileGun.self
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let socket = JointSocket(managedRef: managedRef!, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass)
+            linker.socket = socket
             let pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
@@ -41,8 +42,9 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileRadio.self
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let socket = JointSocket(managedRef: managedRef!, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass)
+            linker.socket = socket
             let extractor = VehicleprofileModule.RadioExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
@@ -55,8 +57,10 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileEngine.self
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let socket = JointSocket(managedRef: managedRef!, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass)
+            linker.socket = socket
+
             let extractor = VehicleprofileModule.EngineExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
@@ -69,8 +73,10 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileSuspension.self
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let socket = JointSocket(managedRef: managedRef!, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass)
+            linker.socket = socket
+
             let extractor = VehicleprofileModule.SuspensionExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
@@ -83,8 +89,10 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileTurret.self
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
-            let linker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let socket = JointSocket(managedRef: managedRef!, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
+            let linker = ManagedObjectLinker(modelClass: modelClass)
+            linker.socket = socket
+
             let extractor = VehicleprofileModule.TurretExtractor()
             let pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)

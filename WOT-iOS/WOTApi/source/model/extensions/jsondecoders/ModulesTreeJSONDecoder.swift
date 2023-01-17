@@ -56,14 +56,16 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let modelClass = Module.self
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: currentModuleKeypath)
+            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: currentModuleKeypath)
             let extractor = CurrentModuleExtractor()
-            let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
+            managedObjectLinker.socket = socket
+
             let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
             let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
             let composition = try composer.buildRequestPredicateComposition()
 
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: nil)
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: managedObjectLinker, managedObjectExtractor: extractor, listener: nil)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
         }
@@ -74,15 +76,17 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         do {
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: nextModulesKeypath)
-            let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, socket: socket)
+            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextModulesKeypath)
+            let linker = ManagedObjectLinker(modelClass: ModulesTree.self)
+            linker.socket = socket
+
             let extractor = NextModuleExtractor()
             let modelClass = Module.self
 
             let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
             let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: nextModuleManagedObjectCreator, managedObjectExtractor: extractor, listener: nil)
+            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
         }
@@ -93,8 +97,10 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         do {
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: nextTanksKeypath)
-            let linker = ManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
+            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextTanksKeypath)
+            let linker = ManagedObjectLinker(modelClass: Vehicles.self)
+            linker.socket = socket
+
             let extractor = NextVehicleExtractor()
             // parents was not used for next portion of tanks
             let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)

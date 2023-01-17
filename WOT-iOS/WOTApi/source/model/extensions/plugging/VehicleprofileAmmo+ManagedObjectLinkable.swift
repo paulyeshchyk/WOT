@@ -13,16 +13,16 @@ extension VehicleprofileAmmo: ManagedObjectPinProtocol {}
 
 extension VehicleprofileAmmo: ManagedObjectPlugProtocol {
 
-    public func plug(pin: ManagedObjectPinProtocol, intoSocket: JointSocketProtocol) {
+    public func plug(pin: ManagedObjectPinProtocol?, intoSocket: JointSocketProtocol?) {
         //
-        switch intoSocket.keypath as? String {
+        switch intoSocket?.keypath as? String {
         case #keyPath(VehicleprofileAmmo.damage): damage = pin as? VehicleprofileAmmoDamage
         case #keyPath(VehicleprofileAmmo.penetration): penetration = pin as? VehicleprofileAmmoPenetration
         default: assertionFailure("undefiend field \(String(describing: intoSocket))")
         }
     }
 
-    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol]?, intoSocket _: JointSocketProtocol?) {
         //
     }
 }
