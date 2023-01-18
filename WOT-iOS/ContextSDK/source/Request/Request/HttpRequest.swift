@@ -8,7 +8,9 @@
 
 // MARK: - HttpRequestProtocol
 
-public protocol HttpRequestProtocol {}
+public protocol HttpRequestProtocol: RequestProtocol {
+    //
+}
 
 // MARK: - HttpRequest
 
@@ -40,11 +42,11 @@ open class HttpRequest: Request, HttpRequestProtocol {
     }
 
     override open func start() throws {
-        let urlRequest = try HttpRequestBuilder().build(hostConfiguration: appContext.hostConfiguration,
-                                                        httpMethod: httpMethod,
-                                                        path: path,
-                                                        args: arguments,
-                                                        bodyData: httpBodyData)
+        //
+        var urlBuilder = URLRequestBuilder()
+        urlBuilder.hostConfiguration = appContext.hostConfiguration
+        urlBuilder.httpRequest = self
+        let urlRequest = try urlBuilder.build()
 
         httpDataReceiver = HttpDataReceiver(context: appContext, request: urlRequest)
         httpDataReceiver?.delegate = self
