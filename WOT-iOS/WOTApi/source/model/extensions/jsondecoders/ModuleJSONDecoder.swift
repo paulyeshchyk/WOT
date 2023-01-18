@@ -123,7 +123,8 @@ public class ModuleDecoder {
         let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
         let composition = try composer.buildRequestPredicateComposition()
 
-        try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+        let request = try appContext?.requestManager?.createRequest(modelClass: modelClass, contextPredicate: composition.contextPredicate)
+        try appContext?.requestManager?.startRequest(request!, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
     }
 }
 

@@ -17,11 +17,14 @@ public protocol JSONRefProtocol {
 
 // MARK: - JSONRef
 
-public class JSONRef: JSONRefProtocol {
+public class JSONRef: JSONRefProtocol, CustomStringConvertible {
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     public var jsonCollection: JSONCollectionProtocol
     public var modelClass: ModelClassType
+    public var description: String {
+        return "[\(type(of: self))] modelClass:\(String(describing: modelClass)), jsonCollection: \(String(describing: jsonCollection))"
+    }
 
     public init(jsonCollection: JSONCollectionProtocol?, modelClass: ModelClassType) throws {
         guard let jsonCollection = jsonCollection else {

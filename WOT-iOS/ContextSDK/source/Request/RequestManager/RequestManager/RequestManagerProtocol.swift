@@ -11,15 +11,13 @@
 public protocol RequestManagerProtocol {
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
+    func createRequest(modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol?) throws -> RequestProtocol
+
+    func startRequest(_ request: RequestProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
+
     func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol)
+
     func removeListener(_ listener: RequestManagerListenerProtocol)
-    func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
-
-    // @available(*, deprecated, message: "fetchRemote should be used instead")
-    func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol
-
-    // @available(*, deprecated, message: "Syndicate to be used")
-    func fetchRemote(modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol?, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
 }
 
 // MARK: - RequestManagerContainerProtocol

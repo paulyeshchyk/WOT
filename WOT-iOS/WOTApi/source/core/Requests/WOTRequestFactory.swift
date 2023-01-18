@@ -27,31 +27,28 @@ public class WOTWEBRequestFactory: NSObject {
     // MARK: Public
 
     public static func fetchVehiclePivotData(appContext: WOTWEBRequestFactory.Context, listener: RequestManagerListenerProtocol) throws {
-        guard let request = try appContext.requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
+        guard let request = try appContext.requestManager?.createRequest(modelClass: Vehicles.self, contextPredicate: nil) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
-        let arguments = RequestArguments()
-        // arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
-        arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
-        request.arguments = arguments
+
         let extractor = VehiclesPivotManagedObjectExtractor()
         let linker = ManagedObjectLinker(modelClass: Vehicles.self)
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: listener)
+        try appContext.requestManager?.startRequest(request, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc
     public static func fetchVehicleTreeData(vehicleId: Int, appContext: DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
-        guard let request = try appContext.requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
+        let modelClass = Vehicles.self
+        let contextPredicate = ContextPredicate()
+        contextPredicate[.primary] = modelClass.primaryKey(forType: .internal, andObject: vehicleId)
+
+        guard let request = try appContext.requestManager?.createRequest(modelClass: modelClass, contextPredicate: contextPredicate) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
-        let arguments = RequestArguments()
-        arguments.setValues([vehicleId], forKey: WOTApiFields.tank_id)
-        arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
-        request.arguments = arguments
         let extractor = VehiclesTreeManagedObjectExtractor()
         let managedObjectLinker = ManagedObjectLinker(modelClass: Vehicles.self)
 
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectLinker: managedObjectLinker, managedObjectExtractor: extractor, listener: listener)
+        try appContext.requestManager?.startRequest(request, managedObjectLinker: managedObjectLinker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc

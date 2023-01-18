@@ -161,14 +161,9 @@ extension RequestManager: RequestManagerProtocol {
         grouppedListenerList.removeListener(listener)
     }
 
-    public func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol {
+    public func startRequest(_ request: RequestProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
         //
-        try requestRegistrator.createRequest(forRequestId: forRequestId)
-    }
-
-    public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
-        //
-        try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
+        try grouppedRequestList.addRequest(request, forGroupId: request.MD5.hashValue)
 
         request.addListener(self)
 
@@ -185,25 +180,17 @@ extension RequestManager: RequestManagerProtocol {
         try request.start()
     }
 
-    public func fetchRemote(modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol?, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
-        do {
-            //
-            let request = try createRequest(modelClass: modelClass, contextPredicate: contextPredicate)
-            let groupId: RequestIdType = request.MD5.hashValue
-
-            try startRequest(request, forGroupId: groupId, managedObjectLinker: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
-        } catch {
-            appContext.logInspector?.log(.error(error), sender: self)
-        }
-    }
-
-    private func createRequest(modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol?) throws -> RequestProtocol {
+    public func createRequest(modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol?) throws -> RequestProtocol {
         //
         let requestID = try requestRegistrator.requestId(forModelClass: modelClass)
         let request = try requestRegistrator.createRequest(forRequestId: requestID)
 
-        let builder = RequestArgumentsBuilder(modelClass: modelClass, contextPredicate: contextPredicate)
-        let arguments = builder.buildRequestArguments(keypathPrefix: request.httpAPIQueryPrefix(), httpQueryItemName: request.httpQueryItemName)
+        let argumentsBuilder = RequestArgumentsBuilder(modelClass: modelClass)
+        argumentsBuilder.contextPredicate = contextPredicate
+        argumentsBuilder.keypathPrefix = request.httpAPIQueryPrefix()
+        argumentsBuilder.httpQueryItemName = request.httpQueryItemName
+
+        let arguments = argumentsBuilder.build()
 
         request.contextPredicate = contextPredicate
         request.arguments = arguments

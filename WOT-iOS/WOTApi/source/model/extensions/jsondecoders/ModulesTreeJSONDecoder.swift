@@ -65,7 +65,8 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
             let composition = try composer.buildRequestPredicateComposition()
 
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: managedObjectLinker, managedObjectExtractor: extractor, listener: nil)
+            let request = try appContext?.requestManager?.createRequest(modelClass: modelClass, contextPredicate: composition.contextPredicate)
+            try appContext?.requestManager?.startRequest(request!, managedObjectLinker: managedObjectLinker, managedObjectExtractor: extractor, listener: nil)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
         }
@@ -86,7 +87,10 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
             let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
+
+            let request = try appContext?.requestManager?.createRequest(modelClass: modelClass, contextPredicate: composition.contextPredicate)
+
+            try appContext?.requestManager?.startRequest(request!, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
         }
@@ -107,7 +111,9 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
             let modelClass = Vehicles.self
             let composition = try composer.buildRequestPredicateComposition()
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
+
+            let request = try appContext?.requestManager?.createRequest(modelClass: modelClass, contextPredicate: composition.contextPredicate)
+            try appContext?.requestManager?.startRequest(request!, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
         }

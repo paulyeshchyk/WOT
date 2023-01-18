@@ -7,8 +7,10 @@
 
 public class RequestArgumentsBuilder: NSObject, RequestArgumentsBuilderProtocol {
 
-    public var modelClass: ModelClassType
-    private let contextPredicate: ContextPredicateProtocol?
+    public let modelClass: ModelClassType
+    public var contextPredicate: ContextPredicateProtocol?
+    public var keypathPrefix: String?
+    public var httpQueryItemName: String?
 
     // MARK: - NSObject
 
@@ -25,14 +27,13 @@ public class RequestArgumentsBuilder: NSObject, RequestArgumentsBuilderProtocol 
 
     // MARK: Lifecycle
 
-    public init(modelClass T: ModelClassType, contextPredicate: ContextPredicateProtocol?) {
-        self.contextPredicate = contextPredicate
+    public init(modelClass T: ModelClassType) {
         modelClass = T.self
     }
 
     // MARK: Public
 
-    public func buildRequestArguments(keypathPrefix: String?, httpQueryItemName: String?) -> RequestArguments {
+    public func build() -> RequestArguments {
         let arguments = RequestArguments()
 
         let keyPaths = modelClass.fieldsKeypaths().compactMap {

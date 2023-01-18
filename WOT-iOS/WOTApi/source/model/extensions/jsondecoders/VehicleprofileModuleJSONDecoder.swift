@@ -35,7 +35,8 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let composition = try composer.buildRequestPredicateComposition()
 
             let extractor = VehicleprofileModule.GunExtractor()
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
+            let request = try appContext?.requestManager?.createRequest(modelClass: modelClass, contextPredicate: composition.contextPredicate)
+            try appContext?.requestManager?.startRequest(request!, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
         if let radio_id = element?[#keyPath(VehicleprofileModule.radio_id)] {
@@ -50,7 +51,8 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
 
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
+            let request = try appContext?.requestManager?.createRequest(modelClass: modelClass, contextPredicate: composition.contextPredicate)
+            try appContext?.requestManager?.startRequest(request!, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
         if let engine_id = element?[#keyPath(VehicleprofileModule.engine_id)] {
@@ -66,7 +68,8 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
 
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
+            let request = try appContext?.requestManager?.createRequest(modelClass: modelClass, contextPredicate: composition.contextPredicate)
+            try appContext?.requestManager?.startRequest(request!, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
         if let suspension_id = element?[#keyPath(VehicleprofileModule.suspension_id)] {
@@ -82,7 +85,8 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
 
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
+            let request = try appContext?.requestManager?.createRequest(modelClass: modelClass, contextPredicate: composition.contextPredicate)
+            try appContext?.requestManager?.startRequest(request!, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
 
         if let turret_id = element?[#keyPath(VehicleprofileModule.turret_id)] {
@@ -98,7 +102,8 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let composition = try composer.buildRequestPredicateComposition()
 
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
+            let request = try appContext?.requestManager?.createRequest(modelClass: modelClass, contextPredicate: composition.contextPredicate)
+            try appContext?.requestManager?.startRequest(request!, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
         }
     }
 }
