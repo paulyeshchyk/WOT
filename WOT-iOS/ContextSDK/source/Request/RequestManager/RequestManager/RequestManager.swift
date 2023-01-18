@@ -185,15 +185,15 @@ extension RequestManager: RequestManagerProtocol {
         let requestID = try requestRegistrator.requestId(forModelClass: modelClass)
         let request = try requestRegistrator.createRequest(forRequestId: requestID)
 
-        let argumentsBuilder = RequestArgumentsBuilder(modelClass: modelClass)
+        let argumentsBuilder = HttpRequestArgumentsBuilder(modelClass: modelClass)
         argumentsBuilder.contextPredicate = contextPredicate
         argumentsBuilder.keypathPrefix = request.httpAPIQueryPrefix()
         argumentsBuilder.httpQueryItemName = request.httpQueryItemName
 
         let arguments = argumentsBuilder.build()
 
-        request.contextPredicate = contextPredicate
         request.arguments = arguments
+
         return request
     }
 }
@@ -206,7 +206,7 @@ extension RequestManager {
         case adapterNotFound(RequestProtocol)
         case notAModelService(RequestProtocol)
         case noRequestIds(RequestProtocol)
-        case requestNotCreated(RequestArgumentsBuilderProtocol)
+        case requestNotCreated(HttpRequestArgumentsBuilderProtocol)
         case requestsNotRegistered(FetchableProtocol.Type)
         case receivedResponseFromReleasedRequest
         case cantAddListener

@@ -10,48 +10,32 @@
 
 @objc
 public protocol RequestArgumentsProtocol {
-    init(_ dictionary: JSON)
-    func setValues(_ values: Any, forKey: AnyHashable)
-    func buildQuery(_ custom: JSON) -> String
-}
+    typealias ArgumentsType = [Swift.AnyHashable: Any]
 
-public typealias ArgumentsType = [Swift.AnyHashable: Any]
+    var contextPredicate: ContextPredicateProtocol? { get set }
+    var allValues: ArgumentsType { get }
+
+    func setValues(_ values: Any, forKey: AnyHashable)
+}
 
 // MARK: - RequestArguments
 
-@objc
-open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
+open class RequestArguments: RequestArgumentsProtocol, CustomStringConvertible, MD5Protocol {
 
+    public var contextPredicate: ContextPredicateProtocol?
     public var MD5: String { uuid.MD5 }
 
-    override public var description: String { "[\(type(of: self))]: \(String(describing: dictionary))" }
+    public var description: String {
+        "[\(type(of: self))]: \(String(describing: allValues))"
+    }
 
-    private var dictionary = ArgumentsType()
+    public var allValues: ArgumentsType = ArgumentsType()
 
     private let uuid = UUID()
-
-    // MARK: Lifecycle
-
-    public required convenience init(_ dictionary: ArgumentsType) {
-        self.init()
-
-        dictionary.keys.forEach {
-            if let plainArray = dictionary[$0] as? String {
-                let joinedString = plainArray.components(separatedBy: ",")
-                self.dictionary[$0] = joinedString
-            }
-        }
-    }
 
     // MARK: Public
 
     public func setValues(_ values: Any, forKey: AnyHashable) {
-        dictionary[forKey] = values
-    }
-
-    public func buildQuery(_ custom: ArgumentsType = [:]) -> String {
-        var mixture = custom
-        mixture.append(with: dictionary)
-        return mixture.asURLQueryString()
+        allValues[forKey] = values
     }
 }

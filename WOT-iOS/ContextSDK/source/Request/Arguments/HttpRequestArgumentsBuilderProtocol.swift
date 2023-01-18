@@ -1,5 +1,5 @@
 //
-//  RequestArgumentsBuilderProtocol.swift
+//  HttpRequestArgumentsBuilderProtocol.swift
 //  ContextSDK
 //
 //  Created by Paul on 30.12.22.
@@ -9,6 +9,13 @@
 
 @objc
 public protocol RequestArgumentsBuilderProtocol: MD5Protocol {
+    func build() -> RequestArgumentsProtocol
+}
+
+// MARK: - HttpRequestArgumentsBuilderProtocol
+
+@objc
+public protocol HttpRequestArgumentsBuilderProtocol: RequestArgumentsBuilderProtocol {
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     var modelClass: ModelClassType { get }
@@ -16,5 +23,4 @@ public protocol RequestArgumentsBuilderProtocol: MD5Protocol {
     var keypathPrefix: String? { get set }
     var httpQueryItemName: String? { get set }
 
-    func build() -> RequestArguments
 }

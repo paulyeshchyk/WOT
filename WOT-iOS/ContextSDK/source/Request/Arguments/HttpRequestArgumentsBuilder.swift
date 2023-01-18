@@ -1,11 +1,11 @@
 //
-//  RequestParadigm.swift
+//  HttpRequestArgumentsBuilder.swift
 //  ContextSDK
 //
 //  Created by Paul on 19.12.22.
 //
 
-public class RequestArgumentsBuilder: NSObject, RequestArgumentsBuilderProtocol {
+public class HttpRequestArgumentsBuilder: NSObject, HttpRequestArgumentsBuilderProtocol {
 
     public let modelClass: ModelClassType
     public var contextPredicate: ContextPredicateProtocol?
@@ -33,8 +33,10 @@ public class RequestArgumentsBuilder: NSObject, RequestArgumentsBuilderProtocol 
 
     // MARK: Public
 
-    public func build() -> RequestArguments {
+    public func build() -> RequestArgumentsProtocol {
+        //
         let arguments = RequestArguments()
+        arguments.contextPredicate = contextPredicate
 
         let keyPaths = modelClass.fieldsKeypaths().compactMap {
             self.addPreffix(keypathPrefix: keypathPrefix, to: $0)
