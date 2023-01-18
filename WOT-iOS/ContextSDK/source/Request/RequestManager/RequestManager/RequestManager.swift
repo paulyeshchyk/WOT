@@ -50,10 +50,9 @@ open class RequestManager: NSObject {
 
     // MARK: Public
 
-    public func registerModelService(_ serviceClass: RequestModelServiceProtocol.Type) {
-        requestRegistrator.registerServiceClass(serviceClass)
+    public func registerModelService(_ serviceClass: RequestModelServiceProtocol.Type) throws {
+        try requestRegistrator.registerServiceClass(serviceClass)
     }
-
 }
 
 // MARK: - RequestManager + RequestListenerProtocol
@@ -117,6 +116,7 @@ extension RequestManager {
 // MARK: - RequestManager + ResponseManagerListener
 
 extension RequestManager: ResponseManagerListener {
+    //
     public func responseManager(_: ResponseManagerProtocol, didStartWorkOn _: RequestProtocol) {
         //
     }
@@ -142,12 +142,12 @@ extension RequestManager: ResponseManagerListener {
         removeLinkers(for: request)
         removeRequest(request)
     }
-
 }
 
 // MARK: - RequestManager + RequestManagerProtocol
 
 extension RequestManager: RequestManagerProtocol {
+
     public func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
         //
         grouppedRequestList.cancelRequests(groupId: groupId, reason: reason) { [weak self] request, reason in
@@ -185,28 +185,21 @@ extension RequestManager: RequestManagerProtocol {
         try request.start()
     }
 
-    public func fetchRemote(modelClass: FetchableProtocol.Type, contextPredicate: ContextPredicateProtocol?, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
-        let requestIDs = requestRegistrator.requestIds(modelServiceClass: modelClass)
-        guard !requestIDs.isEmpty else {
-            throw Errors.requestsNotRegistered(modelClass)
-        }
+    public func fetchRemote(modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol?, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
+        do {
+            //
+            let request = try createRequest(modelClass: modelClass, contextPredicate: contextPredicate)
+            let groupId: RequestIdType = request.MD5.hashValue
 
-        DispatchQueue.main.async {
-            for requestID in requestIDs {
-                do {
-                    //
-                    let request = try self.createRequest(modelClass: modelClass, requestID: requestID, contextPredicate: contextPredicate)
-                    let groupId: RequestIdType = request.MD5.hashValue
-
-                    try self.startRequest(request, forGroupId: groupId, managedObjectLinker: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
-                } catch {
-                    self.appContext.logInspector?.log(.error(error), sender: self)
-                }
-            }
+            try startRequest(request, forGroupId: groupId, managedObjectLinker: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
+        } catch {
+            appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 
-    private func createRequest(modelClass: FetchableProtocol.Type, requestID: RequestIdType, contextPredicate: ContextPredicateProtocol?) throws -> RequestProtocol {
+    private func createRequest(modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol?) throws -> RequestProtocol {
+        //
+        let requestID = try requestRegistrator.requestId(forModelClass: modelClass)
         let request = try requestRegistrator.createRequest(forRequestId: requestID)
 
         let builder = RequestArgumentsBuilder(modelClass: modelClass, contextPredicate: contextPredicate)

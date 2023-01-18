@@ -31,7 +31,7 @@ class ResponseManagerListenerList {
 
     // MARK: Internal
 
-    func didStartRequest(_ request: RequestProtocol, responseManager: ResponseManagerProtocol) {
+    func responseManager(_ responseManager: ResponseManagerProtocol, didStartRequest request: RequestProtocol) {
         list[request.MD5]?.forEach {
             $0.responseManager(responseManager, didStartWorkOn: request)
         }
@@ -43,7 +43,7 @@ class ResponseManagerListenerList {
         }
     }
 
-    func didParseDataForRequest(_ request: RequestProtocol, responseManager: ResponseManagerProtocol, error: Error?) {
+    func responseManager(_ responseManager: ResponseManagerProtocol, didParseDataForRequest request: RequestProtocol, error: Error?) {
         list[request.MD5]?.forEach { listener in
             listener.responseManager(responseManager, didFinishWorkOn: request, withError: error)
         }

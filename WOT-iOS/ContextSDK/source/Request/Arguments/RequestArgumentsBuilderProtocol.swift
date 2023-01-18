@@ -9,6 +9,7 @@
 
 @objc
 public protocol RequestArgumentsBuilderProtocol: MD5Protocol {
-    var modelClass: FetchableProtocol.Type { get }
+    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
+    var modelClass: ModelClassType { get }
     func buildRequestArguments(keypathPrefix: String?, httpQueryItemName: String?) -> RequestArguments
 }

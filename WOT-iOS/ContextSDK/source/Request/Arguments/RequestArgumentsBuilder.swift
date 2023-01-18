@@ -7,7 +7,7 @@
 
 public class RequestArgumentsBuilder: NSObject, RequestArgumentsBuilderProtocol {
 
-    public var modelClass: FetchableProtocol.Type
+    public var modelClass: ModelClassType
     private let contextPredicate: ContextPredicateProtocol?
 
     // MARK: - NSObject
@@ -25,7 +25,7 @@ public class RequestArgumentsBuilder: NSObject, RequestArgumentsBuilderProtocol 
 
     // MARK: Lifecycle
 
-    public init(modelClass T: FetchableProtocol.Type, contextPredicate: ContextPredicateProtocol?) {
+    public init(modelClass T: ModelClassType, contextPredicate: ContextPredicateProtocol?) {
         self.contextPredicate = contextPredicate
         modelClass = T.self
     }

@@ -9,6 +9,7 @@
 
 @objc
 public protocol RequestManagerProtocol {
+    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol)
     func removeListener(_ listener: RequestManagerListenerProtocol)
@@ -18,7 +19,7 @@ public protocol RequestManagerProtocol {
     func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol
 
     // @available(*, deprecated, message: "Syndicate to be used")
-    func fetchRemote(modelClass: FetchableProtocol.Type, contextPredicate: ContextPredicateProtocol?, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
+    func fetchRemote(modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol?, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
 }
 
 // MARK: - RequestManagerContainerProtocol

@@ -47,18 +47,18 @@ open class ResponseManager: ResponseManagerProtocol {
                 throw Errors.modelNotFound(request)
             }
 
-            listeners.didStartRequest(request, responseManager: self)
+            listeners.responseManager(self, didStartRequest: request)
 
             let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext, modelClass: modelClass)
             dataAdapter.request = request
             dataAdapter.linker = linker
             dataAdapter.extractor = extractor
             dataAdapter.completion = { request, error in
-                self.listeners.didParseDataForRequest(request, responseManager: self, error: error)
+                self.listeners.responseManager(self, didParseDataForRequest: request, error: error)
             }
             dataAdapter.decode(data: data, fromRequest: request)
         } catch {
-            listeners.didParseDataForRequest(request, responseManager: self, error: error)
+            listeners.responseManager(self, didParseDataForRequest: request, error: error)
         }
     }
 

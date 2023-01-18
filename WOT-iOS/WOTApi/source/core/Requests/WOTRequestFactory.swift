@@ -37,7 +37,6 @@ public class WOTWEBRequestFactory: NSObject {
         let extractor = VehiclesPivotManagedObjectExtractor()
         let linker = ManagedObjectLinker(modelClass: Vehicles.self)
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: listener)
-//        try appContext.requestManager?.fetchRemote(modelClass: Vehicles.self, contextPredicate: nil, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc
@@ -53,7 +52,6 @@ public class WOTWEBRequestFactory: NSObject {
         let managedObjectLinker = ManagedObjectLinker(modelClass: Vehicles.self)
 
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectLinker: managedObjectLinker, managedObjectExtractor: extractor, listener: listener)
-//        try appContext.requestManager?.fetchRemote(modelClass: Vehicles.self, contextPredicate: nil, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc
