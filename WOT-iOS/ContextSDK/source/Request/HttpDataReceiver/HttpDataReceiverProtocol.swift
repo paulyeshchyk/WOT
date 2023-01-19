@@ -11,11 +11,13 @@ public typealias DataReceiveCompletion = (Data?, Error?) -> Void
 // MARK: - HttpDataReceiverProtocol
 
 public protocol HttpDataReceiverProtocol: MD5Protocol {
-    typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
+
+    typealias Context = LogInspectorContainerProtocol
+        & HostConfigurationContainerProtocol
 
     var delegate: HttpDataReceiverDelegateProtocol? { get set }
 
-    init(context: Context, request: URLRequest)
+    init(appContext: Context, request: URLRequest)
     func start()
 
     @discardableResult

@@ -48,7 +48,7 @@ open class HttpRequest: Request, HttpRequestProtocol {
         urlBuilder.httpRequest = self
         let urlRequest = try urlBuilder.build()
 
-        httpDataReceiver = HttpDataReceiver(context: appContext, request: urlRequest)
+        httpDataReceiver = HttpDataReceiver(appContext: appContext, request: urlRequest)
         httpDataReceiver?.delegate = self
         httpDataReceiver?.start()
     }

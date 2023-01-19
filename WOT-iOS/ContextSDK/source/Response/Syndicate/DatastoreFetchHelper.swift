@@ -9,16 +9,17 @@
 
 class DatastoreFetchHelper {
 
-    typealias Context = DataStoreContainerProtocol
+    typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
 
-    private let appContext: Context?
+    private let appContext: Context
     var nspredicate: NSPredicate?
     var modelClass: PrimaryKeypathProtocol.Type?
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
 
     // MARK: Lifecycle
 
-    init(appContext: DatastoreFetchHelper.Context?) {
+    init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -30,11 +31,11 @@ class DatastoreFetchHelper {
             return
         }
 
-        appContext?.dataStore?.fetch(modelClass: modelClass,
-                                     nspredicate: nspredicate,
-                                     completion: { fetchResult, error in
-                                         self.completion?(fetchResult, error)
-                                     })
+        appContext.dataStore?.fetch(modelClass: modelClass,
+                                    nspredicate: nspredicate,
+                                    completion: { fetchResult, error in
+                                        self.completion?(fetchResult, error)
+                                    })
     }
 }
 

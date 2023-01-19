@@ -24,16 +24,11 @@ public protocol ResponseManagerProtocol: ListenerListContainerProtocol {
 
 open class ResponseManager: ResponseManagerProtocol {
 
-    public typealias Context = LogInspectorContainerProtocol
-        & DataStoreContainerProtocol
-        & RequestManagerContainerProtocol
-        & DecoderManagerContainerProtocol
-
-    private let appContext: Context
+    private let appContext: ResponseConfigurationProtocol.Context
 
     private let listeners = ResponseManagerListenerList()
 
-    public init(appContext: Context) {
+    public init(appContext: ResponseConfigurationProtocol.Context) {
         self.appContext = appContext
     }
 
@@ -52,12 +47,12 @@ open class ResponseManager: ResponseManagerProtocol {
             listeners.responseManager(self, didParseDataForRequest: request, error: error)
         }
     }
-
 }
 
 // MARK: - ResponseManager + ListenerListContainerProtocol
 
 extension ResponseManager {
+    //
     public func removeListener(_ listener: ResponseManagerListener, forRequest: RequestProtocol) {
         listeners.removeListener(listener, forRequest: forRequest)
     }
@@ -69,7 +64,6 @@ extension ResponseManager {
     public func removeListener(_ listener: ResponseManagerListener) {
         listeners.removeListener(listener)
     }
-
 }
 
 // MARK: - %t + ResponseManager.Errors

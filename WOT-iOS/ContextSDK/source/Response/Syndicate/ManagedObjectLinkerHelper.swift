@@ -9,17 +9,16 @@
 
 class ManagedObjectLinkerHelper {
 
-    typealias Context = DataStoreContainerProtocol
+    typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
 
+    let appContext: Context
+    var socket: JointSocketProtocol?
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
-
-    private let appContext: Context?
-    var linker: ManagedObjectLinkerProtocol?
-    var modelClass: (PrimaryKeypathProtocol & FetchableProtocol).Type?
 
     // MARK: Lifecycle
 
-    init(appContext: ManagedObjectLinkerHelper.Context?) {
+    init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -30,18 +29,14 @@ class ManagedObjectLinkerHelper {
             completion?(fetchResult, error ?? Errors.fetchResultIsNotPresented)
             return
         }
-        guard let _ = modelClass else {
-            completion?(fetchResult, Errors.modelClassIsNotDefined)
-            return
-        }
-        guard let linker = linker else {
-            completion?(fetchResult, Errors.managedObjectLinkerIsNotPresented)
-            return
-        }
+
+        let linker = ManagedObjectLinker(appContext: appContext)
+        linker.socket = socket
+        linker.fetchResult = fetchResult
+        linker.completion = completion
+
         do {
-            try linker.process(fetchResult: fetchResult, appContext: appContext) { fetchResult, error in
-                self.completion?(fetchResult, error)
-            }
+            try linker.run()
         } catch {
             completion?(fetchResult, error)
         }

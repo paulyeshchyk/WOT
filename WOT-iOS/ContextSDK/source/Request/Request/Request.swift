@@ -19,7 +19,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     public var decodingDepthLevel: DecodingDepthLevel?
 
-    public let appContext: RequestProtocol.Context
+    let appContext: Context
 
     // MARK: - RequestProtocol
 
@@ -48,10 +48,10 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     // MARK: Lifecycle
 
-    public required init(context: RequestProtocol.Context) {
-        appContext = context
+    public required init(appContext: RequestProtocol.Context) {
+        self.appContext = appContext
+        self.appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
         decodingDepthLevel = DecodingDepthLevel.initial
-        context.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
 
     deinit {

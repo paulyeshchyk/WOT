@@ -12,14 +12,15 @@ public typealias RequestIdType = NSInteger
 
 @objc
 public protocol RequestProtocol: StartableProtocol, MD5Protocol {
-    typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
+
+    typealias Context = LogInspectorContainerProtocol
+        & HostConfigurationContainerProtocol
 
     var availableInGroups: [RequestIdType] { get }
     var listeners: [RequestListenerProtocol] { get }
     var contextPredicate: ContextPredicateProtocol? { get }
     var arguments: RequestArgumentsProtocol? { get set }
     var decodingDepthLevel: DecodingDepthLevel? { get set }
-
     var responseConfiguration: ResponseConfigurationProtocol? { get set }
 
     // MARK: to be moved out from protocol
@@ -27,11 +28,12 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     var httpQueryItemName: String? { get }
     func httpAPIQueryPrefix() -> String?
 
+    init(appContext: Context)
+
     func addGroup(_ group: RequestIdType)
     func addListener(_ listener: RequestListenerProtocol)
     func removeGroup(_ group: RequestIdType)
     func removeListener(_ listener: RequestListenerProtocol)
-    init(context: Context)
 }
 
 // MARK: - RequestListenerContainerProtocol

@@ -10,32 +10,23 @@
 
 open class RequestRegistrator: RequestRegistratorProtocol {
 
-    public typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol
+        & HostConfigurationContainerProtocol
 
-    private let context: Context
+    private let appContext: Context
     private var registeredModelService: [RequestIdType: RequestModelServiceProtocol.Type] = .init()
     private var registeredModelClass: [RequestIdType: PrimaryKeypathProtocol.Type] = .init()
 
     // MARK: Lifecycle
 
     public required init(appContext: Context) {
-        context = appContext
+        self.appContext = appContext
     }
 }
 
 // MARK: - WOTRequestBindingProtocol
 
 public extension RequestRegistrator {
-
-    func requestId(forModelClass: ModelClassType) throws -> RequestIdType {
-        let filtered = registeredModelService.keys.filter {
-            forModelClass == registeredModelClass[$0]
-        }
-        guard let result = filtered.last else {
-            throw Errors.requestNotFound
-        }
-        return result
-    }
 
     func registerServiceClass(_ modelServiceClass: RequestModelServiceProtocol.Type) throws {
         let filtered = registeredModelService.keys.filter {
@@ -50,21 +41,45 @@ public extension RequestRegistrator {
         registeredModelClass[registrationID] = modelClass
     }
 
-    func requestClass(for requestId: RequestIdType) -> RequestModelServiceProtocol.Type? {
+    func createRequest(requestConfiguration: RequestConfigurationProtocol, responseConfiguration: ResponseConfigurationProtocol) throws -> RequestProtocol {
+        //
+        let request = try createRequest(forModelClass: requestConfiguration.modelClass)
+        request.responseConfiguration = responseConfiguration
+
+        request.arguments = try requestConfiguration.buildArguments(forRequest: request)
+
+        return request
+    }
+}
+
+extension RequestRegistrator {
+
+    private func requestClass(for requestId: RequestIdType) -> RequestModelServiceProtocol.Type? {
         return registeredModelService[requestId]
     }
 
-    func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol {
+    private func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol {
         guard let Clazz = requestClass(for: requestId) as? RequestProtocol.Type else {
             throw Errors.requestNotFound
         }
-        return Clazz.init(context: context)
+        return Clazz.init(appContext: appContext)
     }
 
-    func createRequest(forModelClass: ModelClassType) throws -> RequestProtocol {
+    private func requestId(forModelClass: ModelClassType) throws -> RequestIdType {
+        let filtered = registeredModelService.keys.filter {
+            forModelClass == registeredModelClass[$0]
+        }
+        guard let result = filtered.last else {
+            throw Errors.requestNotFound
+        }
+        return result
+    }
+
+    private func createRequest(forModelClass: ModelClassType) throws -> RequestProtocol {
         let requestID = try requestId(forModelClass: forModelClass)
         return try createRequest(forRequestId: requestID)
     }
+
 }
 
 // MARK: - %t + RequestRegistrator.Errors

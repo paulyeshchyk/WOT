@@ -71,13 +71,16 @@ public class DecodingDepthLevel: NSObject, RawRepresentable {
 
 @objc
 public protocol JSONDecoderProtocol: AnyObject {
-    typealias Context = DataStoreContainerProtocol
+
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
+    typealias Context = LogInspectorContainerProtocol
         & RequestManagerContainerProtocol
-        & LogInspectorContainerProtocol
+        & RequestRegistratorContainerProtocol
+        & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
 
     var managedObject: ManagedAndDecodableObjectType? { get set }
-    init(appContext: Context?)
+    init(appContext: Context)
     func decode(using: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws
 }
 

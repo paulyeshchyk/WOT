@@ -9,18 +9,20 @@
 
 class ManagedObjectDecodeHelper {
 
-    typealias Context = DataStoreContainerProtocol
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
+    typealias Context = LogInspectorContainerProtocol
         & RequestManagerContainerProtocol
-        & LogInspectorContainerProtocol
+        & RequestRegistratorContainerProtocol
+        & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
 
-    private let appContext: Context?
+    private let appContext: Context
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var jsonMap: JSONMapProtocol?
 
     // MARK: Lifecycle
 
-    init(appContext: ManagedObjectDecodeHelper.Context?) {
+    init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -41,7 +43,7 @@ class ManagedObjectDecodeHelper {
                 throw Errors.modelClassIsNotDefined
             }
 
-            guard let decoderType = appContext?.decoderManager?.jsonDecoder(for: modelClass) else {
+            guard let decoderType = appContext.decoderManager?.jsonDecoder(for: modelClass) else {
                 throw Errors.decoderIsNotDefined
             }
 
@@ -50,7 +52,7 @@ class ManagedObjectDecodeHelper {
             decoder.managedObject = managedObject
             try decoder.decode(using: jsonMap, forDepthLevel: DecodingDepthLevel.initial)
 
-            appContext?.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
+            appContext.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
                 self.completion?(fetchResult, error)
             }
         } catch {

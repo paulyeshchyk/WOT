@@ -15,58 +15,30 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
     public var MD5: String { uuid.MD5 }
     public var description: String { "\(type(of: self)): \(String(describing: request))" }
 
-    enum State {
-        case notStarted
-        case started
-        case finished
-        case canceled
-
-        // MARK: Internal
-
-        func expandedDescription(for request: URLRequest) -> String {
-            switch self {
-            case .canceled: return "Cancel URL: \(String(describing: request.url, orValue: "unknown"))"
-            case .finished: return "Finished URL: \(String(describing: request.url, orValue: "unknown"))"
-            case .notStarted: return "Not started URL: \(String(describing: request.url, orValue: "unknown"))"
-            case .started: return "Start URL: \(String(describing: request.url, orValue: "unknown"))"
-            }
-        }
-    }
-
-    enum WOTWebDataPumperError: Error, CustomStringConvertible {
-        case urlNotDefined
-
-        var description: String {
-            switch self {
-            case .urlNotDefined: return "[\(type(of: self))]: Url is not defined"
-            }
-        }
-    }
-
     let request: URLRequest
 
     private var state: State = .notStarted {
         didSet {
             let message = state.expandedDescription(for: request)
-            context.logInspector?.log(.remoteFetch(message: message), sender: self)
+            appContext.logInspector?.log(.remoteFetch(message: message), sender: self)
         }
     }
 
     private let uuid: UUID = UUID()
     private var urlDataTask: URLSessionDataTask?
 
-    private let context: HttpDataReceiverProtocol.Context
+    private let appContext: Context
 
     // MARK: Lifecycle
 
-    public required init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
+    public required init(appContext: Context, request: URLRequest) {
         self.request = request
-        self.context = context
+        self.appContext = appContext
     }
 
     deinit {
         if state != .finished {
-            context.logInspector?.log(.warning("deinit HttpDataReceiver when state != finished"), sender: self)
+            appContext.logInspector?.log(.warning("deinit HttpDataReceiver when state != finished"), sender: self)
         }
         urlDataTask?.cancelDataTask()
         urlDataTask = nil
@@ -90,7 +62,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         urlDataTask = nil
 
         guard let url = request.url else {
-            delegate?.didEnd(urlRequest: request, receiver: self, data: nil, error: WOTWebDataPumperError.urlNotDefined)
+            delegate?.didEnd(urlRequest: request, receiver: self, data: nil, error: Errors.urlNotDefined)
             return
         }
         urlDataTask = createDataTask(url: url) {
@@ -115,6 +87,45 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
             }
         }
     }
+}
+
+// MARK: - %t + HttpDataReceiver.State
+
+extension HttpDataReceiver {
+
+    enum State {
+        case notStarted
+        case started
+        case finished
+        case canceled
+
+        // MARK: Internal
+
+        func expandedDescription(for request: URLRequest) -> String {
+            switch self {
+            case .canceled: return "Cancel URL: \(String(describing: request.url, orValue: "unknown"))"
+            case .finished: return "Finished URL: \(String(describing: request.url, orValue: "unknown"))"
+            case .notStarted: return "Not started URL: \(String(describing: request.url, orValue: "unknown"))"
+            case .started: return "Start URL: \(String(describing: request.url, orValue: "unknown"))"
+            }
+        }
+    }
+
+}
+
+// MARK: - %t + HttpDataReceiver.Errors
+
+extension HttpDataReceiver {
+    enum Errors: Error, CustomStringConvertible {
+        case urlNotDefined
+
+        var description: String {
+            switch self {
+            case .urlNotDefined: return "[\(type(of: self))]: Url is not defined"
+            }
+        }
+    }
+
 }
 
 private extension URLSessionDataTask {
