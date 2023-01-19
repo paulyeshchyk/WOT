@@ -1222,8 +1222,8 @@
 		DADD697629754EFD00EFC36D /* jsondecoders */ = {
 			isa = PBXGroup;
 			children = (
-				DADD697729754F3200EFC36D /* ModulesTreeJSONDecoder.swift */,
 				DADD69792975525900EFC36D /* VehiclesJSONDecoder.swift */,
+				DADD697729754F3200EFC36D /* ModulesTreeJSONDecoder.swift */,
 				DADD697B297553DC00EFC36D /* ModuleJSONDecoder.swift */,
 				DADD697D2975575F00EFC36D /* VehicleprofileJSONDecoder.swift */,
 				DADD697F2975589B00EFC36D /* VehicleprofileModuleJSONDecoder.swift */,

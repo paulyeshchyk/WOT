@@ -53,6 +53,7 @@ public struct LoggableType: CustomStringConvertible {
 // MARK: - LogsDefault
 
 extension LoggableType {
+    static let info = LoggableType(type: .info)
     static let error = LoggableType(type: .error)
     static let lifecycle = LoggableType(type: .lifeCycle)
     static let warning = LoggableType(type: .warning)
@@ -73,6 +74,14 @@ extension Loggable {
             case .notAnError: return "Error is nil, but was logged"
             }
         }
+    }
+
+    public static func info(name: String, message: String) -> Loggable {
+        Loggable(type: .info, name: name, message: message)
+    }
+
+    public static func info(_ message: String) -> Loggable {
+        Loggable(type: .info, message: message)
     }
 
     public static func error(_ error: Error?) -> Loggable {

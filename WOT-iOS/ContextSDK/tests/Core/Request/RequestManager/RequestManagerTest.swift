@@ -88,11 +88,6 @@ class Listener: RequestManagerListenerProtocol {
 class Extractor: ManagedObjectExtractable {
     var linkerPrimaryKeyType: PrimaryKeyType = .internal
 
-    // MARK: Internal
-
-    func extractJSON(from _: JSON) -> JSON? {
-        nil
-    }
 }
 
 // MARK: - ObjectID
@@ -170,6 +165,7 @@ class Linker: ManagedObjectLinkerProtocol {
     var MD5: String { uuid.MD5 }
 
     private let uuid = UUID()
+    var completion: ManagedObjectLinkerCompletion?
 
     // MARK: Lifecycle
 
@@ -179,7 +175,7 @@ class Linker: ManagedObjectLinkerProtocol {
 
     // MARK: Internal
 
-    func process(fetchResult: FetchResultProtocol, appContext _: Context?, completion: @escaping ManagedObjectLinkerCompletion) {
+    func process() {
         completion(fetchResult, nil)
     }
 }

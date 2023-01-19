@@ -9,9 +9,11 @@
 
 open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
-    public let modelClass: PrimaryKeypathProtocol.Type
+    public let appContext: Context?
 
     public var socket: JointSocketProtocol?
+    public var fetchResult: FetchResultProtocol?
+    public var completion: ManagedObjectLinkerCompletion?
 
     public var MD5: String { uuid.MD5 }
 
@@ -19,47 +21,54 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
     // MARK: Lifecycle
 
-    public required init(modelClass: PrimaryKeypathProtocol.Type) {
-        self.modelClass = modelClass
+    public required init(appContext: Context?) {
+        self.appContext = appContext
     }
 
     // MARK: Open
 
-    open func extractJSON(from _: JSON) -> JSON? { return nil }
-
-    open func process(fetchResult: FetchResultProtocol, appContext: Context?, completion: @escaping ManagedObjectLinkerCompletion) throws {
+    open func run() throws {
+        //
+        guard let fetchResult = fetchResult else {
+            throw Errors.noFetchResult
+        }
         if let socket = socket {
             if let pin = try fetchResult.managedObject() as? ManagedObjectPinProtocol {
                 let managedRef = socket.managedRef
                 guard let managedObject = try fetchResult.managedObjectContext.object(managedRef: managedRef) as? ManagedObjectPlugProtocol else {
-                    throw ManagedObjectLinkerError.noManagedObjectFoundByManagedRef(managedRef)
+                    throw Errors.noManagedObjectFoundByManagedRef(managedRef)
                 }
+
                 managedObject.plug(pin: pin, intoSocket: socket)
+                appContext?.logInspector?.log(.info(name: "link", message: "finished with \(String(describing: socket))"), sender: self)
+            } else {
+                appContext?.logInspector?.log(.info(name: "link", message: "failed: no pin found for socket: \(String(describing: socket))"), sender: self)
             }
+        } else {
+            appContext?.logInspector?.log(.info(name: "link", message: "failed: no socket found"), sender: self)
         }
 
         // MARK: do stash if no error or even nothing was plugged
 
-        appContext?.dataStore?.stash(fetchResult: fetchResult, completion: completion)
+        appContext?.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
+            self.completion?(fetchResult, error)
+        }
     }
 }
 
-// MARK: - ManagedObjectLinkerError
+// MARK: - %t + ManagedObjectLinker.Errors
 
-private enum ManagedObjectLinkerError: Error, CustomStringConvertible {
-    case unexpectedString(String)
-    case unexpectedClass(AnyClass)
-    case noManagedObjectFound
-    case noManagedRef
-    case noManagedObjectFoundByManagedRef(ManagedRefProtocol?)
+extension ManagedObjectLinker {
 
-    public var description: String {
-        switch self {
-        case .unexpectedString(let clazz): return "[\(type(of: self))]: Class is not supported; expected class is:[\(clazz)]"
-        case .unexpectedClass(let clazz): return "[\(type(of: self))]: Class is not supported; expected class is:[\(String(describing: clazz))]"
-        case .noManagedObjectFound: return "[\(type(of: self))] No managed object found"
-        case .noManagedObjectFoundByManagedRef(let ref): return "[\(type(of: self))] No managed object found for provided ref: \(String(describing: ref, orValue: "NULL"))"
-        case .noManagedRef: return "[\(type(of: self))] No managedRef found"
+    private enum Errors: Error, CustomStringConvertible {
+        case noFetchResult
+        case noManagedObjectFoundByManagedRef(ManagedRefProtocol?)
+
+        public var description: String {
+            switch self {
+            case .noManagedObjectFoundByManagedRef(let ref): return "[\(type(of: self))] No managed object found for provided ref: \(String(describing: ref, orValue: "NULL"))"
+            case .noFetchResult: return "[\(type(of: self))] No fetchResult found"
+            }
         }
     }
 }

@@ -46,13 +46,11 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     let managedRef = try managedObject?.managedRef()
 
                     let socket = JointSocket(managedRef: managedRef!, identifier: module_id, keypath: keypath)
-                    let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-                    managedObjectLinker.socket = socket
                     let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
                     let decodingDepthLevel = forDepthLevel?.next
 
                     #warning("move out of Decoder")
-                    JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+                    JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                         if let error = error {
                             self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                         }
@@ -76,14 +74,11 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
-
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }

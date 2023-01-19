@@ -18,17 +18,19 @@ public class JSONSyndicate {
 
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
-    var completion: ((FetchResultProtocol?, Error?) -> Void)?
-    var linker: ManagedObjectLinkerProtocol?
     let appContext: Context?
-    var modelClass: ModelClassType?
+    let modelClass: ModelClassType
+
+    var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var jsonMap: JSONMapProtocol?
+    var socket: JointSocketProtocol?
     var decodeDepthLevel: DecodingDepthLevel?
 
     // MARK: Lifecycle
 
-    init(appContext: Context?) {
+    init(appContext: Context?, modelClass: ModelClassType) {
         self.appContext = appContext
+        self.modelClass = modelClass
     }
 
     // MARK: Internal
@@ -40,8 +42,7 @@ public class JSONSyndicate {
         }
 
         let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
-        managedObjectLinkerHelper.linker = linker
-        managedObjectLinkerHelper.modelClass = modelClass
+        managedObjectLinkerHelper.socket = socket
         managedObjectLinkerHelper.completion = completion
 
         let mappingCoordinatorDecodeHelper = ManagedObjectDecodeHelper(appContext: appContext)
@@ -63,11 +64,11 @@ public class JSONSyndicate {
 
 extension JSONSyndicate {
 
-    public static func decodeAndLink(appContext: Context?, jsonMap: JSONMapProtocol, modelClass: ModelClassType, managedObjectLinker: ManagedObjectLinkerProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
-        let jsonSyndicate = JSONSyndicate(appContext: appContext)
+    public static func decodeAndLink(appContext: Context?, jsonMap: JSONMapProtocol, modelClass: ModelClassType, socket: JointSocketProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
+        //
+        let jsonSyndicate = JSONSyndicate(appContext: appContext, modelClass: modelClass)
         jsonSyndicate.jsonMap = jsonMap
-        jsonSyndicate.modelClass = modelClass
-        jsonSyndicate.linker = managedObjectLinker
+        jsonSyndicate.socket = socket
         jsonSyndicate.decodeDepthLevel = decodingDepthLevel
 
         jsonSyndicate.completion = { fetchResult, error in

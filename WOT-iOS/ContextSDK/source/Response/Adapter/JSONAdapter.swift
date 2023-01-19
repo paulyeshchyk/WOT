@@ -27,8 +27,8 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     private let appContext: Context?
 
     public let modelClass: ModelClassType
+    public var socket: JointSocketProtocol?
     public weak var request: RequestProtocol?
-    public weak var linker: ManagedObjectLinkerProtocol?
     public weak var extractor: ManagedObjectExtractable?
 
     // MARK: Lifecycle
@@ -89,11 +89,10 @@ public extension JSONAdapter {
         maps.forEach { jsonMap in
             dispatchGroup.enter()
 
-            let syndicate = JSONSyndicate(appContext: appContext)
+            let syndicate = JSONSyndicate(appContext: appContext, modelClass: modelClass)
             syndicate.decodeDepthLevel = request.decodingDepthLevel
             syndicate.jsonMap = jsonMap
-            syndicate.modelClass = modelClass
-            syndicate.linker = linker
+            syndicate.socket = socket
             syndicate.completion = { _, error in
                 if let error = error {
                     self.completion?(request, error)

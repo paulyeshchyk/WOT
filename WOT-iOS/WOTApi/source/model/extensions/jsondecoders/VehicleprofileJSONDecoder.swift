@@ -43,13 +43,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: ammoKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
             let jsonMap = try JSONMap(data: jsonArray, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -69,13 +67,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: armorKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -95,14 +91,12 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: modulesKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
 
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -124,14 +118,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: engineKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
-
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -154,13 +145,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             #warning("managedRef!")
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: gunKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -182,14 +171,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: suspensionKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
-
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -211,14 +197,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: turretKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
-
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -240,14 +223,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: radioKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
-
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
