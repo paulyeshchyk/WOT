@@ -9,7 +9,8 @@
 
 class DatastoreFetchHelper {
 
-    typealias Context = DataStoreContainerProtocol
+    typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
 
     private let appContext: Context?
     var nspredicate: NSPredicate?
@@ -18,7 +19,7 @@ class DatastoreFetchHelper {
 
     // MARK: Lifecycle
 
-    init(appContext: DatastoreFetchHelper.Context?) {
+    init(appContext: Context?) {
         self.appContext = appContext
     }
 

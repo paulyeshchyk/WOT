@@ -9,10 +9,11 @@
 
 class ManagedObjectDecodeHelper {
 
-    typealias Context = DataStoreContainerProtocol
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
+    typealias Context = LogInspectorContainerProtocol
         & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
-        & LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
 
     private let appContext: Context?
@@ -21,7 +22,7 @@ class ManagedObjectDecodeHelper {
 
     // MARK: Lifecycle
 
-    init(appContext: ManagedObjectDecodeHelper.Context?) {
+    init(appContext: Context?) {
         self.appContext = appContext
     }
 

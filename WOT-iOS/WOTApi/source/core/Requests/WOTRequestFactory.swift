@@ -12,8 +12,8 @@ import ContextSDK
 @objc
 public class WOTWEBRequestFactory: NSObject {
     //
-    public typealias Context = DataStoreContainerProtocol
-        & LogInspectorContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
 

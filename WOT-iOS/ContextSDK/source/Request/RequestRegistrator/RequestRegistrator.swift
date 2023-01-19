@@ -10,16 +10,17 @@
 
 open class RequestRegistrator: RequestRegistratorProtocol {
 
-    public typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol
+        & HostConfigurationContainerProtocol
 
-    private let context: Context
+    private let appContext: Context
     private var registeredModelService: [RequestIdType: RequestModelServiceProtocol.Type] = .init()
     private var registeredModelClass: [RequestIdType: PrimaryKeypathProtocol.Type] = .init()
 
     // MARK: Lifecycle
 
     public required init(appContext: Context) {
-        context = appContext
+        self.appContext = appContext
     }
 }
 
@@ -61,7 +62,7 @@ extension RequestRegistrator {
         guard let Clazz = requestClass(for: requestId) as? RequestProtocol.Type else {
             throw Errors.requestNotFound
         }
-        return Clazz.init(context: context)
+        return Clazz.init(appContext: appContext)
     }
 
     private func requestId(forModelClass: ModelClassType) throws -> RequestIdType {

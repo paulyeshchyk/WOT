@@ -22,7 +22,7 @@ class RequestManagerTest: XCTestCase {
         let extractor = Extractor()
         let fetchResult = FetchResult(managedPin: objectID, managedObjectContext: managedObjectContext, predicate: nil, fetchStatus: .fetched)
         let linker = Linker(modelClass: PrimaryKeypath.self, masterFetchResult: fetchResult, socket: socket)
-        let request = TestHttpRequest(context: appContext)
+        let request = TestHttpRequest(appContext: appContext)
         let listener = Listener()
         listener.expectationDidStart = expectation(description: "didStart")
 //        listener.expectationDidFinish = expectation(description: "didFinish")
@@ -138,7 +138,7 @@ class ManagedObjectContext: ManagedObjectContextProtocol {
         false
     }
 
-    func save(appContext _: Context?, completion block: @escaping ThrowableCompletion) {
+    func save(appContext _: ManagedObjectContextSaveProtocol.Context?, completion block: @escaping ThrowableCompletion) {
         block(nil)
     }
 }
@@ -179,14 +179,14 @@ class Linker: ManagedObjectLinkerProtocol {
 
     // MARK: Internal
 
-    func process(fetchResult: FetchResultProtocol, appContext _: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
+    func process(fetchResult: FetchResultProtocol, appContext _: Context?, completion: @escaping ManagedObjectLinkerCompletion) {
         completion(fetchResult, nil)
     }
 }
 
 // MARK: - AppContext
 
-class AppContext: RequestManagerContainerProtocol, DataStoreContainerProtocol, HostConfigurationContainerProtocol, LogInspectorContainerProtocol {
+class AppContext: LogInspectorContainerProtocol, RequestManagerContainerProtocol, DataStoreContainerProtocol, HostConfigurationContainerProtocol {
 
     var dataStore: DataStoreProtocol?
     var hostConfiguration: HostConfigurationProtocol?

@@ -71,6 +71,8 @@ public class DecodingDepthLevel: NSObject, RawRepresentable {
 
 @objc
 public protocol JSONDecoderProtocol: AnyObject {
+
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
         & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol

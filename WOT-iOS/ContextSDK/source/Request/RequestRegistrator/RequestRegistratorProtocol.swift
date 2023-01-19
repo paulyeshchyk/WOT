@@ -17,6 +17,7 @@ public protocol RequestRegistratorContainerProtocol {
 
 @objc
 public protocol RequestRegistratorProtocol {
+
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     func createRequest(requestConfiguration: RequestConfigurationProtocol, responseConfiguration: ResponseConfigurationProtocol) throws -> RequestProtocol

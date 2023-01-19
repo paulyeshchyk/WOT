@@ -6,14 +6,12 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import ContextSDK
-
 @objc
 open class NodeDataModel: NSObject, NodeDataModelProtocol {
 
     open var nodes: [NodeProtocol] { return [] }
 
-    public let appContext: NodeFetchControllerProtocol.Context
+    public let appContext: Context
     public var nodeIndex: NodeIndexProtocol
     public lazy var rootNodes: [NodeProtocol] = { return [] }()
     public var enumerator: NodeEnumeratorProtocol?
@@ -26,7 +24,7 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
 
     // MARK: Lifecycle
 
-    public required init(nodeIndex: NodeIndexProtocol.Type, appContext: NodeFetchControllerProtocol.Context) {
+    public required init(nodeIndex: NodeIndexProtocol.Type, appContext: Context) {
         self.appContext = appContext
         self.nodeIndex = nodeIndex.init()
         super.init()

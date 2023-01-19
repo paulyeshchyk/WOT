@@ -9,9 +9,9 @@
 
 class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: JSONDecoderProtocol.Context?
+    private weak var appContext: Context?
 
-    required init(appContext: JSONDecoderProtocol.Context?) {
+    required init(appContext: Context?) {
         self.appContext = appContext
     }
 
@@ -37,6 +37,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
+            #warning("move out of Decoder")
             let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
             try appContext?.requestManager?.startRequest(request!, listener: nil)
         }
@@ -55,6 +56,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
+            #warning("move out of Decoder")
             let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
             try appContext?.requestManager?.startRequest(request!, listener: nil)
         }
@@ -73,6 +75,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
+            #warning("move out of Decoder")
             let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
             try appContext?.requestManager?.startRequest(request!, listener: nil)
         }
@@ -91,6 +94,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
+            #warning("move out of Decoder")
             let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
             try appContext?.requestManager?.startRequest(request!, listener: nil)
         }
@@ -109,6 +113,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
+            #warning("move out of Decoder")
             let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
             try appContext?.requestManager?.startRequest(request!, listener: nil)
         }

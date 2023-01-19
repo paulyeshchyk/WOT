@@ -7,7 +7,7 @@
 
 public class WOTRequestRegistrator: RequestRegistrator {
     //
-    public required init(appContext: RequestRegistrator.Context) {
+    public required init(appContext: Context) {
         super.init(appContext: appContext)
         do {
             try registerServiceClass(ModulesHttpRequest.self)

@@ -57,21 +57,20 @@
         [keys addObject:description.name];
     }];
 
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([object class])];
-    [request setResultType:NSDictionaryResultType];
-
-    
-    request.predicate = [self predicateForAllPlayingVehiclesWithObject:object];
-
-    
-    request.propertiesToFetch = expressionsForRequest;
-
-    NSError *error = nil;
     #warning "remove appdelegate"
     id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
     NSManagedObjectContext *context = (NSManagedObjectContext *)[coreDataProvider workingContext];
+
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([object class])];
+    [request setResultType:NSDictionaryResultType];
+
+    request.predicate = [self predicateForAllPlayingVehiclesWithObject:object];
+    request.propertiesToFetch = expressionsForRequest;
+
+    NSError *error = nil;
     NSArray *objects = [context executeFetchRequest:request error:&error];
+
     NSDictionary *requestValues = [objects lastObject];
 
     NSMutableDictionary *singleObjectValues = [[NSMutableDictionary alloc] init];

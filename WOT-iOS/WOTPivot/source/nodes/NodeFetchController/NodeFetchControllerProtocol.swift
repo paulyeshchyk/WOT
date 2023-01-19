@@ -12,6 +12,7 @@ import ContextSDK
 
 @objc
 public protocol NodeFetchControllerProtocol {
+
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol

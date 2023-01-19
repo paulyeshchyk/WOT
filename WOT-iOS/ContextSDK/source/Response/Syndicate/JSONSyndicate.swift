@@ -9,24 +9,25 @@
 
 public class JSONSyndicate {
 
-    public typealias Context = DataStoreContainerProtocol
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
+    public typealias Context = LogInspectorContainerProtocol
         & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
-        & LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
 
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var linker: ManagedObjectLinkerProtocol?
-    let appContext: JSONSyndicate.Context?
+    let appContext: Context?
     var modelClass: ModelClassType?
     var jsonMap: JSONMapProtocol?
     var decodeDepthLevel: DecodingDepthLevel?
 
     // MARK: Lifecycle
 
-    init(appContext: JSONSyndicate.Context?) {
+    init(appContext: Context?) {
         self.appContext = appContext
     }
 
@@ -62,7 +63,7 @@ public class JSONSyndicate {
 
 extension JSONSyndicate {
 
-    public static func decodeAndLink(appContext: JSONSyndicate.Context?, jsonMap: JSONMapProtocol, modelClass: ModelClassType, managedObjectLinker: ManagedObjectLinkerProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
+    public static func decodeAndLink(appContext: Context?, jsonMap: JSONMapProtocol, modelClass: ModelClassType, managedObjectLinker: ManagedObjectLinkerProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
         let jsonSyndicate = JSONSyndicate(appContext: appContext)
         jsonSyndicate.jsonMap = jsonMap
         jsonSyndicate.modelClass = modelClass

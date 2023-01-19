@@ -27,7 +27,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
     open func extractJSON(from _: JSON) -> JSON? { return nil }
 
-    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) throws {
+    open func process(fetchResult: FetchResultProtocol, appContext: Context?, completion: @escaping ManagedObjectLinkerCompletion) throws {
         if let socket = socket {
             if let pin = try fetchResult.managedObject() as? ManagedObjectPinProtocol {
                 let managedRef = socket.managedRef

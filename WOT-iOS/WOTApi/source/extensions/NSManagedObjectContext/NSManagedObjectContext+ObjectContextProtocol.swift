@@ -15,7 +15,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 
     // MARK: - ManagedObjectContextLookupProtocol
 
-    public func execute(appContext: ManagedObjectContextLookupProtocol.Context?, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
+    public func execute(appContext: ManagedObjectContextProtocol.Context?, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
         let uuid = UUID()
         let executionStartTime = Date()
         appContext?.logInspector?.log(.sqlite(message: LogMessages.perform_start(uuid, self).description), sender: self)
@@ -32,7 +32,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return object(with: objectID)
     }
 
-    public func findOrCreateObject(appContext: ManagedObjectContextLookupProtocol.Context?, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
+    public func findOrCreateObject(appContext: ManagedObjectContextProtocol.Context?, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
         do {
             guard let foundObject = try lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
                 appContext?.logInspector?.log(.sqlite(message: LogMessages.select_fail(predicate, self).description), sender: self)
@@ -121,6 +121,9 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 }
 
 extension NSManagedObjectContext {
+    //
+    typealias Context = LogInspectorContainerProtocol
+
     private func lastObject(modelClass: AnyObject, predicate: NSPredicate?, includeSubentities: Bool) throws -> ManagedObjectProtocol? {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: modelClass))
         request.fetchLimit = 1
@@ -129,7 +132,7 @@ extension NSManagedObjectContext {
         return try fetch(request).last as? ManagedObjectProtocol
     }
 
-    private func insertNewObject<T>(appContext: ManagedObjectContextLookupProtocol.Context?, forType: AnyObject) -> T? {
+    private func insertNewObject<T>(appContext: Context?, forType: AnyObject) -> T? {
         appContext?.logInspector?.log(.sqlite(message: LogMessages.insert_start(forType).description), sender: self)
         let result = NSEntityDescription.insertNewObject(forEntityName: String(describing: forType), into: self) as? T
         let endMessage = (result == nil) ? LogMessages.insert_fail(forType) : LogMessages.insert_done(forType)

@@ -7,7 +7,9 @@
 
 @objc
 public protocol ResponseConfigurationProtocol {
+    //
     typealias WorkWithDataCompletion = (RequestProtocol, Error?) -> Void
+
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol

@@ -24,7 +24,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     // MARK: DataAdapterProtocol -
 
     private let uuid = UUID()
-    private let appContext: JSONAdapterProtocol.Context?
+    private let appContext: Context?
 
     public let modelClass: ModelClassType
     public weak var request: RequestProtocol?
@@ -33,7 +33,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     // MARK: Lifecycle
 
-    public required init(appContext: JSONAdapterProtocol.Context, modelClass: ModelClassType) {
+    public required init(appContext: Context, modelClass: ModelClassType) {
         self.appContext = appContext
         self.modelClass = modelClass
         appContext.logInspector?.log(.initialization(type(of: self)), sender: self)

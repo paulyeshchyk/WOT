@@ -17,11 +17,6 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         return [rootFilterNode, rootColsNode, rootRowsNode, rootDataNode]
     }
 
-    public typealias Context = LogInspectorContainerProtocol
-        & DataStoreContainerProtocol
-        & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
-
     public lazy var dimension: PivotNodeDimensionProtocol = {
         let result = PivotNodeDimension(rootNodeHolder: self)
         result.enumerator = enumerator
@@ -83,7 +78,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     // MARK: Lifecycle
 
     @objc
-    public required init(fetchController: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator: NodeCreatorProtocol, metadatasource: PivotMetaDatasourceProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: NodeFetchControllerProtocol.Context) {
+    public required init(fetchController: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator: NodeCreatorProtocol, metadatasource: PivotMetaDatasourceProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: Context) {
         shouldDisplayEmptyColumns = false
         self.fetchController = fetchController
         listener = modelListener
@@ -105,7 +100,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    public required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: NodeFetchControllerProtocol.Context) {
+    public required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: Context) {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 

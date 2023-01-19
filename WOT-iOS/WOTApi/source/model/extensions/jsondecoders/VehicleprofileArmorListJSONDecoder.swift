@@ -9,9 +9,9 @@
 
 class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: JSONDecoderProtocol.Context?
+    private weak var appContext: Context?
 
-    required init(appContext: JSONDecoderProtocol.Context?) {
+    required init(appContext: Context?) {
         self.appContext = appContext
     }
 
@@ -38,6 +38,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
+            #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext?.logInspector?.log(.warning(error: error), sender: self)
@@ -64,6 +65,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
+            #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext?.logInspector?.log(.warning(error: error), sender: self)

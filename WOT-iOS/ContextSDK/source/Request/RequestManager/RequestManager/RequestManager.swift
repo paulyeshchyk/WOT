@@ -12,10 +12,8 @@
 open class RequestManager: NSObject {
 
     public typealias Context = LogInspectorContainerProtocol
-        & DataStoreContainerProtocol
         & RequestManagerContainerProtocol
         & HostConfigurationContainerProtocol
-        & DecoderManagerContainerProtocol
         & ResponseManagerContainerProtocol
 
     override public var description: String { String(describing: type(of: self)) }
@@ -71,7 +69,6 @@ extension RequestManager: RequestListenerProtocol {
             appContext.logInspector?.log(.error(error), sender: self)
         }
     }
-
 }
 
 extension RequestManager {

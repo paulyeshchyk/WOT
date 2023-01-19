@@ -10,6 +10,7 @@
 @objc
 public protocol ResponseAdapterProtocol {
 
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol

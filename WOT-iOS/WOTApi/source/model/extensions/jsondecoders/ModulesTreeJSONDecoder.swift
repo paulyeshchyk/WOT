@@ -9,9 +9,9 @@
 
 class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: JSONDecoderProtocol.Context?
+    private weak var appContext: Context?
 
-    required init(appContext: JSONDecoderProtocol.Context?) {
+    required init(appContext: Context?) {
         self.appContext = appContext
     }
 
@@ -66,6 +66,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
 
+            #warning("move out of Decoder")
             let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
             try appContext?.requestManager?.startRequest(request!, listener: nil)
         } catch {
@@ -90,8 +91,8 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
 
+            #warning("move out of Decoder")
             let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-
             try appContext?.requestManager?.startRequest(request!, listener: nil)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
@@ -115,6 +116,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
 
+            #warning("move out of Decoder")
             let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
             try appContext?.requestManager?.startRequest(request!, listener: nil)
         } catch {

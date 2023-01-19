@@ -9,6 +9,7 @@
 
 @objc
 public class HttpJSONResponseConfiguration: NSObject, ResponseConfigurationProtocol {
+
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     public let modelClass: ModelClassType

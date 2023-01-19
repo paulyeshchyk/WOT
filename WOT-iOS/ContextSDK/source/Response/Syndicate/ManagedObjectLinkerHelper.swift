@@ -9,7 +9,8 @@
 
 class ManagedObjectLinkerHelper {
 
-    typealias Context = DataStoreContainerProtocol
+    typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
 
@@ -19,7 +20,7 @@ class ManagedObjectLinkerHelper {
 
     // MARK: Lifecycle
 
-    init(appContext: ManagedObjectLinkerHelper.Context?) {
+    init(appContext: Context?) {
         self.appContext = appContext
     }
 
@@ -28,10 +29,6 @@ class ManagedObjectLinkerHelper {
     func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
         guard let fetchResult = fetchResult, error == nil else {
             completion?(fetchResult, error ?? Errors.fetchResultIsNotPresented)
-            return
-        }
-        guard let _ = modelClass else {
-            completion?(fetchResult, Errors.modelClassIsNotDefined)
             return
         }
         guard let linker = linker else {

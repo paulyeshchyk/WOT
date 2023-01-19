@@ -8,8 +8,18 @@
 
 // MARK: - NodeDataModelProtocol
 
+import ContextSDK
+
+// MARK: - NodeDataModelProtocol
+
 @objc
 public protocol NodeDataModelProtocol {
+
+    typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
+        & RequestRegistratorContainerProtocol
+        & RequestManagerContainerProtocol
+
     var rootNodes: [NodeProtocol] { get }
     var endpointsCount: Int { get }
     func add(rootNode: NodeProtocol)

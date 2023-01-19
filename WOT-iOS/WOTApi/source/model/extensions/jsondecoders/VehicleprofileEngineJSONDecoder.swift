@@ -7,9 +7,9 @@
 
 class VehicleprofileEngineJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: JSONDecoderProtocol.Context?
+    private weak var appContext: Context?
 
-    required init(appContext: JSONDecoderProtocol.Context?) {
+    required init(appContext: Context?) {
         self.appContext = appContext
     }
 
