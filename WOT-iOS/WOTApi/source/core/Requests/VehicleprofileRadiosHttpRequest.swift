@@ -19,8 +19,8 @@ public class VehicleprofileRadiosHttpRequest: HttpRequest {
 // MARK: - VehicleprofileRadiosHttpRequest + RequestModelServiceProtocol
 
 extension VehicleprofileRadiosHttpRequest: RequestModelServiceProtocol {
-    public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
-        WGAPIResponseJSONAdapter.self
+    public class func responseDataDecoderClass() -> ResponseDataDecoderProtocol.Type {
+        WGApiJSONDataDecoder.self
     }
 
     public class func modelClass() -> ModelClassType? {

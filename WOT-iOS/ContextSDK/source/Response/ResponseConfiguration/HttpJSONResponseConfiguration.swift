@@ -23,14 +23,45 @@ public class HttpJSONResponseConfiguration: NSObject, ResponseConfigurationProto
 
     public func handleData(_ data: Data?, fromRequest request: RequestProtocol, forService modelService: RequestModelServiceProtocol, inAppContext appContext: Context, completion: WorkWithDataCompletion?) {
         //
-        let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext, modelClass: modelClass)
-        dataAdapter.request = request
-        dataAdapter.socket = socket
-        dataAdapter.extractor = extractor
-        dataAdapter.completion = completion
+        let responseDataDecoder = type(of: modelService).responseDataDecoderClass().init(appContext: appContext)
+        responseDataDecoder.request = request
+        responseDataDecoder.completion = { request, json, error in
+            self.runSyndicate(appContext: appContext, request: request, json: json, error: error, completion: completion)
+        }
 
-        dataAdapter.decode(data: data, fromRequest: request)
+        responseDataDecoder.decode(data: data, fromRequest: request)
     }
+
+    private func runSyndicate(appContext: Context, request: RequestProtocol, json: JSON?, error: Error?, completion: WorkWithDataCompletion?) {
+        guard error == nil else {
+            completion?(request, error)
+            return
+        }
+
+        guard let json = json else {
+            completion?(request, nil)
+            return
+        }
+
+        let dispatchGroup = DispatchGroup()
+
+        let maps = extractor?.getJSONMaps(json: json, modelClass: modelClass, jsonRefs: request.contextPredicate?.jsonRefs)
+        maps?.forEach { jsonMap in
+            dispatchGroup.enter()
+
+            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: request.decodingDepthLevel) { _, error in
+                if let error = error {
+                    completion?(request, error)
+                }
+                dispatchGroup.leave()
+            }
+        }
+
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            completion?(request, nil)
+        }
+    }
+
 }
 
 // MARK: - HttpRequestConfiguration
