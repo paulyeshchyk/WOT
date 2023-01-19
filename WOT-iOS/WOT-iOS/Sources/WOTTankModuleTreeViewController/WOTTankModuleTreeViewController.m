@@ -183,11 +183,11 @@
 }
 
 - (void)reloadModel {
-    if ( [self isViewLoaded] ){
-        dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ( [self isViewLoaded] ){
             [self.model loadModel];
-        });
-    }
+        }
+    });
 }
 
 - (void)setTank_Id:(NSNumber *)value {

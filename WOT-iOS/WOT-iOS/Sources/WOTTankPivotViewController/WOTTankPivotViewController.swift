@@ -169,7 +169,7 @@ class WOTTankPivotViewController: PivotViewController {
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
-        & DataStoreContainerProtocol
+        & DecoderManagerContainerProtocol
 
     static var registeredCells: [UICollectionViewCell.Type] = {
         return [WOTTankPivotDataCollectionViewCell.self,
@@ -218,7 +218,8 @@ class WOTTankPivotViewController: PivotViewController {
         guard let appDelegate = UIApplication.shared.delegate as? Context else {
             fatalError("appDelegate is not WOTAppDelegateProtocol")
         }
-        return WOTTankPivotModel(modelListener: self, settingsDatasource: settingsDatasource, appContext: appDelegate)
+        return WOTTankPivotModel(modelListener: self, settingsDatasource: settingsDatasource,
+                                 appContext: appDelegate)
     }
 
     override func viewDidLoad() {

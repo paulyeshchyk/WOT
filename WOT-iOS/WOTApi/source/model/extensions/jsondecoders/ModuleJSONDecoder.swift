@@ -124,7 +124,7 @@ public class ModuleDecoder {
             return
         }
 
-        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: pin.modelClass)
+        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
         httpJSONResponseConfiguration.socket = socket
         httpJSONResponseConfiguration.extractor = extractor
 

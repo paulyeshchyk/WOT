@@ -19,6 +19,7 @@ public protocol NodeDataModelProtocol {
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
+        & DecoderManagerContainerProtocol
 
     var rootNodes: [NodeProtocol] { get }
     var endpointsCount: Int { get }

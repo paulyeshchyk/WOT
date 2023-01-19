@@ -19,7 +19,7 @@ public class JSONSyndicate {
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     let appContext: Context
-    let modelClass: ModelClassType
+    var modelClass: ModelClassType?
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var jsonMap: JSONMapProtocol?
@@ -28,9 +28,8 @@ public class JSONSyndicate {
 
     // MARK: Lifecycle
 
-    init(appContext: Context, modelClass: ModelClassType) {
+    init(appContext: Context) {
         self.appContext = appContext
-        self.modelClass = modelClass
     }
 
     // MARK: Internal
@@ -64,9 +63,10 @@ public class JSONSyndicate {
 
 extension JSONSyndicate {
 
-    public static func decodeAndLink(appContext: Context, jsonMap: JSONMapProtocol, modelClass: ModelClassType, socket: JointSocketProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
+    public static func decodeAndLink(appContext: Context, jsonMap: JSONMapProtocol?, modelClass: ModelClassType?, socket: JointSocketProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
         //
-        let jsonSyndicate = JSONSyndicate(appContext: appContext, modelClass: modelClass)
+        let jsonSyndicate = JSONSyndicate(appContext: appContext)
+        jsonSyndicate.modelClass = modelClass
         jsonSyndicate.jsonMap = jsonMap
         jsonSyndicate.socket = socket
         jsonSyndicate.decodeDepthLevel = decodingDepthLevel

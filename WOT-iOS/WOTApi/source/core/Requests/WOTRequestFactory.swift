@@ -16,6 +16,7 @@ public class WOTWEBRequestFactory: NSObject {
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
+        & DecoderManagerContainerProtocol
 
     private enum HttpRequestFactoryError: Error, CustomStringConvertible {
         case objectNotDefined
@@ -33,7 +34,7 @@ public class WOTWEBRequestFactory: NSObject {
         //
         let modelClass = Vehicles.self
 
-        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
         httpJSONResponseConfiguration.socket = nil
         httpJSONResponseConfiguration.extractor = VehiclesPivotManagedObjectExtractor()
 
@@ -53,7 +54,7 @@ public class WOTWEBRequestFactory: NSObject {
         //
         let modelClass = Vehicles.self
 
-        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
         httpJSONResponseConfiguration.socket = nil
         httpJSONResponseConfiguration.extractor = VehiclesTreeManagedObjectExtractor()
 

@@ -12,56 +12,24 @@ public class HttpJSONResponseConfiguration: NSObject, ResponseConfigurationProto
 
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
-    public let modelClass: ModelClassType
+    let appContext: ResponseConfigurationProtocol.Context
     public var socket: JointSocketProtocol?
     public var extractor: ManagedObjectExtractable?
 
-    public required init(modelClass: ModelClassType) {
-        self.modelClass = modelClass
+    public required init(appContext: ResponseConfigurationProtocol.Context) {
+        self.appContext = appContext
         super.init()
     }
 
     public func handleData(_ data: Data?, fromRequest request: RequestProtocol, forService modelService: RequestModelServiceProtocol, inAppContext appContext: Context, completion: WorkWithDataCompletion?) {
         //
-        let responseDataDecoder = type(of: modelService).responseDataDecoderClass().init(appContext: appContext)
-        responseDataDecoder.request = request
-        responseDataDecoder.completion = { request, json, error in
-            self.runSyndicate(appContext: appContext, request: request, json: json, error: error, completion: completion)
-        }
+        let webSyndicate = WEBSyndicate(appContext: appContext, request: request)
+        webSyndicate.modelService = modelService
+        webSyndicate.extractor = extractor
+        webSyndicate.completion = completion
 
-        responseDataDecoder.decode(data: data, fromRequest: request)
+        webSyndicate.run(data: data)
     }
-
-    private func runSyndicate(appContext: Context, request: RequestProtocol, json: JSON?, error: Error?, completion: WorkWithDataCompletion?) {
-        guard error == nil else {
-            completion?(request, error)
-            return
-        }
-
-        guard let json = json else {
-            completion?(request, nil)
-            return
-        }
-
-        let dispatchGroup = DispatchGroup()
-
-        let maps = extractor?.getJSONMaps(json: json, modelClass: modelClass, jsonRefs: request.contextPredicate?.jsonRefs)
-        maps?.forEach { jsonMap in
-            dispatchGroup.enter()
-
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: request.decodingDepthLevel) { _, error in
-                if let error = error {
-                    completion?(request, error)
-                }
-                dispatchGroup.leave()
-            }
-        }
-
-        dispatchGroup.notify(queue: DispatchQueue.main) {
-            completion?(request, nil)
-        }
-    }
-
 }
 
 // MARK: - HttpRequestConfiguration
