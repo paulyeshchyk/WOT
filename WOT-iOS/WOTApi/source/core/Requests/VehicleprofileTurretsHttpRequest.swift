@@ -23,7 +23,7 @@ extension VehicleprofileTurretsHttpRequest: RequestModelServiceProtocol {
         WGAPIResponseJSONAdapter.self
     }
 
-    public class func modelClass() -> PrimaryKeypathProtocol.Type? {
+    public class func modelClass() -> ModelClassType? {
         VehicleprofileTurret.self
     }
 

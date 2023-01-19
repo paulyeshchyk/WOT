@@ -1,20 +1,21 @@
 //
-//  RequestParadigm.swift
+//  HttpRequestArgumentsBuilder.swift
 //  ContextSDK
 //
 //  Created by Paul on 19.12.22.
 //
 
-public class RequestArgumentsBuilder: NSObject, RequestArgumentsBuilderProtocol {
+public class HttpRequestArgumentsBuilder: NSObject, HttpRequestArgumentsBuilderProtocol {
 
-    public var modelClass: FetchableProtocol.Type
-    private let contextPredicate: ContextPredicateProtocol?
+    public var keyPaths: [String]?
+    public var contextPredicate: ContextPredicateProtocol?
+    public var keypathPrefix: String?
+    public var httpQueryItemName: String?
 
     // MARK: - NSObject
 
     override public var description: String {
-        let result: String = "RequestArguments: \(type(of: modelClass))"
-        return result
+        return "\(type(of: self))"
     }
 
     public var MD5: String { uuid.MD5 }
@@ -23,21 +24,16 @@ public class RequestArgumentsBuilder: NSObject, RequestArgumentsBuilderProtocol 
 
     private let uuid = UUID()
 
-    // MARK: Lifecycle
-
-    public init(modelClass T: FetchableProtocol.Type, contextPredicate: ContextPredicateProtocol?) {
-        self.contextPredicate = contextPredicate
-        modelClass = T.self
-    }
-
     // MARK: Public
 
-    public func buildRequestArguments(keypathPrefix: String?, httpQueryItemName: String?) -> RequestArguments {
+    public func build() -> RequestArgumentsProtocol {
+        //
         let arguments = RequestArguments()
+        arguments.contextPredicate = contextPredicate
 
-        let keyPaths = modelClass.fieldsKeypaths().compactMap {
+        let keyPaths = keyPaths?.compactMap {
             self.addPreffix(keypathPrefix: keypathPrefix, to: $0)
-        }
+        } ?? []
 
         if let httpQueryItemName = httpQueryItemName {
             arguments.setValues(keyPaths, forKey: httpQueryItemName)

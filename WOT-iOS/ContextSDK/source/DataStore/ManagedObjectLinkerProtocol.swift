@@ -12,15 +12,17 @@ public typealias ManagedObjectLinkerCompletion = (FetchResultProtocol, Error?) -
 @objc
 public protocol ManagedObjectLinkerProtocol: MD5Protocol {
     typealias Context = DataStoreContainerProtocol
-    func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion)
+    var socket: JointSocketProtocol? { get set }
+    func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) throws
 }
 
 // MARK: - JointSocketProtocol
 
+@objc
 public protocol JointSocketProtocol {
     var identifier: Any? { get }
     var keypath: KeypathType? { get }
-    var managedRef: ManagedRefProtocol? { get }
+    var managedRef: ManagedRefProtocol { get }
 }
 
 // MARK: - JointPinProtocol

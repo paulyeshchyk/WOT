@@ -26,14 +26,14 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     private let uuid = UUID()
     private let appContext: JSONAdapterProtocol.Context?
 
-    public let modelClass: PrimaryKeypathProtocol.Type
+    public let modelClass: ModelClassType
     public weak var request: RequestProtocol?
     public weak var linker: ManagedObjectLinkerProtocol?
     public weak var extractor: ManagedObjectExtractable?
 
     // MARK: Lifecycle
 
-    public required init(appContext: JSONAdapterProtocol.Context, modelClass: PrimaryKeypathProtocol.Type) {
+    public required init(appContext: JSONAdapterProtocol.Context, modelClass: ModelClassType) {
         self.appContext = appContext
         self.modelClass = modelClass
         appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
@@ -72,6 +72,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 }
 
 public extension JSONAdapter {
+    //
     func didFinish(request: RequestProtocol, data: JSON?, error: Error?) {
         guard error == nil, let json = data else {
             completion?(request, error ?? Errors.jsonIsNil)

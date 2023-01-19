@@ -9,7 +9,7 @@
 
 public class JointSocket: NSObject, JointSocketProtocol {
 
-    public var managedRef: ManagedRefProtocol?
+    public var managedRef: ManagedRefProtocol
     public var identifier: Any?
     public var keypath: KeypathType?
 
@@ -21,18 +21,18 @@ public class JointSocket: NSObject, JointSocketProtocol {
 
     // MARK: Lifecycle
 
-    public required init(managedRef: ManagedRefProtocol?, identifier: Any?, keypath: KeypathType?) {
+    public required init(managedRef: ManagedRefProtocol, identifier: Any?, keypath: KeypathType?) {
         self.identifier = identifier
         self.keypath = keypath
         self.managedRef = managedRef
         super.init()
     }
 
-    public convenience init(managedRef: ManagedRefProtocol?, identifier: Any?) {
+    public convenience init(managedRef: ManagedRefProtocol, identifier: Any?) {
         self.init(managedRef: managedRef, identifier: identifier, keypath: nil)
     }
 
-    public convenience init(managedRef: ManagedRefProtocol?, keypath: KeypathType) {
+    public convenience init(managedRef: ManagedRefProtocol, keypath: KeypathType) {
         self.init(managedRef: managedRef, identifier: nil, keypath: keypath)
     }
 }

@@ -26,31 +26,24 @@ open class RequestRegistrator: RequestRegistratorProtocol {
 // MARK: - WOTRequestBindingProtocol
 
 public extension RequestRegistrator {
-    private enum RequestRegistratorError: Error, CustomStringConvertible {
-        case requestNotFound
-        case requestClassNotFound(requestType: String)
-        case requestClassHasNoModelClass(requestClass: String)
-        case modelClassNotFound(RequestProtocol)
-        case modelClassNotRegistered(AnyObject, RequestProtocol)
 
-        public var description: String {
-            switch self {
-            case .requestNotFound: return "\(type(of: self)): Request not found"
-            case .requestClassNotFound(let requestType): return "\(type(of: self)): Request Class not found for request type: \(requestType)"
-            case .requestClassHasNoModelClass(let requestClass): return "\(type(of: self)): Request class(\(requestClass)) has no model class"
-            case .modelClassNotFound(let request): return "\(type(of: self)): Model class not found for request: \(String(describing: request))"
-            case .modelClassNotRegistered(let model, let request): return "\(type(of: self)): Model class(\((type(of: model))) registered for request: \(String(describing: request))"
-            }
+    func requestId(forModelClass: ModelClassType) throws -> RequestIdType {
+        let filtered = registeredModelService.keys.filter {
+            forModelClass == registeredModelClass[$0]
         }
+        guard let result = filtered.last else {
+            throw Errors.requestNotFound
+        }
+        return result
     }
 
-    func requestIds(modelServiceClass: AnyClass) -> [RequestIdType] {
-        registeredModelService.keys.filter {
+    func registerServiceClass(_ modelServiceClass: RequestModelServiceProtocol.Type) throws {
+        let filtered = registeredModelService.keys.filter {
             modelServiceClass == registeredModelClass[$0]
         }
-    }
-
-    func registerServiceClass(_ modelServiceClass: RequestModelServiceProtocol.Type) {
+        guard filtered.isEmpty else {
+            throw Errors.cantRegisterModelServiceClass(modelServiceClass)
+        }
         let modelClass = modelServiceClass.modelClass()
         let registrationID = modelServiceClass.registrationID()
         registeredModelService[registrationID] = modelServiceClass
@@ -63,8 +56,40 @@ public extension RequestRegistrator {
 
     func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol {
         guard let Clazz = requestClass(for: requestId) as? RequestProtocol.Type else {
-            throw RequestRegistratorError.requestNotFound
+            throw Errors.requestNotFound
         }
         return Clazz.init(context: context)
     }
+
+    func createRequest(forModelClass: ModelClassType) throws -> RequestProtocol {
+        let requestID = try requestId(forModelClass: forModelClass)
+        return try createRequest(forRequestId: requestID)
+    }
+}
+
+// MARK: - %t + RequestRegistrator.Errors
+
+extension RequestRegistrator {
+    enum Errors: Error, CustomStringConvertible {
+        case requestNotFound
+        case requestIdNotFound(RequestModelServiceProtocol.Type)
+        case requestClassNotFound(requestType: String)
+        case requestClassHasNoModelClass(requestClass: String)
+        case modelClassNotFound(RequestProtocol)
+        case modelClassNotRegistered(AnyObject, RequestProtocol)
+        case cantRegisterModelServiceClass(RequestModelServiceProtocol.Type)
+
+        public var description: String {
+            switch self {
+            case .requestNotFound: return "\(type(of: self)): Request not found"
+            case .requestClassNotFound(let requestType): return "\(type(of: self)): Request Class not found for request type: \(requestType)"
+            case .requestClassHasNoModelClass(let requestClass): return "\(type(of: self)): Request class(\(requestClass)) has no model class"
+            case .modelClassNotFound(let request): return "\(type(of: self)): Model class not found for request: \(String(describing: request))"
+            case .modelClassNotRegistered(let model, let request): return "\(type(of: self)): Model class(\((type(of: model))) registered for request: \(String(describing: request))"
+            case .cantRegisterModelServiceClass(let modelServiceClass): return "\(type(of: self)): Already registered (\(String(describing: modelServiceClass))"
+            case .requestIdNotFound(let modelServiceClass): return "\(type(of: self)): Reguest id not found for (\(String(describing: modelServiceClass))"
+            }
+        }
+    }
+
 }

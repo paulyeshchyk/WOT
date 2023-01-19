@@ -464,9 +464,15 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest error:(NSError * _Nullable)error {
     [self updateUINeedReset: YES];
+    [requestManager removeListener:self];
 }
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<RequestProtocol> _Nonnull)didStartRequest {
     //
 }
+
+- (void)requestManager:(id<RequestManagerProtocol>)requestManager didCancelRequest:(id<RequestProtocol>)didCancelRequest reason:(id<RequestCancelReasonProtocol>)reason {
+    [requestManager removeListener:self];
+}
+
 @end

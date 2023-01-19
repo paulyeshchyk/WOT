@@ -13,11 +13,11 @@ extension VehicleprofileGun: ManagedObjectPinProtocol {}
 
 extension VehicleprofileGun: ManagedObjectPlugProtocol {
 
-    public func plug(pin _: ManagedObjectPinProtocol, intoSocket _: JointSocketProtocol) {
+    public func plug(pin _: ManagedObjectPinProtocol?, intoSocket _: JointSocketProtocol?) {
         //
     }
 
-    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol]?, intoSocket _: JointSocketProtocol?) {
         //
     }
 }

@@ -27,5 +27,5 @@ public protocol HostConfigurationProtocol {
     var scheme: String { get }
 
     @objc
-    func urlQuery(with: RequestArgumentsProtocol?) -> String
+    func urlQuery(with: RequestArgumentsProtocol?) -> String?
 }

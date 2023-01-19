@@ -12,7 +12,7 @@ public protocol FetchResultProtocol: ManagedObjectContextContainerProtocol {
     var fetchStatus: FetchStatus { get }
     var predicate: NSPredicate? { get set }
 
-    func managedObject() -> ManagedAndDecodableObjectType?
-    func managedObject(inManagedObjectContext: ManagedObjectContextProtocol?) -> ManagedAndDecodableObjectType?
+    func managedObject() throws -> ManagedAndDecodableObjectType
+    func managedObject(inManagedObjectContext: ManagedObjectContextProtocol?) throws -> ManagedAndDecodableObjectType
     func makeDublicate(managedObjectContext: ManagedObjectContextProtocol) -> FetchResultProtocol
 }

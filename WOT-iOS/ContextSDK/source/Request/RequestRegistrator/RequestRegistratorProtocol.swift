@@ -8,17 +8,20 @@
 
 // MARK: - RequestRegistratorContainerProtocol
 
-@objc
 public protocol RequestRegistratorContainerProtocol {
     var requestRegistrator: RequestRegistratorProtocol? { get set }
 }
 
 // MARK: - RequestRegistratorProtocol
 
-@objc
 public protocol RequestRegistratorProtocol {
-    func requestIds(modelServiceClass: AnyClass) -> [RequestIdType]
+    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
+
+    func requestId(forModelClass: ModelClassType) throws -> RequestIdType
     func requestClass(for requestId: RequestIdType) -> RequestModelServiceProtocol.Type?
+
+    func createRequest(forModelClass: ModelClassType) throws -> RequestProtocol
     func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol
-    func registerServiceClass(_ serviceClass: RequestModelServiceProtocol.Type)
+
+    func registerServiceClass(_ serviceClass: RequestModelServiceProtocol.Type) throws
 }

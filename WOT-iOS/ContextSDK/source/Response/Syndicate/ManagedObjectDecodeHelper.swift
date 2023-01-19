@@ -27,31 +27,24 @@ class ManagedObjectDecodeHelper {
     // MARK: Internal
 
     func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
-        guard let fetchResult = fetchResult, error == nil else {
-            completion?(fetchResult, error ?? Errors.fetchResultIsNotPresented)
-            return
-        }
-        guard let jsonMap = jsonMap else {
-            completion?(fetchResult, Errors.contextPredicateIsNotDefined)
-            return
-        }
-
-        guard let managedObject = fetchResult.managedObject() else {
-            completion?(fetchResult, Errors.fetchResultIsNotJSONDecodable(fetchResult))
-            return
-        }
-
-        guard let modelClass = type(of: managedObject) as? PrimaryKeypathProtocol.Type else {
-            completion?(fetchResult, nil)
-            return
-        }
-        guard let decoderType = appContext?.decoderManager?.jsonDecoder(for: modelClass) else {
-            completion?(fetchResult, nil)
-            return
-        }
-
-        //
         do {
+            guard let fetchResult = fetchResult, error == nil else {
+                throw error ?? Errors.fetchResultIsNotPresented
+            }
+            guard let jsonMap = jsonMap else {
+                throw Errors.contextPredicateIsNotDefined
+            }
+
+            let managedObject = try fetchResult.managedObject()
+
+            guard let modelClass = type(of: managedObject) as? PrimaryKeypathProtocol.Type else {
+                throw Errors.modelClassIsNotDefined
+            }
+
+            guard let decoderType = appContext?.decoderManager?.jsonDecoder(for: modelClass) else {
+                throw Errors.decoderIsNotDefined
+            }
+
             #warning("Provide crc check")
             let decoder = decoderType.init(appContext: appContext)
             decoder.managedObject = managedObject
@@ -74,12 +67,16 @@ extension ManagedObjectDecodeHelper {
         case fetchResultIsNotPresented
         case contextPredicateIsNotDefined
         case fetchResultIsNotJSONDecodable(FetchResultProtocol?)
+        case modelClassIsNotDefined
+        case decoderIsNotDefined
 
         public var description: String {
             switch self {
             case .fetchResultIsNotJSONDecodable(let fetchResult): return "[\(type(of: self))]: fetch result(\(type(of: fetchResult)) is not JSONDecodableProtocol"
             case .contextPredicateIsNotDefined: return "\(type(of: self)): Context predicate is not defined"
             case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
+            case .modelClassIsNotDefined: return "Model class is not defined"
+            case .decoderIsNotDefined: return "Decoder is not defined"
             }
         }
     }

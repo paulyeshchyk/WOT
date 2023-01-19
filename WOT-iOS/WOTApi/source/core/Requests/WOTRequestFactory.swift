@@ -27,34 +27,41 @@ public class WOTWEBRequestFactory: NSObject {
     // MARK: Public
 
     public static func fetchVehiclePivotData(appContext: WOTWEBRequestFactory.Context, listener: RequestManagerListenerProtocol) throws {
-        guard let request = try appContext.requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
+        //
+        let modelClass = Vehicles.self
+
+        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+        httpJSONResponseConfiguration.socket = nil
+        httpJSONResponseConfiguration.extractor = VehiclesPivotManagedObjectExtractor()
+
+        let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
+        httpRequestConfiguration.modelFieldKeyPaths = modelClass.dataFieldsKeypaths()
+        httpRequestConfiguration.composer = nil
+
+        guard let request = try appContext.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
-        let arguments = RequestArguments()
-        // arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
-        arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
-        request.arguments = arguments
-        let extractor = VehiclesPivotManagedObjectExtractor()
-        let socket = JointSocket(managedRef: nil, identifier: nil, keypath: nil)
-        let linker = VehiclesPivotManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: linker, managedObjectExtractor: extractor, listener: listener)
-//        try appContext.requestManager?.fetchRemote(modelClass: Vehicles.self, contextPredicate: nil, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: listener)
+
+        try appContext.requestManager?.startRequest(request, listener: listener)
     }
 
     @objc
     public static func fetchVehicleTreeData(vehicleId: Int, appContext: DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
-        guard let request = try appContext.requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
+        //
+        let modelClass = Vehicles.self
+
+        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+        httpJSONResponseConfiguration.socket = nil
+        httpJSONResponseConfiguration.extractor = VehiclesTreeManagedObjectExtractor()
+
+        let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
+        httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
+        httpRequestConfiguration.composer = VehicleTreeRuleBuilder(modelClass: modelClass, vehicleId: vehicleId)
+
+        guard let request = try appContext.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
-        let arguments = RequestArguments()
-        arguments.setValues([vehicleId], forKey: WOTApiFields.tank_id)
-        arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
-        request.arguments = arguments
-        let extractor = VehiclesTreeManagedObjectExtractor()
-        let socket = JointSocket(managedRef: nil, identifier: nil, keypath: nil)
-        let linker = VehiclesTreeManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: linker, managedObjectExtractor: extractor, listener: listener)
-//        try appContext.requestManager?.fetchRemote(modelClass: Vehicles.self, contextPredicate: nil, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: listener)
+        try appContext.requestManager?.startRequest(request, listener: listener)
     }
 
     @objc
@@ -70,39 +77,6 @@ public class WOTWEBRequestFactory: NSObject {
 //        appContext.logInspector?.logEvent(EventFlowStart(request), sender: self)
 //        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: nil)
 //        requestManager.addListener(listener, forRequest: request)
-    }
-}
-
-extension WOTWEBRequestFactory {
-
-    private class VehiclesTreeManagedObjectLinker: ManagedObjectLinker {
-
-        public typealias Context = DataStoreContainerProtocol
-
-        // MARK: Public
-
-        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
-            // MARK: stash
-
-            appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
-                completion(fetchResult, error)
-            }
-        }
-    }
-
-    private class VehiclesPivotManagedObjectLinker: ManagedObjectLinker {
-
-        public typealias Context = DataStoreContainerProtocol
-
-        // MARK: Public
-
-        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerProtocol.Context?, completion: @escaping ManagedObjectLinkerCompletion) {
-            // MARK: stash
-
-            appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
-                completion(fetchResult, error)
-            }
-        }
     }
 }
 

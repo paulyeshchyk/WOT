@@ -1671,7 +1671,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#SwiftLint\n#TODO: build SwiftLint from PODS folder, using: make install\n\"${TOOLS_ROOT}/SwiftLint/bin/swiftlint\" lint\n";
+			shellScript = "#SwiftLint\n#TODO: build SwiftLint from PODS folder, using: make install\n\"${TOOLS_ROOT}/SwiftLint/bin/swiftlint\" --config \".swiftlint.yml\"\n";
 		};
 		1D9CAA3421119BD300B6CA5A /* Swiftgen */ = {
 			isa = PBXShellScriptBuildPhase;
