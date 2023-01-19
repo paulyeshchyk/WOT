@@ -16,6 +16,7 @@ extension Module: FetchableProtocol {
 
     public class func relationFieldsKeypaths() -> [String] {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
+//        []
     }
 
     public class func fieldsKeypaths() -> [String] {

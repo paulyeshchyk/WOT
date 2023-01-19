@@ -13,9 +13,9 @@ extension Vehicles: ManagedObjectPinProtocol {}
 
 extension Vehicles: ManagedObjectPlugProtocol {
 
-    public func plug(pin: ManagedObjectPinProtocol, intoSocket: JointSocketProtocol) {
+    public func plug(pin: ManagedObjectPinProtocol?, intoSocket: JointSocketProtocol?) {
         //
-        switch intoSocket.keypath as? String {
+        switch intoSocket?.keypath as? String {
         case #keyPath(Vehicles.default_profile):
             default_profile = pin as? Vehicleprofile
             modules_tree?.plug(pin: pin, intoSocket: intoSocket)
@@ -28,7 +28,7 @@ extension Vehicles: ManagedObjectPlugProtocol {
         }
     }
 
-    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol]?, intoSocket _: JointSocketProtocol?) {
         //
     }
 }

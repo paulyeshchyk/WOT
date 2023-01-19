@@ -22,7 +22,7 @@ extension VehiclesHttpRequest: RequestModelServiceProtocol {
         WGAPIResponseJSONAdapter.self
     }
 
-    public class func modelClass() -> PrimaryKeypathProtocol.Type? {
+    public class func modelClass() -> ModelClassType? {
         Vehicles.self
     }
 

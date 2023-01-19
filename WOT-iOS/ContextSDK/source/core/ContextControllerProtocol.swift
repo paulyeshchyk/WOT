@@ -14,6 +14,7 @@ public protocol ContextProtocol: LogInspectorContainerProtocol,
     DataStoreContainerProtocol,
     HostConfigurationContainerProtocol,
     RequestManagerContainerProtocol,
+    ResponseManagerContainerProtocol,
     RequestListenerContainerProtocol,
     DecoderManagerContainerProtocol {}
 

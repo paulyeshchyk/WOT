@@ -16,6 +16,7 @@ open class RequestManager: NSObject {
         & RequestManagerContainerProtocol
         & HostConfigurationContainerProtocol
         & DecoderManagerContainerProtocol
+        & ResponseManagerContainerProtocol
 
     override public var description: String { String(describing: type(of: self)) }
 
@@ -26,8 +27,6 @@ open class RequestManager: NSObject {
 
     private let grouppedListenerList: RequestGrouppedListenerList
     private let grouppedRequestList: RequestGrouppedRequestList
-    private let linkerList: ResponseManagedObjectLinkerList
-    private let extractorList: ResponseManagedObjectExtractorList
 
     private let requestRegistrator: RequestRegistratorProtocol
 
@@ -37,8 +36,6 @@ open class RequestManager: NSObject {
         self.appContext = appContext
         grouppedRequestList = RequestGrouppedRequestList(appContext: appContext)
         grouppedListenerList = RequestGrouppedListenerList()
-        linkerList = ResponseManagedObjectLinkerList()
-        extractorList = ResponseManagedObjectExtractorList()
         requestRegistrator = RequestRegistrator(appContext: appContext)
         super.init()
     }
@@ -49,8 +46,8 @@ open class RequestManager: NSObject {
 
     // MARK: Public
 
-    public func registerModelService(_ serviceClass: RequestModelServiceProtocol.Type) {
-        requestRegistrator.registerServiceClass(serviceClass)
+    public func registerModelService(_ serviceClass: RequestModelServiceProtocol.Type) throws {
+        try requestRegistrator.registerServiceClass(serviceClass)
     }
 }
 
@@ -60,6 +57,10 @@ extension RequestManager: RequestListenerProtocol {
 
     public func request(_ request: RequestProtocol, startedWith _: URLRequest) {
         grouppedListenerList.didStartRequest(request, requestManager: self)
+    }
+
+    public func request(_ request: RequestProtocol, canceledWith _: Error?) {
+        removeRequest(request)
     }
 
     public func request(_ request: RequestProtocol, finishedLoadData data: Data?, error: Error?) {
@@ -73,57 +74,16 @@ extension RequestManager: RequestListenerProtocol {
         }
 
         do {
-            try parseResponse(request: request, data: data)
-        } catch {
-            grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
-            appContext.logInspector?.log(.error(error), sender: self)
-        }
-    }
-
-    private func parseResponse(request: RequestProtocol, data: Data?) throws {
-        guard let modelService = request as? RequestModelServiceProtocol else {
-            throw Errors.modelNotFound(request)
-        }
-
-        guard let modelClass = type(of: modelService).modelClass() else {
-            throw Errors.modelNotFound(request)
-        }
-
-        let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext, modelClass: modelClass)
-        dataAdapter.request = request
-        dataAdapter.linker = linkerList.linkerForRequest(request)
-        dataAdapter.extractor = extractorList.extractorForRequest(request)
-        dataAdapter.completion = { request, error in
-            self.finalizeParseResponse(request: request, error: error)
-        }
-        dataAdapter.decode(data: data, fromRequest: request)
-    }
-
-    private func finalizeParseResponse(request: RequestProtocol, error: Error?) {
-        //
-        grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
-        //
-
-        if let error = error {
-            appContext.logInspector?.log(.error(error), sender: self)
-        }
-        //
-        do {
-            try extractorList.removeExtractorForRequest(request)
-        } catch {
-            appContext.logInspector?.log(.error(error), sender: self)
-        }
-
-        do {
-            try linkerList.removeLinkerForRequest(request)
+            try appContext.responseManager?.addListener(self, forRequest: request)
+            appContext.responseManager?.startWorkingOn(request, withData: data)
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 
-    public func request(_ request: RequestProtocol, canceledWith _: Error?) {
-        removeRequest(request)
-    }
+}
+
+extension RequestManager {
 
     private func removeRequest(_ request: RequestProtocol) {
         grouppedRequestList.removeRequest(request)
@@ -131,9 +91,37 @@ extension RequestManager: RequestListenerProtocol {
     }
 }
 
+// MARK: - RequestManager + ResponseManagerListener
+
+extension RequestManager: ResponseManagerListener {
+    //
+    public func responseManager(_: ResponseManagerProtocol, didStartWorkOn _: RequestProtocol) {
+        //
+    }
+
+    public func responseManager(_ responseManager: ResponseManagerProtocol, didFinishWorkOn request: RequestProtocol, withError error: Error?) {
+        responseManager.removeListener(self, forRequest: request)
+        grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
+        if let error = error {
+            appContext.logInspector?.log(.error(error), sender: self)
+        }
+
+        removeRequest(request)
+    }
+
+    public func responseManager(_ responseManager: ResponseManagerProtocol, didCancelWorkOn request: RequestProtocol, reason: ResponseCancelReasonProtocol) {
+        responseManager.removeListener(self, forRequest: request)
+
+        grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: reason.error)
+
+        removeRequest(request)
+    }
+}
+
 // MARK: - RequestManager + RequestManagerProtocol
 
 extension RequestManager: RequestManagerProtocol {
+
     public func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
         //
         grouppedRequestList.cancelRequests(groupId: groupId, reason: reason) { [weak self] request, reason in
@@ -147,14 +135,9 @@ extension RequestManager: RequestManagerProtocol {
         grouppedListenerList.removeListener(listener)
     }
 
-    public func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol {
+    public func startRequest(_ request: RequestProtocol, listener: RequestManagerListenerProtocol?) throws {
         //
-        try requestRegistrator.createRequest(forRequestId: forRequestId)
-    }
-
-    public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
-        //
-        try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
+        try grouppedRequestList.addRequest(request, forGroupId: request.MD5.hashValue)
 
         request.addListener(self)
 
@@ -164,42 +147,16 @@ extension RequestManager: RequestManagerProtocol {
             appContext.logInspector?.log(.warning(error: Errors.requestManagerListenerIsNil), sender: self)
         }
 
-        try extractorList.addExtractor(managedObjectExtractor, forRequest: request)
-
-        try linkerList.addLinker(managedObjectCreator, forRequest: request)
-
         try request.start()
     }
 
-    public func fetchRemote(modelClass: FetchableProtocol.Type, contextPredicate: ContextPredicateProtocol?, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
-        let requestIDs = requestRegistrator.requestIds(modelServiceClass: modelClass)
-        guard !requestIDs.isEmpty else {
-            throw Errors.requestsNotRegistered(modelClass)
-        }
+    public func buildRequest(requestConfiguration: RequestConfigurationProtocol, responseConfiguration: ResponseConfigurationProtocol) throws -> RequestProtocol {
+        //
+        let request = try requestRegistrator.createRequest(forModelClass: requestConfiguration.modelClass)
+        request.responseConfiguration = responseConfiguration
 
-        DispatchQueue.main.async {
-            for requestID in requestIDs {
-                do {
-                    //
-                    let request = try self.createRequest(modelClass: modelClass, requestID: requestID, contextPredicate: contextPredicate)
-                    let groupId: RequestIdType = request.MD5.hashValue
+        request.arguments = try requestConfiguration.buildArguments(forRequest: request)
 
-                    try self.startRequest(request, forGroupId: groupId, managedObjectCreator: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
-                } catch {
-                    self.appContext.logInspector?.log(.error(error), sender: self)
-                }
-            }
-        }
-    }
-
-    private func createRequest(modelClass: FetchableProtocol.Type, requestID: RequestIdType, contextPredicate: ContextPredicateProtocol?) throws -> RequestProtocol {
-        let request = try requestRegistrator.createRequest(forRequestId: requestID)
-
-        let builder = RequestArgumentsBuilder(modelClass: modelClass, contextPredicate: contextPredicate)
-        let arguments = builder.buildRequestArguments(keypathPrefix: request.httpAPIQueryPrefix(), httpQueryItemName: request.httpQueryItemName)
-
-        request.contextPredicate = contextPredicate
-        request.arguments = arguments
         return request
     }
 }
@@ -210,15 +167,14 @@ extension RequestManager {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
         case adapterNotFound(RequestProtocol)
-        case modelNotFound(RequestProtocol)
         case notAModelService(RequestProtocol)
         case noRequestIds(RequestProtocol)
-        case requestNotCreated(RequestArgumentsBuilderProtocol)
+        case requestNotCreated(HttpRequestArgumentsBuilderProtocol)
         case requestsNotRegistered(FetchableProtocol.Type)
         case receivedResponseFromReleasedRequest
         case cantAddListener
         case invalidRequest
-        case modelClassNotFound(RequestProtocol)
+        case modelClassNotFound(RequestConfigurationProtocol)
         case modelClassNotRegistered(AnyObject, RequestProtocol)
         case requestManagerListenerIsNil
 
@@ -226,13 +182,12 @@ extension RequestManager {
             switch self {
             case .notAModelService(let request): return "\(type(of: self)): Not a model service: \(String(describing: request))"
             case .adapterNotFound(let request): return "\(type(of: self)): Adapter not found for request: \(String(describing: request))"
-            case .modelNotFound(let request): return "\(type(of: self)): Model not found for request: \(String(describing: request))"
             case .noRequestIds(let request): return "\(type(of: self)): No request ids for request: \(String(describing: request))"
             case .receivedResponseFromReleasedRequest: return "\(type(of: self)): Received response from released request"
             case .requestNotCreated(let paradigm): return "\(type(of: self)): Request not created for [\(String(describing: paradigm))]"
             case .cantAddListener: return "\(type(of: self)): Can't add listener"
             case .invalidRequest: return "\(type(of: self)): Invalid request"
-            case .modelClassNotFound(let request): return "\(type(of: self)): Model class not found for request: \(String(describing: request))"
+            case .modelClassNotFound(let configuration): return "\(type(of: self)): Model class not found in configuration: \(String(describing: configuration))"
             case .modelClassNotRegistered(let model, let request): return "\(type(of: self)): Model class(\((type(of: model))) registered for request: \(String(describing: request))"
             case .requestManagerListenerIsNil: return "\(type(of: self)): RequestManagerListener is nil"
             case .requestsNotRegistered(let modelClass): return "[\(type(of: self))]: Request was not registered for [\(String(describing: modelClass))]"

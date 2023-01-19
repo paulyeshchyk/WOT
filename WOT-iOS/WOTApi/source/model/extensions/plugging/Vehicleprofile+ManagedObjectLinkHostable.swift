@@ -14,9 +14,9 @@ extension Vehicleprofile: ManagedObjectPinProtocol {}
 extension Vehicleprofile: ManagedObjectPlugProtocol {
 
     // swiftlint:disable cyclomatic_complexity
-    public func plug(pin: ManagedObjectPinProtocol, intoSocket: JointSocketProtocol) {
+    public func plug(pin: ManagedObjectPinProtocol?, intoSocket: JointSocketProtocol?) {
         //
-        switch intoSocket.keypath as? String {
+        switch intoSocket?.keypath as? String {
         case #keyPath(Vehicleprofile.turret): turret = pin as? VehicleprofileTurret
         case #keyPath(Vehicleprofile.suspension): suspension = pin as? VehicleprofileSuspension
         case #keyPath(Vehicleprofile.radio): radio = pin as? VehicleprofileRadio
@@ -30,7 +30,7 @@ extension Vehicleprofile: ManagedObjectPlugProtocol {
         // swiftlint:enable cyclomatic_complexity
     }
 
-    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol]?, intoSocket _: JointSocketProtocol?) {
         //
     }
 }

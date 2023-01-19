@@ -32,10 +32,14 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileAmmoPenetration.self
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(jsonMap: map, foreignPrimarySelectKey: foreignPrimarySelectKey, foreignSecondarySelectKey: foreignSecondarySelectKey)
             let composition = try composer.buildRequestPredicateComposition()
-            let managedRef = try managedObject?.managedRef()
+            guard let managedRef = try managedObject?.managedRef() else {
+                throw VehicleprofileAmmoError.invalidManagedRef
+            }
 
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathPenetration)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
+            managedObjectLinker.socket = socket
+
             let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
@@ -57,10 +61,14 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileAmmoDamage.self
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(jsonMap: map, foreignPrimarySelectKey: foreignPrimarySelectKey, foreignSecondarySelectKey: foreignSecondarySelectKey)
             let composition = try composer.buildRequestPredicateComposition()
-            let managedRef = try managedObject?.managedRef()
+            guard let managedRef = try managedObject?.managedRef() else {
+                throw VehicleprofileAmmoError.invalidManagedRef
+            }
 
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathDamage)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, socket: socket)
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
+            managedObjectLinker.socket = socket
+
             let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
@@ -93,11 +101,13 @@ extension VehicleprofileAmmo {
 public enum VehicleprofileAmmoError: Error, CustomStringConvertible {
     case noPenetration
     case noDamage
+    case invalidManagedRef
 
     public var description: String {
         switch self {
         case .noPenetration: return "[\(type(of: self))]: No penetration"
         case .noDamage: return "[\(type(of: self))]: No damage"
+        case .invalidManagedRef: return "[\(type(of: self))]: Invalid managedRef"
         }
     }
 }

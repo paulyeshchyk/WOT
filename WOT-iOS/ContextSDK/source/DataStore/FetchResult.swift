@@ -18,7 +18,12 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
     public var predicate: NSPredicate?
 
     override public var description: String {
-        let entityName = managedObject()?.entityName ?? ""
+        let entityName: String
+        do {
+            entityName = try managedObject().entityName
+        } catch {
+            entityName = "<Invalid>"
+        }
         return "<\(type(of: self)): context-name \(managedObjectContext.name ?? ""), entity-name \(entityName)>"
     }
 
@@ -51,15 +56,31 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         return FetchResult(managedRef: managedRef, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
     }
 
-    public func managedObject() -> ManagedAndDecodableObjectType? {
-        return managedObject(inManagedObjectContext: managedObjectContext)
+    public func managedObject() throws -> ManagedAndDecodableObjectType {
+        return try managedObject(inManagedObjectContext: managedObjectContext)
     }
 
-    public func managedObject(inManagedObjectContext context: ManagedObjectContextProtocol?) -> ManagedAndDecodableObjectType? {
+    public func managedObject(inManagedObjectContext: ManagedObjectContextProtocol?) throws -> ManagedAndDecodableObjectType {
         guard let managedRef = managedRef else {
-            assertionFailure("objectID is not defined")
-            return nil
+            throw FetchResultError.invalidObjectID
         }
-        return context?.object(managedRef: managedRef) as? ManagedAndDecodableObjectType
+        guard let result = try inManagedObjectContext?.object(managedRef: managedRef) as? ManagedAndDecodableObjectType else {
+            throw FetchResultError.isNotDecodable
+        }
+        return result
+    }
+}
+
+// MARK: - FetchResultError
+
+private enum FetchResultError: Error, CustomStringConvertible {
+    case invalidObjectID
+    case isNotDecodable
+
+    var description: String {
+        switch self {
+        case .invalidObjectID: return "Provided invalid ObjectID"
+        case .isNotDecodable: return "Object is not decodable"
+        }
     }
 }

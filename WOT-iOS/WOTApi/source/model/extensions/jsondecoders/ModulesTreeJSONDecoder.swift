@@ -51,19 +51,23 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
     private func fetchCurrentModule(identifier: JSONValueType?, map: JSONMapProtocol, moduleTreeJSON: JSON?) {
         do {
-            let jsonRef = try JSONRef(data: moduleTreeJSON, modelClass: ModulesTree.self)
-            let currentModuleKeypath = #keyPath(ModulesTree.currentModule)
-            let modelClass = Module.self
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: currentModuleKeypath)
-            let extractor = CurrentModuleExtractor()
-            let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, socket: socket)
-            let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
-            let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
-            let composition = try composer.buildRequestPredicateComposition()
+            let modelClass = Module.self
 
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: nil)
+            let jsonRef = try JSONRef(data: moduleTreeJSON, modelClass: ModulesTree.self)
+            let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
+
+            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: #keyPath(ModulesTree.currentModule))
+            httpJSONResponseConfiguration.extractor = CurrentModuleExtractor()
+
+            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
+            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
+            httpRequestConfiguration.composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
+
+            let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext?.requestManager?.startRequest(request!, listener: nil)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
         }
@@ -74,15 +78,21 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         do {
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: nextModulesKeypath)
-            let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, socket: socket)
-            let extractor = NextModuleExtractor()
             let modelClass = Module.self
 
             let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
-            let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
-            let composition = try composer.buildRequestPredicateComposition()
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: nextModuleManagedObjectCreator, managedObjectExtractor: extractor, listener: nil)
+
+            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextModulesKeypath)
+            httpJSONResponseConfiguration.extractor = NextModuleExtractor()
+
+            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
+            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
+            httpRequestConfiguration.composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
+
+            let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+
+            try appContext?.requestManager?.startRequest(request!, listener: nil)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
         }
@@ -93,15 +103,20 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         do {
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: nextTanksKeypath)
-            let linker = ManagedObjectLinker(modelClass: Vehicles.self, socket: socket)
-            let extractor = NextVehicleExtractor()
+            let modelClass = Vehicles.self
             // parents was not used for next portion of tanks
             let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
-            let composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
-            let modelClass = Vehicles.self
-            let composition = try composer.buildRequestPredicateComposition()
-            try appContext?.requestManager?.fetchRemote(modelClass: modelClass, contextPredicate: composition.contextPredicate, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: nil)
+
+            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextTanksKeypath)
+            httpJSONResponseConfiguration.extractor = NextVehicleExtractor()
+
+            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
+            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
+            httpRequestConfiguration.composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
+
+            let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext?.requestManager?.startRequest(request!, listener: nil)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
         }

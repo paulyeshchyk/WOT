@@ -14,6 +14,14 @@ public protocol RequestCancelReasonProtocol {
     var error: Error? { get }
 }
 
+// MARK: - ResponseCancelReasonProtocol
+
+@objc
+public protocol ResponseCancelReasonProtocol {
+    var reasonDescription: String { get }
+    var error: Error? { get }
+}
+
 // MARK: - StartableProtocol
 
 @objc

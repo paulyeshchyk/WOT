@@ -95,7 +95,7 @@ extension WOTWebProxyRequest: RequestModelServiceProtocol {
         -1
     }
 
-    public static func modelClass() -> PrimaryKeypathProtocol.Type? {
+    public static func modelClass() -> ModelClassType? {
         return nil
     }
 

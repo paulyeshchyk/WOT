@@ -13,11 +13,11 @@ extension VehicleprofileSuspension: ManagedObjectPinProtocol {}
 
 extension VehicleprofileSuspension: ManagedObjectPlugProtocol {
 
-    public func plug(pin _: ManagedObjectPinProtocol, intoSocket _: JointSocketProtocol) {
+    public func plug(pin _: ManagedObjectPinProtocol?, intoSocket _: JointSocketProtocol?) {
         //
     }
 
-    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol]?, intoSocket _: JointSocketProtocol?) {
         //
     }
 }

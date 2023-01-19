@@ -23,7 +23,7 @@ extension VehicleprofileRadiosHttpRequest: RequestModelServiceProtocol {
         WGAPIResponseJSONAdapter.self
     }
 
-    public class func modelClass() -> PrimaryKeypathProtocol.Type? {
+    public class func modelClass() -> ModelClassType? {
         VehicleprofileRadio.self
     }
 

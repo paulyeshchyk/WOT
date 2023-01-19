@@ -8,13 +8,17 @@
 final public class WOTRequestManager: RequestManager {
     public required init(appContext: RequestManager.Context) {
         super.init(appContext: appContext)
-        registerModelService(ModulesHttpRequest.self)
-        registerModelService(VehiclesHttpRequest.self)
-        registerModelService(ModulesTreeHttpRequest.self)
-        registerModelService(VehicleprofileGunHttpRequest.self)
-        registerModelService(VehicleprofileRadiosHttpRequest.self)
-        registerModelService(VehicleprofileTurretsHttpRequest.self)
-        registerModelService(VehicleprofileEnginesHttpRequest.self)
-        registerModelService(VehicleprofileSuspensionHttpRequest.self)
+        do {
+            try registerModelService(ModulesHttpRequest.self)
+            try registerModelService(VehiclesHttpRequest.self)
+            try registerModelService(ModulesTreeHttpRequest.self)
+            try registerModelService(VehicleprofileGunHttpRequest.self)
+            try registerModelService(VehicleprofileRadiosHttpRequest.self)
+            try registerModelService(VehicleprofileTurretsHttpRequest.self)
+            try registerModelService(VehicleprofileEnginesHttpRequest.self)
+            try registerModelService(VehicleprofileSuspensionHttpRequest.self)
+        } catch {
+            appContext.logInspector?.log(.error(error), sender: self)
+        }
     }
 }

@@ -13,13 +13,13 @@ extension VehicleprofileAmmoList: ManagedObjectPinProtocol {}
 
 extension VehicleprofileAmmoList: ManagedObjectPlugProtocol {
 
-    public func plug(pin: ManagedObjectPinProtocol, intoSocket _: JointSocketProtocol) {
+    public func plug(pin: ManagedObjectPinProtocol?, intoSocket _: JointSocketProtocol?) {
         if let ammo = pin as? VehicleprofileAmmo {
             addToVehicleprofileAmmo(ammo)
         }
     }
 
-    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol]?, intoSocket _: JointSocketProtocol?) {
         //
     }
 }

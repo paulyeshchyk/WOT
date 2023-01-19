@@ -27,7 +27,11 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     public var listeners = [RequestListenerProtocol]()
 
-    public var contextPredicate: ContextPredicateProtocol?
+    public var contextPredicate: ContextPredicateProtocol? {
+        arguments?.contextPredicate
+    }
+
+    public var responseConfiguration: ResponseConfigurationProtocol?
 
     public var arguments: RequestArgumentsProtocol?
 

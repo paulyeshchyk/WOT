@@ -12,6 +12,7 @@ import CoreData
 // MARK: - NSManagedObjectContext + ManagedObjectContextProtocol
 
 extension NSManagedObjectContext: ManagedObjectContextProtocol {
+
     // MARK: - ManagedObjectContextLookupProtocol
 
     public func execute(appContext: ManagedObjectContextLookupProtocol.Context?, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
@@ -24,10 +25,9 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         }
     }
 
-    public func object(managedRef: ManagedRefProtocol) -> ManagedObjectProtocol? {
-        guard let objectID = managedRef.managedObjectID as? NSManagedObjectID else {
-            assertionFailure("forObjectID is not NSManagedObject")
-            return nil
+    public func object(managedRef: ManagedRefProtocol?) throws -> ManagedObjectProtocol {
+        guard let objectID = managedRef?.managedObjectID as? NSManagedObjectID else {
+            throw NSManagedObjectContextError.invalidObjectID
         }
         return object(with: objectID)
     }
@@ -146,10 +146,12 @@ extension NSManagedObjectContext {
 
 private enum NSManagedObjectContextError: Error, CustomStringConvertible {
     case isNotPrivateQueueConcurrencyType
+    case invalidObjectID
 
     var description: String {
         switch self {
         case .isNotPrivateQueueConcurrencyType: return "Save operation must be performed only in context with concurrency type: PrivateQueueConcurrencyType"
+        case .invalidObjectID: return "Provided invalid ObjectID"
         }
     }
 }

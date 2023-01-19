@@ -13,9 +13,9 @@ extension VehicleprofileArmorList: ManagedObjectPinProtocol {}
 
 extension VehicleprofileArmorList: ManagedObjectPlugProtocol {
 
-    public func plug(pin: ManagedObjectPinProtocol, intoSocket: JointSocketProtocol) {
+    public func plug(pin: ManagedObjectPinProtocol?, intoSocket: JointSocketProtocol?) {
         //
-        switch intoSocket.keypath as? String {
+        switch intoSocket?.keypath as? String {
         case #keyPath(VehicleprofileArmorList.turret): turret = pin as? VehicleprofileArmor
         case #keyPath(VehicleprofileArmorList.hull): hull = pin as? VehicleprofileArmor
         default:
@@ -23,7 +23,7 @@ extension VehicleprofileArmorList: ManagedObjectPlugProtocol {
         }
     }
 
-    public func plug(pins _: [ManagedObjectPinProtocol], intoSocket _: JointSocketProtocol) {
+    public func plug(pins _: [ManagedObjectPinProtocol]?, intoSocket _: JointSocketProtocol?) {
         //
     }
 }
