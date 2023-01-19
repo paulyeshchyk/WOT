@@ -15,12 +15,12 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 
     // MARK: - ManagedObjectContextLookupProtocol
 
-    public func execute(appContext: ManagedObjectContextProtocol.Context?, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
+    public func execute(appContext: ManagedObjectContextProtocol.Context, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
         let uuid = UUID()
         let executionStartTime = Date()
-        appContext?.logInspector?.log(.sqlite(message: LogMessages.perform_start(uuid, self).description), sender: self)
+        appContext.logInspector?.log(.sqlite(message: LogMessages.perform_start(uuid, self).description), sender: self)
         perform {
-            appContext?.logInspector?.log(.sqlite(message: LogMessages.perform_done(executionStartTime, uuid, self).description), sender: self)
+            appContext.logInspector?.log(.sqlite(message: LogMessages.perform_done(executionStartTime, uuid, self).description), sender: self)
             block(self)
         }
     }
@@ -32,16 +32,16 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return object(with: objectID)
     }
 
-    public func findOrCreateObject(appContext: ManagedObjectContextProtocol.Context?, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
+    public func findOrCreateObject(appContext: ManagedObjectContextProtocol.Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
         do {
             guard let foundObject = try lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
-                appContext?.logInspector?.log(.sqlite(message: LogMessages.select_fail(predicate, self).description), sender: self)
+                appContext.logInspector?.log(.sqlite(message: LogMessages.select_fail(predicate, self).description), sender: self)
                 return insertNewObject(appContext: appContext, forType: modelClass)
             }
-            appContext?.logInspector?.log(.sqlite(message: LogMessages.select_done(predicate, self).description), sender: self)
+            appContext.logInspector?.log(.sqlite(message: LogMessages.select_done(predicate, self).description), sender: self)
             return foundObject
         } catch {
-            appContext?.logInspector?.log(.error(error), sender: self)
+            appContext.logInspector?.log(.error(error), sender: self)
             return nil
         }
     }
@@ -52,7 +52,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return hasChanges
     }
 
-    public func save(appContext: ManagedObjectContextSaveProtocol.Context?, completion block: @escaping ThrowableCompletion) {
+    public func save(appContext: ManagedObjectContextSaveProtocol.Context, completion block: @escaping ThrowableCompletion) {
         guard hasChanges else {
             perform { block(nil) }
             return
@@ -66,22 +66,22 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         }
 
         let executionStartTime = Date()
-        appContext?.logInspector?.log(.sqlite(message: LogMessages.perform4Save_start(self).description), sender: self)
+        appContext.logInspector?.log(.sqlite(message: LogMessages.perform4Save_start(self).description), sender: self)
 
         perform {
             self._save(appContext: appContext) { error in
-                appContext?.logInspector?.log(.sqlite(message: LogMessages.perform4Save_done(executionStartTime, self).description), sender: self)
+                appContext.logInspector?.log(.sqlite(message: LogMessages.perform4Save_done(executionStartTime, self).description), sender: self)
                 block(error)
             }
         }
     }
 
-    private func _save(appContext: ManagedObjectContextSaveProtocol.Context?, completion block: @escaping ThrowableCompletion) {
+    private func _save(appContext: ManagedObjectContextSaveProtocol.Context, completion block: @escaping ThrowableCompletion) {
         let executionStartTime = Date()
         do {
-            appContext?.logInspector?.log(.sqlite(message: LogMessages.save_start(self).description), sender: self)
+            appContext.logInspector?.log(.sqlite(message: LogMessages.save_start(self).description), sender: self)
             try save()
-            appContext?.logInspector?.log(.sqlite(message: LogMessages.save_done(executionStartTime, self).description), sender: self)
+            appContext.logInspector?.log(.sqlite(message: LogMessages.save_done(executionStartTime, self).description), sender: self)
 
             if let parent = parent {
                 parent.save(appContext: appContext, completion: block)
@@ -89,7 +89,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
                 block(nil)
             }
         } catch {
-            appContext?.logInspector?.log(.sqlite(message: LogMessages.save_fail(executionStartTime, self).description), sender: self)
+            appContext.logInspector?.log(.sqlite(message: LogMessages.save_fail(executionStartTime, self).description), sender: self)
         }
     }
 
@@ -132,11 +132,11 @@ extension NSManagedObjectContext {
         return try fetch(request).last as? ManagedObjectProtocol
     }
 
-    private func insertNewObject<T>(appContext: Context?, forType: AnyObject) -> T? {
-        appContext?.logInspector?.log(.sqlite(message: LogMessages.insert_start(forType).description), sender: self)
+    private func insertNewObject<T>(appContext: Context, forType: AnyObject) -> T? {
+        appContext.logInspector?.log(.sqlite(message: LogMessages.insert_start(forType).description), sender: self)
         let result = NSEntityDescription.insertNewObject(forEntityName: String(describing: forType), into: self) as? T
         let endMessage = (result == nil) ? LogMessages.insert_fail(forType) : LogMessages.insert_done(forType)
-        appContext?.logInspector?.log(.sqlite(message: endMessage.description), sender: self)
+        appContext.logInspector?.log(.sqlite(message: endMessage.description), sender: self)
         return result
     }
 

@@ -9,9 +9,9 @@
 
 class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: Context?
+    private let appContext: Context
 
-    required init(appContext: Context?) {
+    required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -43,11 +43,11 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleprofileAmmoError.noPenetration), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noPenetration), sender: self)
         }
 
         // MARK: - Damage
@@ -70,11 +70,11 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
         }
     }
 }

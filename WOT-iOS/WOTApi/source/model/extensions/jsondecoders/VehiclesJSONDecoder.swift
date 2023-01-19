@@ -9,9 +9,9 @@
 
 class VehiclesJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: Context?
+    private let appContext: Context
 
-    required init(appContext: Context?) {
+    required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -52,15 +52,15 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     #warning("move out of Decoder")
                     JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                         if let error = error {
-                            self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                            self.appContext.logInspector?.log(.warning(error: error), sender: self)
                         }
                     })
                 } else {
-                    appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
+                    appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
                 }
             }
         } else {
-            appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
         }
 
         // MARK: - DefaultProfile
@@ -80,11 +80,11 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
         }
     }
 }

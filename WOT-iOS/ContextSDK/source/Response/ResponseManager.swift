@@ -24,17 +24,11 @@ public protocol ResponseManagerProtocol: ListenerListContainerProtocol {
 
 open class ResponseManager: ResponseManagerProtocol {
 
-    public typealias Context = LogInspectorContainerProtocol
-        & DataStoreContainerProtocol
-        & RequestManagerContainerProtocol
-        & RequestRegistratorContainerProtocol
-        & DecoderManagerContainerProtocol
-
-    private let appContext: Context
+    private let appContext: ResponseConfigurationProtocol.Context
 
     private let listeners = ResponseManagerListenerList()
 
-    public init(appContext: Context) {
+    public init(appContext: ResponseConfigurationProtocol.Context) {
         self.appContext = appContext
     }
 

@@ -9,9 +9,9 @@
 
 class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: Context?
+    private let appContext: Context
 
-    required init(appContext: Context?) {
+    required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -38,8 +38,8 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
         if let radio_id = element?[#keyPath(VehicleprofileModule.radio_id)] {
@@ -57,8 +57,8 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
         if let engine_id = element?[#keyPath(VehicleprofileModule.engine_id)] {
@@ -76,8 +76,8 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
         if let suspension_id = element?[#keyPath(VehicleprofileModule.suspension_id)] {
@@ -95,8 +95,8 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
         if let turret_id = element?[#keyPath(VehicleprofileModule.turret_id)] {
@@ -114,8 +114,8 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         }
     }
 }

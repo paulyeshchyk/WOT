@@ -19,7 +19,7 @@ public protocol ManagedObjectLinkerProtocol: MD5Protocol {
     var fetchResult: FetchResultProtocol? { get set }
     var completion: ManagedObjectLinkerCompletion? { get set }
 
-    init(appContext: Context?)
+    init(appContext: Context)
     func run() throws
 }
 

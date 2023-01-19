@@ -24,7 +24,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     // MARK: DataAdapterProtocol -
 
     private let uuid = UUID()
-    private let appContext: Context?
+    private let appContext: Context
 
     public let modelClass: ModelClassType
     public var socket: JointSocketProtocol?
@@ -40,7 +40,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     }
 
     deinit {
-        appContext?.logInspector?.log(.destruction(type(of: self)), sender: self)
+        appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
     }
 
     // MARK: Open

@@ -80,7 +80,7 @@ public protocol JSONDecoderProtocol: AnyObject {
         & DecoderManagerContainerProtocol
 
     var managedObject: ManagedAndDecodableObjectType? { get set }
-    init(appContext: Context?)
+    init(appContext: Context)
     func decode(using: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws
 }
 

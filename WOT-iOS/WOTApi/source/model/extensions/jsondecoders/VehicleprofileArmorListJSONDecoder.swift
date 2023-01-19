@@ -9,9 +9,9 @@
 
 class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: Context?
+    private let appContext: Context
 
-    required init(appContext: Context?) {
+    required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -38,11 +38,11 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileArmorListError.turretNotFound), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileArmorListError.turretNotFound), sender: self)
         }
 
         // MARK: - hull
@@ -63,11 +63,11 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileArmorListError.hullNotFound), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileArmorListError.hullNotFound), sender: self)
         }
     }
 }

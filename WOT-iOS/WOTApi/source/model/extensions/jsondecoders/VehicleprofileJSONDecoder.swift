@@ -9,9 +9,9 @@
 
 class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: Context?
+    private let appContext: Context
 
-    required init(appContext: Context?) {
+    required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -49,11 +49,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noAmmoList(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noAmmoList(tank_id)), sender: self)
         }
 
         // MARK: - Armor
@@ -73,11 +73,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noArmor(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noArmor(tank_id)), sender: self)
         }
 
         // MARK: - Module
@@ -98,11 +98,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noModule(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noModule(tank_id)), sender: self)
         }
 
         // MARK: - Engine
@@ -124,11 +124,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noEngine(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noEngine(tank_id)), sender: self)
         }
 
         // MARK: - Gun
@@ -151,11 +151,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noGun(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noGun(tank_id)), sender: self)
         }
 
         // MARK: - Suspension
@@ -177,11 +177,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noSuspension(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noSuspension(tank_id)), sender: self)
         }
 
         // MARK: - Turret
@@ -203,11 +203,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
         }
 
         // MARK: - Radio
@@ -229,11 +229,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             #warning("move out of Decoder")
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
         }
     }
 }

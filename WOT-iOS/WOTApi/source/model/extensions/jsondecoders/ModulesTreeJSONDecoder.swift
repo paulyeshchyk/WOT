@@ -9,9 +9,9 @@
 
 class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: Context?
+    private let appContext: Context
 
-    required init(appContext: Context?) {
+    required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -67,10 +67,10 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
 
             #warning("move out of Decoder")
-            let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         } catch {
-            appContext?.logInspector?.log(.error(error), sender: self)
+            appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 
@@ -92,10 +92,10 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         } catch {
-            appContext?.logInspector?.log(.error(error), sender: self)
+            appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 
@@ -117,10 +117,10 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         } catch {
-            appContext?.logInspector?.log(.error(error), sender: self)
+            appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 

@@ -27,7 +27,7 @@ open class CoreDataStore: DataStore {
         guard let model = self.managedObjectModel else {
             abort()
         }
-        appContext?.logInspector?.log(.custom("sqlite url: \(String(describing: sqliteURL))"), sender: self)
+        appContext.logInspector?.log(.custom("sqlite url: \(String(describing: sqliteURL))"), sender: self)
 
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
         do {
@@ -142,14 +142,14 @@ extension CoreDataStore {
 
         let uuid = UUID()
         let executionStartTime = Date()
-        appContext?.logInspector?.log(.performance(name: "mergeStart", message: "operation: \(uuid.MD5), context: \(toContext.name ?? "")"), sender: self)
+        appContext.logInspector?.log(.performance(name: "mergeStart", message: "operation: \(uuid.MD5), context: \(toContext.name ?? "")"), sender: self)
 
         if toContext.hasChanges {
             do {
                 try toContext.save()
-                appContext?.logInspector?.log(.performance(name: "mergeEnd", message: "(\(Date().elapsed(from: executionStartTime))s) operation:\(uuid.MD5), context: \(toContext.name ?? "")"), sender: self)
+                appContext.logInspector?.log(.performance(name: "mergeEnd", message: "(\(Date().elapsed(from: executionStartTime))s) operation:\(uuid.MD5), context: \(toContext.name ?? "")"), sender: self)
             } catch {
-                appContext?.logInspector?.log(.error(CoreDataStoreError.contextNotSaved), sender: self)
+                appContext.logInspector?.log(.error(CoreDataStoreError.contextNotSaved), sender: self)
             }
         }
         toContext.processPendingChanges()

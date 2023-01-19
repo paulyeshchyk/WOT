@@ -9,8 +9,6 @@
 
 open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
-    public let appContext: Context?
-
     public var socket: JointSocketProtocol?
     public var fetchResult: FetchResultProtocol?
     public var completion: ManagedObjectLinkerCompletion?
@@ -19,9 +17,11 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
     private let uuid = UUID()
 
+    private let appContext: Context
+
     // MARK: Lifecycle
 
-    public required init(appContext: Context?) {
+    public required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -40,17 +40,17 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
                 }
 
                 managedObject.plug(pin: pin, intoSocket: socket)
-                appContext?.logInspector?.log(.info(name: "link", message: "finished with \(String(describing: socket))"), sender: self)
+                appContext.logInspector?.log(.info(name: "link", message: "finished with \(String(describing: socket))"), sender: self)
             } else {
-                appContext?.logInspector?.log(.info(name: "link", message: "failed: no pin found for socket: \(String(describing: socket))"), sender: self)
+                appContext.logInspector?.log(.info(name: "link", message: "failed: no pin found for socket: \(String(describing: socket))"), sender: self)
             }
         } else {
-            appContext?.logInspector?.log(.info(name: "link", message: "failed: no socket found"), sender: self)
+            appContext.logInspector?.log(.info(name: "link", message: "failed: no socket found"), sender: self)
         }
 
         // MARK: do stash if no error or even nothing was plugged
 
-        appContext?.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
+        appContext.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
             self.completion?(fetchResult, error)
         }
     }

@@ -12,13 +12,13 @@ class ManagedObjectLinkerHelper {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
 
-    let appContext: Context?
+    let appContext: Context
     var socket: JointSocketProtocol?
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
 
     // MARK: Lifecycle
 
-    init(appContext: Context?) {
+    init(appContext: Context) {
         self.appContext = appContext
     }
 

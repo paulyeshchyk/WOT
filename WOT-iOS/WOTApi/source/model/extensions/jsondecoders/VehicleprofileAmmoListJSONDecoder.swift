@@ -9,9 +9,9 @@
 
 class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: Context?
+    private let appContext: Context
 
-    required init(appContext: Context?) {
+    required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -38,7 +38,7 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
 
             JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
             })
         }
