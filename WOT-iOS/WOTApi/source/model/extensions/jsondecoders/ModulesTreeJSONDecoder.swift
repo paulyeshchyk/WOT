@@ -66,7 +66,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
 
-            let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
             try appContext?.requestManager?.startRequest(request!, listener: nil)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
@@ -90,7 +90,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
 
-            let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
 
             try appContext?.requestManager?.startRequest(request!, listener: nil)
         } catch {
@@ -115,7 +115,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
 
-            let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            let request = try appContext?.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
             try appContext?.requestManager?.startRequest(request!, listener: nil)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)

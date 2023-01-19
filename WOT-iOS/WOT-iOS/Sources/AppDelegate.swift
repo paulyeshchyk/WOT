@@ -13,6 +13,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var window: UIWindow?
 
     public var hostConfiguration: HostConfigurationProtocol?
+    public var requestRegistrator: RequestRegistratorProtocol?
     public var requestManager: RequestManagerProtocol?
     public var requestListener: RequestListenerProtocol?
     public var logInspector: LogInspectorProtocol?
@@ -28,7 +29,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
 
         hostConfiguration = WOTHostConfiguration()
         dataStore = WOTDataStore(appContext: self)
-        requestManager = WOTRequestManager(appContext: self)
+        requestManager = RequestManager(appContext: self)
+        requestRegistrator = WOTRequestRegistrator(appContext: self)
         decoderManager = WOTDecoderManager()
         responseManager = WOTResponseManager(appContext: self)
 

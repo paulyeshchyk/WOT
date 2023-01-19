@@ -11,6 +11,7 @@ public class JSONSyndicate {
 
     public typealias Context = DataStoreContainerProtocol
         & RequestManagerContainerProtocol
+        & RequestRegistratorContainerProtocol
         & LogInspectorContainerProtocol
         & DecoderManagerContainerProtocol
 

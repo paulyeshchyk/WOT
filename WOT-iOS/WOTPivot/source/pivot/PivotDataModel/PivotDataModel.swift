@@ -17,7 +17,10 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         return [rootFilterNode, rootColsNode, rootRowsNode, rootDataNode]
     }
 
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
+        & RequestRegistratorContainerProtocol
+        & RequestManagerContainerProtocol
 
     public lazy var dimension: PivotNodeDimensionProtocol = {
         let result = PivotNodeDimension(rootNodeHolder: self)

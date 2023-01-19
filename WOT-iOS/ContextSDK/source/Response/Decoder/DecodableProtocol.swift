@@ -71,9 +71,10 @@ public class DecodingDepthLevel: NSObject, RawRepresentable {
 
 @objc
 public protocol JSONDecoderProtocol: AnyObject {
-    typealias Context = DataStoreContainerProtocol
+    typealias Context = LogInspectorContainerProtocol
         & RequestManagerContainerProtocol
-        & LogInspectorContainerProtocol
+        & RequestRegistratorContainerProtocol
+        & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
 
     var managedObject: ManagedAndDecodableObjectType? { get set }

@@ -27,6 +27,7 @@ open class ResponseManager: ResponseManagerProtocol {
     public typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestManagerContainerProtocol
+        & RequestRegistratorContainerProtocol
         & DecoderManagerContainerProtocol
 
     private let appContext: Context
@@ -52,12 +53,12 @@ open class ResponseManager: ResponseManagerProtocol {
             listeners.responseManager(self, didParseDataForRequest: request, error: error)
         }
     }
-
 }
 
 // MARK: - ResponseManager + ListenerListContainerProtocol
 
 extension ResponseManager {
+    //
     public func removeListener(_ listener: ResponseManagerListener, forRequest: RequestProtocol) {
         listeners.removeListener(listener, forRequest: forRequest)
     }
@@ -69,7 +70,6 @@ extension ResponseManager {
     public func removeListener(_ listener: ResponseManagerListener) {
         listeners.removeListener(listener)
     }
-
 }
 
 // MARK: - %t + ResponseManager.Errors

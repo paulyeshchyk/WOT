@@ -12,6 +12,7 @@ public protocol ResponseConfigurationProtocol {
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
         & RequestManagerContainerProtocol
+        & RequestRegistratorContainerProtocol
 
     func handleData(_ data: Data?, fromRequest: RequestProtocol, forService: RequestModelServiceProtocol, inAppContext: Context, completion: WorkWithDataCompletion?)
 

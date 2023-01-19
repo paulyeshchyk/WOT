@@ -16,7 +16,8 @@ public protocol ContextProtocol: LogInspectorContainerProtocol,
     RequestManagerContainerProtocol,
     ResponseManagerContainerProtocol,
     RequestListenerContainerProtocol,
-    DecoderManagerContainerProtocol {}
+    DecoderManagerContainerProtocol,
+    RequestRegistratorContainerProtocol {}
 
 // MARK: - ContextControllerProtocol
 

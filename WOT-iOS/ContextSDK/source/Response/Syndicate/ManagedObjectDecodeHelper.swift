@@ -11,6 +11,7 @@ class ManagedObjectDecodeHelper {
 
     typealias Context = DataStoreContainerProtocol
         & RequestManagerContainerProtocol
+        & RequestRegistratorContainerProtocol
         & LogInspectorContainerProtocol
         & DecoderManagerContainerProtocol
 
