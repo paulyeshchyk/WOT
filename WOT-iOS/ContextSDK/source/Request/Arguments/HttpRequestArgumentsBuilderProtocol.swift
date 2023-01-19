@@ -18,7 +18,7 @@ public protocol RequestArgumentsBuilderProtocol: MD5Protocol {
 public protocol HttpRequestArgumentsBuilderProtocol: RequestArgumentsBuilderProtocol {
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
-    var modelClass: ModelClassType { get }
+    var keyPaths: [String]? { get set }
     var contextPredicate: ContextPredicateProtocol? { get set }
     var keypathPrefix: String? { get set }
     var httpQueryItemName: String? { get set }

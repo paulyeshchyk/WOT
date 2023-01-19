@@ -31,6 +31,8 @@ open class Request: RequestProtocol, CustomStringConvertible {
         arguments?.contextPredicate
     }
 
+    public var responseConfiguration: ResponseConfigurationProtocol?
+
     public var arguments: RequestArgumentsProtocol?
 
     public var MD5: String { uuid.MD5 }

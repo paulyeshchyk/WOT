@@ -27,28 +27,41 @@ public class WOTWEBRequestFactory: NSObject {
     // MARK: Public
 
     public static func fetchVehiclePivotData(appContext: WOTWEBRequestFactory.Context, listener: RequestManagerListenerProtocol) throws {
-        guard let request = try appContext.requestManager?.createRequest(modelClass: Vehicles.self, contextPredicate: nil) else {
+        //
+        let modelClass = Vehicles.self
+
+        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+        httpJSONResponseConfiguration.socket = nil
+        httpJSONResponseConfiguration.extractor = VehiclesPivotManagedObjectExtractor()
+
+        let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
+        httpRequestConfiguration.modelFieldKeyPaths = modelClass.dataFieldsKeypaths()
+        httpRequestConfiguration.composer = nil
+
+        guard let request = try appContext.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
 
-        let extractor = VehiclesPivotManagedObjectExtractor()
-        let linker = ManagedObjectLinker(modelClass: Vehicles.self)
-        try appContext.requestManager?.startRequest(request, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: listener)
+        try appContext.requestManager?.startRequest(request, listener: listener)
     }
 
     @objc
     public static func fetchVehicleTreeData(vehicleId: Int, appContext: DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
+        //
         let modelClass = Vehicles.self
-        let contextPredicate = ContextPredicate()
-        contextPredicate[.primary] = modelClass.primaryKey(forType: .internal, andObject: vehicleId)
 
-        guard let request = try appContext.requestManager?.createRequest(modelClass: modelClass, contextPredicate: contextPredicate) else {
+        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+        httpJSONResponseConfiguration.socket = nil
+        httpJSONResponseConfiguration.extractor = VehiclesTreeManagedObjectExtractor()
+
+        let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
+        httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
+        httpRequestConfiguration.composer = VehicleTreeRuleBuilder(modelClass: modelClass, vehicleId: vehicleId)
+
+        guard let request = try appContext.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
-        let extractor = VehiclesTreeManagedObjectExtractor()
-        let managedObjectLinker = ManagedObjectLinker(modelClass: Vehicles.self)
-
-        try appContext.requestManager?.startRequest(request, managedObjectLinker: managedObjectLinker, managedObjectExtractor: extractor, listener: listener)
+        try appContext.requestManager?.startRequest(request, listener: listener)
     }
 
     @objc

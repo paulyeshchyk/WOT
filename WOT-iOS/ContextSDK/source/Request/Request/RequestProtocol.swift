@@ -20,6 +20,8 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     var arguments: RequestArgumentsProtocol? { get set }
     var decodingDepthLevel: DecodingDepthLevel? { get set }
 
+    var responseConfiguration: ResponseConfigurationProtocol? { get set }
+
     // MARK: to be moved out from protocol
 
     var httpQueryItemName: String? { get }

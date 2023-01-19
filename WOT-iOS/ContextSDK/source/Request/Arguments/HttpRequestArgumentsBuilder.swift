@@ -7,7 +7,7 @@
 
 public class HttpRequestArgumentsBuilder: NSObject, HttpRequestArgumentsBuilderProtocol {
 
-    public let modelClass: ModelClassType
+    public var keyPaths: [String]?
     public var contextPredicate: ContextPredicateProtocol?
     public var keypathPrefix: String?
     public var httpQueryItemName: String?
@@ -15,8 +15,7 @@ public class HttpRequestArgumentsBuilder: NSObject, HttpRequestArgumentsBuilderP
     // MARK: - NSObject
 
     override public var description: String {
-        let result: String = "RequestArguments: \(type(of: modelClass))"
-        return result
+        return "\(type(of: self))"
     }
 
     public var MD5: String { uuid.MD5 }
@@ -25,12 +24,6 @@ public class HttpRequestArgumentsBuilder: NSObject, HttpRequestArgumentsBuilderP
 
     private let uuid = UUID()
 
-    // MARK: Lifecycle
-
-    public init(modelClass T: ModelClassType) {
-        modelClass = T.self
-    }
-
     // MARK: Public
 
     public func build() -> RequestArgumentsProtocol {
@@ -38,9 +31,9 @@ public class HttpRequestArgumentsBuilder: NSObject, HttpRequestArgumentsBuilderP
         let arguments = RequestArguments()
         arguments.contextPredicate = contextPredicate
 
-        let keyPaths = modelClass.fieldsKeypaths().compactMap {
+        let keyPaths = keyPaths?.compactMap {
             self.addPreffix(keypathPrefix: keypathPrefix, to: $0)
-        }
+        } ?? []
 
         if let httpQueryItemName = httpQueryItemName {
             arguments.setValues(keyPaths, forKey: httpQueryItemName)

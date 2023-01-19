@@ -117,14 +117,16 @@ public class ModuleDecoder {
             return
         }
 
-        let modelClass = pin.modelClass
-        let linker = ManagedObjectLinker(modelClass: modelClass)
-        linker.socket = socket
-        let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
-        let composition = try composer.buildRequestPredicateComposition()
+        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: pin.modelClass)
+        httpJSONResponseConfiguration.socket = socket
+        httpJSONResponseConfiguration.extractor = extractor
 
-        let request = try appContext?.requestManager?.createRequest(modelClass: modelClass, contextPredicate: composition.contextPredicate)
-        try appContext?.requestManager?.startRequest(request!, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+        let httpRequestConfiguration = HttpRequestConfiguration(modelClass: pin.modelClass)
+        httpRequestConfiguration.modelFieldKeyPaths = pin.modelClass.fieldsKeypaths()
+        httpRequestConfiguration.composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
+
+        let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+        try appContext?.requestManager?.startRequest(request!, listener: self)
     }
 }
 

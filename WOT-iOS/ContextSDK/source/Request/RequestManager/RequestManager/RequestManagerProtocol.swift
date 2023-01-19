@@ -9,11 +9,12 @@
 
 @objc
 public protocol RequestManagerProtocol {
+
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
-    func createRequest(modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol?) throws -> RequestProtocol
+    func buildRequest(requestConfiguration: RequestConfigurationProtocol, responseConfiguration: ResponseConfigurationProtocol) throws -> RequestProtocol
 
-    func startRequest(_ request: RequestProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
+    func startRequest(_ request: RequestProtocol, listener: RequestManagerListenerProtocol?) throws
 
     func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol)
 

@@ -17,7 +17,7 @@ public protocol ResponseManagerContainerProtocol {
 @objc
 public protocol ResponseManagerProtocol: ListenerListContainerProtocol {
 
-    func startWorkingOn(_ request: RequestProtocol, withData: Data?, linker: ManagedObjectLinkerProtocol?, extractor: ManagedObjectExtractable?)
+    func startWorkingOn(_ request: RequestProtocol, withData: Data?)
 }
 
 // MARK: - ResponseManager
@@ -37,26 +37,17 @@ open class ResponseManager: ResponseManagerProtocol {
         self.appContext = appContext
     }
 
-    public func startWorkingOn(_ request: RequestProtocol, withData data: Data?, linker: ManagedObjectLinkerProtocol?, extractor: ManagedObjectExtractable?) {
+    public func startWorkingOn(_ request: RequestProtocol, withData data: Data?) {
         do {
             guard let modelService = request as? RequestModelServiceProtocol else {
                 throw Errors.modelNotFound(request)
             }
 
-            guard let modelClass = type(of: modelService).modelClass() else {
-                throw Errors.modelNotFound(request)
-            }
-
             listeners.responseManager(self, didStartRequest: request)
 
-            let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext, modelClass: modelClass)
-            dataAdapter.request = request
-            dataAdapter.linker = linker
-            dataAdapter.extractor = extractor
-            dataAdapter.completion = { request, error in
+            request.responseConfiguration?.handleData(data, fromRequest: request, forService: modelService, inAppContext: appContext, completion: { request, error in
                 self.listeners.responseManager(self, didParseDataForRequest: request, error: error)
-            }
-            dataAdapter.decode(data: data, fromRequest: request)
+            })
         } catch {
             listeners.responseManager(self, didParseDataForRequest: request, error: error)
         }

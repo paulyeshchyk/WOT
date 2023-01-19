@@ -19,6 +19,9 @@ public protocol RequestRegistratorProtocol {
 
     func requestId(forModelClass: ModelClassType) throws -> RequestIdType
     func requestClass(for requestId: RequestIdType) -> RequestModelServiceProtocol.Type?
+
+    func createRequest(forModelClass: ModelClassType) throws -> RequestProtocol
     func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol
+
     func registerServiceClass(_ serviceClass: RequestModelServiceProtocol.Type) throws
 }

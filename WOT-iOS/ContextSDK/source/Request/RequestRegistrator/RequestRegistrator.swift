@@ -60,6 +60,11 @@ public extension RequestRegistrator {
         }
         return Clazz.init(context: context)
     }
+
+    func createRequest(forModelClass: ModelClassType) throws -> RequestProtocol {
+        let requestID = try requestId(forModelClass: forModelClass)
+        return try createRequest(forRequestId: requestID)
+    }
 }
 
 // MARK: - %t + RequestRegistrator.Errors
