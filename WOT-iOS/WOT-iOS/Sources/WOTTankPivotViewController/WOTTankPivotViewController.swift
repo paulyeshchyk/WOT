@@ -165,7 +165,11 @@ typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void
 @objc(WOTTankPivotViewController)
 class WOTTankPivotViewController: PivotViewController {
 
-    typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & DataStoreContainerProtocol
+    typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
+        & RequestRegistratorContainerProtocol
+        & RequestManagerContainerProtocol
+        & DataStoreContainerProtocol
 
     static var registeredCells: [UICollectionViewCell.Type] = {
         return [WOTTankPivotDataCollectionViewCell.self,

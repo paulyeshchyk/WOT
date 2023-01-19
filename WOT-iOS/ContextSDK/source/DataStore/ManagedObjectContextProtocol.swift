@@ -16,6 +16,7 @@ public protocol ManagedObjectContextContainerProtocol {
 
 @objc
 public protocol ManagedObjectContextProtocol: ManagedObjectContextLookupProtocol, ManagedObjectContextSaveProtocol {
+
     var name: String? { get }
 }
 
@@ -23,19 +24,23 @@ public protocol ManagedObjectContextProtocol: ManagedObjectContextLookupProtocol
 
 @objc
 public protocol ManagedObjectContextLookupProtocol: AnyObject {
+
     typealias Context = LogInspectorContainerProtocol
+
     func object(managedRef: ManagedRefProtocol?) throws -> ManagedObjectProtocol
-    func findOrCreateObject(appContext: Context?, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol?
-    func execute(appContext: Context?, with: @escaping (ManagedObjectContextProtocol) -> Void)
+    func findOrCreateObject(appContext: Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol?
+    func execute(appContext: Context, with: @escaping (ManagedObjectContextProtocol) -> Void)
 }
 
 // MARK: - ManagedObjectContextSaveProtocol
 
 @objc
 public protocol ManagedObjectContextSaveProtocol: AnyObject {
+
     typealias Context = LogInspectorContainerProtocol
+
     func hasTheChanges() -> Bool
-    func save(appContext: Context?, completion block: @escaping ThrowableCompletion)
+    func save(appContext: Context, completion block: @escaping ThrowableCompletion)
 }
 
 // MARK: - ManagedObjectContextDeleteProtocol
