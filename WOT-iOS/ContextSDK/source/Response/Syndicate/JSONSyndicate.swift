@@ -50,18 +50,16 @@ class JSONSyndicate {
         jsonMapCreator.modelClass = modelClass
         jsonMapCreator.extractor = extractor
         jsonMapCreator.contextPredicate = request.contextPredicate
-        jsonMapCreator.completion = { result in
-            if let error = result.error {
-                self.completion?(self.request, error)
+        jsonMapCreator.completion = { jsonMaps, error in
+            if let err = error {
+                self.completion?(self.request, err)
             } else {
                 MOSyndicate.fetch_decode_link(appContext: self.appContext,
-                                              jsonMap: result.map,
+                                              jsonMaps: jsonMaps,
                                               modelClass: modelClass,
                                               socket: self.socket,
                                               decodingDepthLevel: self.request.decodingDepthLevel) { _, error in
-                    if result.completed {
-                        self.completion?(self.request, error)
-                    }
+                    self.completion?(self.request, error)
                 }
             }
         }

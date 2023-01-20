@@ -11,15 +11,9 @@ class JSONMapHelper {
 
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
-    struct JSOMMapHelperResult {
-        let map: JSONMapProtocol?
-        let error: Error?
-        let completed: Bool
-    }
-
     let appContext: ResponseConfigurationProtocol.Context
     var extractor: ManagedObjectExtractable?
-    var completion: ((JSOMMapHelperResult) -> Void)?
+    var completion: (([JSONMapProtocol]?, Error?) -> Void)?
     var modelClass: ModelClassType?
     var contextPredicate: ContextPredicateProtocol?
 
@@ -34,30 +28,19 @@ class JSONMapHelper {
 
     func run(json: JSON?, error: Error?) {
         guard error == nil else {
-            let result = JSOMMapHelperResult(map: nil, error: error, completed: false)
-            completion?(result)
+            completion?(nil, error)
             return
         }
         guard let json = json else {
-            let result = JSOMMapHelperResult(map: nil, error: Errors.jsonIsNil, completed: false)
-            completion?(result)
+            completion?(nil, Errors.jsonIsNil)
             return
         }
         guard let modelClass = modelClass else {
-            let result = JSOMMapHelperResult(map: nil, error: Errors.modelClassIsNil, completed: false)
-            completion?(result)
+            completion?(nil, Errors.modelClassIsNil)
             return
         }
-        let extractedMaps = extractor?.getJSONMaps(json: json, modelClass: modelClass, jsonRefs: contextPredicate?.jsonRefs)
-        guard let maps = extractedMaps else {
-            let result = JSOMMapHelperResult(map: nil, error: Errors.mapsAreNotCreated, completed: false)
-            completion?(result)
-            return
-        }
-        for (index, map) in maps.enumerated() {
-            let result = JSOMMapHelperResult(map: map, error: nil, completed: index == (maps.count - 1))
-            completion?(result)
-        }
+        let maps = extractor?.getJSONMaps(json: json, modelClass: modelClass, jsonRefs: contextPredicate?.jsonRefs)
+        completion?(maps, (maps == nil) ? Errors.mapsAreNotCreated : nil)
     }
 }
 

@@ -38,6 +38,22 @@ public class MOSyndicate {
 
 extension MOSyndicate {
 
+    public static func fetch_decode_link(appContext: Context, jsonMaps: [JSONMapProtocol]?, modelClass: ModelClassType?, socket: JointSocketProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
+        guard let jsonMaps = jsonMaps else {
+            completion(nil, Errors.noMapsProvided)
+            return
+        }
+
+        for (index, map) in jsonMaps.enumerated() {
+            MOSyndicate.fetch_decode_link(appContext: appContext, jsonMap: map, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel) { _, _ in
+                let completed = (index == jsonMaps.count - 1)
+                if completed {
+                    completion(nil, nil)
+                }
+            }
+        }
+    }
+
     public static func fetch_decode_link(appContext: Context, jsonMap: JSONMapProtocol?, modelClass: ModelClassType?, socket: JointSocketProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
         guard decodingDepthLevel?.maxReached() ?? false else {
             completion(nil, Errors.reachedMaxDecodingDepthLevel)
@@ -72,11 +88,13 @@ extension MOSyndicate {
     private enum Errors: Error, CustomStringConvertible {
         case jsonExtractorIsNotPresented
         case reachedMaxDecodingDepthLevel
+        case noMapsProvided
 
         public var description: String {
             switch self {
             case .jsonExtractorIsNotPresented: return "\(type(of: self)): json extrator is not presented"
             case .reachedMaxDecodingDepthLevel: return "\(type(of: self)): Reached max decoding depth level"
+            case .noMapsProvided: return "\(type(of: self)): No maps provided"
             }
         }
     }
