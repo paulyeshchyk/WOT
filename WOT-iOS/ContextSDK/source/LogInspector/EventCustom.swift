@@ -84,6 +84,10 @@ extension Loggable {
         Loggable(type: .info, message: message)
     }
 
+    public static func error(_ message: String) -> Loggable {
+        Loggable(type: .error, message: message)
+    }
+
     public static func error(_ error: Error?) -> Loggable {
         Loggable(type: .error, message: String(describing: error ?? LoggableError.notAnError))
     }

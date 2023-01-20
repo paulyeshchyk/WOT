@@ -33,6 +33,11 @@ class WEBSyndicate {
     // MARK: Internal
 
     func run(data: Data?) {
+        guard decodeDepthLevel?.maxReached() ?? true else {
+            completion?(request, Errors.reachedMaxDecodingDepthLevel)
+            return
+        }
+
         guard let modelService = modelService else {
             completion?(request, Errors.modelServiceIsNotDefined)
             return
@@ -49,12 +54,12 @@ class WEBSyndicate {
             if let error = result.error {
                 self.completion?(self.request, error)
             } else {
-                JSONSyndicate.decodeAndLink(appContext: self.appContext,
-                                            jsonMap: result.map,
-                                            modelClass: modelClass,
-                                            socket: self.socket,
-                                            decodingDepthLevel:
-                                            self.request.decodingDepthLevel) { _, error in
+                JSONSyndicate.fetch_decode_link(appContext: self.appContext,
+                                                jsonMap: result.map,
+                                                modelClass: modelClass,
+                                                socket: self.socket,
+                                                decodingDepthLevel:
+                                                self.request.decodingDepthLevel) { _, error in
                     if result.completed {
                         self.completion?(self.request, error)
                     }
@@ -75,8 +80,20 @@ class WEBSyndicate {
 // MARK: - %t + WEBSyndicate.Errors
 
 extension WEBSyndicate {
-    enum Errors: Error {
+    // Errors
+    private enum Errors: Error, CustomStringConvertible {
         case modelServiceIsNotDefined
         case requestIsNotDefined
+        case jsonExtractorIsNotPresented
+        case reachedMaxDecodingDepthLevel
+
+        public var description: String {
+            switch self {
+            case .modelServiceIsNotDefined: return "\(type(of: self)): model service is not presented"
+            case .requestIsNotDefined: return "\(type(of: self)): request is not presented"
+            case .jsonExtractorIsNotPresented: return "\(type(of: self)): json extrator is not presented"
+            case .reachedMaxDecodingDepthLevel: return "\(type(of: self)): Reached max decoding depth level"
+            }
+        }
     }
 }

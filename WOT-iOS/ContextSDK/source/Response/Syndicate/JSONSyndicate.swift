@@ -24,7 +24,6 @@ public class JSONSyndicate {
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var jsonMap: JSONMapProtocol?
     var socket: JointSocketProtocol?
-    var decodeDepthLevel: DecodingDepthLevel?
 
     // MARK: Lifecycle
 
@@ -34,9 +33,14 @@ public class JSONSyndicate {
 
     // MARK: Internal
 
-    func run() {
-        guard decodeDepthLevel?.maxReached() ?? false else {
-            completion?(nil, Errors.reachedMaxDecodingDepthLevel)
+    func run() {}
+}
+
+extension JSONSyndicate {
+
+    public static func fetch_decode_link(appContext: Context, jsonMap: JSONMapProtocol?, modelClass: ModelClassType?, socket: JointSocketProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
+        guard decodingDepthLevel?.maxReached() ?? false else {
+            completion(nil, Errors.reachedMaxDecodingDepthLevel)
             return
         }
 
@@ -58,23 +62,6 @@ public class JSONSyndicate {
         }
 
         datastoreFetchHelper.run()
-    }
-}
-
-extension JSONSyndicate {
-
-    public static func decodeAndLink(appContext: Context, jsonMap: JSONMapProtocol?, modelClass: ModelClassType?, socket: JointSocketProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
-        //
-        let jsonSyndicate = JSONSyndicate(appContext: appContext)
-        jsonSyndicate.modelClass = modelClass
-        jsonSyndicate.jsonMap = jsonMap
-        jsonSyndicate.socket = socket
-        jsonSyndicate.decodeDepthLevel = decodingDepthLevel
-
-        jsonSyndicate.completion = { fetchResult, error in
-            completion(fetchResult, error)
-        }
-        jsonSyndicate.run()
     }
 }
 

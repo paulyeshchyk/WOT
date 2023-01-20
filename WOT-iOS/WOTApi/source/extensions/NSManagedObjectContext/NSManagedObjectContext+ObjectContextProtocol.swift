@@ -35,7 +35,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
     public func findOrCreateObject(appContext: ManagedObjectContextProtocol.Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
         do {
             guard let foundObject = try lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
-                appContext.logInspector?.log(.sqlite(message: LogMessages.select_fail(predicate, self).description), sender: self)
+                appContext.logInspector?.log(.error(LogMessages.select_fail(modelClass, predicate, self).description), sender: self)
                 return insertNewObject(appContext: appContext, forType: modelClass)
             }
             appContext.logInspector?.log(.sqlite(message: LogMessages.select_done(predicate, self).description), sender: self)
@@ -166,7 +166,7 @@ private enum LogMessages: CustomStringConvertible {
     case perform_done(Date, UUID, NSManagedObjectContext)
     case perform4Save_start(NSManagedObjectContext)
     case perform4Save_done(Date, NSManagedObjectContext)
-    case select_fail(NSPredicate?, NSManagedObjectContext)
+    case select_fail(AnyObject, NSPredicate?, NSManagedObjectContext)
     case select_done(NSPredicate?, NSManagedObjectContext)
     case save_start(NSManagedObjectContext)
     case save_done(Date, NSManagedObjectContext)
@@ -182,7 +182,7 @@ private enum LogMessages: CustomStringConvertible {
         case .perform4Save_start(let context): return "perform_for_save-start; in: \(context.name ?? "<unknown>"))"
         case .perform4Save_done(let date, let context): return "perform_for_save-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
         case .select_done(let predicate, let context): return "select done; predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
-        case .select_fail(let predicate, let context): return "select fail; predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
+        case .select_fail(let clazz, let predicate, let context): return "select fail; entity: \(type(of: clazz)), predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
         case .save_start(let context): return "save-start; in: \(context.name ?? "<unknown>")"
         case .save_done(let date, let context): return "save-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
         case .save_fail(let date, let context): return "save-fail; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"

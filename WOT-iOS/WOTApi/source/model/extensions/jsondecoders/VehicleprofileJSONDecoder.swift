@@ -47,7 +47,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -71,7 +71,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -96,7 +96,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -122,7 +122,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -149,7 +149,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -175,7 +175,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -201,7 +201,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -227,7 +227,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            JSONSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }
