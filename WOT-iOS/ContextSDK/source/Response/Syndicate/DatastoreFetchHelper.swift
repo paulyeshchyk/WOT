@@ -25,7 +25,12 @@ class DatastoreFetchHelper {
 
     // MARK: Internal
 
-    func run() {
+    func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
+        if let incomingError = error {
+            completion?(nil, incomingError)
+            return
+        }
+
         guard let modelClass = modelClass else {
             completion?(nil, Errors.modelClassIsNotDefined)
             return

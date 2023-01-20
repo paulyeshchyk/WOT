@@ -50,7 +50,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     let decodingDepthLevel = forDepthLevel?.next
 
                     #warning("move out of Decoder")
-                    JSONSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+                    MOSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                         if let error = error {
                             self.appContext.logInspector?.log(.warning(error: error), sender: self)
                         }
@@ -78,7 +78,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             let decodingDepthLevel = forDepthLevel?.next
 
             #warning("move out of Decoder")
-            JSONSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            MOSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }

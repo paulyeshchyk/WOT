@@ -23,7 +23,7 @@ public class HttpJSONResponseConfiguration: NSObject, ResponseConfigurationProto
 
     public func handleData(_ data: Data?, fromRequest request: RequestProtocol, forService modelService: RequestModelServiceProtocol, inAppContext appContext: Context, completion: WorkWithDataCompletion?) {
         //
-        let webSyndicate = WEBSyndicate(appContext: appContext, request: request)
+        let webSyndicate = JSONSyndicate(appContext: appContext, request: request)
         webSyndicate.modelService = modelService
         webSyndicate.extractor = extractor
         webSyndicate.completion = completion

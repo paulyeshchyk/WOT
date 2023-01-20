@@ -36,7 +36,7 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            JSONSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
+            MOSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.warning(error: error), sender: self)
                 }

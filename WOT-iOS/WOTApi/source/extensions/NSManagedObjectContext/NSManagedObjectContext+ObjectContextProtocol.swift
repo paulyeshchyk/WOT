@@ -38,7 +38,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
                 appContext.logInspector?.log(.error(LogMessages.select_fail(modelClass, predicate, self).description), sender: self)
                 return insertNewObject(appContext: appContext, forType: modelClass)
             }
-            appContext.logInspector?.log(.sqlite(message: LogMessages.select_done(predicate, self).description), sender: self)
+            appContext.logInspector?.log(.sqlite(message: LogMessages.select_done(predicate, self, foundObject).description), sender: self)
             return foundObject
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
@@ -125,9 +125,14 @@ extension NSManagedObjectContext {
     typealias Context = LogInspectorContainerProtocol
 
     private func lastObject(modelClass: AnyObject, predicate: NSPredicate?, includeSubentities: Bool) throws -> ManagedObjectProtocol? {
+        guard let nspredicate = predicate else {
+            assertionFailure("no predicate")
+            return nil
+        }
+
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: modelClass))
         request.fetchLimit = 1
-        request.predicate = predicate
+        request.predicate = nspredicate
         request.includesSubentities = includeSubentities
         return try fetch(request).last as? ManagedObjectProtocol
     }
@@ -167,7 +172,7 @@ private enum LogMessages: CustomStringConvertible {
     case perform4Save_start(NSManagedObjectContext)
     case perform4Save_done(Date, NSManagedObjectContext)
     case select_fail(AnyObject, NSPredicate?, NSManagedObjectContext)
-    case select_done(NSPredicate?, NSManagedObjectContext)
+    case select_done(NSPredicate?, NSManagedObjectContext, ManagedObjectProtocol?)
     case save_start(NSManagedObjectContext)
     case save_done(Date, NSManagedObjectContext)
     case save_fail(Date, NSManagedObjectContext)
@@ -181,7 +186,7 @@ private enum LogMessages: CustomStringConvertible {
         case .perform_done(let date, let uuid, let context): return "perform-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>"), operation: \(uuid.MD5)"
         case .perform4Save_start(let context): return "perform_for_save-start; in: \(context.name ?? "<unknown>"))"
         case .perform4Save_done(let date, let context): return "perform_for_save-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
-        case .select_done(let predicate, let context): return "select done; predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
+        case .select_done(let predicate, let context, let object): return "select done; found [\(String(describing: object, orValue: "<NULL>"))] by predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
         case .select_fail(let clazz, let predicate, let context): return "select fail; entity: \(type(of: clazz)), predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
         case .save_start(let context): return "save-start; in: \(context.name ?? "<unknown>")"
         case .save_done(let date, let context): return "save-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
