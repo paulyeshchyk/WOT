@@ -25,6 +25,11 @@ class JSONMapHelper {
 
     init(appContext: ResponseConfigurationProtocol.Context) {
         self.appContext = appContext
+        appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
+    }
+
+    deinit {
+        appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
     }
 
     func run(json: JSON?, error: Error?) {

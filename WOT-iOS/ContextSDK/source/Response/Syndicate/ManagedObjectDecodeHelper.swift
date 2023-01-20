@@ -24,6 +24,11 @@ class ManagedObjectDecodeHelper {
 
     init(appContext: Context) {
         self.appContext = appContext
+        appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
+    }
+
+    deinit {
+        appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
     }
 
     // MARK: Internal

@@ -32,17 +32,34 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return object(with: objectID)
     }
 
-    public func findOrCreateObject(appContext: ManagedObjectContextProtocol.Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
+    public func findOrCreateObject(appContext: ManagedObjectContextLookupProtocol.Context, modelClass: AnyObject, predicate: NSPredicate?, completion: @escaping FetchCompletion) {
         do {
-            guard let foundObject = try lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
-                appContext.logInspector?.log(.error(LogMessages.select_fail(modelClass, predicate, self).description), sender: self)
-                return insertNewObject(appContext: appContext, forType: modelClass)
+            if let foundObject = try lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) {
+                appContext.logInspector?.log(.sqlite(message: LogMessages.select_done(predicate, self, foundObject).description), sender: self)
+                let fetchResult = try foundObject.fetchResult(context: self)
+                completion(fetchResult, nil)
+                return
             }
-            appContext.logInspector?.log(.sqlite(message: LogMessages.select_done(predicate, self, foundObject).description), sender: self)
-            return foundObject
+            appContext.logInspector?.log(.error(LogMessages.select_fail(modelClass, predicate, self).description), sender: self)
+            insertAndSave(appContext: appContext, modelClass: modelClass, completion: completion)
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
-            return nil
+            completion(nil, error)
+        }
+    }
+
+    private func insertAndSave(appContext: Context, modelClass: AnyObject, completion: @escaping FetchCompletion) {
+        do {
+            let insertedObject = insertNewObject(appContext: appContext, forType: modelClass)
+
+            try save()
+
+            let fetchResult = try insertedObject.fetchResult(context: self)
+
+            completion(fetchResult, nil)
+
+        } catch {
+            completion(nil, error)
         }
     }
 
@@ -68,7 +85,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         let executionStartTime = Date()
         appContext.logInspector?.log(.sqlite(message: LogMessages.perform4Save_start(self).description), sender: self)
 
-        perform {
+        performAndWait {
             self._save(appContext: appContext) { error in
                 appContext.logInspector?.log(.sqlite(message: LogMessages.perform4Save_done(executionStartTime, self).description), sender: self)
                 block(error)
@@ -137,11 +154,10 @@ extension NSManagedObjectContext {
         return try fetch(request).last as? ManagedObjectProtocol
     }
 
-    private func insertNewObject<T>(appContext: Context, forType: AnyObject) -> T? {
+    private func insertNewObject(appContext: Context, forType: AnyObject) -> NSManagedObject {
         appContext.logInspector?.log(.sqlite(message: LogMessages.insert_start(forType).description), sender: self)
-        let result = NSEntityDescription.insertNewObject(forEntityName: String(describing: forType), into: self) as? T
-        let endMessage = (result == nil) ? LogMessages.insert_fail(forType) : LogMessages.insert_done(forType)
-        appContext.logInspector?.log(.sqlite(message: endMessage.description), sender: self)
+        let result = NSEntityDescription.insertNewObject(forEntityName: String(describing: forType), into: self)
+        appContext.logInspector?.log(.sqlite(message: LogMessages.insert_done(forType).description), sender: self)
         return result
     }
 
