@@ -40,12 +40,14 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            #warning("move out of Decoder")
-            MOSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            let config = UoW_Config__Fetch_Decode_Link()
+            config.appContext = appContext
+            config.jsonMaps = [jsonMap]
+            config.modelClass = modelClass
+            config.socket = socket
+            config.decodingDepthLevel = decodingDepthLevel
+            let uow = try appContext.uowManager.uow(by: config)
+            try appContext.uowManager.perform(uow: uow)
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noPenetration), sender: self)
         }
@@ -67,12 +69,14 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            #warning("move out of Decoder")
-            MOSyndicate.fetch_decode_link(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            let config = UoW_Config__Fetch_Decode_Link()
+            config.appContext = appContext
+            config.jsonMaps = [jsonMap]
+            config.modelClass = modelClass
+            config.socket = socket
+            config.decodingDepthLevel = decodingDepthLevel
+            let uow = try appContext.uowManager.uow(by: config)
+            try appContext.uowManager.perform(uow: uow)
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
         }

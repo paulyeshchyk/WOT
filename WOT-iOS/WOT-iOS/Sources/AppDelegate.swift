@@ -12,7 +12,7 @@
 public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var window: UIWindow?
 
-    private let logPriorities: [LogEventType]? = [.error, .warning, .flow, .custom, .remoteFetch, .sqlite]
+    private let logPriorities: [LogEventType]? = [.error, .warning, .flow, .custom, .remoteFetch, .sqlite, .uow]
     private let logOutput = OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)
 
     public lazy var logInspector: LogInspectorProtocol? = LogInspector(priorities: logPriorities, output: [logOutput])
@@ -22,6 +22,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public lazy var responseManager: ResponseManagerProtocol? = WOTResponseManager(appContext: self)
     public lazy var dataStore: DataStoreProtocol? = WOTDataStore(appContext: self)
     public lazy var decoderManager: DecoderManagerProtocol? = WOTDecoderManager()
+    public lazy var uowManager: UoW_ManagerProtocol = UoW_Manager(appContext: self)
     public var requestListener: RequestListenerProtocol?
 
     // MARK: Public

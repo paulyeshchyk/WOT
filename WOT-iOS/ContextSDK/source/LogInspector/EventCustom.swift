@@ -62,6 +62,7 @@ extension LoggableType {
     static let performance = LoggableType(type: .performance)
     static let sqlite = LoggableType(type: .sqlite)
     static let remoteFetch = LoggableType(type: .remoteFetch)
+    static let uow = LoggableType(type: .uow)
 }
 
 extension Loggable {
@@ -130,6 +131,10 @@ extension Loggable {
 
     public static func sqlite(message: String) -> Loggable {
         Loggable(type: .sqlite, message: message)
+    }
+
+    public static func uow(_ message: String) -> Loggable {
+        Loggable(type: .uow, message: message)
     }
 
     public static func remoteFetch(message: String) -> Loggable {

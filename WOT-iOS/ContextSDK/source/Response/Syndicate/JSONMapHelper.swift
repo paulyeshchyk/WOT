@@ -9,15 +9,22 @@
 
 class JSONMapHelper {
 
+    typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
+        & DecoderManagerContainerProtocol
+        & RequestManagerContainerProtocol
+        & RequestRegistratorContainerProtocol
+        & UoW_ManagerContainerProtocol
+
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
-    let appContext: ResponseConfigurationProtocol.Context
+    let appContext: Context
     var extractor: ManagedObjectExtractable?
     var completion: (([JSONMapProtocol]?, Error?) -> Void)?
     var modelClass: ModelClassType?
     var contextPredicate: ContextPredicateProtocol?
 
-    init(appContext: ResponseConfigurationProtocol.Context) {
+    init(appContext: Context) {
         self.appContext = appContext
         appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
     }

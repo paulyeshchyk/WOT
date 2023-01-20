@@ -1,13 +1,13 @@
 //
-//  ManagedObjectDecodeHelper.swift
+//  MODecodeHelper.swift
 //  ContextSDK
 //
 //  Created by Paul on 16.01.23.
 //
 
-// MARK: - ManagedObjectDecodeHelper
+// MARK: - MODecodeHelper
 
-class ManagedObjectDecodeHelper {
+class MODecodeHelper {
 
     #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
@@ -15,6 +15,7 @@ class ManagedObjectDecodeHelper {
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
+        & UoW_ManagerContainerProtocol
 
     private let appContext: Context
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
@@ -52,7 +53,6 @@ class ManagedObjectDecodeHelper {
                 throw Errors.decoderIsNotDefined
             }
 
-            #warning("Provide crc check")
             let decoder = decoderType.init(appContext: appContext)
             decoder.managedObject = managedObject
             try decoder.decode(using: jsonMap, forDepthLevel: DecodingDepthLevel.initial)
@@ -66,9 +66,9 @@ class ManagedObjectDecodeHelper {
     }
 }
 
-// MARK: - %t + ManagedObjectDecodeHelper.Errors
+// MARK: - %t + MODecodeHelper.Errors
 
-extension ManagedObjectDecodeHelper {
+extension MODecodeHelper {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
         case fetchResultIsNotPresented

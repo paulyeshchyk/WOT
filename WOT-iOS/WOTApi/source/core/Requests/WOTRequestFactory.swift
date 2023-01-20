@@ -12,11 +12,13 @@ import ContextSDK
 @objc
 public class WOTWEBRequestFactory: NSObject {
     //
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     public typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
         & DecoderManagerContainerProtocol
+        & UoW_ManagerContainerProtocol
 
     private enum HttpRequestFactoryError: Error, CustomStringConvertible {
         case objectNotDefined

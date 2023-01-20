@@ -1,13 +1,13 @@
 //
-//  ManagedObjectLinkerHelper.swift
+//  MOLinkHelper.swift
 //  ContextSDK
 //
 //  Created by Paul on 16.01.23.
 //
 
-// MARK: - ManagedObjectLinkerHelper
+// MARK: - MOLinkHelper
 
-class ManagedObjectLinkerHelper {
+class MOLinkHelper {
 
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
@@ -48,9 +48,9 @@ class ManagedObjectLinkerHelper {
     }
 }
 
-// MARK: - %t + ManagedObjectLinkerHelper.Errors
+// MARK: - %t + MOLinkHelper.Errors
 
-extension ManagedObjectLinkerHelper {
+extension MOLinkHelper {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
         case managedObjectLinkerIsNotPresented

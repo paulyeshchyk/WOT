@@ -68,11 +68,13 @@ extension JSONRefProtocol {
 
 public class ModuleDecoder {
 
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
         & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
+        & UoW_ManagerContainerProtocol
 
     let appContext: Context
     public var modelClass: PrimaryKeypathProtocol.Type?

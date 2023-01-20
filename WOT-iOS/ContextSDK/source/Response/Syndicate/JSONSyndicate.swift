@@ -9,11 +9,13 @@
 
 class JSONSyndicate {
 
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     public typealias Context = LogInspectorContainerProtocol
         & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
+        & UoW_ManagerContainerProtocol
 
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
@@ -46,20 +48,30 @@ class JSONSyndicate {
         let modelClass = type(of: modelService).modelClass()
 
         //
-        let jsonMapCreator = JSONMapHelper(appContext: appContext)
-        jsonMapCreator.modelClass = modelClass
-        jsonMapCreator.extractor = extractor
-        jsonMapCreator.contextPredicate = request.contextPredicate
-        jsonMapCreator.completion = { jsonMaps, error in
+        let jsonMapHelper = JSONMapHelper(appContext: appContext)
+        jsonMapHelper.modelClass = modelClass
+        jsonMapHelper.extractor = extractor
+        jsonMapHelper.contextPredicate = request.contextPredicate
+        jsonMapHelper.completion = { jsonMaps, error in
             if let err = error {
                 self.completion?(self.request, err)
             } else {
-                MOSyndicate.fetch_decode_link(appContext: self.appContext,
-                                              jsonMaps: jsonMaps,
-                                              modelClass: modelClass,
-                                              socket: self.socket,
-                                              decodingDepthLevel: self.request.decodingDepthLevel) { _, error in
-                    self.completion?(self.request, error)
+                let config = UoW_Config__Fetch_Decode_Link()
+                config.appContext = self.appContext
+                config.jsonMaps = jsonMaps
+                config.modelClass = modelClass
+                config.socket = self.socket
+                config.decodingDepthLevel = self.decodeDepthLevel
+                do {
+                    let uow = try self.appContext.uowManager.uow(by: config)
+                    uow.didStatusChanged = { uow in
+                        if uow.status == .finish {
+                            self.completion?(self.request, nil)
+                        }
+                    }
+                    try self.appContext.uowManager.perform(uow: uow)
+                } catch {
+                    //
                 }
             }
         }
@@ -67,7 +79,7 @@ class JSONSyndicate {
         let responseDataDecoder = responseDecoderClass.init(appContext: appContext)
         responseDataDecoder.request = request
         responseDataDecoder.completion = { _, json, error in
-            jsonMapCreator.run(json: json, error: error)
+            jsonMapHelper.run(json: json, error: error)
         }
 
         responseDataDecoder.decode(data: data, fromRequest: request)

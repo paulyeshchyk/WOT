@@ -1,13 +1,13 @@
 //
-//  DatastoreFetchHelper.swift
+//  MOFetchHelper.swift
 //  ContextSDK
 //
 //  Created by Paul on 16.01.23.
 //
 
-// MARK: - DatastoreFetchHelper
+// MARK: - MOFetchHelper
 
-class DatastoreFetchHelper {
+class MOFetchHelper {
 
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
@@ -49,9 +49,9 @@ class DatastoreFetchHelper {
     }
 }
 
-// MARK: - %t + DatastoreFetchHelper.Errors
+// MARK: - %t + MOFetchHelper.Errors
 
-extension DatastoreFetchHelper {
+extension MOFetchHelper {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
         case modelClassIsNotDefined
