@@ -29,12 +29,10 @@ extension DataStore: DataStoreProtocol {
         fatalError("has not been implemented")
     }
 
-    @objc
     open func newPrivateContext() -> ManagedObjectContextProtocol {
         fatalError("has not been implemented")
     }
 
-    @objc
     open func workingContext() -> ManagedObjectContextProtocol {
         fatalError("has not been implemented")
     }

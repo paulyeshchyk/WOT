@@ -12,15 +12,16 @@ import WOTPivot
 // MARK: - WOTMenuDatasourceDelegate
 
 @objc
-protocol WOTMenuDatasourceDelegate: NSObjectProtocol {
+protocol WOTMenuDatasourceDelegate: AnyObject {
     func hasUpdatedData(_ datasource: WOTMenuDatasourceProtocol)
 }
 
 // MARK: - WOTMenuDatasourceProtocol
 
 @objc
-protocol WOTMenuDatasourceProtocol: NSObjectProtocol {
+protocol WOTMenuDatasourceProtocol {
     var delegate: WOTMenuDatasourceDelegate? { get set }
+    init()
     func object(at index: Int) -> WOTMenuItem?
     func objectsCount() -> Int
     func rebuild()
@@ -28,14 +29,13 @@ protocol WOTMenuDatasourceProtocol: NSObjectProtocol {
 
 // MARK: - WOTMenuDatasource
 
-@objc
 class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
 
     // MARK: - Properties
 
     weak var delegate: WOTMenuDatasourceDelegate?
 
-    var availableViewControllers: [WOTMenuItem] = []
+    private var availableViewControllers: [WOTMenuItem] = []
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
 
     var visibleViewControllers: [WOTMenuItem]? {
@@ -46,7 +46,7 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
 
     // MARK: Lifecycle
 
-    override init() {
+    override required init() {
         super.init()
 
         availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankPivotViewController.self, controllerTitle: WOTApi.L10n.wotStringTankdeleyev, icon: UIImage(), userDependence: false))

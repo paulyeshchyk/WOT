@@ -25,8 +25,6 @@
 
 @implementation WOTTankConfigurationItemViewController
 
-@synthesize appContext;
-
 - (void)viewDidLoad {
     
     [super viewDidLoad];

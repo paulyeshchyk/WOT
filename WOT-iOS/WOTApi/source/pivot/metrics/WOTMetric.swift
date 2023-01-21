@@ -24,7 +24,8 @@ public protocol WOTMetricProtocol: NSObjectProtocol {
 
 // MARK: - WOTMetric
 
-@objc public class WOTMetric: NSObject, WOTMetricProtocol {
+@objc
+public class WOTMetric: NSObject, WOTMetricProtocol {
 
     public var metricName: String?
     public var evaluator: WOTTankMetricEvaluatorProtocol?
@@ -32,7 +33,6 @@ public protocol WOTMetricProtocol: NSObjectProtocol {
 
     // MARK: Lifecycle
 
-    @objc
     public required init(metricName: String?, grouppingName: String?, evaluator: WOTTankMetricEvaluatorProtocol?) {
         self.metricName = metricName
         self.evaluator = evaluator

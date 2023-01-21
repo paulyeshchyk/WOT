@@ -10,6 +10,7 @@ import WOTPivot
 
 // MARK: - PivotViewController
 
+@objc
 open class PivotViewController: UIViewController, ContextControllerProtocol {
     @IBOutlet open var collectionView: UICollectionView?
 
@@ -188,7 +189,6 @@ class WOTTankPivotViewController: PivotViewController {
 
     // MARK: Public
 
-    @objc
     override public func registerCells() {
         WOTTankPivotViewController.registeredCells.forEach { (type) in
             let clazzStr = String(describing: type)
@@ -231,14 +231,12 @@ class WOTTankPivotViewController: PivotViewController {
         navigationItem.setRightBarButtonItems(items, animated: false)
     }
 
-    @objc
-    func openConstructor(_: Any) {
+    @objc func openConstructor(_: Any) {
         let vc = WOTPivotConstructorViewController(nibName: "WOTPivotConstructorViewController", bundle: Bundle.main)
         navigationController?.pushViewController(vc, animated: true)
     }
 
-    @objc
-    func refresh(_: UIRefreshControl) {
+    @objc func refresh(_: UIRefreshControl) {
         model.loadModel()
     }
 

@@ -7,7 +7,7 @@
 
 // MARK: - UoW__Fetch_Decode_Link
 
-public class UoW__Fetch_Decode_Link: UoW_Protocol, UoW_Status_Protocol {
+public class UoW__Fetch_Decode_Link: UoW_Protocol {
 
     public var MD5: String { uuid.MD5 }
     private let uuid = UUID()
@@ -81,7 +81,7 @@ public class UoW_Config__Fetch_Decode_Link: UoW_Config_Protocol {
 
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
-    public var uowType: UoW_Protocol.Type {
+    public var uowClass: UoW_Protocol.Type {
         UoW__Fetch_Decode_Link.self
     }
 

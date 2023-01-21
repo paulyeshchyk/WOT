@@ -21,8 +21,7 @@ public protocol FetchRequestContainerProtocol {
 }
 
 public extension NodeFetchController {
-    @objc
-    convenience init(objCFetchRequestContainer: FetchRequestContainerProtocol, appContext: Context) {
+    @objc convenience init(objCFetchRequestContainer: FetchRequestContainerProtocol, appContext: Context) {
         self.init(fetchRequestContainer: objCFetchRequestContainer, appContext: appContext)
     }
 }

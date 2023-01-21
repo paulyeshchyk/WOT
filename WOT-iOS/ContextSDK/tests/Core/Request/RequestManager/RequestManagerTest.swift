@@ -241,8 +241,7 @@ public class HostConfiguration: NSObject, HostConfigurationProtocol {
 
     // MARK: Public
 
-    @objc
-    public func urlQuery(with: RequestArgumentsProtocol?) -> String {
+    @objc public func urlQuery(with: RequestArgumentsProtocol?) -> String {
         let custom = ["application_id": applicationID]
         currentArguments = with?.buildQuery(custom) ?? ""
         return currentArguments

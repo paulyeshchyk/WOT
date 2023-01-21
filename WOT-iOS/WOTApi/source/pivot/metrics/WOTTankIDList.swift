@@ -30,8 +30,7 @@ public class WOTTanksIDList: NSObject {
 
     // MARK: Lifecycle
 
-    @objc
-    public required init(tankID: String) {
+    @objc public required init(tankID: String) {
         super.init()
         addObject(tankID)
     }

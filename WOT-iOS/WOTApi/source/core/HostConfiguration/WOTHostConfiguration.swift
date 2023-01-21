@@ -29,7 +29,6 @@ public class WOTHostConfiguration: NSObject, HostConfigurationProtocol {
 
     // MARK: Public
 
-    @objc
     public func urlQuery(with arguments: RequestArgumentsProtocol?) -> String? {
         var result = arguments?.allValues
         result?.append(with: ["application_id": applicationID])

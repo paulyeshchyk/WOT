@@ -50,7 +50,7 @@ open class UoW_Manager {
 extension UoW_Manager: UoW_ManagerProtocol {
 
     public func uow(by config: UoW_Config_Protocol) throws -> UoW_Protocol {
-        let resultType = config.uowType
+        let resultType = config.uowClass
         let result = try resultType.init(configuration: config)
         result.status = .initialization
         return result
@@ -114,7 +114,7 @@ extension UoW_Manager {
 }
 
 extension Loggable {
-    //
+
     static func uowAddToQueue(_ uow: UoW_Protocol) -> Loggable { Loggable.uow("added into queue: \(String(describing: uow))") }
     static func uowWillRun(_ uow: UoW_Protocol) -> Loggable { Loggable.uow("will run: \(String(describing: uow))") }
     static func uowDidRun(_ uow: UoW_Protocol) -> Loggable { Loggable.uow("did run: \(String(describing: uow))") }
@@ -123,7 +123,6 @@ extension Loggable {
     static func uowDidUnsubscribe(_ uow: UoW_Protocol) -> Loggable { Loggable.uow("did unsubscribe from: \(String(describing: uow))") }
     static func uowWillPerform(_ uow: UoW_Protocol) -> Loggable { Loggable.uow("will perform: \(String(describing: uow))") }
     static func uowDidPerform(_ uow: UoW_Protocol) -> Loggable { Loggable.uow("did perform: \(String(describing: uow))") }
-
 }
 
 // MARK: - UoW_Manager.Errors

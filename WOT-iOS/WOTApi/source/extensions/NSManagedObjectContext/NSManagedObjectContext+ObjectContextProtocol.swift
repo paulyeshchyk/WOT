@@ -138,7 +138,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 }
 
 extension NSManagedObjectContext {
-    //
+
     typealias Context = LogInspectorContainerProtocol
 
     private func lastObject(modelClass: AnyObject, predicate: NSPredicate?, includeSubentities: Bool) throws -> ManagedObjectProtocol? {

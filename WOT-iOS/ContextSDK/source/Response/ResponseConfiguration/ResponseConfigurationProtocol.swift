@@ -7,7 +7,7 @@
 
 @objc
 public protocol ResponseConfigurationProtocol {
-    //
+
     typealias WorkWithDataCompletion = (RequestProtocol, Error?) -> Void
 
     #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")

@@ -91,7 +91,7 @@ public class UoW_Config__Parse_Fetch_Decode_Link: UoW_Config_Protocol {
         & DecoderManagerContainerProtocol
         & UoW_ManagerContainerProtocol
 
-    public var uowType: UoW_Protocol.Type { UoW__Parse_Fetch_Decode_Link.self }
+    public var uowClass: UoW_Protocol.Type { UoW__Parse_Fetch_Decode_Link.self }
 
     var appContext: Context
     var modelService: RequestModelServiceProtocol

@@ -6,7 +6,7 @@
 //
 
 public class VehicleTreeRuleBuilder: FetchRequestPredicateComposerProtocol {
-    //
+
     let modelClass: PrimaryKeypathProtocol.Type
     let vehicleId: JSONValueType
 

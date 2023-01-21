@@ -63,7 +63,7 @@ public protocol LogEventProtocol {
 
 @objc
 public protocol LogInspectorContainerProtocol {
-    @objc var logInspector: LogInspectorProtocol? { get set }
+    var logInspector: LogInspectorProtocol? { get set }
 }
 
 // MARK: - Loggable

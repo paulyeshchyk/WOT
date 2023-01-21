@@ -62,7 +62,6 @@
 		DAA56E8A2978361A0092DA17 /* ResponseConfigurationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E89297836190092DA17 /* ResponseConfigurationProtocol.swift */; };
 		DAA56E8D297836490092DA17 /* RequestConfigurationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E8C297836490092DA17 /* RequestConfigurationProtocol.swift */; };
 		DAA56E8F297836740092DA17 /* HttpJSONResponseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E8E297836740092DA17 /* HttpJSONResponseConfiguration.swift */; };
-		DAC55BC32974F047008166BE /* MODecodeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC55BC22974F047008166BE /* MODecodeHelper.swift */; };
 		DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */; };
 		DACDB0D8295DBB66005BBA72 /* LogInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D6295DBB66005BBA72 /* LogInspector.swift */; };
 		DACDB0F1295EDC96005BBA72 /* FetchResultProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0DE295EDC94005BBA72 /* FetchResultProtocol.swift */; };
@@ -84,9 +83,6 @@
 		DACDB110295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB10F295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift */; };
 		DACDB12029601537005BBA72 /* ContextPredicateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB11F29601537005BBA72 /* ContextPredicateProtocol.swift */; };
 		DACDB123296023C8005BBA72 /* JSONMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB122296023C7005BBA72 /* JSONMap.swift */; };
-		DAD98B01297984ED007F9ED2 /* JSONMapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD98B00297984ED007F9ED2 /* JSONMapHelper.swift */; };
-		DADD69702974F0D000EFC36D /* MOFetchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD696F2974F0D000EFC36D /* MOFetchHelper.swift */; };
-		DADD69722974F10600EFC36D /* MOLinkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69712974F10600EFC36D /* MOLinkHelper.swift */; };
 		DADD69752975088E00EFC36D /* JSONRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69742975088E00EFC36D /* JSONRef.swift */; };
 		DADD6999297563BD00EFC36D /* DecoderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD6998297563BD00EFC36D /* DecoderManager.swift */; };
 		DADD699E2975680200EFC36D /* DecoderManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD699D2975680200EFC36D /* DecoderManagerProtocol.swift */; };
@@ -98,6 +94,10 @@
 		DADD69BC29759D5D00EFC36D /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69B029759D5D00EFC36D /* URLRequestBuilder.swift */; };
 		DADD69BD29759D5D00EFC36D /* HttpDataReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69B129759D5D00EFC36D /* HttpDataReceiver.swift */; };
 		DADD69BF2975A82700EFC36D /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69BE2975A82700EFC36D /* Request.swift */; };
+		DAED202F297C1C430019EFBA /* MOLinkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAED202B297C1C430019EFBA /* MOLinkHelper.swift */; };
+		DAED2030297C1C430019EFBA /* MODecodeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAED202C297C1C430019EFBA /* MODecodeHelper.swift */; };
+		DAED2031297C1C430019EFBA /* JSONMapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAED202D297C1C430019EFBA /* JSONMapHelper.swift */; };
+		DAED2032297C1C430019EFBA /* MOFetchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAED202E297C1C430019EFBA /* MOFetchHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,7 +169,6 @@
 		DAA56E89297836190092DA17 /* ResponseConfigurationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseConfigurationProtocol.swift; sourceTree = "<group>"; };
 		DAA56E8C297836490092DA17 /* RequestConfigurationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestConfigurationProtocol.swift; sourceTree = "<group>"; };
 		DAA56E8E297836740092DA17 /* HttpJSONResponseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpJSONResponseConfiguration.swift; sourceTree = "<group>"; };
-		DAC55BC22974F047008166BE /* MODecodeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MODecodeHelper.swift; sourceTree = "<group>"; };
 		DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogWrapper.swift; sourceTree = "<group>"; };
 		DACDB0D6295DBB66005BBA72 /* LogInspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInspector.swift; sourceTree = "<group>"; };
 		DACDB0DE295EDC94005BBA72 /* FetchResultProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchResultProtocol.swift; sourceTree = "<group>"; };
@@ -191,9 +190,6 @@
 		DACDB10F295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectLinkerProtocol.swift; sourceTree = "<group>"; };
 		DACDB11F29601537005BBA72 /* ContextPredicateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPredicateProtocol.swift; sourceTree = "<group>"; };
 		DACDB122296023C7005BBA72 /* JSONMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMap.swift; sourceTree = "<group>"; };
-		DAD98B00297984ED007F9ED2 /* JSONMapHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMapHelper.swift; sourceTree = "<group>"; };
-		DADD696F2974F0D000EFC36D /* MOFetchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOFetchHelper.swift; sourceTree = "<group>"; };
-		DADD69712974F10600EFC36D /* MOLinkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOLinkHelper.swift; sourceTree = "<group>"; };
 		DADD69742975088E00EFC36D /* JSONRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONRef.swift; sourceTree = "<group>"; };
 		DADD6998297563BD00EFC36D /* DecoderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderManager.swift; sourceTree = "<group>"; };
 		DADD699D2975680200EFC36D /* DecoderManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderManagerProtocol.swift; sourceTree = "<group>"; };
@@ -205,6 +201,10 @@
 		DADD69B029759D5D00EFC36D /* URLRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
 		DADD69B129759D5D00EFC36D /* HttpDataReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiver.swift; sourceTree = "<group>"; };
 		DADD69BE2975A82700EFC36D /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		DAED202B297C1C430019EFBA /* MOLinkHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOLinkHelper.swift; sourceTree = "<group>"; };
+		DAED202C297C1C430019EFBA /* MODecodeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODecodeHelper.swift; sourceTree = "<group>"; };
+		DAED202D297C1C430019EFBA /* JSONMapHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONMapHelper.swift; sourceTree = "<group>"; };
+		DAED202E297C1C430019EFBA /* MOFetchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOFetchHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,6 +400,7 @@
 		DA5BC8ED297AB7A9005C4914 /* UoW */ = {
 			isa = PBXGroup;
 			children = (
+				DAED2028297C1BDC0019EFBA /* helpers */,
 				DA5BC8F2297AD4A6005C4914 /* samples */,
 				DA5BC8EE297AB7C8005C4914 /* UoW_ManagerProtocol.swift */,
 				DA5BC8F0297AB826005C4914 /* UoW_Manager.swift */,
@@ -449,17 +450,6 @@
 				DA84BF3F2957327F00BAC71D /* DecoderContainerProtocol.swift */,
 			);
 			path = codable;
-			sourceTree = "<group>";
-		};
-		DAA3A5442969F53900430492 /* Syndicate */ = {
-			isa = PBXGroup;
-			children = (
-				DAC55BC22974F047008166BE /* MODecodeHelper.swift */,
-				DADD696F2974F0D000EFC36D /* MOFetchHelper.swift */,
-				DADD69712974F10600EFC36D /* MOLinkHelper.swift */,
-				DAD98B00297984ED007F9ED2 /* JSONMapHelper.swift */,
-			);
-			path = Syndicate;
 			sourceTree = "<group>";
 		};
 		DAA3A54A296A167600430492 /* Operations */ = {
@@ -608,7 +598,6 @@
 				DAA56E7A2976E3790092DA17 /* ResponseManager.swift */,
 				DAA56E7C2976EC240092DA17 /* lists */,
 				DADD69CA2975B7BD00EFC36D /* Adapter */,
-				DAA3A5442969F53900430492 /* Syndicate */,
 				DADD69CB2975B80800EFC36D /* Decoder */,
 			);
 			path = Response;
@@ -653,6 +642,17 @@
 				DACDB109295EDDD9005BBA72 /* JSONCollection.swift */,
 			);
 			path = JSON;
+			sourceTree = "<group>";
+		};
+		DAED2028297C1BDC0019EFBA /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DAED202D297C1C430019EFBA /* JSONMapHelper.swift */,
+				DAED202C297C1C430019EFBA /* MODecodeHelper.swift */,
+				DAED202E297C1C430019EFBA /* MOFetchHelper.swift */,
+				DAED202B297C1C430019EFBA /* MOLinkHelper.swift */,
+			);
+			path = helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -786,12 +786,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAA56E7E2976EC3B0092DA17 /* ResponseManagerListenerList.swift in Sources */,
+				DAED2031297C1C430019EFBA /* JSONMapHelper.swift in Sources */,
 				DACDB103295EDC96005BBA72 /* LogInspectorProtocol.swift in Sources */,
 				DA288E782964C72000973561 /* NSThread+Execution.swift in Sources */,
+				DAED2030297C1C430019EFBA /* MODecodeHelper.swift in Sources */,
 				DA288F752965D8FB00973561 /* EventCustom.swift in Sources */,
-				DADD69722974F10600EFC36D /* MOLinkHelper.swift in Sources */,
 				DACDB12029601537005BBA72 /* ContextPredicateProtocol.swift in Sources */,
-				DAD98B01297984ED007F9ED2 /* JSONMapHelper.swift in Sources */,
 				DACDB10A295EDDD9005BBA72 /* JSONCollection.swift in Sources */,
 				DADD69BB29759D5D00EFC36D /* HttpDataReceiverProtocol.swift in Sources */,
 				DACDB0F1295EDC96005BBA72 /* FetchResultProtocol.swift in Sources */,
@@ -799,14 +799,13 @@
 				DADD69B429759D5D00EFC36D /* RequestGrouppedListenerList.swift in Sources */,
 				DA81E5102952FE6700C60F31 /* Date+Elapsed.swift in Sources */,
 				DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */,
-				DAC55BC32974F047008166BE /* MODecodeHelper.swift in Sources */,
-				DADD69702974F0D000EFC36D /* MOFetchHelper.swift in Sources */,
 				DA5BC8F8297BA0A7005C4914 /* UoW__Parse_Fetch_Decode_Link.swift in Sources */,
 				DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */,
 				DA5BC8F6297AEF9C005C4914 /* UoW__Fetch_Decode_Link.swift in Sources */,
 				DA84BF402957327F00BAC71D /* DecoderContainerProtocol.swift in Sources */,
 				DACDB0F3295EDC96005BBA72 /* RequestManagerProtocol.swift in Sources */,
 				DACDB0F9295EDC96005BBA72 /* HttpServiceProtocol.swift in Sources */,
+				DAED2032297C1C430019EFBA /* MOFetchHelper.swift in Sources */,
 				DADD69BC29759D5D00EFC36D /* URLRequestBuilder.swift in Sources */,
 				DADD69BF2975A82700EFC36D /* Request.swift in Sources */,
 				DA32CEB129641C48007726AD /* ManagedObjectExtractable.swift in Sources */,
@@ -854,6 +853,7 @@
 				DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */,
 				DADD6999297563BD00EFC36D /* DecoderManager.swift in Sources */,
 				DA2C28F12959F0DD00D18A6E /* DataStore.swift in Sources */,
+				DAED202F297C1C430019EFBA /* MOLinkHelper.swift in Sources */,
 				DACDB0F2295EDC96005BBA72 /* RequestModelServiceProtocol.swift in Sources */,
 				DAA56E7B2976E3790092DA17 /* ResponseManager.swift in Sources */,
 				DA0E80532950688500B44CC6 /* NSDictionary+Append.swift in Sources */,

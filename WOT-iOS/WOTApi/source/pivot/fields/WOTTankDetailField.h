@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 typedef void(^EvaluateCompletionBlock)(NSDictionary *values);
 
@@ -14,7 +15,7 @@ typedef void(^EvaluateCompletionBlock)(NSDictionary *values);
 
 @property (nonatomic, copy) NSString *expressionName;
 
-- (void)evaluateWithObject:(id)object completionBlock:(EvaluateCompletionBlock)completionBlock;
+- (void)context:(NSManagedObjectContext *) context evaluateWithObject:(id)object completionBlock:(EvaluateCompletionBlock)completionBlock;
 
 @end
 

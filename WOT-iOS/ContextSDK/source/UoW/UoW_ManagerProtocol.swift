@@ -7,9 +7,17 @@
 
 // MARK: - UoW_Config_Protocol
 
+// @objc
+// public enum UoW_Type: Int {
+//    case web
+//    case fetch
+//    case mapping
+//    case parse
+// }
+
 @objc
 public protocol UoW_Config_Protocol {
-    var uowType: UoW_Protocol.Type { get }
+    var uowClass: UoW_Protocol.Type { get }
 }
 
 // MARK: - UoW_Listener
@@ -30,22 +38,25 @@ public enum UoW_Status: Int {
     case finish
 }
 
-// MARK: - UoW_Status_Protocol
-
-@objc
-public protocol UoW_Status_Protocol: MD5Protocol {
-    var status: UoW_Status { get set }
-    var didStatusChanged: ((_ uow: UoW_Protocol) -> Void)? { get set }
-}
-
 // MARK: - UoW_Protocol
 
 @objc
-public protocol UoW_Protocol: UoW_Status_Protocol {
-    var configuration: UoW_Config_Protocol { get }
+public protocol UoW_Protocol: MD5Protocol {
+    // - status
+    var status: UoW_Status { get set }
 
-    init(configuration: UoW_Config_Protocol) throws
+    var configuration: UoW_Config_Protocol { get }
     func run(forListener: UoW_Listener) throws
+
+    var didStatusChanged: ((_ uow: UoW_Protocol) -> Void)? { get set }
+    init(configuration: UoW_Config_Protocol) throws
+}
+
+// MARK: - UoW_Custom
+
+public protocol UoW_Custom: UoW_Protocol {
+    init<T: UoW_Config_Protocol>(configuration: T) throws
+
 }
 
 // MARK: - UoW_ManagerProtocol
