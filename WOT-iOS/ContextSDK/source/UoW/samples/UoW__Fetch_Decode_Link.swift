@@ -30,7 +30,9 @@ public class UoW__Fetch_Decode_Link: UoW_Protocol, UoW_Status_Protocol {
     // RUN
 
     public func run(forListener listener: UoW_Listener) throws {
+        //
         for (index, jsonMap) in config.jsonMaps.enumerated() {
+            //
             let moLinkHelper = MOLinkHelper(appContext: config.appContext)
             moLinkHelper.socket = config.socket
             moLinkHelper.completion = { _, _ in
@@ -84,17 +86,20 @@ public class UoW_Config__Fetch_Decode_Link: UoW_Config_Protocol {
     }
 
     public var appContext: Context
-    public var modelClass: ModelClassType
+    public var modelClass: ModelClassType?
     public var socket: JointSocketProtocol?
     public var jsonMaps: [JSONMapProtocol]
     public var decodingDepthLevel: DecodingDepthLevel?
 
     public required init (appContext: Context,
-                          modelClass: ModelClassType,
+                          modelClass: ModelClassType?,
                           socket: JointSocketProtocol?,
                           jsonMaps: [JSONMapProtocol],
-                          decodingDepthLevel: DecodingDepthLevel?) {
+                          decodingDepthLevel: DecodingDepthLevel?) throws {
         self.appContext = appContext
+        guard let modelClass = modelClass else {
+            throw Errors.modelClassIsEmpty
+        }
         self.modelClass = modelClass
         self.socket = socket
         self.jsonMaps = jsonMaps

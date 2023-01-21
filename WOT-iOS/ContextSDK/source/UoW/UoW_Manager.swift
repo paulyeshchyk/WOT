@@ -7,7 +7,7 @@
 
 // MARK: - UoW_Manager
 
-public class UoW_Manager {
+open class UoW_Manager {
 
     public typealias Context = LogInspectorContainerProtocol
 

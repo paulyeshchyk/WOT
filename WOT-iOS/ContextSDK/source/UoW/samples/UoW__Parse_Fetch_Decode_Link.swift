@@ -44,30 +44,21 @@ class UoW__Parse_Fetch_Decode_Link: UoW_Protocol {
                 return
             }
 
-            for (index, jsonMap) in jsonMaps.enumerated() {
-                let moLinkHelper = MOLinkHelper(appContext: self.config.appContext)
-                moLinkHelper.socket = self.config.socket
-                moLinkHelper.completion = { _, _ in
-                    let completed = (index == jsonMaps.count - 1)
-                    if completed {
+            do {
+                let uow_config = try UoW_Config__Fetch_Decode_Link(appContext: self.config.appContext,
+                                                                   modelClass: modelClass,
+                                                                   socket: self.config.socket,
+                                                                   jsonMaps: jsonMaps,
+                                                                   decodingDepthLevel: self.config.decodeDepthLevel)
+                let uow = try self.config.appContext.uowManager.uow(by: uow_config)
+                uow.didStatusChanged = { uow in
+                    if uow.status == .finish {
                         listener.didFinishUOW(self, error: nil)
                     }
                 }
-
-                let moDecodeHelper = MODecodeHelper(appContext: self.config.appContext)
-                moDecodeHelper.jsonMap = jsonMap
-                moDecodeHelper.completion = { fetchResult, error in
-                    moLinkHelper.run(fetchResult, error: error)
-                }
-
-                let moFetchHelper = MOFetchHelper(appContext: self.config.appContext)
-                moFetchHelper.modelClass = modelClass
-                moFetchHelper.nspredicate = jsonMap.contextPredicate.nspredicate(operator: .and)
-                moFetchHelper.completion = { fetchResult, error in
-                    moDecodeHelper.run(fetchResult, error: error)
-                }
-
-                moFetchHelper.run(nil, error: nil)
+                try self.config.appContext.uowManager.perform(uow: uow)
+            } catch {
+                self.config.appContext.logInspector?.log(.error(error), sender: self)
             }
         }
 

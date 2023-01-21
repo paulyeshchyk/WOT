@@ -8,7 +8,6 @@
 
 // MARK: - AppDelegate
 
-@objc
 public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var window: UIWindow?
 
@@ -22,7 +21,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public lazy var responseManager: ResponseManagerProtocol? = WOTResponseManager(appContext: self)
     public lazy var dataStore: DataStoreProtocol? = WOTDataStore(appContext: self)
     public lazy var decoderManager: DecoderManagerProtocol? = WOTDecoderManager()
-    public lazy var uowManager: UoW_ManagerProtocol = UoW_Manager(appContext: self)
+    public lazy var uowManager: UoW_ManagerProtocol = WOTUoW_Manager(appContext: self)
     public var requestListener: RequestListenerProtocol?
 
     // MARK: Public

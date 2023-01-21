@@ -40,11 +40,11 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            let config = UoW_Config__Fetch_Decode_Link(appContext: appContext,
-                                                       modelClass: modelClass,
-                                                       socket: socket,
-                                                       jsonMaps: [jsonMap],
-                                                       decodingDepthLevel: decodingDepthLevel)
+            let config = try UoW_Config__Fetch_Decode_Link(appContext: appContext,
+                                                           modelClass: modelClass,
+                                                           socket: socket,
+                                                           jsonMaps: [jsonMap],
+                                                           decodingDepthLevel: decodingDepthLevel)
             let uow = try appContext.uowManager.uow(by: config)
             try appContext.uowManager.perform(uow: uow)
         } else {
@@ -68,11 +68,11 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            let config = UoW_Config__Fetch_Decode_Link(appContext: appContext,
-                                                       modelClass: modelClass,
-                                                       socket: socket,
-                                                       jsonMaps: [jsonMap],
-                                                       decodingDepthLevel: decodingDepthLevel)
+            let config = try UoW_Config__Fetch_Decode_Link(appContext: appContext,
+                                                           modelClass: modelClass,
+                                                           socket: socket,
+                                                           jsonMaps: [jsonMap],
+                                                           decodingDepthLevel: decodingDepthLevel)
             let uow = try appContext.uowManager.uow(by: config)
             try appContext.uowManager.perform(uow: uow)
         } else {

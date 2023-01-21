@@ -214,6 +214,7 @@
 		DA911B8129635576009E89F3 /* VehicleprofileArmor+ManagedObjectLinkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA911B8029635576009E89F3 /* VehicleprofileArmor+ManagedObjectLinkable.swift */; };
 		DA913E3C2959A7E100D39F0E /* NSManagedObject+ManagedObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E3B2959A7E100D39F0E /* NSManagedObject+ManagedObjectProtocol.swift */; };
 		DA913E3E2959A83E00D39F0E /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E3D2959A83E00D39F0E /* NSManagedObject+PrimaryKeypathProtocol.swift */; };
+		DA9522FC297BCF3500AF420C /* WOTUoW_Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9522FB297BCF3400AF420C /* WOTUoW_Manager.swift */; };
 		DAA56E4D2976715C0092DA17 /* AssetCatalogExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E4C2976715C0092DA17 /* AssetCatalogExtractor.swift */; };
 		DAA56E52297672250092DA17 /* UIColor+HSB.h in Headers */ = {isa = PBXBuildFile; fileRef = DAA56E50297672250092DA17 /* UIColor+HSB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAA56E53297672250092DA17 /* UIColor+HSB.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E51297672250092DA17 /* UIColor+HSB.m */; };
@@ -496,6 +497,7 @@
 		DA911B8029635576009E89F3 /* VehicleprofileArmor+ManagedObjectLinkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmor+ManagedObjectLinkable.swift"; sourceTree = "<group>"; };
 		DA913E3B2959A7E100D39F0E /* NSManagedObject+ManagedObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+ManagedObjectProtocol.swift"; sourceTree = "<group>"; };
 		DA913E3D2959A83E00D39F0E /* NSManagedObject+PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+PrimaryKeypathProtocol.swift"; sourceTree = "<group>"; };
+		DA9522FB297BCF3400AF420C /* WOTUoW_Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTUoW_Manager.swift; sourceTree = "<group>"; };
 		DAA56E4C2976715C0092DA17 /* AssetCatalogExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetCatalogExtractor.swift; sourceTree = "<group>"; };
 		DAA56E50297672250092DA17 /* UIColor+HSB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HSB.h"; sourceTree = "<group>"; };
 		DAA56E51297672250092DA17 /* UIColor+HSB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HSB.m"; sourceTree = "<group>"; };
@@ -684,6 +686,7 @@
 		DA39E2A529615C390099D877 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				DA9522FA297BCF0E00AF420C /* UoW_Manager */,
 				DAA56E9029792A2B0092DA17 /* RequestRegistrator */,
 				DADD699A297564CE00EFC36D /* DecoderManager */,
 				DACA006F295B69AC00E677D3 /* jsonAdapter */,
@@ -1137,6 +1140,14 @@
 			path = SessionManager;
 			sourceTree = "<group>";
 		};
+		DA9522FA297BCF0E00AF420C /* UoW_Manager */ = {
+			isa = PBXGroup;
+			children = (
+				DA9522FB297BCF3400AF420C /* WOTUoW_Manager.swift */,
+			);
+			path = UoW_Manager;
+			sourceTree = "<group>";
+		};
 		DAA56E4E297672250092DA17 /* UIColor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1528,6 +1539,7 @@
 				DA2625442971A0CB00CB3AED /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 				DA39E2C429616ED50099D877 /* WOTMetric.swift in Sources */,
 				DA81E8532953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */,
+				DA9522FC297BCF3500AF420C /* WOTUoW_Manager.swift in Sources */,
 				DA81E7D529532DC600C60F31 /* UIImage+TankType.swift in Sources */,
 				DADD697C297553DC00EFC36D /* ModuleJSONDecoder.swift in Sources */,
 				DA911B7F296350DB009E89F3 /* VehicleprofileAmmoDamage+ManagedObjectLinkable.swift in Sources */,
