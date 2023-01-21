@@ -7,44 +7,35 @@
 
 // MARK: - UoW__Fetch_Decode_Link
 
-public class UoW__Fetch_Decode_Link: UoW_Protocol {
+public class UoW__Fetch_Decode_Link: UoW_Protocol, UoW_Status_Protocol {
 
     public var MD5: String { uuid.MD5 }
     private let uuid = UUID()
 
-    public var status: UoW_Status {
-        didSet {
-            didStatusChanged?(self)
-        }
-    }
-
+    public var status: UoW_Status = .unknown { didSet { didStatusChanged?(self) } }
     public var didStatusChanged: ((_ uow: UoW_Protocol) -> Void)?
-    public var data: UoW_Config_Protocol { config }
+
+    public var configuration: UoW_Config_Protocol
 
     private var config: UoW_Config__Fetch_Decode_Link
 
-    public required init(config: UoW_Config_Protocol) throws {
-        guard let cfg = config as? UoW_Config__Fetch_Decode_Link else {
+    public required init(configuration: UoW_Config_Protocol) throws {
+        self.configuration = configuration
+        guard let cfg = configuration as? UoW_Config__Fetch_Decode_Link else {
             throw Errors.invalidConfig
         }
-        self.config = cfg
-        status = .initialization
+        config = cfg
     }
 
     // RUN
 
     public func run(forListener listener: UoW_Listener) throws {
-        status = .inProgress
-
-        let config = try config.unwrapped()
-
         for (index, jsonMap) in config.jsonMaps.enumerated() {
             let moLinkHelper = MOLinkHelper(appContext: config.appContext)
             moLinkHelper.socket = config.socket
             moLinkHelper.completion = { _, _ in
-                let completed = (index == config.jsonMaps.count - 1)
+                let completed = (index == self.config.jsonMaps.count - 1)
                 if completed {
-                    self.status = .finish
                     listener.didFinishUOW(self, error: nil)
                 }
             }
@@ -92,27 +83,23 @@ public class UoW_Config__Fetch_Decode_Link: UoW_Config_Protocol {
         UoW__Fetch_Decode_Link.self
     }
 
-    public var jsonMaps: [JSONMapProtocol]?
-    public var modelClass: ModelClassType?
-    public var appContext: Context?
+    public var appContext: Context
+    public var modelClass: ModelClassType
     public var socket: JointSocketProtocol?
+    public var jsonMaps: [JSONMapProtocol]
     public var decodingDepthLevel: DecodingDepthLevel?
 
-    public struct Unwrapped {
-        var appContext: Context
-        var modelClass: ModelClassType
-        var socket: JointSocketProtocol?
-        var jsonMaps: [JSONMapProtocol]
+    public required init (appContext: Context,
+                          modelClass: ModelClassType,
+                          socket: JointSocketProtocol?,
+                          jsonMaps: [JSONMapProtocol],
+                          decodingDepthLevel: DecodingDepthLevel?) {
+        self.appContext = appContext
+        self.modelClass = modelClass
+        self.socket = socket
+        self.jsonMaps = jsonMaps
+        self.decodingDepthLevel = decodingDepthLevel
     }
-
-    public func unwrapped() throws -> Unwrapped {
-        guard let jsonMaps = jsonMaps else { throw Errors.jsonMapIsEmpty }
-        guard let appContext = appContext else { throw Errors.appContextIsEmpty }
-        guard let modelClass = modelClass else { throw Errors.modelClassIsEmpty }
-        return Unwrapped(appContext: appContext, modelClass: modelClass, socket: socket, jsonMaps: jsonMaps)
-    }
-
-    public init() {}
 }
 
 // MARK: - %t + UoW_Config__Fetch_Decode_Link.Errors

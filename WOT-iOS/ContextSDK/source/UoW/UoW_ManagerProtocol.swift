@@ -23,20 +23,28 @@ public protocol UoW_Listener {
 
 @objc
 public enum UoW_Status: Int {
+    case unknown
     case initialization
+    case inQueue
     case inProgress
     case finish
+}
+
+// MARK: - UoW_Status_Protocol
+
+@objc
+public protocol UoW_Status_Protocol: MD5Protocol {
+    var status: UoW_Status { get set }
+    var didStatusChanged: ((_ uow: UoW_Protocol) -> Void)? { get set }
 }
 
 // MARK: - UoW_Protocol
 
 @objc
-public protocol UoW_Protocol: MD5Protocol {
-    var data: UoW_Config_Protocol { get }
-    var status: UoW_Status { get }
-    var didStatusChanged: ((_ uow: UoW_Protocol) -> Void)? { get set }
+public protocol UoW_Protocol: UoW_Status_Protocol {
+    var configuration: UoW_Config_Protocol { get }
 
-    init(config: UoW_Config_Protocol) throws
+    init(configuration: UoW_Config_Protocol) throws
     func run(forListener: UoW_Listener) throws
 }
 

@@ -20,9 +20,11 @@ public class UoW_Manager {
 
     private func moveToQueue(_ uow: UoW_Protocol) throws {
         log(.uowAddToQueue(uow))
+        uow.status = .inQueue
 
         log(.uowWillRun(uow))
         try uow.run(forListener: self)
+        uow.status = .inProgress
         log(.uowDidRun(uow))
     }
 
@@ -49,7 +51,9 @@ extension UoW_Manager: UoW_ManagerProtocol {
 
     public func uow(by config: UoW_Config_Protocol) throws -> UoW_Protocol {
         let resultType = config.uowType
-        return try resultType.init(config: config)
+        let result = try resultType.init(configuration: config)
+        result.status = .initialization
+        return result
     }
 
     public func perform(uow: UoW_Protocol) throws {
@@ -75,6 +79,8 @@ extension UoW_Manager: UoW_ManagerProtocol {
 extension UoW_Manager: UoW_Listener {
 
     public func didFinishUOW(_ uow: UoW_Protocol, error: Error?) {
+        uow.status = .finish
+
         logFinish(uow, orError: error)
 
         do {

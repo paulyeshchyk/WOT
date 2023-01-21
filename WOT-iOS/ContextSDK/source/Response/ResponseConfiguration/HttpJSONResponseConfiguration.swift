@@ -22,13 +22,24 @@ public class HttpJSONResponseConfiguration: NSObject, ResponseConfigurationProto
     }
 
     public func handleData(_ data: Data?, fromRequest request: RequestProtocol, forService modelService: RequestModelServiceProtocol, inAppContext appContext: Context, completion: WorkWithDataCompletion?) {
-        //
-        let webSyndicate = JSONSyndicate(appContext: appContext, request: request)
-        webSyndicate.modelService = modelService
-        webSyndicate.extractor = extractor
-        webSyndicate.completion = completion
-
-        webSyndicate.run(data: data)
+        do {
+            let uow_config = try UoW_Config__Parse_Fetch_Decode_Link(appContext: appContext,
+                                                                     modelService: modelService,
+                                                                     extractor: extractor,
+                                                                     request: request,
+                                                                     socket: socket,
+                                                                     decodeDepthLevel: nil,
+                                                                     data: data)
+            let uow = try appContext.uowManager.uow(by: uow_config)
+            uow.didStatusChanged = { uow in
+                if uow.status == .finish {
+                    completion?(request, nil)
+                }
+            }
+            try appContext.uowManager.perform(uow: uow)
+        } catch {
+            appContext.logInspector?.log(.error(error), sender: self)
+        }
     }
 }
 

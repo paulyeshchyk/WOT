@@ -82,6 +82,7 @@ extension ResponseManagerListenerList: ListenerListContainerProtocol {
         let MD5 = forRequest.MD5
         if var listeners = list[MD5] {
             listeners.removeAll(where: { $0.MD5 == listener.MD5 })
+            #warning("crash here: EXC_BAD_ACCESS")
             list[MD5] = listeners
         }
     }

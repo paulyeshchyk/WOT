@@ -202,7 +202,7 @@ private enum LogMessages: CustomStringConvertible {
         case .perform_done(let date, let uuid, let context): return "perform-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>"), operation: \(uuid.MD5)"
         case .perform4Save_start(let context): return "perform_for_save-start; in: \(context.name ?? "<unknown>"))"
         case .perform4Save_done(let date, let context): return "perform_for_save-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"
-        case .select_done(let predicate, let context, let object): return "select done; found [\(String(describing: object, orValue: "<NULL>"))] by predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
+        case .select_done(let predicate, let context, let object): return "select done; found [\(String(describing: object?.entityName, orValue: "<NULL>"))] by predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
         case .select_fail(let clazz, let predicate, let context): return "select fail; entity: \(type(of: clazz)), predicate: \(String(describing: predicate, orValue: "<NULL>")); in: \(context.name ?? "<unknown>")"
         case .save_start(let context): return "save-start; in: \(context.name ?? "<unknown>")"
         case .save_done(let date, let context): return "save-done; (\(Date().elapsed(from: date))s) in: \(context.name ?? "<unknown>")"

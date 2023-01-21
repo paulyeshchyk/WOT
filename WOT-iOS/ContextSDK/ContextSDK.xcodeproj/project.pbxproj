@@ -43,6 +43,7 @@
 		DA5BC8EF297AB7C8005C4914 /* UoW_ManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5BC8EE297AB7C8005C4914 /* UoW_ManagerProtocol.swift */; };
 		DA5BC8F1297AB826005C4914 /* UoW_Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5BC8F0297AB826005C4914 /* UoW_Manager.swift */; };
 		DA5BC8F6297AEF9C005C4914 /* UoW__Fetch_Decode_Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5BC8F5297AEF9C005C4914 /* UoW__Fetch_Decode_Link.swift */; };
+		DA5BC8F8297BA0A7005C4914 /* UoW__Parse_Fetch_Decode_Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5BC8F7297BA0A7005C4914 /* UoW__Parse_Fetch_Decode_Link.swift */; };
 		DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EB2952FCEE00C60F31 /* RequestRegistratorProtocol.swift */; };
 		DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EC2952FCEE00C60F31 /* RequestRegistrator.swift */; };
 		DA81E4F02952FDD800C60F31 /* JSONDataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EF2952FDD800C60F31 /* JSONDataDecoder.swift */; };
@@ -83,7 +84,6 @@
 		DACDB110295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB10F295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift */; };
 		DACDB12029601537005BBA72 /* ContextPredicateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB11F29601537005BBA72 /* ContextPredicateProtocol.swift */; };
 		DACDB123296023C8005BBA72 /* JSONMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB122296023C7005BBA72 /* JSONMap.swift */; };
-		DAD98AFF2979847C007F9ED2 /* JSONSyndicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD98AFE2979847C007F9ED2 /* JSONSyndicate.swift */; };
 		DAD98B01297984ED007F9ED2 /* JSONMapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD98B00297984ED007F9ED2 /* JSONMapHelper.swift */; };
 		DADD69702974F0D000EFC36D /* MOFetchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD696F2974F0D000EFC36D /* MOFetchHelper.swift */; };
 		DADD69722974F10600EFC36D /* MOLinkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69712974F10600EFC36D /* MOLinkHelper.swift */; };
@@ -150,6 +150,7 @@
 		DA5BC8EE297AB7C8005C4914 /* UoW_ManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UoW_ManagerProtocol.swift; sourceTree = "<group>"; };
 		DA5BC8F0297AB826005C4914 /* UoW_Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UoW_Manager.swift; sourceTree = "<group>"; };
 		DA5BC8F5297AEF9C005C4914 /* UoW__Fetch_Decode_Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UoW__Fetch_Decode_Link.swift; sourceTree = "<group>"; };
+		DA5BC8F7297BA0A7005C4914 /* UoW__Parse_Fetch_Decode_Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UoW__Parse_Fetch_Decode_Link.swift; sourceTree = "<group>"; };
 		DA81E4EB2952FCEE00C60F31 /* RequestRegistratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestRegistratorProtocol.swift; sourceTree = "<group>"; };
 		DA81E4EC2952FCEE00C60F31 /* RequestRegistrator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestRegistrator.swift; sourceTree = "<group>"; };
 		DA81E4EF2952FDD800C60F31 /* JSONDataDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDataDecoder.swift; sourceTree = "<group>"; };
@@ -190,7 +191,6 @@
 		DACDB10F295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectLinkerProtocol.swift; sourceTree = "<group>"; };
 		DACDB11F29601537005BBA72 /* ContextPredicateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPredicateProtocol.swift; sourceTree = "<group>"; };
 		DACDB122296023C7005BBA72 /* JSONMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMap.swift; sourceTree = "<group>"; };
-		DAD98AFE2979847C007F9ED2 /* JSONSyndicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSyndicate.swift; sourceTree = "<group>"; };
 		DAD98B00297984ED007F9ED2 /* JSONMapHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMapHelper.swift; sourceTree = "<group>"; };
 		DADD696F2974F0D000EFC36D /* MOFetchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOFetchHelper.swift; sourceTree = "<group>"; };
 		DADD69712974F10600EFC36D /* MOLinkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOLinkHelper.swift; sourceTree = "<group>"; };
@@ -411,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				DA5BC8F5297AEF9C005C4914 /* UoW__Fetch_Decode_Link.swift */,
+				DA5BC8F7297BA0A7005C4914 /* UoW__Parse_Fetch_Decode_Link.swift */,
 			);
 			path = samples;
 			sourceTree = "<group>";
@@ -453,7 +454,6 @@
 		DAA3A5442969F53900430492 /* Syndicate */ = {
 			isa = PBXGroup;
 			children = (
-				DAD98AFE2979847C007F9ED2 /* JSONSyndicate.swift */,
 				DAC55BC22974F047008166BE /* MODecodeHelper.swift */,
 				DADD696F2974F0D000EFC36D /* MOFetchHelper.swift */,
 				DADD69712974F10600EFC36D /* MOLinkHelper.swift */,
@@ -801,8 +801,8 @@
 				DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				DAC55BC32974F047008166BE /* MODecodeHelper.swift in Sources */,
 				DADD69702974F0D000EFC36D /* MOFetchHelper.swift in Sources */,
+				DA5BC8F8297BA0A7005C4914 /* UoW__Parse_Fetch_Decode_Link.swift in Sources */,
 				DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */,
-				DAD98AFF2979847C007F9ED2 /* JSONSyndicate.swift in Sources */,
 				DA5BC8F6297AEF9C005C4914 /* UoW__Fetch_Decode_Link.swift in Sources */,
 				DA84BF402957327F00BAC71D /* DecoderContainerProtocol.swift in Sources */,
 				DACDB0F3295EDC96005BBA72 /* RequestManagerProtocol.swift in Sources */,
