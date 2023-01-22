@@ -17,14 +17,12 @@ public class WOTTreeModuleNode: Node, WOTTreeModuleNodeProtocol {
 
     // MARK: Lifecycle
 
-    @objc
-    public required init(moduleTree module: WOTTreeModulesTreeProtocol) {
+    @objc public required init(moduleTree module: WOTTreeModulesTreeProtocol) {
         modulesTree = module
         super.init(name: module.moduleName())
     }
 
-    @objc
-    public required init(name _: String) {
+    @objc public required init(name _: String) {
         fatalError("init(name:) has not been implemented")
     }
 

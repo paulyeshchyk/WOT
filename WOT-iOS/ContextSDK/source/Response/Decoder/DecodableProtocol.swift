@@ -78,6 +78,7 @@ public protocol JSONDecoderProtocol: AnyObject {
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
+        & UoW_ManagerContainerProtocol
 
     var managedObject: ManagedAndDecodableObjectType? { get set }
     init(appContext: Context)

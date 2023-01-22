@@ -28,7 +28,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileGun.self
             let managedRef = try managedObject?.managedRef()
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
             httpJSONResponseConfiguration.extractor = VehicleprofileModule.GunExtractor()
 
@@ -47,7 +47,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileRadio.self
             let managedRef = try managedObject?.managedRef()
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
             httpJSONResponseConfiguration.extractor = VehicleprofileModule.RadioExtractor()
 
@@ -66,7 +66,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileEngine.self
             let managedRef = try managedObject?.managedRef()
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
             httpJSONResponseConfiguration.extractor = VehicleprofileModule.EngineExtractor()
 
@@ -85,7 +85,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileSuspension.self
             let managedRef = try managedObject?.managedRef()
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
             httpJSONResponseConfiguration.extractor = VehicleprofileModule.SuspensionExtractor()
 
@@ -104,7 +104,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileTurret.self
             let managedRef = try managedObject?.managedRef()
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
             httpJSONResponseConfiguration.extractor = VehicleprofileModule.TurretExtractor()
 

@@ -17,7 +17,7 @@
 typedef void(^WOTConfigurationCompletionCancelBlock) (void);
 typedef void(^WOTConfigurationCompletionDoneBlock) (id configuration);
 
-@interface WOTTankModuleTreeViewController : UIViewController<ContextControllerProtocol>
+@interface WOTTankModuleTreeViewController : UIViewController
 
 @property (nonatomic, copy)NSNumber *tank_Id;
 

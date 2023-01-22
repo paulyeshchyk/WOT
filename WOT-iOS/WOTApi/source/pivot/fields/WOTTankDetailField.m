@@ -10,7 +10,7 @@
 
 @implementation WOTTankDetailField
 
-- (void)evaluateWithObject:(id)object completionBlock:(EvaluateCompletionBlock)completionBlock {
+- (void)context:(NSManagedObjectContext*) context evaluateWithObject:(id)object completionBlock:(EvaluateCompletionBlock)completionBlock {
     
     NSCAssert(NO, @"has not been implemented");
 

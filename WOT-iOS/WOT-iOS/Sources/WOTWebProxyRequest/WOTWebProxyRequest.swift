@@ -87,8 +87,8 @@ public class WOTWebProxyRequest: HttpRequest {
 // MARK: - WOTWebProxyRequest + RequestModelServiceProtocol
 
 extension WOTWebProxyRequest: RequestModelServiceProtocol {
-    public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
-        JSONAdapter.self
+    public class func responseDataDecoderClass() -> ResponseDataDecoderProtocol.Type {
+        JSONDataDecoder.self
     }
 
     public static func registrationID() -> RequestIdType {

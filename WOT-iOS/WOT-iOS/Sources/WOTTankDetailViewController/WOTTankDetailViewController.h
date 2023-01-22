@@ -9,7 +9,7 @@
 #import <WOT-Swift.h>
 #import <UIKit/UIKit.h>
 
-@interface WOTTankDetailViewController : UIViewController<ContextControllerProtocol>
+@interface WOTTankDetailViewController : UIViewController
 
 @property (nonatomic, strong) NSNumber *tankId;
 

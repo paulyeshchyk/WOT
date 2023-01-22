@@ -8,8 +8,8 @@
 import UIKit
 
 public extension UIImage {
-    @objc
-    static func image(forTankType: String) -> UIImage? {
+
+    @objc static func image(forTankType: String) -> UIImage? {
         return AssetCatalogExtractor.createLocalImage(forImageNamed: forTankType, bundle: Bundle(for: WOTDataStore.self))
     }
 }

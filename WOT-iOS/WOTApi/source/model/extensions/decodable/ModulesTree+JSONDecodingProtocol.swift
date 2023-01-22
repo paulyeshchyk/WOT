@@ -11,7 +11,7 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension ModulesTree: DecodableProtocol {
-    //
+
     enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case module_id
         case name

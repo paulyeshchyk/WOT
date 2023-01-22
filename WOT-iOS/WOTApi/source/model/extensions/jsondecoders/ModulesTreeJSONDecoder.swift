@@ -58,7 +58,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let jsonRef = try JSONRef(data: moduleTreeJSON, modelClass: ModulesTree.self)
             let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: #keyPath(ModulesTree.currentModule))
             httpJSONResponseConfiguration.extractor = CurrentModuleExtractor()
 
@@ -83,7 +83,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
             let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextModulesKeypath)
             httpJSONResponseConfiguration.extractor = NextModuleExtractor()
 
@@ -108,7 +108,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             // parents was not used for next portion of tanks
             let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextTanksKeypath)
             httpJSONResponseConfiguration.extractor = NextVehicleExtractor()
 

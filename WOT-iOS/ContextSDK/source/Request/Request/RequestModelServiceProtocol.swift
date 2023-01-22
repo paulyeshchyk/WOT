@@ -11,5 +11,5 @@ public protocol RequestModelServiceProtocol: AnyObject {
 
     static func registrationID() -> RequestIdType
     static func modelClass() -> ModelClassType?
-    static func dataAdapterClass() -> ResponseAdapterProtocol.Type
+    static func responseDataDecoderClass() -> ResponseDataDecoderProtocol.Type
 }

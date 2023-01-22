@@ -49,12 +49,14 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
                     let decodingDepthLevel = forDepthLevel?.next
 
-                    #warning("move out of Decoder")
-                    JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                        if let error = error {
-                            self.appContext.logInspector?.log(.warning(error: error), sender: self)
-                        }
-                    })
+                    let config = try UoW_Config__Fetch_Decode_Link(appContext: appContext,
+                                                                   modelClass: modelClass,
+                                                                   socket: socket,
+                                                                   jsonMaps: [jsonMap],
+                                                                   decodingDepthLevel: decodingDepthLevel)
+                    let uow = try appContext.uowManager.uow(by: config)
+                    try appContext.uowManager.perform(uow: uow)
+
                 } else {
                     appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
                 }
@@ -77,12 +79,13 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            #warning("move out of Decoder")
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, socket: socket, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            let config = try UoW_Config__Fetch_Decode_Link(appContext: appContext,
+                                                           modelClass: modelClass,
+                                                           socket: socket,
+                                                           jsonMaps: [jsonMap],
+                                                           decodingDepthLevel: decodingDepthLevel)
+            let uow = try appContext.uowManager.uow(by: config)
+            try appContext.uowManager.perform(uow: uow)
         } else {
             appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
         }

@@ -32,8 +32,7 @@ open class Node: NSObject, NodeProtocol {
 
     // MARK: Lifecycle
 
-    @objc
-    public required init(name nameValue: String) {
+    @objc public required init(name nameValue: String) {
         super.init()
         name = nameValue
     }

@@ -10,6 +10,7 @@ import WOTPivot
 
 // MARK: - PivotViewController
 
+@objc
 open class PivotViewController: UIViewController, ContextControllerProtocol {
     @IBOutlet open var collectionView: UICollectionView?
 
@@ -165,11 +166,13 @@ typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void
 @objc(WOTTankPivotViewController)
 class WOTTankPivotViewController: PivotViewController {
 
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
-        & DataStoreContainerProtocol
+        & DecoderManagerContainerProtocol
+        & UoW_ManagerContainerProtocol
 
     static var registeredCells: [UICollectionViewCell.Type] = {
         return [WOTTankPivotDataCollectionViewCell.self,
@@ -186,7 +189,6 @@ class WOTTankPivotViewController: PivotViewController {
 
     // MARK: Public
 
-    @objc
     override public func registerCells() {
         WOTTankPivotViewController.registeredCells.forEach { (type) in
             let clazzStr = String(describing: type)
@@ -218,7 +220,8 @@ class WOTTankPivotViewController: PivotViewController {
         guard let appDelegate = UIApplication.shared.delegate as? Context else {
             fatalError("appDelegate is not WOTAppDelegateProtocol")
         }
-        return WOTTankPivotModel(modelListener: self, settingsDatasource: settingsDatasource, appContext: appDelegate)
+        return WOTTankPivotModel(modelListener: self, settingsDatasource: settingsDatasource,
+                                 appContext: appDelegate)
     }
 
     override func viewDidLoad() {
@@ -228,14 +231,12 @@ class WOTTankPivotViewController: PivotViewController {
         navigationItem.setRightBarButtonItems(items, animated: false)
     }
 
-    @objc
-    func openConstructor(_: Any) {
+    @objc func openConstructor(_: Any) {
         let vc = WOTPivotConstructorViewController(nibName: "WOTPivotConstructorViewController", bundle: Bundle.main)
         navigationController?.pushViewController(vc, animated: true)
     }
 
-    @objc
-    func refresh(_: UIRefreshControl) {
+    @objc func refresh(_: UIRefreshControl) {
         model.loadModel()
     }
 

@@ -11,7 +11,7 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension Module: DecodableProtocol {
-    //
+
     enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case name
         case nation
