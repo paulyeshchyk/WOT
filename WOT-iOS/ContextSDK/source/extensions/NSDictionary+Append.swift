@@ -44,8 +44,8 @@ extension Dictionary where Key == AnyHashable, Value == Any {
 }
 
 public extension NSDictionary {
-    @objc
-    func asURLQueryString() -> String {
+
+    @objc func asURLQueryString() -> String {
         var result = [String]()
         keyEnumerator()
             .compactMap { $0 as? String }
@@ -58,8 +58,7 @@ public extension NSDictionary {
         return result.joined(separator: "&")
     }
 
-    @objc
-    func escapedValue(key: AnyHashable) -> String? {
+    @objc func escapedValue(key: AnyHashable) -> String? {
         guard let obj = object(forKey: key) else { return nil }
 
         if let array = obj as? [URLEncodedProtocol] {

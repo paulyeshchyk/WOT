@@ -11,7 +11,7 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension Vehicles: DecodableProtocol {
-    //
+
     enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case is_gift
         case is_premium

@@ -8,8 +8,6 @@
 #import "WOTTankPivotFixedCollectionViewCell.h"
 #import "WOTTankPivotEmptyCollectionViewCell.h"
 #import "WOTTankListViewController.h"
-#import "WOTPlayersListViewController.h"
-#import "WOTProfileViewController.h"
 #import "WOTMenuTableViewCell.h"
 #import "WOTDrawerViewController.h"
 #import "UIToolbar+WOT.h"

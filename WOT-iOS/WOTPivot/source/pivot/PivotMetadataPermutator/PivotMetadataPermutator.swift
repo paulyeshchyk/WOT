@@ -90,8 +90,8 @@ public protocol PivotTemplateProtocol {
 
 @objc
 public class PivotMetaTypeConverter: NSObject {
-    @objc
-    public static func nodeClass(for type: PivotMetadataType) -> PivotNode.Type {
+
+    @objc public static func nodeClass(for type: PivotMetadataType) -> PivotNode.Type {
         switch type {
         case .filter:
             return FilterPivotNode.self

@@ -23,7 +23,7 @@ public protocol RequestManagerProtocol {
 
 @objc
 public protocol RequestManagerContainerProtocol {
-    @objc var requestManager: RequestManagerProtocol? { get set }
+    var requestManager: RequestManagerProtocol? { get set }
 }
 
 // MARK: - RequestManagerListenerProtocol

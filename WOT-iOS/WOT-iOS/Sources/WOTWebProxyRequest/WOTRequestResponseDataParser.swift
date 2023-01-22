@@ -6,7 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-// @objc
 // public protocol WOTRequestResponseDataParserProtocol {
 //    var appManager: WOTAppManagerProtocol? { get set }
 //

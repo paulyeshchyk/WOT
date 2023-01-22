@@ -22,20 +22,13 @@ public protocol WOTTankEvaluationResultProtocol {
 @objc
 public class WOTTankEvalutionResult: NSObject, WOTTankEvaluationResultProtocol {
 
-    @objc
     public var thisValue: CGFloat
-
-    @objc
     public var maxValue: CGFloat
-
-    @objc
     public var averageValue: CGFloat
 
     // MARK: Lifecycle
 
-    @objc
-    public required
-    init(thisValue: CGFloat, maxValue: CGFloat, averageValue: CGFloat) {
+    public required init(thisValue: CGFloat, maxValue: CGFloat, averageValue: CGFloat) {
         self.thisValue = thisValue
         self.maxValue = maxValue
         self.averageValue = averageValue

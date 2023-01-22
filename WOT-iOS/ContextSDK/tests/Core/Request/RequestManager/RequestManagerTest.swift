@@ -121,8 +121,8 @@ class ManagedObjectContext: ManagedObjectContextProtocol {
         nil
     }
 
-    func findOrCreateObject(modelClass _: AnyObject, predicate _: NSPredicate?) -> ManagedObjectProtocol? {
-        nil
+    func findOrCreateObject(appContext _: Context, modelClass _: AnyObject, predicate _: NSPredicate?, completion _: @escaping FetchCompletion) {
+        //
     }
 
     func execute(appContext _: Context?, with _: @escaping (ManagedObjectContextProtocol) -> Void) {
@@ -241,8 +241,7 @@ public class HostConfiguration: NSObject, HostConfigurationProtocol {
 
     // MARK: Public
 
-    @objc
-    public func urlQuery(with: RequestArgumentsProtocol?) -> String {
+    @objc public func urlQuery(with: RequestArgumentsProtocol?) -> String {
         let custom = ["application_id": applicationID]
         currentArguments = with?.buildQuery(custom) ?? ""
         return currentArguments

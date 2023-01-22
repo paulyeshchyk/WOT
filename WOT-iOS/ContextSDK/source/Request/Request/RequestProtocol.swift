@@ -40,14 +40,14 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
 
 @objc
 public protocol RequestListenerContainerProtocol {
-    @objc var requestListener: RequestListenerProtocol? { get set }
+    var requestListener: RequestListenerProtocol? { get set }
 }
 
 // MARK: - RequestListenerProtocol
 
 @objc
 public protocol RequestListenerProtocol: MD5Protocol {
-    @objc func request(_ request: RequestProtocol, finishedLoadData data: Data?, error: Error?)
-    @objc func request(_ request: RequestProtocol, canceledWith error: Error?)
-    @objc func request(_ request: RequestProtocol, startedWith urlRequest: URLRequest)
+    func request(_ request: RequestProtocol, finishedLoadData data: Data?, error: Error?)
+    func request(_ request: RequestProtocol, canceledWith error: Error?)
+    func request(_ request: RequestProtocol, startedWith urlRequest: URLRequest)
 }

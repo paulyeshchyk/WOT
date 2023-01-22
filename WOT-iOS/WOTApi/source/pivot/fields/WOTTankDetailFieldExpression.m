@@ -38,7 +38,7 @@
     return nil;
 }
 
-- (void)evaluateWithObject:(id)object completionBlock:(EvaluateCompletionBlock)completionBlock {
+- (void)context:(NSManagedObjectContext*) context evaluateWithObject:(id)object completionBlock:(EvaluateCompletionBlock)completionBlock {
 
     NSMutableArray *keys = [[NSMutableArray alloc] init];
     NSMutableArray *expressionsForSingleObject = [[NSMutableArray alloc] init];
@@ -56,11 +56,6 @@
         
         [keys addObject:description.name];
     }];
-
-    #warning "remove appdelegate"
-    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-    id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
-    NSManagedObjectContext *context = (NSManagedObjectContext *)[coreDataProvider workingContext];
 
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([object class])];
     [request setResultType:NSDictionaryResultType];

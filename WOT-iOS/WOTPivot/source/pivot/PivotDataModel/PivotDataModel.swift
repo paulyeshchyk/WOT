@@ -67,8 +67,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         }
     }
 
-    @objc
-    public var contentSize: CGSize {
+    @objc public var contentSize: CGSize {
         return dimension.contentSize
     }
 
@@ -77,8 +76,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
 
     // MARK: Lifecycle
 
-    @objc
-    public required init(fetchController: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator: NodeCreatorProtocol, metadatasource: PivotMetaDatasourceProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: Context) {
+    @objc public required init(fetchController: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator: NodeCreatorProtocol, metadatasource: PivotMetaDatasourceProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: Context) {
         shouldDisplayEmptyColumns = false
         self.fetchController = fetchController
         listener = modelListener

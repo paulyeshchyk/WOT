@@ -11,7 +11,7 @@ import ContextSDK
 // MARK: - VehicleprofileAmmoPenetration + DecodableProtocol
 
 extension VehicleprofileAmmoPenetration: DecodableProtocol {
-    //
+
     enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case min_value
         case avg_value

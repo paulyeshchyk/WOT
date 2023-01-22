@@ -13,6 +13,6 @@
 
 @required
 
-- (void)parseObject:(NSManagedObject *)obj withField:(WOTTankDetailField *)field;
+- (void)context:(NSManagedObjectContext *) context parseObject:(NSManagedObject *)obj withField:(WOTTankDetailField *)field;
 
 @end
