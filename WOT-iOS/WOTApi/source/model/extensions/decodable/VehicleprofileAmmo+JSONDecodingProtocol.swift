@@ -11,7 +11,7 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension VehicleprofileAmmo: DecodableProtocol {
-    //
+
     enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case type
         case stun

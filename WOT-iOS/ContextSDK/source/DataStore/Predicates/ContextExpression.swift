@@ -35,8 +35,7 @@ public class ContextExpression: NSObject, ContextExpressionProtocol {
         return "\(predicate.description)"
     }
 
-    @objc
-    public var predicate: NSPredicate {
+    @objc public var predicate: NSPredicate {
         // swiftlint:disable force_cast
         return NSPredicate(format: predicateFormat, name, value as! CVarArg)
         // swiftlint:enable force_cast
@@ -46,8 +45,7 @@ public class ContextExpression: NSObject, ContextExpressionProtocol {
 
     // MARK: Lifecycle
 
-    @objc
-    public required init(components: [String], value: JSONValueType, nameAlias: String, predicateFormat: String) {
+    @objc public required init(components: [String], value: JSONValueType, nameAlias: String, predicateFormat: String) {
         self.components = components
         self.value = value
         self.predicateFormat = predicateFormat
@@ -55,15 +53,13 @@ public class ContextExpression: NSObject, ContextExpressionProtocol {
         super.init()
     }
 
-    @objc
-    public required convenience init(name: String, value: JSONValueType, nameAlias: String, predicateFormat: String) {
+    @objc public required convenience init(name: String, value: JSONValueType, nameAlias: String, predicateFormat: String) {
         self.init(components: [name], value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
     }
 
     // MARK: Public
 
-    @objc
-    public func foreignKey(byInsertingComponent: String) -> ContextExpressionProtocol? {
+    @objc public func foreignKey(byInsertingComponent: String) -> ContextExpressionProtocol? {
         var newComponents = [byInsertingComponent]
         newComponents.append(contentsOf: components)
         return ContextExpression(components: newComponents, value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)

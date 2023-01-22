@@ -52,13 +52,11 @@ open class CoreDataStore: DataStore {
 
     private lazy var privateContext: ManagedObjectContextProtocol = CoreDataStore.privateQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
 
-    @objc
-    override public func newPrivateContext() -> ManagedObjectContextProtocol {
+    @objc override public func newPrivateContext() -> ManagedObjectContextProtocol {
         privateContext
     }
 
-    @objc
-    override public func workingContext() -> ManagedObjectContextProtocol {
+    @objc override public func workingContext() -> ManagedObjectContextProtocol {
         return mainContext
     }
 
@@ -86,7 +84,7 @@ open class CoreDataStore: DataStore {
 }
 
 extension CoreDataStore {
-    //
+
     private static func mainQueueConcurrencyContext(persistentStoreCoordinator: NSPersistentStoreCoordinator?) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.name = "Main <\(UUID().MD5)>"

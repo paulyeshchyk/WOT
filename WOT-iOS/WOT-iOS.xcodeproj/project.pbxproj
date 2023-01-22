@@ -31,6 +31,7 @@
 		1DD6471A1B2084FF00B0EC76 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 1DD647191B2084FF00B0EC76 /* podfile */; };
 		1DD6471D1B20855400B0EC76 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DD6471F1B20855400B0EC76 /* Localizable.strings */; };
 		8AD6F43E3E07FF8D8FFEB9C1 /* Pods_WOT_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78862B5E77DF034FEC5D9B2A /* Pods_WOT_iOS.framework */; };
+		DA0C7165297BE0060093EBBF /* WOTPlayersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0C7164297BE0060093EBBF /* WOTPlayersListViewController.swift */; };
 		DA288F712965C2EA00973561 /* WOTLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA288F702965C2EA00973561 /* WOTLaunchScreen.storyboard */; };
 		DA39E25B296075140099D877 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E257296075140099D877 /* ContextSDK.framework */; };
 		DA39E25C296075140099D877 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E257296075140099D877 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -156,9 +157,7 @@
 		DA81E9F42954497E00C60F31 /* WOTTankTreeNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA81E94D2954497D00C60F31 /* WOTTankTreeNodeCollectionViewCell.xib */; };
 		DA81E9F52954497E00C60F31 /* WOTTankConfigurationModuleMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E9512954497D00C60F31 /* WOTTankConfigurationModuleMapping.m */; };
 		DA81E9F62954497E00C60F31 /* WOTTankConfigurationModuleMapping+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E9522954497D00C60F31 /* WOTTankConfigurationModuleMapping+Factory.m */; };
-		DA81E9F72954497E00C60F31 /* WOTPlayersListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E9552954497D00C60F31 /* WOTPlayersListViewController.m */; };
 		DA81E9F82954497E00C60F31 /* WOTPlayersListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA81E9562954497D00C60F31 /* WOTPlayersListViewController.xib */; };
-		DA81E9F92954497E00C60F31 /* WOTProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E9592954497D00C60F31 /* WOTProfileViewController.m */; };
 		DA81E9FA2954497E00C60F31 /* WOTProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA81E95A2954497D00C60F31 /* WOTProfileViewController.xib */; };
 		DA81E9FF2954497E00C60F31 /* WOTLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA81E9642954497D00C60F31 /* WOTLoginViewController.xib */; };
 		DA81EA002954497E00C60F31 /* WOTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E9652954497D00C60F31 /* WOTLoginViewController.m */; };
@@ -238,6 +237,7 @@
 		DA81EA5B29544F4900C60F31 /* WOTLanguageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81EA5729544F4900C60F31 /* WOTLanguageTableViewCell.m */; };
 		DA81EA5C29544F4900C60F31 /* WOTLanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA81EA5829544F4900C60F31 /* WOTLanguageTableViewCell.xib */; };
 		DA81EA5D29544F4900C60F31 /* WOTLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81EA5929544F4900C60F31 /* WOTLanguageSelectorViewController.m */; };
+		DA9522FE297BD9B000AF420C /* WOTProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9522FD297BD9B000AF420C /* WOTProfileViewController.swift */; };
 		DAA56E422976703B0092DA17 /* UIBarButtonItem+EventBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E252976703A0092DA17 /* UIBarButtonItem+EventBlock.m */; };
 		DAA56E432976703B0092DA17 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E282976703A0092DA17 /* NSString+RomanUtils.m */; };
 		DAA56E442976703B0092DA17 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E2A2976703A0092DA17 /* RomanNumber.m */; };
@@ -294,6 +294,7 @@
 		1DD6471E1B20855400B0EC76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2A176CC6D9BAC80B33FBEA3A /* Pods-WOT-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		78862B5E77DF034FEC5D9B2A /* Pods_WOT_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOT_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA0C7164297BE0060093EBBF /* WOTPlayersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPlayersListViewController.swift; sourceTree = "<group>"; };
 		DA288F702965C2EA00973561 /* WOTLaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WOTLaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA39E257296075140099D877 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA39E258296075140099D877 /* WOTApi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTApi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -427,11 +428,7 @@
 		DA81E9502954497D00C60F31 /* WOTTankConfigurationModuleMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankConfigurationModuleMapping.h; sourceTree = "<group>"; };
 		DA81E9512954497D00C60F31 /* WOTTankConfigurationModuleMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankConfigurationModuleMapping.m; sourceTree = "<group>"; };
 		DA81E9522954497D00C60F31 /* WOTTankConfigurationModuleMapping+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankConfigurationModuleMapping+Factory.m"; sourceTree = "<group>"; };
-		DA81E9542954497D00C60F31 /* WOTPlayersListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTPlayersListViewController.h; sourceTree = "<group>"; };
-		DA81E9552954497D00C60F31 /* WOTPlayersListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTPlayersListViewController.m; sourceTree = "<group>"; };
 		DA81E9562954497D00C60F31 /* WOTPlayersListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTPlayersListViewController.xib; sourceTree = "<group>"; };
-		DA81E9582954497D00C60F31 /* WOTProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTProfileViewController.h; sourceTree = "<group>"; };
-		DA81E9592954497D00C60F31 /* WOTProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTProfileViewController.m; sourceTree = "<group>"; };
 		DA81E95A2954497D00C60F31 /* WOTProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTProfileViewController.xib; sourceTree = "<group>"; };
 		DA81E9642954497D00C60F31 /* WOTLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTLoginViewController.xib; sourceTree = "<group>"; };
 		DA81E9652954497D00C60F31 /* WOTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLoginViewController.m; sourceTree = "<group>"; };
@@ -550,6 +547,7 @@
 		DA81EA5729544F4900C60F31 /* WOTLanguageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageTableViewCell.m; sourceTree = "<group>"; };
 		DA81EA5829544F4900C60F31 /* WOTLanguageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTLanguageTableViewCell.xib; sourceTree = "<group>"; };
 		DA81EA5929544F4900C60F31 /* WOTLanguageSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageSelectorViewController.m; sourceTree = "<group>"; };
+		DA9522FD297BD9B000AF420C /* WOTProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTProfileViewController.swift; sourceTree = "<group>"; };
 		DAA56E242976703A0092DA17 /* UIBarButtonItem+EventBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+EventBlock.h"; sourceTree = "<group>"; };
 		DAA56E252976703A0092DA17 /* UIBarButtonItem+EventBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+EventBlock.m"; sourceTree = "<group>"; };
 		DAA56E272976703A0092DA17 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
@@ -974,9 +972,8 @@
 		DA81E9532954497D00C60F31 /* WOTPlayersListViewController */ = {
 			isa = PBXGroup;
 			children = (
-				DA81E9542954497D00C60F31 /* WOTPlayersListViewController.h */,
-				DA81E9552954497D00C60F31 /* WOTPlayersListViewController.m */,
 				DA81E9562954497D00C60F31 /* WOTPlayersListViewController.xib */,
+				DA0C7164297BE0060093EBBF /* WOTPlayersListViewController.swift */,
 			);
 			path = WOTPlayersListViewController;
 			sourceTree = "<group>";
@@ -984,9 +981,8 @@
 		DA81E9572954497D00C60F31 /* WOTProfileViewController */ = {
 			isa = PBXGroup;
 			children = (
-				DA81E9582954497D00C60F31 /* WOTProfileViewController.h */,
-				DA81E9592954497D00C60F31 /* WOTProfileViewController.m */,
 				DA81E95A2954497D00C60F31 /* WOTProfileViewController.xib */,
+				DA9522FD297BD9B000AF420C /* WOTProfileViewController.swift */,
 			);
 			path = WOTProfileViewController;
 			sourceTree = "<group>";
@@ -1252,9 +1248,9 @@
 			isa = PBXGroup;
 			children = (
 				DA81E9DC2954497E00C60F31 /* WOTTankDetailProgressTableViewCell.h */,
+				DA81E9DF2954497E00C60F31 /* WOTTankDetailProgressTableViewCell.m */,
 				DA81E9DD2954497E00C60F31 /* WOTTankDetailProgressTableViewCell.xib */,
 				DA81E9DE2954497E00C60F31 /* WOTTankDetailTextTableViewCell.m */,
-				DA81E9DF2954497E00C60F31 /* WOTTankDetailProgressTableViewCell.m */,
 				DA81E9E02954497E00C60F31 /* WOTTankDetailTextTableViewCell.xib */,
 				DA81E9E12954497E00C60F31 /* WOTTankDetailTextTableViewCell.h */,
 				DA81E9E22954497E00C60F31 /* WOTTankDetailTableViewCellProtocol.h */,
@@ -1796,7 +1792,6 @@
 				DA81EA2A2954497E00C60F31 /* WOTTankPivotDataGroupCollectionViewCell.swift in Sources */,
 				DA81EA082954497E00C60F31 /* WOTTankListSettingSortTableViewCell.m in Sources */,
 				DA81EA372954497E00C60F31 /* WOTTankGridCollectionSubitemTableViewCell.m in Sources */,
-				DA81E9F72954497E00C60F31 /* WOTPlayersListViewController.m in Sources */,
 				DA81EA332954497E00C60F31 /* WOTTankPivotViewController.swift in Sources */,
 				DA81EA2E2954497E00C60F31 /* WOTTankPivotFilterCollectionViewCell.m in Sources */,
 				DA81EA002954497E00C60F31 /* WOTLoginViewController.m in Sources */,
@@ -1807,7 +1802,6 @@
 				DA81EA342954497E00C60F31 /* WOTTankGridViewController.m in Sources */,
 				DA81EA412954497E00C60F31 /* WOTTankDetailCollectionViewFlowLayout.m in Sources */,
 				DA81EA432954497E00C60F31 /* WOTTankDetailTextTableViewCell.m in Sources */,
-				DA81E9F92954497E00C60F31 /* WOTProfileViewController.m in Sources */,
 				DAA56E482976703B0092DA17 /* NSBundle+LanguageBundle.m in Sources */,
 				DA81EA362954497E00C60F31 /* NSObject+WOTTankGridValueData.m in Sources */,
 				DA81E9F32954497E00C60F31 /* WOTTankTreeNodeCollectionViewCell.m in Sources */,
@@ -1819,6 +1813,7 @@
 				DA81EA182954497E00C60F31 /* WOTTankListViewController.m in Sources */,
 				DA81EA0F2954497E00C60F31 /* WOTTankListSettingsDatasource+TableView.m in Sources */,
 				DAA56E432976703B0092DA17 /* NSString+RomanUtils.m in Sources */,
+				DA9522FE297BD9B000AF420C /* WOTProfileViewController.swift in Sources */,
 				DA81E9F52954497E00C60F31 /* WOTTankConfigurationModuleMapping.m in Sources */,
 				DA81EA322954497E00C60F31 /* WOTTankPivotDataCollectionViewCell.m in Sources */,
 				1DD646391B1C616A00B0EC76 /* main.m in Sources */,
@@ -1831,6 +1826,7 @@
 				DA81E9EA2954497E00C60F31 /* WOTTankConfigurationItemHeaderFooter.m in Sources */,
 				DAA56E442976703B0092DA17 /* RomanNumber.m in Sources */,
 				DA81EA442954497E00C60F31 /* WOTTankDetailProgressTableViewCell.m in Sources */,
+				DA0C7165297BE0060093EBBF /* WOTPlayersListViewController.swift in Sources */,
 				DA81EA462954497E00C60F31 /* WOTTankDetailCollectionViewCell.m in Sources */,
 				DAA56E422976703B0092DA17 /* UIBarButtonItem+EventBlock.m in Sources */,
 				DA81EA212954497E00C60F31 /* WOTPivotConstructorViewController.swift in Sources */,

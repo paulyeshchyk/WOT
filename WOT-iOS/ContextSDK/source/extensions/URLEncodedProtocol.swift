@@ -30,8 +30,8 @@ extension NSNumber: URLEncodedProtocol {
 // MARK: - NSString + URLEncodedProtocol
 
 extension NSString: URLEncodedProtocol {
-    @objc
-    public func urlEncoded() -> String? {
+
+    @objc public func urlEncoded() -> String? {
         return (self as String).urlEncoded()
     }
 }

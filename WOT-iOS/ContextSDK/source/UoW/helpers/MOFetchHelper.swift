@@ -1,13 +1,13 @@
 //
-//  DatastoreFetchHelper.swift
+//  MOFetchHelper.swift
 //  ContextSDK
 //
 //  Created by Paul on 16.01.23.
 //
 
-// MARK: - DatastoreFetchHelper
+// MARK: - MOFetchHelper
 
-class DatastoreFetchHelper {
+class MOFetchHelper {
 
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
@@ -21,11 +21,21 @@ class DatastoreFetchHelper {
 
     init(appContext: Context) {
         self.appContext = appContext
+        appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
+    }
+
+    deinit {
+        appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
     }
 
     // MARK: Internal
 
-    func run() {
+    func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
+        if let incomingError = error {
+            completion?(nil, incomingError)
+            return
+        }
+
         guard let modelClass = modelClass else {
             completion?(nil, Errors.modelClassIsNotDefined)
             return
@@ -39,9 +49,9 @@ class DatastoreFetchHelper {
     }
 }
 
-// MARK: - %t + DatastoreFetchHelper.Errors
+// MARK: - %t + MOFetchHelper.Errors
 
-extension DatastoreFetchHelper {
+extension MOFetchHelper {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
         case modelClassIsNotDefined

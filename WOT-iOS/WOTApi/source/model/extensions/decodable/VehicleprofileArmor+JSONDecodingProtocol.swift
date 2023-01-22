@@ -11,7 +11,7 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension VehicleprofileArmor: DecodableProtocol {
-    //
+
     enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case front
         case sides

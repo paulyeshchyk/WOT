@@ -52,7 +52,7 @@ open class ResponseManager: ResponseManagerProtocol {
 // MARK: - ResponseManager + ListenerListContainerProtocol
 
 extension ResponseManager {
-    //
+
     public func removeListener(_ listener: ResponseManagerListener, forRequest: RequestProtocol) {
         listeners.removeListener(listener, forRequest: forRequest)
     }

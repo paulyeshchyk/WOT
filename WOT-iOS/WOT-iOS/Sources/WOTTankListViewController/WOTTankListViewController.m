@@ -40,15 +40,15 @@
 
 @implementation WOTTankListViewController
 
-@synthesize appContext;
+//@synthesize appContext;
 
-- (id)initWithContext:(id<ContextProtocol>)context {
-    self = [super initWithNibName:NSStringFromClass([WOTTankListViewController class]) bundle:nil];
-    if (self) {
-        self.appContext = context;
-    }
-    return self;
-}
+//- (id)initWithContext:(id<ContextProtocol>)context {
+//    self = [super initWithNibName:NSStringFromClass([WOTTankListViewController class]) bundle:nil];
+//    if (self) {
+//        self.appContext = context;
+//    }
+//    return self;
+//}
 
 - (void)dealloc {
 
