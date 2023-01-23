@@ -83,27 +83,16 @@ public extension JSONAdapter {
             return
         }
 
-        let dispatchGroup = DispatchGroup()
-
         let maps = extractor.getJSONMaps(json: json, modelClass: modelClass, jsonRefs: request.contextPredicate?.jsonRefs)
-        maps.forEach { jsonMap in
-            dispatchGroup.enter()
 
-            let syndicate = JSONSyndicate(appContext: appContext, modelClass: modelClass)
-            syndicate.decodeDepthLevel = request.decodingDepthLevel
-            syndicate.jsonMap = jsonMap
-            syndicate.socket = socket
-            syndicate.completion = { _, error in
-                if let error = error {
-                    self.completion?(request, error)
-                }
-                dispatchGroup.leave()
-            }
-            syndicate.run()
-        }
-
-        dispatchGroup.notify(queue: DispatchQueue.main) {
-            self.completion?(request, nil)
+        let uow = UOWDecodeAndLinkMaps()
+        uow.appContext = appContext
+        uow.maps = maps
+        uow.modelClass = modelClass
+        uow.socket = socket
+        uow.decodingDepthLevel = request.decodingDepthLevel
+        try? appContext.uowManager.run(uow) { result in
+            self.completion?(request, (result as? UOWResultProtocol)?.error)
         }
     }
 }

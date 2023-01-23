@@ -56,6 +56,7 @@ extension ResponseManagerListenerList: ListenerListContainerProtocol {
 
     func addListener(_ listener: ResponseManagerListener, forRequest: RequestProtocol) throws {
         let requestMD5 = forRequest.MD5
+        #warning("Crash is here")
         if var listeners = list[requestMD5] {
             let filtered = listeners.filter { $0.MD5 == listener.MD5 }
             guard filtered.isEmpty else {
@@ -79,6 +80,7 @@ extension ResponseManagerListenerList: ListenerListContainerProtocol {
 
     func removeListener(_ listener: ResponseManagerListener, forRequest: RequestProtocol) {
         let MD5 = forRequest.MD5
+        #warning("Crash is here")
         if var listeners = list[MD5] {
             listeners.removeAll(where: { $0.MD5 == listener.MD5 })
             list[MD5] = listeners
