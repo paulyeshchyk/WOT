@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,39 +15,23 @@
 		1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */; };
 		1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E562245FE7E4007E5CA8 /* RequestManager.swift */; };
 		1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */; };
-		1D7E0695247D0460008CB848 /* WOTKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E0694247D045F008CB848 /* WOTKitTests.swift */; };
 		1D7E0697247D0460008CB848 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E506245FE541007E5CA8 /* WOTKit.framework */; };
 		1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */; };
-		DA0E8044295064EC00B44CC6 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0E8043295064EC00B44CC6 /* ContextSDK.framework */; platformFilter = ios; };
+		DA12D07029621B3C0077F664 /* RequestManagerLogEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA12D06F29621B3C0077F664 /* RequestManagerLogEvents.swift */; };
+		DA39E28D29609BC70099D877 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E28C29609BC70099D877 /* ContextSDK.framework */; };
+		DA39E28E29609BC70099D877 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E28C29609BC70099D877 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */; };
 		DA81E7CD295326B800C60F31 /* NSThread+ExecutionOnMain.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E7CE295326B800C60F31 /* NSThread+ExecutionOnMain.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7CC295326B800C60F31 /* NSThread+ExecutionOnMain.m */; };
 		DA81E872295352FF00C60F31 /* NSBundle+LanguageBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E85C295352FD00C60F31 /* NSBundle+LanguageBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E873295352FF00C60F31 /* NSBundle+LanguageBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E85D295352FE00C60F31 /* NSBundle+LanguageBundle.m */; };
-		DA81E8742953530000C60F31 /* UINavigationBar+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E85F295352FE00C60F31 /* UINavigationBar+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E8752953530000C60F31 /* UINavigationBar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E860295352FE00C60F31 /* UINavigationBar+WOT.m */; };
-		DA81E8762953530000C60F31 /* UIToolbar+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E861295352FE00C60F31 /* UIToolbar+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E8772953530000C60F31 /* UIToolbar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E862295352FE00C60F31 /* UIToolbar+WOT.m */; };
 		DA81E8782953530000C60F31 /* UIColor+HSB.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E864295352FE00C60F31 /* UIColor+HSB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E865295352FE00C60F31 /* UIColor+HSB.m */; };
 		DA81E87A2953530000C60F31 /* UIImage+Resize.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E867295352FE00C60F31 /* UIImage+Resize.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E868295352FE00C60F31 /* UIImage+Resize.m */; };
-		DA81E87C2953530000C60F31 /* UIBarButtonItem+EventBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E86A295352FE00C60F31 /* UIBarButtonItem+EventBlock.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E87D2953530000C60F31 /* UIBarButtonItem+EventBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E86B295352FE00C60F31 /* UIBarButtonItem+EventBlock.m */; };
-		DA81E87E2953530000C60F31 /* UIView+StretchingConstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E86D295352FF00C60F31 /* UIView+StretchingConstraints.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E87F2953530000C60F31 /* UIView+StretchingConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */; };
-		DA81E8802953530000C60F31 /* WOTProgressView.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E870295352FF00C60F31 /* WOTProgressView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E8812953530000C60F31 /* WOTProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E871295352FF00C60F31 /* WOTProgressView.m */; };
-		DA81E90D29536FF500C60F31 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E90B29536FF500C60F31 /* Reachability.h */; };
-		DA81E90E29536FF500C60F31 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E90C29536FF500C60F31 /* Reachability.m */; };
-		DA81E914295370BA00C60F31 /* NSString+RomanUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E910295370BA00C60F31 /* NSString+RomanUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */; };
-		DA81E916295370BA00C60F31 /* RomanNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E912295370BA00C60F31 /* RomanNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E917295370BA00C60F31 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E913295370BA00C60F31 /* RomanNumber.m */; };
 		DA913E422959C01A00D39F0E /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E412959C01A00D39F0E /* CoreDataStore.swift */; };
 		DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */; };
 		DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */; };
-		E5892FAF56F4E5EE8B2FF883 /* Pods_WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BBDA62C4859376667143F03 /* Pods_WOTKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,13 +44,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		DA39E28F29609BC70099D877 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DA39E28E29609BC70099D877 /* ContextSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		0BBDA62C4859376667143F03 /* Pods_WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E506245FE541007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
-		1D60E50A245FE541007E5CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect_Center.swift; sourceTree = "<group>"; };
-		1D60E54B245FE7E4007E5CA8 /* WOTDataTanksFetchControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataTanksFetchControllerTest.swift; sourceTree = "<group>"; };
 		1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseParser.swift; sourceTree = "<group>"; };
 		1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestBuilder.swift; sourceTree = "<group>"; };
 		1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiverProtocol.swift; sourceTree = "<group>"; };
@@ -74,40 +69,22 @@
 		1D60E562245FE7E4007E5CA8 /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
 		1D7E0692247D045F008CB848 /* WOTKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D7E0694247D045F008CB848 /* WOTKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTKitTests.swift; sourceTree = "<group>"; };
-		1D7E0696247D0460008CB848 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDataAdapterCreator.swift; sourceTree = "<group>"; };
-		81FCA397B8AC1996D248ADE5 /* Pods-WOTKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTKit.debug.xcconfig"; path = "Target Support Files/Pods-WOTKit/Pods-WOTKit.debug.xcconfig"; sourceTree = "<group>"; };
-		83D702B700F7C58D88F5D178 /* Pods-WOTKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTKit.release.xcconfig"; path = "Target Support Files/Pods-WOTKit/Pods-WOTKit.release.xcconfig"; sourceTree = "<group>"; };
-		DA0E8043295064EC00B44CC6 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA12D06F29621B3C0077F664 /* RequestManagerLogEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManagerLogEvents.swift; sourceTree = "<group>"; };
+		DA39E28C29609BC70099D877 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCatalogExtractor.swift; sourceTree = "<group>"; };
 		DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
 		DA81E7CC295326B800C60F31 /* NSThread+ExecutionOnMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+ExecutionOnMain.m"; sourceTree = "<group>"; };
 		DA81E85C295352FD00C60F31 /* NSBundle+LanguageBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+LanguageBundle.h"; sourceTree = "<group>"; };
 		DA81E85D295352FE00C60F31 /* NSBundle+LanguageBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+LanguageBundle.m"; sourceTree = "<group>"; };
-		DA81E85F295352FE00C60F31 /* UINavigationBar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+WOT.h"; sourceTree = "<group>"; };
-		DA81E860295352FE00C60F31 /* UINavigationBar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+WOT.m"; sourceTree = "<group>"; };
-		DA81E861295352FE00C60F31 /* UIToolbar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+WOT.h"; sourceTree = "<group>"; };
-		DA81E862295352FE00C60F31 /* UIToolbar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+WOT.m"; sourceTree = "<group>"; };
 		DA81E864295352FE00C60F31 /* UIColor+HSB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HSB.h"; sourceTree = "<group>"; };
 		DA81E865295352FE00C60F31 /* UIColor+HSB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HSB.m"; sourceTree = "<group>"; };
 		DA81E867295352FE00C60F31 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		DA81E868295352FE00C60F31 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		DA81E86A295352FE00C60F31 /* UIBarButtonItem+EventBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+EventBlock.h"; sourceTree = "<group>"; };
-		DA81E86B295352FE00C60F31 /* UIBarButtonItem+EventBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+EventBlock.m"; sourceTree = "<group>"; };
-		DA81E86D295352FF00C60F31 /* UIView+StretchingConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+StretchingConstraints.h"; sourceTree = "<group>"; };
-		DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+StretchingConstraints.m"; sourceTree = "<group>"; };
-		DA81E870295352FF00C60F31 /* WOTProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTProgressView.h; sourceTree = "<group>"; };
-		DA81E871295352FF00C60F31 /* WOTProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTProgressView.m; sourceTree = "<group>"; };
-		DA81E90B29536FF500C60F31 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		DA81E90C29536FF500C60F31 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		DA81E910295370BA00C60F31 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
-		DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RomanUtils.m"; sourceTree = "<group>"; };
-		DA81E912295370BA00C60F31 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
-		DA81E913295370BA00C60F31 /* RomanNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomanNumber.m; sourceTree = "<group>"; };
 		DA913E412959C01A00D39F0E /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+ObjectContextProtocol.swift"; sourceTree = "<group>"; };
-		DAAD823A29505864001B0ACD /* PYContext.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PYContext.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DACDB124296050DD005BBA72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DACDB12629605129005BBA72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStoreEmptyFetchResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,8 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA0E8044295064EC00B44CC6 /* ContextSDK.framework in Frameworks */,
-				E5892FAF56F4E5EE8B2FF883 /* Pods_WOTKit.framework in Frameworks */,
+				DA39E28D29609BC70099D877 /* ContextSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,13 +111,10 @@
 		1D60E4FC245FE541007E5CA8 = {
 			isa = PBXGroup;
 			children = (
-				1D60E508245FE541007E5CA8 /* Sources */,
-				1D60E5F324601DAB007E5CA8 /* Tests */,
-				1D7E0693247D045F008CB848 /* WOTKitTests */,
+				1D60E508245FE541007E5CA8 /* source */,
+				1D60E5F324601DAB007E5CA8 /* tests */,
 				1D60E507245FE541007E5CA8 /* Products */,
-				1D60E50A245FE541007E5CA8 /* Info.plist */,
-				DAAD823929505864001B0ACD /* Frameworks */,
-				521F7FD3D9266E841219BAA7 /* Pods */,
+				DA39E28B29609BC70099D877 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -154,42 +127,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1D60E508245FE541007E5CA8 /* Sources */ = {
+		1D60E508245FE541007E5CA8 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				DA39E2A429615B2D0099D877 /* extensions */,
 				1D60E536245FE7E4007E5CA8 /* CoreData */,
 				1D60E557245FE7E4007E5CA8 /* Network */,
-				1D60E51C245FE7A7007E5CA8 /* basics */,
 				1D60E509245FE541007E5CA8 /* WOTKit.h */,
+				DACDB12629605129005BBA72 /* Info.plist */,
 			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
-		1D60E51C245FE7A7007E5CA8 /* basics */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E51D245FE7A7007E5CA8 /* categories */,
-			);
-			path = basics;
-			sourceTree = "<group>";
-		};
-		1D60E51D245FE7A7007E5CA8 /* categories */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E90F295370BA00C60F31 /* RomanNumber */,
-				DA81E85B295352FD00C60F31 /* NSBundle */,
-				DA81E85E295352FE00C60F31 /* UIBar */,
-				DA81E869295352FE00C60F31 /* UIBarButtonItem */,
-				DA81E863295352FE00C60F31 /* UIColor */,
-				DA81E866295352FE00C60F31 /* UIImage */,
-				DA81E86F295352FF00C60F31 /* UIProgressView */,
-				DA81E86C295352FF00C60F31 /* UIView */,
-				DA81E7CA295326B800C60F31 /* NSThread */,
-				DA81E7B729531EBF00C60F31 /* UIImage+Bundle */,
-				1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */,
-				1D60E528245FE7A7007E5CA8 /* CGRect */,
-			);
-			path = categories;
+			path = source;
 			sourceTree = "<group>";
 		};
 		1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */ = {
@@ -211,6 +158,7 @@
 		1D60E536245FE7E4007E5CA8 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				DA39E31B296190CF0099D877 /* extensions */,
 				DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */,
 				DA913E412959C01A00D39F0E /* CoreDataStore.swift */,
 			);
@@ -220,7 +168,6 @@
 		1D60E557245FE7E4007E5CA8 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				DA81E90A29536FF500C60F31 /* Reachability */,
 				1DFCC92C24714AAF005F580E /* ResponseAdapterCreator */,
 				1D60E558245FE7E4007E5CA8 /* ResponseCoordinator */,
 				1D60E55C245FE7E4007E5CA8 /* DataPumper */,
@@ -252,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				1D60E562245FE7E4007E5CA8 /* RequestManager.swift */,
+				DA12D06F29621B3C0077F664 /* RequestManagerLogEvents.swift */,
 			);
 			path = RequestManager;
 			sourceTree = "<group>";
@@ -264,37 +212,12 @@
 			path = Request;
 			sourceTree = "<group>";
 		};
-		1D60E5F324601DAB007E5CA8 /* Tests */ = {
+		1D60E5F324601DAB007E5CA8 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E5F424601DCA007E5CA8 /* CoreData */,
+				DACDB124296050DD005BBA72 /* Info.plist */,
 			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		1D60E5F424601DCA007E5CA8 /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E5F524601DD8007E5CA8 /* FetchController */,
-			);
-			path = CoreData;
-			sourceTree = "<group>";
-		};
-		1D60E5F524601DD8007E5CA8 /* FetchController */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E54B245FE7E4007E5CA8 /* WOTDataTanksFetchControllerTest.swift */,
-			);
-			path = FetchController;
-			sourceTree = "<group>";
-		};
-		1D7E0693247D045F008CB848 /* WOTKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				1D7E0694247D045F008CB848 /* WOTKitTests.swift */,
-				1D7E0696247D0460008CB848 /* Info.plist */,
-			);
-			path = WOTKitTests;
+			path = tests;
 			sourceTree = "<group>";
 		};
 		1DFCC92C24714AAF005F580E /* ResponseAdapterCreator */ = {
@@ -305,14 +228,33 @@
 			path = ResponseAdapterCreator;
 			sourceTree = "<group>";
 		};
-		521F7FD3D9266E841219BAA7 /* Pods */ = {
+		DA39E28B29609BC70099D877 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				81FCA397B8AC1996D248ADE5 /* Pods-WOTKit.debug.xcconfig */,
-				83D702B700F7C58D88F5D178 /* Pods-WOTKit.release.xcconfig */,
+				DA39E28C29609BC70099D877 /* ContextSDK.framework */,
 			);
-			name = Pods;
-			path = ../Pods;
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DA39E2A429615B2D0099D877 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7CA295326B800C60F31 /* NSThread */,
+				DA81E866295352FE00C60F31 /* UIImage */,
+				DA81E863295352FE00C60F31 /* UIColor */,
+				DA81E85B295352FD00C60F31 /* NSBundle */,
+				DA81E7B729531EBF00C60F31 /* UIImage+Bundle */,
+				1D60E528245FE7A7007E5CA8 /* CGRect */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		DA39E31B296190CF0099D877 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 		DA81E7B729531EBF00C60F31 /* UIImage+Bundle */ = {
@@ -341,17 +283,6 @@
 			path = NSBundle;
 			sourceTree = "<group>";
 		};
-		DA81E85E295352FE00C60F31 /* UIBar */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E85F295352FE00C60F31 /* UINavigationBar+WOT.h */,
-				DA81E860295352FE00C60F31 /* UINavigationBar+WOT.m */,
-				DA81E861295352FE00C60F31 /* UIToolbar+WOT.h */,
-				DA81E862295352FE00C60F31 /* UIToolbar+WOT.m */,
-			);
-			path = UIBar;
-			sourceTree = "<group>";
-		};
 		DA81E863295352FE00C60F31 /* UIColor */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,63 +301,6 @@
 			path = UIImage;
 			sourceTree = "<group>";
 		};
-		DA81E869295352FE00C60F31 /* UIBarButtonItem */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E86A295352FE00C60F31 /* UIBarButtonItem+EventBlock.h */,
-				DA81E86B295352FE00C60F31 /* UIBarButtonItem+EventBlock.m */,
-			);
-			path = UIBarButtonItem;
-			sourceTree = "<group>";
-		};
-		DA81E86C295352FF00C60F31 /* UIView */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E86D295352FF00C60F31 /* UIView+StretchingConstraints.h */,
-				DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */,
-			);
-			path = UIView;
-			sourceTree = "<group>";
-		};
-		DA81E86F295352FF00C60F31 /* UIProgressView */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E870295352FF00C60F31 /* WOTProgressView.h */,
-				DA81E871295352FF00C60F31 /* WOTProgressView.m */,
-			);
-			path = UIProgressView;
-			sourceTree = "<group>";
-		};
-		DA81E90A29536FF500C60F31 /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E90B29536FF500C60F31 /* Reachability.h */,
-				DA81E90C29536FF500C60F31 /* Reachability.m */,
-			);
-			path = Reachability;
-			sourceTree = "<group>";
-		};
-		DA81E90F295370BA00C60F31 /* RomanNumber */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E910295370BA00C60F31 /* NSString+RomanUtils.h */,
-				DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */,
-				DA81E912295370BA00C60F31 /* RomanNumber.h */,
-				DA81E913295370BA00C60F31 /* RomanNumber.m */,
-			);
-			path = RomanNumber;
-			sourceTree = "<group>";
-		};
-		DAAD823929505864001B0ACD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				DA0E8043295064EC00B44CC6 /* ContextSDK.framework */,
-				DAAD823A29505864001B0ACD /* PYContext.framework */,
-				0BBDA62C4859376667143F03 /* Pods_WOTKit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -434,16 +308,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA81E8742953530000C60F31 /* UINavigationBar+WOT.h in Headers */,
-				DA81E8762953530000C60F31 /* UIToolbar+WOT.h in Headers */,
 				DA81E8782953530000C60F31 /* UIColor+HSB.h in Headers */,
-				DA81E87C2953530000C60F31 /* UIBarButtonItem+EventBlock.h in Headers */,
-				DA81E8802953530000C60F31 /* WOTProgressView.h in Headers */,
-				DA81E87E2953530000C60F31 /* UIView+StretchingConstraints.h in Headers */,
-				DA81E90D29536FF500C60F31 /* Reachability.h in Headers */,
 				DA81E872295352FF00C60F31 /* NSBundle+LanguageBundle.h in Headers */,
-				DA81E916295370BA00C60F31 /* RomanNumber.h in Headers */,
-				DA81E914295370BA00C60F31 /* NSString+RomanUtils.h in Headers */,
 				DA81E7CD295326B800C60F31 /* NSThread+ExecutionOnMain.h in Headers */,
 				DA81E87A2953530000C60F31 /* UIImage+Resize.h in Headers */,
 				1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */,
@@ -457,13 +323,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D60E50E245FE541007E5CA8 /* Build configuration list for PBXNativeTarget "WOTKit" */;
 			buildPhases = (
-				541259EA4D3C3EA28A01F891 /* [CP] Check Pods Manifest.lock */,
 				1D60E501245FE541007E5CA8 /* Headers */,
 				1D60E502245FE541007E5CA8 /* Sources */,
 				1D60E503245FE541007E5CA8 /* Frameworks */,
 				1D60E504245FE541007E5CA8 /* Resources */,
 				1D60E5EA246013C0007E5CA8 /* sourcekitten */,
 				DA8A95A0295C38C200BFB62E /* SwiftFormat */,
+				DA39E28F29609BC70099D877 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -566,28 +432,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# sourcekitten doc --module-name WOTKit -- -project WOTKit.xcodeproj >> WOTKit-sourcekitten.json\n";
 		};
-		541259EA4D3C3EA28A01F891 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-WOTKit-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		DA8A95A0295C38C200BFB62E /* SwiftFormat */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -613,30 +457,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA81E8772953530000C60F31 /* UIToolbar+WOT.m in Sources */,
 				DA913E422959C01A00D39F0E /* CoreDataStore.swift in Sources */,
 				1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */,
 				1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */,
-				DA81E8752953530000C60F31 /* UINavigationBar+WOT.m in Sources */,
-				DA81E87D2953530000C60F31 /* UIBarButtonItem+EventBlock.m in Sources */,
 				DA81E7CE295326B800C60F31 /* NSThread+ExecutionOnMain.m in Sources */,
+				DA12D07029621B3C0077F664 /* RequestManagerLogEvents.swift in Sources */,
 				1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */,
 				DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */,
-				DA81E90E29536FF500C60F31 /* Reachability.m in Sources */,
 				1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */,
 				1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */,
-				DA81E87F2953530000C60F31 /* UIView+StretchingConstraints.m in Sources */,
 				DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */,
 				1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */,
 				DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */,
 				1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */,
-				DA81E8812953530000C60F31 /* WOTProgressView.m in Sources */,
 				DA81E873295352FF00C60F31 /* NSBundle+LanguageBundle.m in Sources */,
-				DA81E917295370BA00C60F31 /* RomanNumber.m in Sources */,
 				DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
 				DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */,
-				DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,7 +481,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D7E0695247D0460008CB848 /* WOTKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,7 +619,6 @@
 		};
 		1D60E50F245FE541007E5CA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 81FCA397B8AC1996D248ADE5 /* Pods-WOTKit.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -791,7 +626,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -799,7 +634,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epam.sample.WOTKit;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -810,7 +645,6 @@
 		};
 		1D60E510245FE541007E5CA8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 83D702B700F7C58D88F5D178 /* Pods-WOTKit.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -818,7 +652,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -826,7 +660,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epam.sample.WOTKit;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -838,14 +672,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = WOTKitTests/Info.plist;
+				INFOPLIST_FILE = tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epam.sample.WOTKitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -856,14 +690,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = WOTKitTests/Info.plist;
+				INFOPLIST_FILE = tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epam.sample.WOTKitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

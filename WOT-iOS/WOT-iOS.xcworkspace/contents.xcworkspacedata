@@ -8,10 +8,10 @@
       location = "group:ContextSDK/ContextSDK.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:WOTKit/WOTKit.xcodeproj">
+      location = "group:WOTPivot/WOTPivot.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:WOTPivot/WOTPivot.xcodeproj">
+      location = "group:WOTKit/WOTKit.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:WOTApi/WOTApi.xcodeproj">

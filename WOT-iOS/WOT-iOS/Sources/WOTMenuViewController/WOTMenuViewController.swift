@@ -25,7 +25,7 @@ protocol WOTMenuProtocol: NSObjectProtocol {
     func rebuildMenu()
 }
 
-@objc(WOTMenuViewController)
+@objc
 class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourceDelegate {
     var menuDatasource: WOTMenuDatasourceProtocol?
 
@@ -129,5 +129,5 @@ extension WOTMenuViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 class DefaultMenuViewController: UIViewController, ContextControllerProtocol {
-    var context: ContextProtocol?
+    var appContext: ContextProtocol?
 }

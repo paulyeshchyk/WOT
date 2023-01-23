@@ -9,14 +9,11 @@
 import WOTKit
 import WOTPivot
 
-typealias WOTTankPivotCompletionCancelBlock = () -> Void
-typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void
-
-open class WOTPivotViewController: UIViewController, ContextControllerProtocol {
-    public var context: ContextProtocol?
+open class PivotViewController: UIViewController, ContextControllerProtocol {
+    public var appContext: ContextProtocol?
     @IBOutlet open var collectionView: UICollectionView?
 
-    @IBOutlet open var flowLayout: WOTPivotLayout? {
+    @IBOutlet open var flowLayout: WGPivotColoredFlowLayout? {
         didSet {
             flowLayout?.relativeContentSizeBlock = { [weak self] in
                 let size = self?.model.contentSize
@@ -37,26 +34,15 @@ open class WOTPivotViewController: UIViewController, ContextControllerProtocol {
         return WOTPivotRefreshControl(target: self, action: #selector(WOTTankPivotViewController.refresh(_:)))
     }()
 
-    open func pivotModel() -> WOTPivotDataModelProtocol {
-        return WOTPivotDataModel(enumerator: WOTNodeEnumerator.sharedInstance)
+    open func pivotModel() -> PivotDataModelProtocol {
+        return PivotDataModel(enumerator: NodeEnumerator.sharedInstance)
     }
 
-    lazy var model: WOTPivotDataModelProtocol = {
+    lazy var model: PivotDataModelProtocol = {
         return pivotModel()
     }()
 
-    static var openedPopoverKey: UInt8 = 0
-    var hasOpenedPopover: Bool {
-        get {
-            guard let result = objc_getAssociatedObject(self, &WOTTankPivotViewController.openedPopoverKey) as? Bool else {
-                return false
-            }
-            return result
-        }
-        set {
-            objc_setAssociatedObject(self, &WOTTankPivotViewController.openedPopoverKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
-        }
-    }
+    var hasOpenedPopover: Bool = false
 
     func closePopover() {
         hasOpenedPopover = false
@@ -66,11 +52,11 @@ open class WOTPivotViewController: UIViewController, ContextControllerProtocol {
         hasOpenedPopover = true
     }
 
-    open func cell(forDataNode _: WOTPivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
+    open func cell(forDataNode _: PivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 
-    open func cell(forNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    open func cell(forNode node: PivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         switch node.cellType {
         case .column,
              .row: return cell(forFixedNode: node, at: indexPath)
@@ -80,15 +66,15 @@ open class WOTPivotViewController: UIViewController, ContextControllerProtocol {
         }
     }
 
-    open func cell(forFixedNode _: WOTPivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
+    open func cell(forFixedNode _: PivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 
-    open func cell(forFilterNode _: WOTPivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
+    open func cell(forFilterNode _: PivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 
-    open func cell(forDataGroupNode _: WOTPivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
+    open func cell(forDataGroupNode _: PivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 
@@ -114,7 +100,7 @@ open class WOTPivotViewController: UIViewController, ContextControllerProtocol {
     open func registerCells() {}
 }
 
-extension WOTPivotViewController: UICollectionViewDataSource {
+extension PivotViewController: UICollectionViewDataSource {
     public func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let node = model.item(atIndexPath: indexPath as NSIndexPath) else {
             return UICollectionViewCell()
@@ -127,7 +113,7 @@ extension WOTPivotViewController: UICollectionViewDataSource {
     }
 }
 
-extension WOTPivotViewController: UICollectionViewDelegate {
+extension PivotViewController: UICollectionViewDelegate {
     public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let pivotNode = model.item(atIndexPath: indexPath as NSIndexPath) else {
             return
@@ -162,15 +148,18 @@ extension WOTPivotViewController: UICollectionViewDelegate {
     }
 }
 
+typealias WOTTankPivotCompletionCancelBlock = () -> Void
+typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void
+
 @objc(WOTTankPivotViewController)
-class WOTTankPivotViewController: WOTPivotViewController {
+class WOTTankPivotViewController: PivotViewController {
     typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & DataStoreContainerProtocol
     var cancelBlock: WOTTankPivotCompletionCancelBlock?
     var doneBlock: WOTTankPivotCompletionDoneBlock?
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
     var settingsDatasource = WOTTankListSettingsDatasource()
 
-    override func pivotModel() -> WOTPivotDataModelProtocol {
+    override func pivotModel() -> PivotDataModelProtocol {
         guard let appDelegate = UIApplication.shared.delegate as? Context else {
             fatalError("appDelegate is not WOTAppDelegateProtocol")
         }
@@ -212,7 +201,7 @@ class WOTTankPivotViewController: WOTPivotViewController {
         }
     }
 
-    override func cell(forDataNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    override func cell(forDataNode node: PivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         let ident = String(describing: WOTTankPivotDataCollectionViewCell.self)
         guard let cell = collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotDataCollectionViewCell else {
             return UICollectionViewCell()
@@ -223,7 +212,7 @@ class WOTTankPivotViewController: WOTPivotViewController {
         return cell
     }
 
-    override func cell(forDataGroupNode _: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    override func cell(forDataGroupNode _: PivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         let ident = String(describing: WOTTankPivotDataGroupCollectionViewCell.self)
         guard let cell = collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotDataGroupCollectionViewCell else {
             return UICollectionViewCell()
@@ -231,7 +220,7 @@ class WOTTankPivotViewController: WOTPivotViewController {
         return cell
     }
 
-    override public func cell(forFixedNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    override public func cell(forFixedNode node: PivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         let ident = String(describing: WOTTankPivotFixedCollectionViewCell.self)
         guard let result = collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotFixedCollectionViewCell else {
             return UICollectionViewCell()
@@ -240,7 +229,7 @@ class WOTTankPivotViewController: WOTPivotViewController {
         return result
     }
 
-    override public func cell(forFilterNode _: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    override public func cell(forFilterNode _: PivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         let ident = String(describing: WOTTankPivotFilterCollectionViewCell.self)
         guard let result = collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) else {
             return UICollectionViewCell()
@@ -255,7 +244,7 @@ extension WOTTankPivotViewController {
     }
 }
 
-extension WOTTankPivotViewController: WOTDataModelListener {
+extension WOTTankPivotViewController: NodeDataModelListener {
     func didFinishLoadModel(error _: Error?) {
         collectionView?.reloadData()
         refreshControl.endRefreshing()

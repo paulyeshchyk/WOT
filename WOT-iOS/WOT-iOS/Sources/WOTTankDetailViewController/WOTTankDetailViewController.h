@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) NSNumber *tankId;
 
+- (id)initWithContext:(id<ContextProtocol>)context;
+
 @end

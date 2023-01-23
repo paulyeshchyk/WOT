@@ -17,6 +17,7 @@
 #import "WOTTankDetailViewController.h"
 #import "WOTTankListSearchBar.h"
 #import <WOTKit/WOTKit.h>
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -37,7 +38,15 @@
 
 @implementation WOTTankListViewController
 
-@synthesize context;
+@synthesize appContext;
+
+- (id)initWithContext:(id<ContextProtocol>)context {
+    self = [super initWithNibName:NSStringFromClass([WOTTankListViewController class]) bundle:nil];
+    if (self) {
+        self.appContext = context;
+    }
+    return self;
+}
 
 - (void)dealloc {
 
@@ -174,7 +183,8 @@
         [weakSelf.navigationController popViewControllerAnimated:YES];
     }];
     
-    WOTTankDetailViewController *detail = [[WOTTankDetailViewController alloc] initWithNibName:NSStringFromClass([WOTTankDetailViewController class]) bundle:nil];
+    id<ContextProtocol> context = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
+    WOTTankDetailViewController *detail = [[WOTTankDetailViewController alloc] initWithContext:context];
     Vehicles *tank = [self.fetchedResultController objectAtIndexPath:indexPath];
     detail.tankId = tank.tank_id;
 

@@ -57,7 +57,7 @@
 
 --lifecycle
 --organizetypes
---modifierorder open, public, private, final, required, convenience
+--modifierorder final, open, public, private, required, convenience
 
 
 # rules

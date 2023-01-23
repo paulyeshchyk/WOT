@@ -10,6 +10,9 @@
 #import "WOTLanguageSelectorViewController.h"
 #import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi.h>
+#import "UIBarButtonItem+EventBlock.h"
+#import "UIToolbar+WOT.h"
+#import "UINavigationBar+WOT.h"
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
 
