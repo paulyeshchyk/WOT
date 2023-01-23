@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1D5D020A23BF47E9004B0314 /* TankPivotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D020923BF47E9004B0314 /* TankPivotViewController.swift */; };
+		1D7E0687247CE8EA008CB848 /* WOTData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7E0684247CE8EA008CB848 /* WOTData.framework */; };
+		1D7E0688247CE8EA008CB848 /* WOTData.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7E0684247CE8EA008CB848 /* WOTData.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1D7E0689247CE8EA008CB848 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7E0685247CE8EA008CB848 /* WOTKit.framework */; };
+		1D7E068A247CE8EA008CB848 /* WOTKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7E0685247CE8EA008CB848 /* WOTKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1D7E068B247CE8EA008CB848 /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7E0686247CE8EA008CB848 /* WOTPivot.framework */; };
+		1D7E068C247CE8EA008CB848 /* WOTPivot.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7E0686247CE8EA008CB848 /* WOTPivot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D8ACEDA22A7E90000CF309B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8ACED922A7E90000CF309B /* AppDelegate.swift */; };
 		1D8ACEDC22A7E90000CF309B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8ACEDB22A7E90000CF309B /* ViewController.swift */; };
 		1D8ACEDF22A7E90000CF309B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D8ACEDD22A7E90000CF309B /* Main.storyboard */; };
@@ -15,8 +21,6 @@
 		1D8ACEE422A7E90100CF309B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D8ACEE222A7E90100CF309B /* LaunchScreen.storyboard */; };
 		1D8ACEEF22A7E90100CF309B /* WOTPivotSamplesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8ACEEE22A7E90100CF309B /* WOTPivotSamplesTests.swift */; };
 		1D8ACEFA22A7EA7300CF309B /* SteelPivotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8ACEF922A7EA7300CF309B /* SteelPivotViewController.swift */; };
-		1D8ACEFC22A7FB7200CF309B /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8ACEFB22A7FB7200CF309B /* WOTPivot.framework */; };
-		1D8ACEFD22A7FB7200CF309B /* WOTPivot.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8ACEFB22A7FB7200CF309B /* WOTPivot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D8ACF0322A9284D00CF309B /* steel in Resources */ = {isa = PBXBuildFile; fileRef = 1D8ACF0222A9284D00CF309B /* steel */; };
 /* End PBXBuildFile section */
 
@@ -31,13 +35,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1D8ACEFE22A7FB7300CF309B /* Embed Frameworks */ = {
+		1D7E068D247CE8EB008CB848 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1D8ACEFD22A7FB7200CF309B /* WOTPivot.framework in Embed Frameworks */,
+				1D7E068A247CE8EA008CB848 /* WOTKit.framework in Embed Frameworks */,
+				1D7E068C247CE8EA008CB848 /* WOTPivot.framework in Embed Frameworks */,
+				1D7E0688247CE8EA008CB848 /* WOTData.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -46,6 +52,9 @@
 
 /* Begin PBXFileReference section */
 		1D5D020923BF47E9004B0314 /* TankPivotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TankPivotViewController.swift; sourceTree = "<group>"; };
+		1D7E0684247CE8EA008CB848 /* WOTData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D7E0685247CE8EA008CB848 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D7E0686247CE8EA008CB848 /* WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8ACED622A7E90000CF309B /* WOTPivotSamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WOTPivotSamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8ACED922A7E90000CF309B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D8ACEDB22A7E90000CF309B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,7 +75,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D8ACEFC22A7FB7200CF309B /* WOTPivot.framework in Frameworks */,
+				1D7E0689247CE8EA008CB848 /* WOTKit.framework in Frameworks */,
+				1D7E068B247CE8EA008CB848 /* WOTPivot.framework in Frameworks */,
+				1D7E0687247CE8EA008CB848 /* WOTData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +91,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D7E0683247CE8EA008CB848 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1D7E0684247CE8EA008CB848 /* WOTData.framework */,
+				1D7E0685247CE8EA008CB848 /* WOTKit.framework */,
+				1D7E0686247CE8EA008CB848 /* WOTPivot.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		1D8ACECD22A7E90000CF309B = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +108,7 @@
 				1D8ACED822A7E90000CF309B /* WOTPivotSamples */,
 				1D8ACEED22A7E90100CF309B /* WOTPivotSamplesTests */,
 				1D8ACED722A7E90000CF309B /* Products */,
+				1D7E0683247CE8EA008CB848 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -134,7 +156,7 @@
 				1D8ACED222A7E90000CF309B /* Sources */,
 				1D8ACED322A7E90000CF309B /* Frameworks */,
 				1D8ACED422A7E90000CF309B /* Resources */,
-				1D8ACEFE22A7FB7300CF309B /* Embed Frameworks */,
+				1D7E068D247CE8EB008CB848 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -170,7 +192,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Pavel Yeshchyk";
 				TargetAttributes = {
 					1D8ACED522A7E90000CF309B = {
@@ -298,6 +320,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -359,6 +382,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -395,6 +419,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SM687X2N9M;
 				INFOPLIST_FILE = WOTPivotSamples/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -413,6 +438,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SM687X2N9M;
 				INFOPLIST_FILE = WOTPivotSamples/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
