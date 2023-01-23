@@ -7,8 +7,8 @@
 //
 
 public class DataGroupPivotNode: PivotNode {
-    @objc
-    public var fetchedObjects: [AnyObject]?
+
+    @objc public var fetchedObjects: [AnyObject]?
 
     override public var cellType: PivotCellType {
         return .dataGroup

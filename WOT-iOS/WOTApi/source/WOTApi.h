@@ -17,7 +17,7 @@ FOUNDATION_EXPORT const unsigned char WOTApiVersionString[];
 
 #import <WOTApi/NSExpressionDescription+WOT.h>
 #import <WOTApi/Strings.h>
-#import <WOTApi/WOTApplicationDefaults.h>
+//#import <WOTApi/WOTApplicationDefaults.h>
 #import <WOTApi/WOTCoreDataPredicates.h>
 #import <WOTApi/WOTEngineFireStartingChanceCompareFieldExpression.h>
 #import <WOTApi/WOTEnginePowerCompareFieldExpression.h>

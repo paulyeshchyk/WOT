@@ -10,7 +10,7 @@
 #import <WOTApi/WOTApi.h>
 #import "WOTTankConfigurationModuleMapping.h"
 
-@interface WOTTankConfigurationItemViewController : UIViewController<ContextControllerProtocol>
+@interface WOTTankConfigurationItemViewController : UIViewController
 
 @property (nonatomic, strong)id<WOTTreeModulesTreeProtocol> moduleTree;
 @property (nonatomic, copy) NSURL *imageURL;

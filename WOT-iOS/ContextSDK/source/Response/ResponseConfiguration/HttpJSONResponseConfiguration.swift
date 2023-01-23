@@ -12,24 +12,34 @@ public class HttpJSONResponseConfiguration: NSObject, ResponseConfigurationProto
 
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
-    public let modelClass: ModelClassType
+    let appContext: ResponseConfigurationProtocol.Context
     public var socket: JointSocketProtocol?
     public var extractor: ManagedObjectExtractable?
 
-    public required init(modelClass: ModelClassType) {
-        self.modelClass = modelClass
+    public required init(appContext: ResponseConfigurationProtocol.Context) {
+        self.appContext = appContext
         super.init()
     }
 
     public func handleData(_ data: Data?, fromRequest request: RequestProtocol, forService modelService: RequestModelServiceProtocol, inAppContext appContext: Context, completion: WorkWithDataCompletion?) {
-        //
-        let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext, modelClass: modelClass)
-        dataAdapter.request = request
-        dataAdapter.socket = socket
-        dataAdapter.extractor = extractor
-        dataAdapter.completion = completion
-
-        dataAdapter.decode(data: data, fromRequest: request)
+        do {
+            let uow_config = try UoW_Config__Parse_Fetch_Decode_Link(appContext: appContext,
+                                                                     modelService: modelService,
+                                                                     extractor: extractor,
+                                                                     request: request,
+                                                                     socket: socket,
+                                                                     decodeDepthLevel: nil,
+                                                                     data: data)
+            let uow = try appContext.uowManager.uow(by: uow_config)
+            uow.didStatusChanged = { uow in
+                if uow.status == .finish {
+                    completion?(request, nil)
+                }
+            }
+            try appContext.uowManager.perform(uow: uow)
+        } catch {
+            appContext.logInspector?.log(.error(error), sender: self)
+        }
     }
 }
 

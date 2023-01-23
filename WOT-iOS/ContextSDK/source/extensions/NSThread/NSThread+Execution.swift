@@ -6,8 +6,8 @@
 //
 
 extension Thread {
-    @objc
-    public static func executeOnMain(completion: @escaping () -> Void) {
+
+    @objc public static func executeOnMain(completion: @escaping () -> Void) {
         if Thread.isMainThread {
             completion()
         } else {

@@ -17,7 +17,7 @@
 
 @implementation WOTTankDetailFieldKVO
 
-- (void)evaluateWithObject:(id)object completionBlock:(EvaluateCompletionBlock)completionBlock {
+- (void)context:(NSManagedObjectContext*) context evaluateWithObject:(id)object completionBlock:(EvaluateCompletionBlock)completionBlock {
 
     id path = self.fieldDescriotion?self.fieldDescriotion:self.fieldPath;
     id value = [object valueForKeyPath:self.fieldPath];

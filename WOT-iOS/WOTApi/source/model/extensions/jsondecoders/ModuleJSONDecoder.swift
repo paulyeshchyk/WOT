@@ -68,11 +68,13 @@ extension JSONRefProtocol {
 
 public class ModuleDecoder {
 
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
         & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
+        & UoW_ManagerContainerProtocol
 
     let appContext: Context
     public var modelClass: PrimaryKeypathProtocol.Type?
@@ -124,7 +126,7 @@ public class ModuleDecoder {
             return
         }
 
-        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: pin.modelClass)
+        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
         httpJSONResponseConfiguration.socket = socket
         httpJSONResponseConfiguration.extractor = extractor
 

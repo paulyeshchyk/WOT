@@ -82,7 +82,7 @@ extension RequestManager {
 // MARK: - RequestManager + ResponseManagerListener
 
 extension RequestManager: ResponseManagerListener {
-    //
+
     public func responseManager(_: ResponseManagerProtocol, didStartWorkOn _: RequestProtocol) {
         //
     }
@@ -93,6 +93,9 @@ extension RequestManager: ResponseManagerListener {
         if let error = error {
             appContext.logInspector?.log(.error(error), sender: self)
         }
+
+        #warning("remove ASAP; used in WOTTankModuleTreeViewController")
+        NotificationCenter.default.post(name: NSNotification.Name("WOTRequestManagerDidFinishLoadData"), object: nil)
 
         removeRequest(request)
     }

@@ -32,14 +32,12 @@ public class PivotNode: Node, PivotNodeProtocol {
 
     // MARK: Lifecycle
 
-    @objc
-    public required init(name nameValue: String, predicate predicateValue: NSPredicate) {
+    @objc public required init(name nameValue: String, predicate predicateValue: NSPredicate) {
         predicate = predicateValue
         super.init(name: nameValue)
     }
 
-    @objc
-    public required init(name nameValue: String) {
+    @objc public required init(name nameValue: String) {
         super.init(name: nameValue)
     }
 

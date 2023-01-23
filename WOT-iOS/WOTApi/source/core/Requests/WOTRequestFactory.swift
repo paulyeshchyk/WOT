@@ -11,11 +11,14 @@ import ContextSDK
 
 @objc
 public class WOTWEBRequestFactory: NSObject {
-    //
+
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     public typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
+        & DecoderManagerContainerProtocol
+        & UoW_ManagerContainerProtocol
 
     private enum HttpRequestFactoryError: Error, CustomStringConvertible {
         case objectNotDefined
@@ -33,7 +36,7 @@ public class WOTWEBRequestFactory: NSObject {
         //
         let modelClass = Vehicles.self
 
-        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
         httpJSONResponseConfiguration.socket = nil
         httpJSONResponseConfiguration.extractor = VehiclesPivotManagedObjectExtractor()
 
@@ -48,12 +51,14 @@ public class WOTWEBRequestFactory: NSObject {
         try appContext.requestManager?.startRequest(request, listener: listener)
     }
 
-    @objc
-    public static func fetchVehicleTreeData(vehicleId: Int, appContext: Context, listener: RequestManagerListenerProtocol) throws {
+    @objc public static func fetchVehicleTreeData(vehicleId: Int, appContext: AnyObject, listener: RequestManagerListenerProtocol?) throws {
+        guard let appContext = appContext as? Context else {
+            throw Errors.incorrectAppContext
+        }
         //
         let modelClass = Vehicles.self
 
-        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
+        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(appContext: appContext)
         httpJSONResponseConfiguration.socket = nil
         httpJSONResponseConfiguration.extractor = VehiclesTreeManagedObjectExtractor()
 
@@ -67,8 +72,7 @@ public class WOTWEBRequestFactory: NSObject {
         try appContext.requestManager?.startRequest(request, listener: listener)
     }
 
-    @objc
-    public static func fetchProfileData(profileTankId _: Int, requestManager _: RequestManagerProtocol, listener _: RequestManagerListenerProtocol) throws {
+    @objc public static func fetchProfileData(profileTankId _: Int, appContext _: AnyObject, listener _: RequestManagerListenerProtocol) throws {
 //        let request: WOTRequestProtocol = try requestManager.createRequest(forRequestId: WebRequestType.tankProfile.rawValue)
 //        let groupId = "\(WGWebRequestGroups.vehicle_profile):\(profileTankId)"
 //
@@ -80,6 +84,14 @@ public class WOTWEBRequestFactory: NSObject {
 //        appContext.logInspector?.logEvent(EventFlowStart(request), sender: self)
 //        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: nil)
 //        requestManager.addListener(listener, forRequest: request)
+    }
+}
+
+// MARK: - %t + WOTWEBRequestFactory.Errors
+
+extension WOTWEBRequestFactory {
+    enum Errors: Error {
+        case incorrectAppContext
     }
 }
 

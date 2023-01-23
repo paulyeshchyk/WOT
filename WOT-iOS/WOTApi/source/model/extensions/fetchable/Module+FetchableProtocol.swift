@@ -9,14 +9,13 @@
 // MARK: - FetchableProtocol
 
 extension Module: FetchableProtocol {
-    //
+
     public class func dataFieldsKeypaths() -> [String] {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
     public class func relationFieldsKeypaths() -> [String] {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
-//        []
     }
 
     public class func fieldsKeypaths() -> [String] {

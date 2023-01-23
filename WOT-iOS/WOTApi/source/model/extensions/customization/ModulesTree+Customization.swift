@@ -9,13 +9,12 @@
 // MARK: - Customization
 
 public extension ModulesTree {
-    @objc
-    func moduleType_() -> ObjCVehicleModuleType {
+
+    @objc func moduleType_() -> ObjCVehicleModuleType {
         return .unknown
     }
 
-    @objc
-    func localImageURL() -> URL? {
+    @objc func localImageURL() -> URL? {
         let type = moduleType_()
         let name = type.stringValue
         return Bundle.main.url(forResource: name, withExtension: "png")
@@ -96,8 +95,8 @@ public enum ObjCVehicleModuleType: Int {
 @objc
 @available(*, deprecated, message: "Use swift VehicleModuleType")
 public class ObjCVehicleModuleTypeConverter: NSObject {
-    @objc
-    public static func fromString(_ string: String) -> ObjCVehicleModuleType {
+
+    @objc public static func fromString(_ string: String) -> ObjCVehicleModuleType {
         return ObjCVehicleModuleType.fromString(stringValue: string)
     }
 }

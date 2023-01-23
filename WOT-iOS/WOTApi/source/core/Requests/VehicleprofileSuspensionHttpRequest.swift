@@ -19,8 +19,8 @@ public class VehicleprofileSuspensionHttpRequest: HttpRequest {
 // MARK: - VehicleprofileSuspensionHttpRequest + RequestModelServiceProtocol
 
 extension VehicleprofileSuspensionHttpRequest: RequestModelServiceProtocol {
-    public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
-        WGAPIResponseJSONAdapter.self
+    public class func responseDataDecoderClass() -> ResponseDataDecoderProtocol.Type {
+        WGApiJSONDataDecoder.self
     }
 
     public class func modelClass() -> ModelClassType? {

@@ -7,9 +7,7 @@
 
 @objc
 public protocol WOTTankListSettingsAvailableFieldsProtocol {
-    @objc
-    var allFields: [WOTTankListSettingField] { get }
 
-    @objc
+    var allFields: [WOTTankListSettingField] { get }
     func isFieldBusy(_ field: WOTTankListSettingField) -> Bool
 }

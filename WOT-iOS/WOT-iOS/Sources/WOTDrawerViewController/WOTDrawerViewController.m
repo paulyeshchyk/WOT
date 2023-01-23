@@ -26,8 +26,6 @@
 
 @implementation WOTDrawerViewController
 
-@synthesize appContext;
-
 #warning "Broken logic: UIViewController may not possess UI in NIB"
 + (UIViewController *)centerViewControllerForClassName:(Class )class title:(NSString *)title image:(UIImage *)image{
 
@@ -49,19 +47,13 @@
     return centerNavigationController;
 }
 
-- (void)dealloc {
-    
-    self.menu.delegate = nil;
-}
-
 + (WOTDrawerViewController * _Nonnull)newDrawer{
     return [[WOTDrawerViewController alloc] initWithMenu];
 }
 
 - (id _Nonnull)initWithMenu {
 
-    WOTMenuDatasource *menuDatasource = [[WOTMenuDatasource alloc] init];
-    WOTMenuViewController *menuViewController = [[WOTMenuViewController alloc] initWithMenuDatasource: menuDatasource nibName:@"WOTMenuViewController" bundle: nil];
+    WOTMenuViewController *menuViewController = [[WOTMenuViewController alloc] initWithMenuDatasourceClass: WOTMenuDatasource.class];
     
     UINavigationController *leftNavigationController = [[UINavigationController alloc] initWithRootViewController:menuViewController];
     
@@ -149,11 +141,7 @@
 
 - (void)loginPressedOnMenu:(id<WOTMenuProtocol>)menu {
 
-//    id<WOTAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
-
     [self closeDrawerAnimated:YES completion:NULL];
-    
-//    [WOTSessionManager switchUserWithRequestManager:manager.requestManager];
 }
 
 #pragma mark - private

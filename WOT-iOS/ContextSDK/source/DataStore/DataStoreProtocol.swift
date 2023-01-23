@@ -15,24 +15,24 @@ public typealias DatastoreFetchResultCompletion = (FetchResultProtocol, Error?) 
 
 @objc
 public protocol DataStoreContainerProtocol {
-    @objc var dataStore: DataStoreProtocol? { get set }
+    var dataStore: DataStoreProtocol? { get set }
 }
 
 // MARK: - DataStoreProtocol
 
 @objc
 public protocol DataStoreProtocol {
-    //
-    @available(*, deprecated)
-    @objc func workingContext() -> ManagedObjectContextProtocol
 
     @available(*, deprecated)
-    @objc func newPrivateContext() -> ManagedObjectContextProtocol
+    func workingContext() -> ManagedObjectContextProtocol
 
-    @objc func perform(block: @escaping ObjectContextCompletion)
+    @available(*, deprecated)
+    func newPrivateContext() -> ManagedObjectContextProtocol
 
-    @objc func fetchResultController(fetchRequest: AnyObject, managedObjectContext: ManagedObjectContextProtocol) throws -> AnyObject
-    @objc func mainContextFetchResultController(fetchRequest: AnyObject, sectionNameKeyPath: String?, cacheName name: String?) throws -> AnyObject
+    func perform(block: @escaping ObjectContextCompletion)
+
+    func fetchResultController(fetchRequest: AnyObject, managedObjectContext: ManagedObjectContextProtocol) throws -> AnyObject
+    func mainContextFetchResultController(fetchRequest: AnyObject, sectionNameKeyPath: String?, cacheName name: String?) throws -> AnyObject
 
     func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, completion: @escaping FetchResultCompletion)
 

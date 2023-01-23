@@ -22,13 +22,17 @@ public protocol ManagedObjectContextProtocol: ManagedObjectContextLookupProtocol
 
 // MARK: - ManagedObjectContextLookupProtocol
 
+public typealias FetchCompletion = ((FetchResultProtocol?, Error?) -> Void)
+
+// MARK: - ManagedObjectContextLookupProtocol
+
 @objc
 public protocol ManagedObjectContextLookupProtocol: AnyObject {
 
     typealias Context = LogInspectorContainerProtocol
 
     func object(managedRef: ManagedRefProtocol?) throws -> ManagedObjectProtocol
-    func findOrCreateObject(appContext: Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol?
+    func findOrCreateObject(appContext: ManagedObjectContextLookupProtocol.Context, modelClass: AnyObject, predicate: NSPredicate?, completion: @escaping FetchCompletion)
     func execute(appContext: Context, with: @escaping (ManagedObjectContextProtocol) -> Void)
 }
 

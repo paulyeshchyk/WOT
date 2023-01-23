@@ -6,32 +6,28 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 // MARK: - WOTMenuItemProtocol
 
 @objc
-protocol WOTMenuItemProtocol: NSObjectProtocol {
-    var controllerClass: AnyClass { get }
-    var controllerTitle: String { get }
-    var icon: UIImage { get }
-    var userDependence: Bool { get }
-    init(controllerClass clazz: AnyClass, controllerTitle title: String, icon image: UIImage, userDependence dependence: Bool)
+protocol WOTMenuItemProtocol {
+    @objc var controllerClass: UIViewController.Type { get }
+    @objc var controllerTitle: String { get }
+    @objc var icon: UIImage { get }
+    @objc var userDependence: Bool { get }
 }
 
 // MARK: - WOTMenuItem
 
-@objc
-class WOTMenuItem: NSObject {
+class WOTMenuItem: NSObject, WOTMenuItemProtocol {
 
-    @objc private(set) var controllerClass: ContextControllerProtocol.Type
-    @objc private(set) var controllerTitle: String
-    @objc private(set) var icon: UIImage
-    @objc private(set) var userDependence: Bool
+    let controllerClass: UIViewController.Type
+    let controllerTitle: String
+    let icon: UIImage
+    let userDependence: Bool
 
     // MARK: Lifecycle
 
-    init(controllerClass clazz: ContextControllerProtocol.Type, controllerTitle title: String, icon image: UIImage, userDependence dependence: Bool) {
+    init(controllerClass clazz: UIViewController.Type, controllerTitle title: String, icon image: UIImage, userDependence dependence: Bool) {
         controllerClass = clazz
         controllerTitle = title
         icon = image

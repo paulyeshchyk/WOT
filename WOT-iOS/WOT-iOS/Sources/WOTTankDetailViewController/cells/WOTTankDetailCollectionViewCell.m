@@ -27,6 +27,10 @@ static const NSInteger RowHeight = 44.0f;
     
     return CGSizeMake(size.width, RowHeight*fields.count);
 }
+- (id) workingContext {
+    id<ContextProtocol> delegate = [[UIApplication sharedApplication] delegate];
+    return [[delegate dataStore] workingContext];
+}
 
 - (void)dealloc {
     
@@ -69,7 +73,7 @@ static const NSInteger RowHeight = 44.0f;
         
         result = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankDetailTextTableViewCell class]) forIndexPath:indexPath];
     }
-    [result parseObject:self.fetchedObject withField:field];
+    [result context:[self workingContext] parseObject:self.fetchedObject withField:field];
     
     return result;
 }

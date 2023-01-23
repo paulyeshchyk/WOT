@@ -12,8 +12,8 @@ import UIKit
 
 @objc
 public class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNodeConnectorLayerProtocol {
-    @objc
-    public static func connectors(forModel: TreeDataModelProtocol, byFrame: CGRect, flowLayout: WOTTankConfigurationFlowCellLayoutProtocol) -> UIImage? {
+
+    @objc public static func connectors(forModel: TreeDataModelProtocol, byFrame: CGRect, flowLayout: WOTTankConfigurationFlowCellLayoutProtocol) -> UIImage? {
         UIGraphicsBeginImageContext(byFrame.size)
         guard let uiGraphicsContext = UIGraphicsGetCurrentContext() else {
             return nil

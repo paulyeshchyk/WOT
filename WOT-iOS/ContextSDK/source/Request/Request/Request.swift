@@ -73,6 +73,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
     }
 
     open func removeListener(_ listener: RequestListenerProtocol) {
+        #warning("crash here when push back detail controller: Fatal error: Index out of range")
         listeners.removeAll(where: { $0.MD5 == listener.MD5 })
     }
 }

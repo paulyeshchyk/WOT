@@ -29,12 +29,10 @@ extension DataStore: DataStoreProtocol {
         fatalError("has not been implemented")
     }
 
-    @objc
     open func newPrivateContext() -> ManagedObjectContextProtocol {
         fatalError("has not been implemented")
     }
 
-    @objc
     open func workingContext() -> ManagedObjectContextProtocol {
         fatalError("has not been implemented")
     }
@@ -95,18 +93,10 @@ extension DataStore: DataStoreProtocol {
                 return
             }
 
-            guard let managedObject = privateManagedObjectContext.findOrCreateObject(appContext: self.appContext, modelClass: modelClass, predicate: nspredicate) else {
-                completion(nil, DataStoreError.objectNotCreated(modelClass))
-                return
-            }
-            self.stash(managedObjectContext: privateManagedObjectContext) { context, error in
-                do {
-                    let fetchResult = try managedObject.fetchResult(context: context)
-                    completion(fetchResult, error)
-                } catch {
-                    completion(nil, error)
-                }
-            }
+            privateManagedObjectContext.findOrCreateObject(appContext: self.appContext,
+                                                           modelClass: modelClass,
+                                                           predicate: nspredicate,
+                                                           completion: completion)
         }
     }
 }

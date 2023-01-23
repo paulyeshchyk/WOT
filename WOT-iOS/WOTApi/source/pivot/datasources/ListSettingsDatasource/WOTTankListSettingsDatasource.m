@@ -199,16 +199,21 @@
 
     id<ContextProtocol> _Nonnull appContext = [WOTTankListSettingsDatasource appContext];
     [appContext.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
-        ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate];
-        setting.key = key;
-        setting.ascending = @(ascending);
-        setting.type = WOTApiSettingType.key_type_sort;
-        setting.orderBy = @(orderBy);
+        [context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate completion:^(id<FetchResultProtocol> _Nullable result, NSError * _Nullable error) {
+            
+            NSError *error1 = nil;
+            ListSetting *setting = (ListSetting *)[result managedObjectAndReturnError:&error1];
+            setting.key = key;
+            setting.ascending = @(ascending);
+            setting.type = WOTApiSettingType.key_type_sort;
+            setting.orderBy = @(orderBy);
 
-        [context saveWithAppContext:appContext completion:^(NSError * _Nullable error) {
-            if (callback) {
-                callback(setting);
-            }
+            [context saveWithAppContext:appContext completion:^(NSError * _Nullable error) {
+                if (callback) {
+                    callback(setting);
+                }
+            }];
+
         }];
     }];
 }
@@ -221,16 +226,21 @@
 
     id<ContextProtocol> _Nonnull appContext = [WOTTankListSettingsDatasource appContext];
     [appContext.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
-        ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate];
-        setting.key = key;
-        setting.ascending = @(ascending);
-        setting.type = WOTApiSettingType.key_type_group;
-        setting.orderBy = @(orderBy);
 
-        [context saveWithAppContext:appContext completion:^(NSError * _Nullable error) {
-            if (callback) {
-                callback(setting);
-            }
+        [context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate completion:^(id<FetchResultProtocol> _Nullable result, NSError * _Nullable error) {
+            
+            NSError *error1 = nil;
+            ListSetting *setting = (ListSetting *)[result managedObjectAndReturnError:&error1];
+            setting.key = key;
+            setting.ascending = @(ascending);
+            setting.type = WOTApiSettingType.key_type_group;
+            setting.orderBy = @(orderBy);
+
+            [context saveWithAppContext:appContext completion:^(NSError * _Nullable error) {
+                if (callback) {
+                    callback(setting);
+                }
+            }];
         }];
     }];
 }
@@ -244,16 +254,22 @@
 
     id<ContextProtocol> _Nonnull appContext = [WOTTankListSettingsDatasource appContext];
     [appContext.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
-        ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate];
-        setting.key = key;
-        setting.ascending = @(NO);
-        setting.type = WOTApiSettingType.key_type_filter;
-        setting.orderBy = @(0);
-        setting.values = value;
-        [context saveWithAppContext:appContext completion:^(NSError * _Nullable error) {
-            if (callback) {
-                callback(setting);
-            }
+
+        [context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate completion:^(id<FetchResultProtocol> _Nullable result, NSError * _Nullable error) {
+            
+            NSError *error1 = nil;
+            ListSetting *setting = (ListSetting *)[result managedObjectAndReturnError:&error1];
+
+            setting.key = key;
+            setting.ascending = @(NO);
+            setting.type = WOTApiSettingType.key_type_filter;
+            setting.orderBy = @(0);
+            setting.values = value;
+            [context saveWithAppContext:appContext completion:^(NSError * _Nullable error) {
+                if (callback) {
+                    callback(setting);
+                }
+            }];
         }];
     }];
 }
