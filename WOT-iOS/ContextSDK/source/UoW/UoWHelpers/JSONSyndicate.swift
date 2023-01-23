@@ -15,6 +15,7 @@ public class JSONSyndicate {
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
+        & UOWManagerContainerProtocol
 
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
@@ -59,22 +60,6 @@ public class JSONSyndicate {
         }
 
         datastoreFetchHelper.run()
-    }
-}
-
-extension JSONSyndicate {
-
-    public static func decodeAndLink(appContext: Context, jsonMap: JSONMapProtocol, modelClass: ModelClassType, socket: JointSocketProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
-        //
-        let jsonSyndicate = JSONSyndicate(appContext: appContext, modelClass: modelClass)
-        jsonSyndicate.jsonMap = jsonMap
-        jsonSyndicate.socket = socket
-        jsonSyndicate.decodeDepthLevel = decodingDepthLevel
-
-        jsonSyndicate.completion = { fetchResult, error in
-            completion(fetchResult, error)
-        }
-        jsonSyndicate.run()
     }
 }
 

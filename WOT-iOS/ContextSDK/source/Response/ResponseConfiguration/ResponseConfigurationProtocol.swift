@@ -15,6 +15,7 @@ public protocol ResponseConfigurationProtocol {
         & DecoderManagerContainerProtocol
         & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
+        & UOWManagerContainerProtocol
 
     func handleData(_ data: Data?, fromRequest: RequestProtocol, forService: RequestModelServiceProtocol, inAppContext: Context, completion: WorkWithDataCompletion?)
 

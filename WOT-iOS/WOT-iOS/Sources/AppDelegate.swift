@@ -15,6 +15,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     private let logPriorities: [LogEventType]? = [.error, .warning, .flow, .custom, .remoteFetch, .sqlite]
     private let logOutput = OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)
 
+    public lazy var uowManager: UOWManagerProtocol = UOWManager(appContext: self)
     public lazy var logInspector: LogInspectorProtocol? = LogInspector(priorities: logPriorities, output: [logOutput])
     public lazy var hostConfiguration: HostConfigurationProtocol? = WOTHostConfiguration()
     public lazy var requestRegistrator: RequestRegistratorProtocol? = WOTRequestRegistrator(appContext: self)
