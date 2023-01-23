@@ -16,6 +16,7 @@ public protocol ResponseAdapterProtocol {
         & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
         & DecoderManagerContainerProtocol
+        & UOWManagerContainerProtocol
 
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
