@@ -8,13 +8,17 @@
 
 open class PivotNodeCreator: NodeCreatorProtocol {
 
+    open var collapseToGroups: Bool { return false }
+
+    open var useEmptyNode: Bool { return false }
+
+    // MARK: Lifecycle
+
     public init() {
         //
     }
 
-    open var collapseToGroups: Bool { return false }
-
-    open var useEmptyNode: Bool { return false }
+    // MARK: Open
 
     open func createEmptyNode() -> NodeProtocol {
         return DataPivotNode(name: "")
@@ -57,6 +61,8 @@ open class PivotNodeCreator: NodeCreatorProtocol {
             }
         }
     }
+
+    // MARK: Private
 
     private func nodes(for fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> [NodeProtocol] {
         var result = [NodeProtocol]()

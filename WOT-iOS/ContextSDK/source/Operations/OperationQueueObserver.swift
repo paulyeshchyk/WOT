@@ -24,10 +24,16 @@
 
 private class OperationQueueObserver: NSObject {
 
+    private let completion: (Any?) -> Void
+
+    // MARK: Lifecycle
+
     required init(completion: @escaping (Any?) -> Void) {
         self.completion = completion
         super.init()
     }
+
+    // MARK: Internal
 
     func observeQueue(_ queue: OperationQueue) {
         queue.addObserver(self, forKeyPath: #keyPath(OperationQueue.operationCount), options: .new, context: nil)
@@ -41,5 +47,4 @@ private class OperationQueueObserver: NSObject {
         }
     }
 
-    private let completion: (Any?) -> Void
 }

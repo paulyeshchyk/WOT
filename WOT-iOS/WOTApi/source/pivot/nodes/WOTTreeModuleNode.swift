@@ -9,6 +9,14 @@
 @objc
 public class WOTTreeModuleNode: Node, WOTTreeModuleNodeProtocol {
 
+    private(set) public var modulesTree: WOTTreeModulesTreeProtocol
+
+    public var imageURL: URL? {
+        return modulesTree.moduleLocalImageURL()
+    }
+
+    // MARK: Lifecycle
+
     @objc
     public required init(moduleTree module: WOTTreeModulesTreeProtocol) {
         modulesTree = module
@@ -20,11 +28,7 @@ public class WOTTreeModuleNode: Node, WOTTreeModuleNodeProtocol {
         fatalError("init(name:) has not been implemented")
     }
 
-    private(set) public var modulesTree: WOTTreeModulesTreeProtocol
-
-    public var imageURL: URL? {
-        return modulesTree.moduleLocalImageURL()
-    }
+    // MARK: Public
 
     override public func value(key: AnyHashable) -> Any? {
         guard let keyAsString = key as? String else {

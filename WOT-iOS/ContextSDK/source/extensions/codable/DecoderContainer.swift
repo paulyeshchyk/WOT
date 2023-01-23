@@ -35,9 +35,12 @@ extension JSON: DecoderContainer {
 
 class DecoderWrapper: Decodable {
 
+    let decoder: Decoder
+
+    // MARK: Lifecycle
+
     required init(from decoder: Decoder) throws {
         self.decoder = decoder
     }
 
-    let decoder: Decoder
 }

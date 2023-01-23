@@ -68,6 +68,12 @@ public protocol LogInspectorContainerProtocol {
 // MARK: - Loggable
 
 public class Loggable {
+    var name: String
+    var type: LoggableType
+    var message: String
+
+    // MARK: Lifecycle
+
     public init(type: LoggableType, name: String, message: String) {
         self.type = type
         self.name = name.rightJustified(width: 10, truncate: true, spacer: " ")
@@ -79,9 +85,6 @@ public class Loggable {
         self.init(type: type, name: convertedName, message: message)
     }
 
-    var name: String
-    var type: LoggableType
-    var message: String
 }
 
 // MARK: - LogInspectorProtocol

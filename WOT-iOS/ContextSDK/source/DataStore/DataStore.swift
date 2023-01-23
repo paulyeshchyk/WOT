@@ -9,34 +9,39 @@
 
 open class DataStore {
 
+    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol
+
+    public let appContext: Context
+
+    // MARK: Lifecycle
+
     public required init(appContext: Context) {
         self.appContext = appContext
         appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
 
-    public enum DataStoreError: Error, CustomStringConvertible {
-        case noKeysDefinedForClass(String)
-        case clazzIsNotSupportable(String)
-        case contextNotSaved
-        case contextNotDefined
-        case objectNotCreated(AnyClass)
-        case notManagedObjectType(PrimaryKeypathProtocol.Type)
+}
 
-        public var description: String {
-            switch self {
-            case .noKeysDefinedForClass(let clazz): return "[\(type(of: self))]: No keys defined for:[\(String(describing: clazz))]"
-            case .contextNotSaved: return "\(type(of: self)): Context is not saved"
-            case .objectNotCreated(let clazz): return "\(type(of: self)): Object is not created:[\(String(describing: clazz))]"
-            case .clazzIsNotSupportable(let clazz): return "\(type(of: self)): Class is not supported by mapper:[\(String(describing: clazz))]"
-            case .notManagedObjectType(let clazz): return "[\(type(of: self))]: Not ManagedObjectType:[\(String(describing: clazz))]"
-            case .contextNotDefined: return "[\(type(of: self))]: Context is not defined"
-            }
+// MARK: - DataStoreError
+
+private enum DataStoreError: Error, CustomStringConvertible {
+    case noKeysDefinedForClass(String)
+    case clazzIsNotSupportable(String)
+    case contextNotSaved
+    case contextNotDefined
+    case objectNotCreated(AnyClass)
+    case notManagedObjectType(PrimaryKeypathProtocol.Type)
+
+    public var description: String {
+        switch self {
+        case .noKeysDefinedForClass(let clazz): return "[\(type(of: self))]: No keys defined for:[\(String(describing: clazz))]"
+        case .contextNotSaved: return "\(type(of: self)): Context is not saved"
+        case .objectNotCreated(let clazz): return "\(type(of: self)): Object is not created:[\(String(describing: clazz))]"
+        case .clazzIsNotSupportable(let clazz): return "\(type(of: self)): Class is not supported by mapper:[\(String(describing: clazz))]"
+        case .notManagedObjectType(let clazz): return "[\(type(of: self))]: Not ManagedObjectType:[\(String(describing: clazz))]"
+        case .contextNotDefined: return "[\(type(of: self))]: Context is not defined"
         }
     }
-
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol
-
-    public let appContext: Context
 }
 
 // MARK: - DataStore + DataStoreProtocol

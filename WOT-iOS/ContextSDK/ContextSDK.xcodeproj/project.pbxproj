@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DA0432A529633B400092C891 /* ManagedObjectLinkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0432A429633B400092C891 /* ManagedObjectLinkable.swift */; };
+		DA0432A529633B400092C891 /* ManagedObjectPinProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0432A429633B400092C891 /* ManagedObjectPinProtocol.swift */; };
 		DA08567429548C9C00273762 /* Hash_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08567329548C9C00273762 /* Hash_Test.swift */; };
 		DA08567729548E2000273762 /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08567629548E2000273762 /* String+MD5.swift */; };
 		DA0E8033295064A400B44CC6 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0E8029295064A300B44CC6 /* ContextSDK.framework */; };
@@ -25,7 +25,7 @@
 		DA0E806B2950920C00B44CC6 /* PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E806A2950920C00B44CC6 /* PrimaryKeypathProtocol.swift */; };
 		DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80702950933200B44CC6 /* FetchResult.swift */; };
 		DA0E80792950A3A100B44CC6 /* ContextPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80782950A3A100B44CC6 /* ContextPredicate.swift */; };
-		DA0E807C2950A60300B44CC6 /* RequestParadigm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807B2950A60300B44CC6 /* RequestParadigm.swift */; };
+		DA0E807C2950A60300B44CC6 /* RequestArgumentsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807B2950A60300B44CC6 /* RequestArgumentsBuilder.swift */; };
 		DA0E807E2950A6D200B44CC6 /* RequestPredicateComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807D2950A6D200B44CC6 /* RequestPredicateComposition.swift */; };
 		DA0E80902950B07C00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80842950B07A00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift */; };
 		DA0E80922950B07C00B44CC6 /* RootTagRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80862950B07A00B44CC6 /* RootTagRuleBuilder.swift */; };
@@ -45,7 +45,10 @@
 		DA2C28F12959F0DD00D18A6E /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28F02959F0DD00D18A6E /* DataStore.swift */; };
 		DA2C28F42959F55D00D18A6E /* ManagedObjectLinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28F32959F55D00D18A6E /* ManagedObjectLinker.swift */; };
 		DA32CEB129641C48007726AD /* ManagedObjectExtractable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CEB029641C48007726AD /* ManagedObjectExtractable.swift */; };
-		DA56E2AB296B22FA001D9DD4 /* ModuleSyndicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56E2AA296B22FA001D9DD4 /* ModuleSyndicate.swift */; };
+		DA456E70296E9D9F0065D8FF /* JointSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA456E6F296E9D9F0065D8FF /* JointSocket.swift */; };
+		DA456E72296E9DE20065D8FF /* JointPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA456E71296E9DE20065D8FF /* JointPin.swift */; };
+		DA56E2AB296B22FA001D9DD4 /* MOSyndicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56E2AA296B22FA001D9DD4 /* MOSyndicate.swift */; };
+		DA56E2B5296C0EC4001D9DD4 /* String+Describing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56E2B4296C0EC4001D9DD4 /* String+Describing.swift */; };
 		DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EB2952FCEE00C60F31 /* RequestRegistratorProtocol.swift */; };
 		DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EC2952FCEE00C60F31 /* RequestRegistrator.swift */; };
 		DA81E4F02952FDD800C60F31 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EF2952FDD800C60F31 /* JSONAdapter.swift */; };
@@ -55,7 +58,7 @@
 		DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */; };
 		DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */; };
 		DAA3A5432969994800430492 /* ManagedObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A5422969994800430492 /* ManagedObjectProtocol.swift */; };
-		DAA3A5462969F54C00430492 /* VehicleSyndicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A5452969F54C00430492 /* VehicleSyndicate.swift */; };
+		DAA3A5462969F54C00430492 /* JSONSyndicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A5452969F54C00430492 /* JSONSyndicate.swift */; };
 		DAA3A54C296A168D00430492 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A54B296A168D00430492 /* ConcurrentOperation.swift */; };
 		DAA3A54E296A16D800430492 /* OperationQueueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A54D296A16D800430492 /* OperationQueueObserver.swift */; };
 		DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */; };
@@ -74,12 +77,11 @@
 		DACDB101295EDC96005BBA72 /* ContextControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0EE295EDC95005BBA72 /* ContextControllerProtocol.swift */; };
 		DACDB102295EDC96005BBA72 /* ManagedObjectContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0EF295EDC95005BBA72 /* ManagedObjectContextProtocol.swift */; };
 		DACDB103295EDC96005BBA72 /* LogInspectorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0F0295EDC95005BBA72 /* LogInspectorProtocol.swift */; };
-		DACDB105295EDCB9005BBA72 /* RequestParadigmProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB104295EDCB9005BBA72 /* RequestParadigmProtocol.swift */; };
+		DACDB105295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB104295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift */; };
 		DACDB107295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB106295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift */; };
 		DACDB10A295EDDD9005BBA72 /* JSONCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB109295EDDD9005BBA72 /* JSONCollection.swift */; };
 		DACDB10C295EDE08005BBA72 /* JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB10B295EDE08005BBA72 /* JSONDecodingProtocol.swift */; };
 		DACDB110295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB10F295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift */; };
-		DACDB11C295F4F26005BBA72 /* Joint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB11B295F4F26005BBA72 /* Joint.swift */; };
 		DACDB11E295F832B005BBA72 /* VehicleprofileAmmoListAmmoRequestPredicateComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB11D295F832B005BBA72 /* VehicleprofileAmmoListAmmoRequestPredicateComposer.swift */; };
 		DACDB12029601537005BBA72 /* ContextPredicateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB11F29601537005BBA72 /* ContextPredicateProtocol.swift */; };
 		DACDB123296023C8005BBA72 /* JSONMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB122296023C7005BBA72 /* JSONMap.swift */; };
@@ -96,7 +98,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DA0432A429633B400092C891 /* ManagedObjectLinkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectLinkable.swift; sourceTree = "<group>"; };
+		DA0432A429633B400092C891 /* ManagedObjectPinProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectPinProtocol.swift; sourceTree = "<group>"; };
 		DA08567329548C9C00273762 /* Hash_Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hash_Test.swift; sourceTree = "<group>"; };
 		DA08567629548E2000273762 /* String+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
 		DA0E8029295064A300B44CC6 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,7 +119,7 @@
 		DA0E806A2950920C00B44CC6 /* PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryKeypathProtocol.swift; sourceTree = "<group>"; };
 		DA0E80702950933200B44CC6 /* FetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchResult.swift; sourceTree = "<group>"; };
 		DA0E80782950A3A100B44CC6 /* ContextPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPredicate.swift; sourceTree = "<group>"; };
-		DA0E807B2950A60300B44CC6 /* RequestParadigm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestParadigm.swift; sourceTree = "<group>"; };
+		DA0E807B2950A60300B44CC6 /* RequestArgumentsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestArgumentsBuilder.swift; sourceTree = "<group>"; };
 		DA0E807D2950A6D200B44CC6 /* RequestPredicateComposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPredicateComposition.swift; sourceTree = "<group>"; };
 		DA0E80842950B07A00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedLocalAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		DA0E80862950B07A00B44CC6 /* RootTagRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTagRuleBuilder.swift; sourceTree = "<group>"; };
@@ -137,7 +139,10 @@
 		DA2C28F02959F0DD00D18A6E /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		DA2C28F32959F55D00D18A6E /* ManagedObjectLinker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectLinker.swift; sourceTree = "<group>"; };
 		DA32CEB029641C48007726AD /* ManagedObjectExtractable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectExtractable.swift; sourceTree = "<group>"; };
-		DA56E2AA296B22FA001D9DD4 /* ModuleSyndicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleSyndicate.swift; sourceTree = "<group>"; };
+		DA456E6F296E9D9F0065D8FF /* JointSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JointSocket.swift; sourceTree = "<group>"; };
+		DA456E71296E9DE20065D8FF /* JointPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JointPin.swift; sourceTree = "<group>"; };
+		DA56E2AA296B22FA001D9DD4 /* MOSyndicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSyndicate.swift; sourceTree = "<group>"; };
+		DA56E2B4296C0EC4001D9DD4 /* String+Describing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Describing.swift"; sourceTree = "<group>"; };
 		DA81E4EB2952FCEE00C60F31 /* RequestRegistratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestRegistratorProtocol.swift; sourceTree = "<group>"; };
 		DA81E4EC2952FCEE00C60F31 /* RequestRegistrator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestRegistrator.swift; sourceTree = "<group>"; };
 		DA81E4EF2952FDD800C60F31 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; };
@@ -147,7 +152,7 @@
 		DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+Decode.swift"; sourceTree = "<group>"; };
 		DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderContainer.swift; sourceTree = "<group>"; };
 		DAA3A5422969994800430492 /* ManagedObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectProtocol.swift; sourceTree = "<group>"; };
-		DAA3A5452969F54C00430492 /* VehicleSyndicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleSyndicate.swift; sourceTree = "<group>"; };
+		DAA3A5452969F54C00430492 /* JSONSyndicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSyndicate.swift; sourceTree = "<group>"; };
 		DAA3A54B296A168D00430492 /* ConcurrentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentOperation.swift; sourceTree = "<group>"; };
 		DAA3A54D296A16D800430492 /* OperationQueueObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationQueueObserver.swift; sourceTree = "<group>"; };
 		DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogWrapper.swift; sourceTree = "<group>"; };
@@ -166,12 +171,11 @@
 		DACDB0EE295EDC95005BBA72 /* ContextControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextControllerProtocol.swift; sourceTree = "<group>"; };
 		DACDB0EF295EDC95005BBA72 /* ManagedObjectContextProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectContextProtocol.swift; sourceTree = "<group>"; };
 		DACDB0F0295EDC95005BBA72 /* LogInspectorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInspectorProtocol.swift; sourceTree = "<group>"; };
-		DACDB104295EDCB9005BBA72 /* RequestParadigmProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestParadigmProtocol.swift; sourceTree = "<group>"; };
+		DACDB104295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestArgumentsBuilderProtocol.swift; sourceTree = "<group>"; };
 		DACDB106295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPredicateComposerProtocol.swift; sourceTree = "<group>"; };
 		DACDB109295EDDD9005BBA72 /* JSONCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCollection.swift; sourceTree = "<group>"; };
 		DACDB10B295EDE08005BBA72 /* JSONDecodingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingProtocol.swift; sourceTree = "<group>"; };
 		DACDB10F295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectLinkerProtocol.swift; sourceTree = "<group>"; };
-		DACDB11B295F4F26005BBA72 /* Joint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Joint.swift; sourceTree = "<group>"; };
 		DACDB11D295F832B005BBA72 /* VehicleprofileAmmoListAmmoRequestPredicateComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleprofileAmmoListAmmoRequestPredicateComposer.swift; sourceTree = "<group>"; };
 		DACDB11F29601537005BBA72 /* ContextPredicateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPredicateProtocol.swift; sourceTree = "<group>"; };
 		DACDB122296023C7005BBA72 /* JSONMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMap.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 				DA08567629548E2000273762 /* String+MD5.swift */,
 				DA288F692965A76900973561 /* String+Unescape.swift */,
 				DA288F76296697C700973561 /* String+LeadingSpace.swift */,
+				DA56E2B4296C0EC4001D9DD4 /* String+Describing.swift */,
 			);
 			path = NSString;
 			sourceTree = "<group>";
@@ -350,7 +355,7 @@
 		DA0E807A2950A5F400B44CC6 /* RequestParadigm */ = {
 			isa = PBXGroup;
 			children = (
-				DA0E807B2950A60300B44CC6 /* RequestParadigm.swift */,
+				DA0E807B2950A60300B44CC6 /* RequestArgumentsBuilder.swift */,
 				DA0E807D2950A6D200B44CC6 /* RequestPredicateComposition.swift */,
 			);
 			path = RequestParadigm;
@@ -368,7 +373,6 @@
 				DA0E808B2950B07B00B44CC6 /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift */,
 				DA0E808C2950B07B00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */,
 				DA0E80862950B07A00B44CC6 /* RootTagRuleBuilder.swift */,
-				DACDB11B295F4F26005BBA72 /* Joint.swift */,
 			);
 			path = RelationLinkParadigm;
 			sourceTree = "<group>";
@@ -409,6 +413,8 @@
 			isa = PBXGroup;
 			children = (
 				DA2C28F32959F55D00D18A6E /* ManagedObjectLinker.swift */,
+				DA456E6F296E9D9F0065D8FF /* JointSocket.swift */,
+				DA456E71296E9DE20065D8FF /* JointPin.swift */,
 			);
 			path = ManagedObjectCreator;
 			sourceTree = "<group>";
@@ -428,14 +434,14 @@
 				DAA3A5422969994800430492 /* ManagedObjectProtocol.swift */,
 				DA32CEB029641C48007726AD /* ManagedObjectExtractable.swift */,
 				DACDB10F295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift */,
-				DA0432A429633B400092C891 /* ManagedObjectLinkable.swift */,
+				DA0432A429633B400092C891 /* ManagedObjectPinProtocol.swift */,
 				DACDB0E8295EDC95005BBA72 /* MD5Protocol.swift */,
 				DACDB0DF295EDC94005BBA72 /* ModelServiceProtocol.swift */,
 				DACDB0E4295EDC94005BBA72 /* RequestableProtocol.swift */,
 				DACDB0E0295EDC94005BBA72 /* RequestManagerProtocol.swift */,
 				DACDB0ED295EDC95005BBA72 /* ResponseAdapterProtocol.swift */,
 				DACDB0E1295EDC94005BBA72 /* ResponseDataAdapterCreatorProtocol.swift */,
-				DACDB104295EDCB9005BBA72 /* RequestParadigmProtocol.swift */,
+				DACDB104295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift */,
 				DACDB106295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift */,
 				DACDB0E9295EDC95005BBA72 /* SessionManagerProtocol.swift */,
 				DACDB0E7295EDC95005BBA72 /* URLEncodedProtocol.swift */,
@@ -489,8 +495,8 @@
 		DAA3A5442969F53900430492 /* Syndicate */ = {
 			isa = PBXGroup;
 			children = (
-				DAA3A5452969F54C00430492 /* VehicleSyndicate.swift */,
-				DA56E2AA296B22FA001D9DD4 /* ModuleSyndicate.swift */,
+				DAA3A5452969F54C00430492 /* JSONSyndicate.swift */,
+				DA56E2AA296B22FA001D9DD4 /* MOSyndicate.swift */,
 			);
 			path = Syndicate;
 			sourceTree = "<group>";
@@ -671,7 +677,7 @@
 				DA0E80972950B07C00B44CC6 /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 				DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */,
-				DA56E2AB296B22FA001D9DD4 /* ModuleSyndicate.swift in Sources */,
+				DA56E2AB296B22FA001D9DD4 /* MOSyndicate.swift in Sources */,
 				DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */,
 				DACDB0F3295EDC96005BBA72 /* RequestManagerProtocol.swift in Sources */,
 				DACDB0F9295EDC96005BBA72 /* HttpServiceProtocol.swift in Sources */,
@@ -689,11 +695,12 @@
 				DACDB0D8295DBB66005BBA72 /* LogInspector.swift in Sources */,
 				DACDB107295EDD42005BBA72 /* RequestPredicateComposerProtocol.swift in Sources */,
 				DA288F6A2965A76900973561 /* String+Unescape.swift in Sources */,
+				DA56E2B5296C0EC4001D9DD4 /* String+Describing.swift in Sources */,
 				DACDB123296023C8005BBA72 /* JSONMap.swift in Sources */,
 				DACDB101295EDC96005BBA72 /* ContextControllerProtocol.swift in Sources */,
 				DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */,
 				DA0E807E2950A6D200B44CC6 /* RequestPredicateComposition.swift in Sources */,
-				DA0432A529633B400092C891 /* ManagedObjectLinkable.swift in Sources */,
+				DA0432A529633B400092C891 /* ManagedObjectPinProtocol.swift in Sources */,
 				DA0E80932950B07C00B44CC6 /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift in Sources */,
 				DACDB0FA295EDC96005BBA72 /* URLEncodedProtocol.swift in Sources */,
 				DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */,
@@ -701,16 +708,15 @@
 				DAA3A54C296A168D00430492 /* ConcurrentOperation.swift in Sources */,
 				DAA3A5432969994800430492 /* ManagedObjectProtocol.swift in Sources */,
 				DA0E806B2950920C00B44CC6 /* PrimaryKeypathProtocol.swift in Sources */,
-				DAA3A5462969F54C00430492 /* VehicleSyndicate.swift in Sources */,
+				DAA3A5462969F54C00430492 /* JSONSyndicate.swift in Sources */,
 				DACDB0FB295EDC96005BBA72 /* MD5Protocol.swift in Sources */,
 				DACDB102295EDC96005BBA72 /* ManagedObjectContextProtocol.swift in Sources */,
 				DACDB0F4295EDC96005BBA72 /* ResponseDataAdapterCreatorProtocol.swift in Sources */,
 				DA0E80922950B07C00B44CC6 /* RootTagRuleBuilder.swift in Sources */,
-				DACDB105295EDCB9005BBA72 /* RequestParadigmProtocol.swift in Sources */,
+				DACDB105295EDCB9005BBA72 /* RequestArgumentsBuilderProtocol.swift in Sources */,
 				DAA3A54E296A16D800430492 /* OperationQueueObserver.swift in Sources */,
 				DACDB100295EDC96005BBA72 /* ResponseAdapterProtocol.swift in Sources */,
 				DA0E80792950A3A100B44CC6 /* ContextPredicate.swift in Sources */,
-				DACDB11C295F4F26005BBA72 /* Joint.swift in Sources */,
 				DA0E806529508C4700B44CC6 /* StartableProtocol.swift in Sources */,
 				DA2C28F42959F55D00D18A6E /* ManagedObjectLinker.swift in Sources */,
 				DA81E4F02952FDD800C60F31 /* JSONAdapter.swift in Sources */,
@@ -721,13 +727,15 @@
 				DA0E806429508C4700B44CC6 /* RequestProtocol.swift in Sources */,
 				DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */,
 				DACDB110295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift in Sources */,
+				DA456E72296E9DE20065D8FF /* JointPin.swift in Sources */,
 				DACDB0F7295EDC96005BBA72 /* RequestableProtocol.swift in Sources */,
 				DA0E80902950B07C00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */,
-				DA0E807C2950A60300B44CC6 /* RequestParadigm.swift in Sources */,
+				DA0E807C2950A60300B44CC6 /* RequestArgumentsBuilder.swift in Sources */,
 				DA12D0772962FD530077F664 /* SessionManager.swift in Sources */,
 				DACDB0FF295EDC96005BBA72 /* DataStoreProtocol.swift in Sources */,
 				DA0E80942950B07C00B44CC6 /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,
 				DA0E809A2950B07C00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
+				DA456E70296E9D9F0065D8FF /* JointSocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

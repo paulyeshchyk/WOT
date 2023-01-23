@@ -22,6 +22,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var dataStore: DataStoreProtocol?
     public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
+    // MARK: Public
+
     public func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         let logPriorities: [LogEventType]? = [.error, .warning, .flow, .custom, .remoteFetch]
         logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])

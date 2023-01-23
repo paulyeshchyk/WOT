@@ -8,17 +8,22 @@
 
 open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
-    public init(drivenJoint: Joint) {
-        self.drivenJoint = drivenJoint
+    private let pin: JointPinProtocol
+
+    // MARK: Lifecycle
+
+    public init(pin: JointPinProtocol) {
+        self.pin = pin
     }
+
+    // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
-        lookupPredicate[.primary] = drivenJoint.modelClass.primaryKey(forType: .external, andObject: drivenJoint.theID)
-        lookupPredicate[.secondary] = drivenJoint.contextPredicate?[.primary]
+        lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
+        lookupPredicate[.secondary] = pin.contextPredicate?[.primary]
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 
-    private let drivenJoint: Joint
 }

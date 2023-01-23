@@ -5,35 +5,7 @@
 //  Created by Paul on 26.12.22.
 //
 
-open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtractable {
-
-    public required init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, anchor: ManagedObjectLinkerAnchorProtocol) {
-        self.masterFetchResult = masterFetchResult
-        self.modelClass = modelClass
-        self.anchor = anchor
-    }
-
-    open var linkerPrimaryKeyType: PrimaryKeyType {
-        fatalError("has not been implemented")
-    }
-
-    open func extractJSON(from _: JSON) -> JSON? { return nil }
-
-    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
-        guard let link = fetchResult.managedObject() as? ManagedObjectLinkable else {
-            completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectLinkHostable.self)))
-            return
-        }
-        guard let host = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ManagedObjectLinkHostable else {
-            completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectLinkable.self)))
-            return
-        }
-        host.doLinking(link, anchor: anchor)
-
-        // MARK: stash
-
-        appContext?.dataStore?.stash(fetchResult: fetchResult, completion: completion)
-    }
+open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
 
     public enum ManagedObjectLinkerError: Error, CustomStringConvertible {
         case unexpectedString(String)
@@ -52,9 +24,40 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtrac
     public let modelClass: PrimaryKeypathProtocol.Type
 
     public var masterFetchResult: FetchResultProtocol?
-    public var anchor: ManagedObjectLinkerAnchorProtocol
+    public var socket: JointSocketProtocol
 
     public var MD5: String { uuid.MD5 }
 
     private let uuid = UUID()
+
+    // MARK: Lifecycle
+
+    public required init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, socket: JointSocketProtocol) {
+        self.masterFetchResult = masterFetchResult
+        self.modelClass = modelClass
+        self.socket = socket
+    }
+
+    // MARK: Open
+
+    open func extractJSON(from _: JSON) -> JSON? { return nil }
+
+    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
+        guard let pin = fetchResult.managedObject() as? ManagedObjectPinProtocol else {
+            completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectSocketProtocol.self)))
+            return
+        }
+        guard let managedObject = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ManagedObjectSocketProtocol else {
+            completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectPinProtocol.self)))
+            return
+        }
+        //
+
+        managedObject.doLinking(pin: pin, socket: socket)
+
+        // MARK: stash
+
+        appContext?.dataStore?.stash(fetchResult: fetchResult, completion: completion)
+    }
+
 }

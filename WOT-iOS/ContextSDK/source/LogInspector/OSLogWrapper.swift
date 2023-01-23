@@ -103,13 +103,17 @@ extension OSLog {
 
 public class OSLogWrapper: LOGOutputProtocol {
 
+    public var consoleLevel: LogOutputLevel
+    public var bundle: Bundle
+
+    // MARK: Lifecycle
+
     public required init(consoleLevel: LogOutputLevel, bundle: Bundle) {
         self.consoleLevel = consoleLevel
         self.bundle = bundle
     }
 
-    public var consoleLevel: LogOutputLevel
-    public var bundle: Bundle
+    // MARK: Public
 
     /// log something generally unimportant (lowest priority)
     public func verbose(_ message: Any, _: String, _: String, line _: Int, context: LogContext?) {

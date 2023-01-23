@@ -9,6 +9,30 @@
 
 open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
+    open var responseClass: AnyClass {
+        fatalError("has not been implemented")
+    }
+
+    public var completion: ResponseAdapterProtocol.OnComplete?
+
+    public var MD5: String { uuid.MD5 }
+
+    // MARK: NSObject -
+
+    public var description: String { String(describing: type(of: request)) }
+
+    // MARK: DataAdapterProtocol -
+
+    private let uuid = UUID()
+    private var managedObjectLinker: ManagedObjectLinkerProtocol
+    private var jsonExtractor: ManagedObjectExtractable
+
+    private let appContext: JSONAdapterProtocol.Context
+    private let modelClass: PrimaryKeypathProtocol.Type
+    private let request: RequestProtocol
+
+    // MARK: Lifecycle
+
     public required init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, jsonExtractor: ManagedObjectExtractable, appContext: JSONAdapterProtocol.Context) {
         self.modelClass = modelClass
         self.request = request
@@ -22,21 +46,13 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
     }
 
-    open var responseClass: AnyClass {
-        fatalError("has not been implemented")
-    }
+    // MARK: Open
 
     open func decodedObject(jsonDecoder _: JSONDecoder, from _: Data) throws -> JSON? {
         fatalError("has not been implemented")
     }
 
-    public var completion: ResponseAdapterProtocol.OnComplete?
-
-    public var MD5: String { uuid.MD5 }
-
-    // MARK: NSObject -
-
-    public var description: String { String(describing: type(of: request)) }
+    // MARK: Public
 
     public func decode(data: Data?, fromRequest request: RequestProtocol) {
         guard let data = data else {
@@ -53,15 +69,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         }
     }
 
-    // MARK: DataAdapterProtocol -
-
-    private let uuid = UUID()
-    private var managedObjectLinker: ManagedObjectLinkerProtocol
-    private var jsonExtractor: ManagedObjectExtractable
-
-    private let appContext: JSONAdapterProtocol.Context
-    private let modelClass: PrimaryKeypathProtocol.Type
-    private let request: RequestProtocol
+    // MARK: Private
 
     private func didFoundObject(_: FetchResultProtocol, error _: Error?) {}
 }
@@ -79,7 +87,7 @@ public extension JSONAdapter {
             dispatchGroup.enter()
 
             //
-            let syndicate = VehicleSyndicate(appContext: appContext, json: json, key: key)
+            let syndicate = JSONSyndicate(appContext: appContext, json: json, key: key)
             syndicate.contextPredicate = request.contextPredicate
             syndicate.modelClass = modelClass
             syndicate.managedObjectLinker = managedObjectLinker

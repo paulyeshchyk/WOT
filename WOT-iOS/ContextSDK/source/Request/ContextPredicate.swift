@@ -7,14 +7,6 @@
 
 public class ContextPredicate: NSObject, ContextPredicateProtocol {
 
-    public convenience init(parentObjectIDList idList: [AnyObject]?) {
-        self.init()
-
-        if let compacted = idList?.compactMap({ $0 }) {
-            parentObjectIDList.append(contentsOf: compacted)
-        }
-    }
-
     /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
     /// parents identifier has been taken from a list
     public var parentObjectIDList: [AnyObject] = []
@@ -30,6 +22,20 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
         }
         return result.joined(separator: ";")
     }
+
+    private var _expressions: [ContextExpressionType: Set<ContextExpression>] = .init()
+
+    // MARK: Lifecycle
+
+    public convenience init(parentObjectIDList idList: [AnyObject]?) {
+        self.init()
+
+        if let compacted = idList?.compactMap({ $0 }) {
+            parentObjectIDList.append(contentsOf: compacted)
+        }
+    }
+
+    // MARK: Public
 
     public subscript(pkType: ContextExpressionType) -> ContextExpressionProtocol? {
         get {
@@ -71,5 +77,4 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
         }
     }
 
-    private var _expressions: [ContextExpressionType: Set<ContextExpression>] = .init()
 }

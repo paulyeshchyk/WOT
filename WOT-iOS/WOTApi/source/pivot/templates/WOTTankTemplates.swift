@@ -117,8 +117,6 @@ class WOTPivotTemplateVehicleDPM: PivotTemplateProtocol {
 
 public struct WOTPivotTemplates {
 
-    public init() {}
-
     public lazy var tankID: PivotTemplateProtocol = WOTPivotTemplateVehicleTankID()
 
     public lazy var vehiclePremium: PivotTemplateProtocol = WOTPivotTemplateVehiclePremium()
@@ -130,4 +128,9 @@ public struct WOTPivotTemplates {
     public lazy var vehicleNation: PivotTemplateProtocol = WOTPivotTemplateVehicleNation()
 
     public lazy var vehicleDPM: PivotTemplateProtocol = WOTPivotTemplateVehicleDPM()
+
+    // MARK: Lifecycle
+
+    public init() {}
+
 }

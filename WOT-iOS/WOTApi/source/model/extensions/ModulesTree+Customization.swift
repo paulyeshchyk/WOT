@@ -33,6 +33,17 @@ public enum VehicleModuleType: String {
     case vehicleGun
     case tank
 
+    var index: Int {
+        if let result = VehicleModuleType.allTypes.firstIndex(of: self) {
+            return result
+        }
+        fatalError("VehicleModuleType.alltypes has no value:\(self)")
+    }
+
+    private static var allTypes: [VehicleModuleType] = [.unknown, .vehicleChassis, .vehicleEngine, .vehicleRadio, .vehicleTurret, .vehicleGun, .tank]
+
+    // MARK: Public
+
     public static func fromString(_ string: String?) -> VehicleModuleType {
         guard let string = string else {
             fatalError("incompatible module type: nil")
@@ -43,18 +54,12 @@ public enum VehicleModuleType: String {
         return result
     }
 
-    var index: Int {
-        if let result = VehicleModuleType.allTypes.firstIndex(of: self) {
-            return result
-        }
-        fatalError("VehicleModuleType.alltypes has no value:\(self)")
-    }
+    // MARK: Internal
 
     static func value(for intValue: Int) -> VehicleModuleType {
         return VehicleModuleType.allTypes[intValue]
     }
 
-    private static var allTypes: [VehicleModuleType] = [.unknown, .vehicleChassis, .vehicleEngine, .vehicleRadio, .vehicleTurret, .vehicleGun, .tank]
 }
 
 // MARK: - ObjCVehicleModuleType
@@ -72,6 +77,8 @@ public enum ObjCVehicleModuleType: Int {
     var stringValue: String {
         return VehicleModuleType.value(for: rawValue).rawValue
     }
+
+    // MARK: Internal
 
     static func fromString(stringValue: String) -> ObjCVehicleModuleType {
         guard let index = VehicleModuleType(rawValue: stringValue)?.index else { fatalError("wrong string value: \(stringValue)") }

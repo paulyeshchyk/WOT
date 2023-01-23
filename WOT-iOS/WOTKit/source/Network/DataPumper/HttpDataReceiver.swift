@@ -12,51 +12,10 @@ import ContextSDK
 
 public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible {
 
-    public required init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
-        self.request = request
-        self.context = context
-    }
-
-    deinit {
-        if (state != .finished) {
-            context.logInspector?.log(.warning("deinit HttpDataReceiver when state != finished"), sender: self)
-        }
-        urlDataTask?.cancelDataTask()
-        urlDataTask = nil
-    }
-
     public weak var delegate: HttpDataReceiverDelegateProtocol?
 
     public var MD5: String { uuid.MD5 }
     public var description: String { "\(type(of: self)): \(String(describing: request))" }
-
-    @discardableResult
-    public func cancel() -> Bool {
-        let result = urlDataTask?.cancelDataTask() ?? false
-        urlDataTask = nil
-        if result == true {
-            context.logInspector?.log(.remoteFetch(message: "Cancel URL: \(String(describing: request.url))"), sender: self)
-            delegate?.didCancel(urlRequest: request, receiver: self, error: nil)
-        }
-        return result
-    }
-
-    public func start(completion: @escaping (() -> Void)) {
-        urlDataTask?.cancelDataTask()
-        urlDataTask = nil
-
-        guard let url = request.url else {
-            delegate?.didEnd(urlRequest: request, receiver: self, data: nil, error: WOTWebDataPumperError.urlNotDefined)
-            return
-        }
-        urlDataTask = createDataTask(url: url) {
-            self.state = .finished
-            completion()
-        }
-        context.logInspector?.log(.remoteFetch(message: "Start URL: \(String(describing: request.url))"), sender: self)
-        delegate?.didStart(urlRequest: request, receiver: self)
-        urlDataTask?.resume()
-    }
 
     enum State {
         case unknown
@@ -83,13 +42,58 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
 
     private let context: HttpDataReceiverProtocol.Context
 
+    // MARK: Lifecycle
+
+    public required init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
+        self.request = request
+        self.context = context
+    }
+
+    deinit {
+        if state != .finished {
+            context.logInspector?.log(.warning("deinit HttpDataReceiver when state != finished"), sender: self)
+        }
+        urlDataTask?.cancelDataTask()
+        urlDataTask = nil
+    }
+
+    // MARK: Public
+
+    @discardableResult
+    public func cancel() -> Bool {
+        let result = urlDataTask?.cancelDataTask() ?? false
+        urlDataTask = nil
+        if result == true {
+            context.logInspector?.log(.remoteFetch(message: "Cancel URL: \(String(describing: request.url))"), sender: self)
+            delegate?.didCancel(urlRequest: request, receiver: self, error: nil)
+        }
+        return result
+    }
+
+    public func start() {
+        urlDataTask?.cancelDataTask()
+        urlDataTask = nil
+
+        guard let url = request.url else {
+            delegate?.didEnd(urlRequest: request, receiver: self, data: nil, error: WOTWebDataPumperError.urlNotDefined)
+            return
+        }
+        urlDataTask = createDataTask(url: url) {
+            self.state = .finished
+        }
+        context.logInspector?.log(.remoteFetch(message: "Start URL: \(String(describing: request.url))"), sender: self)
+        delegate?.didStart(urlRequest: request, receiver: self)
+        urlDataTask?.resume()
+    }
+
+    // MARK: Private
+
     private func createDataTask(url: URL, completion: @escaping () -> Void) -> URLSessionDataTask {
         state = .started
         return URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            //
-            completion()
-            //
             guard let self = self else { return }
+            completion()
+
             DispatchQueue.main.async {
                 self.delegate?.didEnd(urlRequest: self.request, receiver: self, data: data, error: error)
             }

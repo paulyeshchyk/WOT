@@ -10,6 +10,18 @@
 
 public class NodeIndex: NSObject, NodeIndexProtocol {
 
+    public static let Comparator: NodeComparatorType = { (_, _, _) in
+        return .orderedSame
+    }
+
+    public var count: Int {
+        return index.keys.count
+    }
+
+    private var index = [AnyHashable: NodeProtocol]()
+
+    // MARK: Lifecycle
+
     // contains node.index: node
     // where node.index - global autoincremented value
     // used to get item by indexpath while iterating in  WOTPivotLayout::layoutAttributesForElementsInRect
@@ -23,13 +35,7 @@ public class NodeIndex: NSObject, NodeIndexProtocol {
         //
     }
 
-    public static let Comparator: NodeComparatorType = { (_, _, _) in
-        return .orderedSame
-    }
-
-    public var count: Int {
-        return index.keys.count
-    }
+    // MARK: Public
 
     public func reset() {
         index.removeAll()
@@ -63,7 +69,6 @@ public class NodeIndex: NSObject, NodeIndexProtocol {
         return result
     }
 
-    private var index = [AnyHashable: NodeProtocol]()
 }
 
 // MARK: - ObjCNodeIndex

@@ -22,17 +22,21 @@ public protocol WOTTanksIDListProtocol: NSObjectProtocol {
 @objc
 public class WOTTanksIDList: NSObject {
 
+    private(set) public var allObjects = [String]()
+
+    public var label: String {
+        return allObjects.joined(separator: "-")
+    }
+
+    // MARK: Lifecycle
+
     @objc
     public required init(tankID: String) {
         super.init()
         addObject(tankID)
     }
 
-    private(set) public var allObjects = [String]()
-
-    public var label: String {
-        return allObjects.joined(separator: "-")
-    }
+    // MARK: Internal
 
     func addObject(_ object: String) {
         allObjects.append(object)

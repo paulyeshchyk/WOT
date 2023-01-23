@@ -8,14 +8,32 @@
 
 import ContextSDK
 
+// MARK: - HttpRequestProtocol
+
+public protocol HttpRequestProtocol {}
+
 // MARK: - HttpRequest
 
-open class HttpRequest: Request {
+open class HttpRequest: Request, HttpRequestProtocol {
+
+    override public var description: String {
+        "\(type(of: self)): \(path)"
+    }
+
+    private var httpDataReceiver: HttpDataReceiver?
+
+    override open var httpQueryItemName: String {
+        fatalError("has not been implemented")
+    }
+
+    // MARK: Lifecycle
 
     deinit {
         httpDataReceiver?.delegate = nil
         httpDataReceiver?.cancel()
     }
+
+    // MARK: Open
 
     override open func cancel(byReason: RequestCancelReasonProtocol) throws {
         if httpDataReceiver?.cancel() ?? false {
@@ -23,7 +41,7 @@ open class HttpRequest: Request {
         }
     }
 
-    override open func start(completion: @escaping (() -> Void)) throws {
+    override open func start() throws {
         let urlRequest = try HttpRequestBuilder().build(hostConfiguration: appContext.hostConfiguration,
                                                         httpMethod: httpMethod,
                                                         path: path,
@@ -32,14 +50,9 @@ open class HttpRequest: Request {
 
         httpDataReceiver = HttpDataReceiver(context: appContext, request: urlRequest)
         httpDataReceiver?.delegate = self
-        httpDataReceiver?.start(completion: completion)
+        httpDataReceiver?.start()
     }
 
-    override public var description: String {
-        "\(type(of: self)): \(path)"
-    }
-
-    private var httpDataReceiver: HttpDataReceiver?
 }
 
 // MARK: - HttpRequest + HttpDataReceiverDelegateProtocol
@@ -77,13 +90,16 @@ extension HttpRequest: HttpServiceProtocol {
 
 final private class HttpRequestCancelEvent: LogEventProtocol {
 
-    init(reason: RequestCancelReasonProtocol) {
-        self.reason = reason
-    }
-
     var eventType: LogEventType { .info }
     var message: String { reason.reasonDescription }
     var name: String { "HttpRequestCancelEvent" }
 
     private let reason: RequestCancelReasonProtocol
+
+    // MARK: Lifecycle
+
+    init(reason: RequestCancelReasonProtocol) {
+        self.reason = reason
+    }
+
 }

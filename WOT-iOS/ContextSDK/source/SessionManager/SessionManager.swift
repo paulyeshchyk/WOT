@@ -11,6 +11,8 @@ public class SessionManager: NSObject, SessionManagerProtocol {
     @objc
     public var appContext: AnyObject?
 
+    // MARK: Public
+
     @objc
     public func login() {}
 

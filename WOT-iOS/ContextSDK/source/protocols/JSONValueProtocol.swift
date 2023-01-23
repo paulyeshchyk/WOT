@@ -23,6 +23,8 @@ public enum JSONValue {
 // MARK: - JSONValue + Encodable
 
 extension JSONValue: Encodable {
+
+    // swiftlint:disable cyclomatic_complexity
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
@@ -33,10 +35,13 @@ extension JSONValue: Encodable {
         case .json(let json): try container.encode(json)
         case .array(let array): try container.encode(array)
         }
+        // swiftlint:enable cyclomatic_complexity
     }
 }
 
 extension JSONValue {
+
+    // swiftlint:disable cyclomatic_complexity
     public init?(any: Any?) {
         if let value = any as? String {
             self = .string(value)
@@ -58,6 +63,7 @@ extension JSONValue {
         } else {
             return nil
         }
+        // swiftlint:enable cyclomatic_complexity
     }
 
     func encode(encoding: String.Encoding = .utf8) throws -> String? {

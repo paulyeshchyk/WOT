@@ -10,10 +10,6 @@ import ContextSDK
 
 public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
 
-    public init(appContext: Context) {
-        self.appContext = appContext
-    }
-
     public typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestManagerContainerProtocol
@@ -31,4 +27,11 @@ public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
     }
 
     private let appContext: Context
+
+    // MARK: Lifecycle
+
+    public init(appContext: Context) {
+        self.appContext = appContext
+    }
+
 }

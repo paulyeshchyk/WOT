@@ -34,21 +34,6 @@ protocol WOTMenuProtocol: NSObjectProtocol {
 @objc
 class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourceDelegate {
 
-    required convenience init(menuDatasource datasource: WOTMenuDatasource, nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        menuDatasource = datasource
-        menuDatasource?.delegate = self
-    }
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     var menuDatasource: WOTMenuDatasourceProtocol?
 
     @IBOutlet var tableView: UITableView?
@@ -77,6 +62,25 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourc
         return item?.icon ?? UIImage()
     }
 
+    // MARK: Lifecycle
+
+    required convenience init(menuDatasource datasource: WOTMenuDatasource, nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        self.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        menuDatasource = datasource
+        menuDatasource?.delegate = self
+    }
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Internal
+
     func rebuildMenu() {
         menuDatasource?.rebuild()
     }
@@ -103,6 +107,8 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourc
         selectedIndex = 0
         tableView?.reloadData()
     }
+
+    // MARK: Fileprivate
 
     fileprivate func redrawNavigationBar() {
         navigationController?.navigationBar.setDarkStyle()

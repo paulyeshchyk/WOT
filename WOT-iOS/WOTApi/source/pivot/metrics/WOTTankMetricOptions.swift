@@ -9,11 +9,6 @@
 @objc
 public class WOTTankMetricOptions: NSObject, OptionSet {
 
-    public required init(rawValue: Int) {
-        self.rawValue = rawValue
-        super.init()
-    }
-
     @objc public static let none = WOTTankMetricOptions(rawValue: 1 << 0)
     @objc public static let mobility = WOTTankMetricOptions(rawValue: 1 << 1)
     @objc public static let armor = WOTTankMetricOptions(rawValue: 1 << 2)
@@ -22,6 +17,15 @@ public class WOTTankMetricOptions: NSObject, OptionSet {
 
     @objc
     public var rawValue: Int
+
+    // MARK: Lifecycle
+
+    public required init(rawValue: Int) {
+        self.rawValue = rawValue
+        super.init()
+    }
+
+    // MARK: Public
 
     @objc
     public func isInclude(_ options: WOTTankMetricOptions) -> Bool {

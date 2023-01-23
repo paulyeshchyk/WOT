@@ -25,6 +25,7 @@ public extension ModulesTree {
     }
 
     enum RelativeKeys: String, CodingKey, CaseIterable {
+        case default_profile
         case next_modules
         case next_tanks
         case currentModule

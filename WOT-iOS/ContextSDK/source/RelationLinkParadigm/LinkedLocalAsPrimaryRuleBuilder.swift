@@ -8,16 +8,21 @@
 
 open class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
-    public init(drivenJoint: Joint) {
-        self.drivenJoint = drivenJoint
+    private let pin: JointPinProtocol
+
+    // MARK: Lifecycle
+
+    public init(pin: JointPinProtocol) {
+        self.pin = pin
     }
+
+    // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate(parentObjectIDList: nil)
-        lookupPredicate[.primary] = drivenJoint.modelClass.primaryKey(forType: .internal, andObject: drivenJoint.theID)
+        lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .internal, andObject: pin.identifier)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 
-    private let drivenJoint: Joint
 }
