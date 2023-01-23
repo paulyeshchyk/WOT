@@ -9,9 +9,9 @@
 
 class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: JSONDecoderProtocol.Context?
+    private let appContext: Context
 
-    required init(appContext: JSONDecoderProtocol.Context?) {
+    required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -28,18 +28,18 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileGun.self
             let managedRef = try managedObject?.managedRef()
 
-            let pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
-
             let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
             httpJSONResponseConfiguration.extractor = VehicleprofileModule.GunExtractor()
 
+            let pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
             let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
-            let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            #warning("move out of Decoder")
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
         if let radio_id = element?[#keyPath(VehicleprofileModule.radio_id)] {
@@ -47,18 +47,18 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileRadio.self
             let managedRef = try managedObject?.managedRef()
 
-            let pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
-
             let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
             httpJSONResponseConfiguration.extractor = VehicleprofileModule.RadioExtractor()
 
+            let pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
             let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
-            let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            #warning("move out of Decoder")
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
         if let engine_id = element?[#keyPath(VehicleprofileModule.engine_id)] {
@@ -66,18 +66,18 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileEngine.self
             let managedRef = try managedObject?.managedRef()
 
-            let pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
-
             let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
             httpJSONResponseConfiguration.extractor = VehicleprofileModule.EngineExtractor()
 
+            let pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
             let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
-            let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            #warning("move out of Decoder")
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
         if let suspension_id = element?[#keyPath(VehicleprofileModule.suspension_id)] {
@@ -85,18 +85,18 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileSuspension.self
             let managedRef = try managedObject?.managedRef()
 
-            let pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
-
             let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
             httpJSONResponseConfiguration.extractor = VehicleprofileModule.SuspensionExtractor()
 
+            let pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
             let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
-            let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            #warning("move out of Decoder")
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
         if let turret_id = element?[#keyPath(VehicleprofileModule.turret_id)] {
@@ -104,18 +104,18 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileTurret.self
             let managedRef = try managedObject?.managedRef()
 
-            let pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)
-
             let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
             httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
             httpJSONResponseConfiguration.extractor = VehicleprofileModule.TurretExtractor()
 
+            let pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)
             let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
             httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
-            let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext?.requestManager?.startRequest(request!, listener: nil)
+            #warning("move out of Decoder")
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            try appContext.requestManager?.startRequest(request!, listener: nil)
         }
     }
 }

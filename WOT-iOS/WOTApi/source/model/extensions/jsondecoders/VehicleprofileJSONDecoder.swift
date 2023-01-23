@@ -9,9 +9,9 @@
 
 class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: JSONDecoderProtocol.Context?
+    private let appContext: Context
 
-    required init(appContext: JSONDecoderProtocol.Context?) {
+    required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -43,18 +43,19 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: ammoKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
             let jsonMap = try JSONMap(data: jsonArray, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            let uow = UOWDecodeAndLinkMaps()
+            uow.appContext = appContext
+            uow.maps = [jsonMap]
+            uow.modelClass = modelClass
+            uow.socket = socket
+            uow.decodingDepthLevel = decodingDepthLevel
+
+            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noAmmoList(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noAmmoList(tank_id)), sender: self)
         }
 
         // MARK: - Armor
@@ -68,18 +69,19 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: armorKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            let uow = UOWDecodeAndLinkMaps()
+            uow.appContext = appContext
+            uow.maps = [jsonMap]
+            uow.modelClass = modelClass
+            uow.socket = socket
+            uow.decodingDepthLevel = decodingDepthLevel
+
+            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noArmor(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noArmor(tank_id)), sender: self)
         }
 
         // MARK: - Module
@@ -93,19 +95,20 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: modulesKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
 
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            let uow = UOWDecodeAndLinkMaps()
+            uow.appContext = appContext
+            uow.maps = [jsonMap]
+            uow.modelClass = modelClass
+            uow.socket = socket
+            uow.decodingDepthLevel = decodingDepthLevel
+
+            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noModule(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noModule(tank_id)), sender: self)
         }
 
         // MARK: - Engine
@@ -121,19 +124,18 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: engineKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
-
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
+            let uow = UOWDecodeAndLinkMaps()
+            uow.appContext = appContext
+            uow.maps = [jsonMap]
+            uow.modelClass = modelClass
+            uow.socket = socket
+            uow.decodingDepthLevel = decodingDepthLevel
 
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noEngine(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noEngine(tank_id)), sender: self)
         }
 
         // MARK: - Gun
@@ -150,18 +152,19 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             #warning("managedRef!")
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: gunKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            let uow = UOWDecodeAndLinkMaps()
+            uow.appContext = appContext
+            uow.maps = [jsonMap]
+            uow.modelClass = modelClass
+            uow.socket = socket
+            uow.decodingDepthLevel = decodingDepthLevel
+
+            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noGun(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noGun(tank_id)), sender: self)
         }
 
         // MARK: - Suspension
@@ -177,19 +180,19 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: suspensionKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
-
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            let uow = UOWDecodeAndLinkMaps()
+            uow.appContext = appContext
+            uow.maps = [jsonMap]
+            uow.modelClass = modelClass
+            uow.socket = socket
+            uow.decodingDepthLevel = decodingDepthLevel
+
+            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noSuspension(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noSuspension(tank_id)), sender: self)
         }
 
         // MARK: - Turret
@@ -205,19 +208,19 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: turretKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
-
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            let uow = UOWDecodeAndLinkMaps()
+            uow.appContext = appContext
+            uow.maps = [jsonMap]
+            uow.modelClass = modelClass
+            uow.socket = socket
+            uow.decodingDepthLevel = decodingDepthLevel
+
+            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
         }
 
         // MARK: - Radio
@@ -233,19 +236,19 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: radioKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
-
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            let uow = UOWDecodeAndLinkMaps()
+            uow.appContext = appContext
+            uow.maps = [jsonMap]
+            uow.modelClass = modelClass
+            uow.socket = socket
+            uow.decodingDepthLevel = decodingDepthLevel
+
+            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
         }
     }
 }

@@ -9,9 +9,9 @@
 
 class ModuleJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: JSONDecoderProtocol.Context?
+    private let appContext: Context
 
-    required init(appContext: JSONDecoderProtocol.Context?) {
+    required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -34,6 +34,7 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
 
         let type = element?[#keyPath(Module.type)]
 
+        #warning("move out of Decoder")
         let moduleDecoder = ModuleDecoder(appContext: appContext)
         moduleDecoder.module_id = module_id
         moduleDecoder.parentHostPin = parentHostPin
@@ -67,13 +68,19 @@ extension JSONRefProtocol {
 
 public class ModuleDecoder {
 
-    public weak var appContext: JSONDecoderProtocol.Context?
+    typealias Context = LogInspectorContainerProtocol
+        & RequestManagerContainerProtocol
+        & RequestRegistratorContainerProtocol
+        & DataStoreContainerProtocol
+        & DecoderManagerContainerProtocol
+
+    let appContext: Context
     public var modelClass: PrimaryKeypathProtocol.Type?
     public var module_id: JSONValueType?
     public var parentHostPin: JointPinProtocol?
     public var type: JSONValueType?
 
-    init(appContext: JSONDecoderProtocol.Context?) {
+    init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -112,7 +119,7 @@ public class ModuleDecoder {
         }
     }
 
-    private func fetch_module(appContext: JSONDecoderProtocol.Context?, pin: JointPinProtocol, socket: JointSocketProtocol, extractor: ManagedObjectExtractable, parentHostPin: JointPinProtocol?) throws {
+    private func fetch_module(appContext: Context, pin: JointPinProtocol, socket: JointSocketProtocol, extractor: ManagedObjectExtractable, parentHostPin: JointPinProtocol?) throws {
         guard let parentHostPin = parentHostPin else {
             return
         }
@@ -125,8 +132,8 @@ public class ModuleDecoder {
         httpRequestConfiguration.modelFieldKeyPaths = pin.modelClass.fieldsKeypaths()
         httpRequestConfiguration.composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
 
-        let request = try appContext?.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-        try appContext?.requestManager?.startRequest(request!, listener: self)
+        let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+        try appContext.requestManager?.startRequest(request!, listener: self)
     }
 }
 

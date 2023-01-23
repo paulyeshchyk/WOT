@@ -9,24 +9,29 @@
 
 public class JSONSyndicate {
 
-    public typealias Context = DataStoreContainerProtocol
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
+    public typealias Context = LogInspectorContainerProtocol
         & RequestManagerContainerProtocol
-        & LogInspectorContainerProtocol
+        & RequestRegistratorContainerProtocol
+        & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
+        & UOWManagerContainerProtocol
 
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
+    let appContext: Context
+    let modelClass: ModelClassType
+
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
-    var linker: ManagedObjectLinkerProtocol?
-    let appContext: JSONSyndicate.Context?
-    var modelClass: ModelClassType?
     var jsonMap: JSONMapProtocol?
+    var socket: JointSocketProtocol?
     var decodeDepthLevel: DecodingDepthLevel?
 
     // MARK: Lifecycle
 
-    init(appContext: JSONSyndicate.Context?) {
+    init(appContext: Context, modelClass: ModelClassType) {
         self.appContext = appContext
+        self.modelClass = modelClass
     }
 
     // MARK: Internal
@@ -38,8 +43,7 @@ public class JSONSyndicate {
         }
 
         let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
-        managedObjectLinkerHelper.linker = linker
-        managedObjectLinkerHelper.modelClass = modelClass
+        managedObjectLinkerHelper.socket = socket
         managedObjectLinkerHelper.completion = completion
 
         let mappingCoordinatorDecodeHelper = ManagedObjectDecodeHelper(appContext: appContext)
@@ -56,22 +60,6 @@ public class JSONSyndicate {
         }
 
         datastoreFetchHelper.run()
-    }
-}
-
-extension JSONSyndicate {
-
-    public static func decodeAndLink(appContext: JSONSyndicate.Context?, jsonMap: JSONMapProtocol, modelClass: ModelClassType, managedObjectLinker: ManagedObjectLinkerProtocol?, decodingDepthLevel: DecodingDepthLevel?, completion: @escaping FetchResultCompletion) {
-        let jsonSyndicate = JSONSyndicate(appContext: appContext)
-        jsonSyndicate.jsonMap = jsonMap
-        jsonSyndicate.modelClass = modelClass
-        jsonSyndicate.linker = managedObjectLinker
-        jsonSyndicate.decodeDepthLevel = decodingDepthLevel
-
-        jsonSyndicate.completion = { fetchResult, error in
-            completion(fetchResult, error)
-        }
-        jsonSyndicate.run()
     }
 }
 

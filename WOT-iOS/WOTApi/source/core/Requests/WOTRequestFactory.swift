@@ -12,7 +12,10 @@ import ContextSDK
 @objc
 public class WOTWEBRequestFactory: NSObject {
     //
-    public typealias Context = DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
+        & RequestRegistratorContainerProtocol
+        & RequestManagerContainerProtocol
 
     private enum HttpRequestFactoryError: Error, CustomStringConvertible {
         case objectNotDefined
@@ -26,7 +29,7 @@ public class WOTWEBRequestFactory: NSObject {
 
     // MARK: Public
 
-    public static func fetchVehiclePivotData(appContext: WOTWEBRequestFactory.Context, listener: RequestManagerListenerProtocol) throws {
+    public static func fetchVehiclePivotData(appContext: Context, listener: RequestManagerListenerProtocol) throws {
         //
         let modelClass = Vehicles.self
 
@@ -38,7 +41,7 @@ public class WOTWEBRequestFactory: NSObject {
         httpRequestConfiguration.modelFieldKeyPaths = modelClass.dataFieldsKeypaths()
         httpRequestConfiguration.composer = nil
 
-        guard let request = try appContext.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration) else {
+        guard let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
 
@@ -46,7 +49,7 @@ public class WOTWEBRequestFactory: NSObject {
     }
 
     @objc
-    public static func fetchVehicleTreeData(vehicleId: Int, appContext: DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
+    public static func fetchVehicleTreeData(vehicleId: Int, appContext: Context, listener: RequestManagerListenerProtocol) throws {
         //
         let modelClass = Vehicles.self
 
@@ -58,7 +61,7 @@ public class WOTWEBRequestFactory: NSObject {
         httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
         httpRequestConfiguration.composer = VehicleTreeRuleBuilder(modelClass: modelClass, vehicleId: vehicleId)
 
-        guard let request = try appContext.requestManager?.buildRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration) else {
+        guard let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
         try appContext.requestManager?.startRequest(request, listener: listener)

@@ -9,6 +9,7 @@
 
 @objc
 public class HttpJSONResponseConfiguration: NSObject, ResponseConfigurationProtocol {
+
     public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     public let modelClass: ModelClassType
@@ -22,18 +23,14 @@ public class HttpJSONResponseConfiguration: NSObject, ResponseConfigurationProto
 
     public func handleData(_ data: Data?, fromRequest request: RequestProtocol, forService modelService: RequestModelServiceProtocol, inAppContext appContext: Context, completion: WorkWithDataCompletion?) {
         //
-        let linker = ManagedObjectLinker(modelClass: modelClass)
-        linker.socket = socket
-
         let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext, modelClass: modelClass)
         dataAdapter.request = request
-        dataAdapter.linker = linker
+        dataAdapter.socket = socket
         dataAdapter.extractor = extractor
         dataAdapter.completion = completion
 
         dataAdapter.decode(data: data, fromRequest: request)
     }
-
 }
 
 // MARK: - HttpRequestConfiguration

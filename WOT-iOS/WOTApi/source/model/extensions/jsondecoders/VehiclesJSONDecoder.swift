@@ -9,9 +9,9 @@
 
 class VehiclesJSONDecoder: JSONDecoderProtocol {
 
-    private weak var appContext: JSONDecoderProtocol.Context?
+    private let appContext: Context
 
-    required init(appContext: JSONDecoderProtocol.Context?) {
+    required init(appContext: Context) {
         self.appContext = appContext
     }
 
@@ -46,22 +46,26 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     let managedRef = try managedObject?.managedRef()
 
                     let socket = JointSocket(managedRef: managedRef!, identifier: module_id, keypath: keypath)
-                    let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-                    managedObjectLinker.socket = socket
                     let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
                     let decodingDepthLevel = forDepthLevel?.next
 
-                    JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                        if let error = error {
-                            self.appContext?.logInspector?.log(.warning(error: error), sender: self)
-                        }
-                    })
+                    #warning("move out of Decoder")
+
+                    let uow = UOWDecodeAndLinkMaps()
+                    uow.appContext = appContext
+                    uow.maps = [jsonMap]
+                    uow.modelClass = modelClass
+                    uow.socket = socket
+                    uow.decodingDepthLevel = decodingDepthLevel
+
+                    try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+
                 } else {
-                    appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
+                    appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
                 }
             }
         } else {
-            appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
         }
 
         // MARK: - DefaultProfile
@@ -75,25 +79,26 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
-            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass)
-            managedObjectLinker.socket = socket
-
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
             let decodingDepthLevel = forDepthLevel?.next
 
-            JSONSyndicate.decodeAndLink(appContext: appContext, jsonMap: jsonMap, modelClass: modelClass, managedObjectLinker: managedObjectLinker, decodingDepthLevel: decodingDepthLevel, completion: { _, error in
-                if let error = error {
-                    self.appContext?.logInspector?.log(.warning(error: error), sender: self)
-                }
-            })
+            let uow = UOWDecodeAndLinkMaps()
+            uow.appContext = appContext
+            uow.maps = [jsonMap]
+            uow.modelClass = modelClass
+            uow.socket = socket
+            uow.decodingDepthLevel = decodingDepthLevel
+
+            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+
         } else {
-            appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
         }
     }
 }
 
 extension VehiclesJSONDecoder {
-    private func modulesTreeMapping(modulesTreeJSON _: JSON?, jsonRef _: JSONRefProtocol, jsonMap _: JSONMapProtocol, appContext _: JSONDecoderProtocol.Context?) throws {}
+    private func modulesTreeMapping(modulesTreeJSON _: JSON?, jsonRef _: JSONRefProtocol, jsonMap _: JSONMapProtocol, appContext _: Context?) throws {}
 }
 
 extension VehiclesJSONDecoder {

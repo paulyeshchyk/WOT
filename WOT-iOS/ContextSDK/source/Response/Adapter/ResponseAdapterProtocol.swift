@@ -10,10 +10,13 @@
 @objc
 public protocol ResponseAdapterProtocol {
 
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
+        & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
         & DecoderManagerContainerProtocol
+        & UOWManagerContainerProtocol
 
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
@@ -23,7 +26,7 @@ public protocol ResponseAdapterProtocol {
     var completion: ResponseAdapterProtocol.OnComplete? { get set }
     var modelClass: ModelClassType { get }
     var request: RequestProtocol? { get set }
-    var linker: ManagedObjectLinkerProtocol? { get set }
+    var socket: JointSocketProtocol? { get set }
     var extractor: ManagedObjectExtractable? { get set }
 
     init(appContext: Context, modelClass: ModelClassType)

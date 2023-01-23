@@ -25,7 +25,7 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
 
     // MARK: Lifecycle
 
-    public required init(fetchController fetch: NodeFetchControllerProtocol, listener list: NodeDataModelListener, enumerator _: NodeEnumeratorProtocol, nodeCreator nc: NodeCreatorProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: NodeFetchControllerProtocol.Context) {
+    public required init(fetchController fetch: NodeFetchControllerProtocol, listener list: NodeDataModelListener, enumerator _: NodeEnumeratorProtocol, nodeCreator nc: NodeCreatorProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: Context) {
         fetchController = fetch
         listener = list
         nodeCreator = nc
@@ -41,7 +41,7 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    public required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: NodeFetchControllerProtocol.Context) {
+    public required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: Context) {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 

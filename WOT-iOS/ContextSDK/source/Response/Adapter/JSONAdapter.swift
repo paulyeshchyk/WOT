@@ -24,23 +24,23 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     // MARK: DataAdapterProtocol -
 
     private let uuid = UUID()
-    private let appContext: JSONAdapterProtocol.Context?
+    private let appContext: Context
 
     public let modelClass: ModelClassType
+    public var socket: JointSocketProtocol?
     public weak var request: RequestProtocol?
-    public weak var linker: ManagedObjectLinkerProtocol?
     public weak var extractor: ManagedObjectExtractable?
 
     // MARK: Lifecycle
 
-    public required init(appContext: JSONAdapterProtocol.Context, modelClass: ModelClassType) {
+    public required init(appContext: Context, modelClass: ModelClassType) {
         self.appContext = appContext
         self.modelClass = modelClass
         appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
 
     deinit {
-        appContext?.logInspector?.log(.destruction(type(of: self)), sender: self)
+        appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
     }
 
     // MARK: Open
@@ -83,28 +83,16 @@ public extension JSONAdapter {
             return
         }
 
-        let dispatchGroup = DispatchGroup()
-
         let maps = extractor.getJSONMaps(json: json, modelClass: modelClass, jsonRefs: request.contextPredicate?.jsonRefs)
-        maps.forEach { jsonMap in
-            dispatchGroup.enter()
 
-            let syndicate = JSONSyndicate(appContext: appContext)
-            syndicate.decodeDepthLevel = request.decodingDepthLevel
-            syndicate.jsonMap = jsonMap
-            syndicate.modelClass = modelClass
-            syndicate.linker = linker
-            syndicate.completion = { _, error in
-                if let error = error {
-                    self.completion?(request, error)
-                }
-                dispatchGroup.leave()
-            }
-            syndicate.run()
-        }
-
-        dispatchGroup.notify(queue: DispatchQueue.main) {
-            self.completion?(request, nil)
+        let uow = UOWDecodeAndLinkMaps()
+        uow.appContext = appContext
+        uow.maps = maps
+        uow.modelClass = modelClass
+        uow.socket = socket
+        uow.decodingDepthLevel = request.decodingDepthLevel
+        try? appContext.uowManager.run(uow) { result in
+            self.completion?(request, (result as? UOWResultProtocol)?.error)
         }
     }
 }
