@@ -2,15 +2,17 @@
 //  WOTLoginViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/1/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/1/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTLoginViewController.h"
-
-#import "WOTRequestExecutor.h"
+#import "WOTApplicationDefaults.h"
 #import "WOTLanguageSelectorViewController.h"
-#import "WOTWEBRequest.h"
+#import "UINavigationBar+WOT.h"
+#import "UIImage+Resize.h"
+#import "UIBarButtonItem+EventBlock.h"
+#import "WOTSessionManager.h"
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
 
@@ -68,7 +70,7 @@
     NSArray *queryItems = [components queryItems];
     NSURLQueryItem *status = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_STATUS]] lastObject];
     NSURLQueryItem *nickname = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_NICKNAME]] lastObject];
-    NSURLQueryItem *access_token = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_ACCESS_TOKEN]] lastObject];
+    NSURLQueryItem *access_token = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOTApiKeys.accessToken]] lastObject];
     NSURLQueryItem *account_id = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_ACCOUNT_ID]] lastObject];
     NSURLQueryItem *expires_at = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_EXPIRES_AT]] lastObject];
 
@@ -82,7 +84,8 @@
 
         NSURLQueryItem *errorMessage = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_MESSAGE]] lastObject];
         NSURLQueryItem *errorCode = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_CODE]] lastObject];
-        wotLogin.error = [WOTError loginErrorWithCode:WOT_ERROR_CODE_ENDPOINT_ERROR userInfo:@{@"message":errorMessage,@"code":errorCode.value}];
+        NSDictionary *userInfo = @{@"message":errorMessage,@"code":errorCode.value};
+        wotLogin.error = [NSError errorWithDomain:@"WOTLOGIN" code:1 userInfo:userInfo];
     }
     
     if (self.callback) {
@@ -98,9 +101,9 @@
     if (language) {
 
         [WOTApplicationDefaults setLanguage:language];
-
-        WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
+//        id<WOTAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
+        
+//        [WOTSessionManager loginWithRequestManager:manager.requestManager];
     }
     
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
@@ -116,7 +119,7 @@
     NSMutableDictionary *args =[[NSMutableDictionary alloc] init];
     if (self.error) args[WOT_KEY_ERROR] = self.error;
     if (self.userID) args[WOT_KEY_USER_ID] = self.userID;
-    if (self.access_token) args[WOT_KEY_ACCESS_TOKEN] = self.access_token;
+    if (self.access_token) args[WOTApiKeys.accessToken] = self.access_token;
     if (self.account_id) args[WOT_KEY_ACCOUNT_ID] = self.account_id;
     if (self.expires_at) args[WOT_KEY_EXPIRES_AT] = self.expires_at;
     return args;

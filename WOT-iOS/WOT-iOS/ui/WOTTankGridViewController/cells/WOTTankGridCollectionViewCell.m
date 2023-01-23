@@ -2,12 +2,15 @@
 //  WOTTankGridCollectionViewCell.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 9/14/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 9/14/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankGridCollectionViewCell.h"
 #import "WOTTankGridCollectionSubitemTableViewCell.h"
+#import "WOTNode+DetailGrid.h"
+#import <WOTData/WOTData.h>
+#import "NSObject+WOTTankGridValueData.h"
 
 @interface WOTTankGridCollectionViewCell () <UITableViewDataSource, UITableViewDelegate>
 
@@ -57,20 +60,32 @@
     self.metricNameLabel.text = _metricName;
 }
 
+- (void)setSubitems:(NSDictionary *)subitems {
+    
+    _subitems = [subitems copy];
+}
+
+- (void)reloadCell {
+    
+    [self.subitemsTableView reloadData];
+}
+
 #pragma mark - UITableViewDatasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [[self.subitems allKeys] count];
+    return [self.subitems count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     WOTTankGridCollectionSubitemTableViewCell *result = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankGridCollectionSubitemTableViewCell class]) forIndexPath:indexPath];
-    id key = [self.subitems allKeys][indexPath.row];
-    id value = self.subitems[key];
-    
-    result.captionText = key;
-    result.valueText = value;
+
+
+    id<WOTNodeProtocol> node = self.subitems[indexPath.row];
+    NSString *valueText = [NSObject gridValueData: node];
+
+    result.captionText = node.name;
+    result.valueText = valueText;
     return result;
 }
 #pragma mark - UITableViewDelegate

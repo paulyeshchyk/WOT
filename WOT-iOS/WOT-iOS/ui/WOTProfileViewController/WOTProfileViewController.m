@@ -2,23 +2,19 @@
 //  WOTProfileViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/4/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/4/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTProfileViewController.h"
+#import <WOT-Swift.h>
 
 @implementation WOTProfileViewController
 
-- (void)dealloc {
-    
-}
-
+@synthesize appManager;
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    
     return UIStatusBarStyleLightContent;
 }
-
 
 @end

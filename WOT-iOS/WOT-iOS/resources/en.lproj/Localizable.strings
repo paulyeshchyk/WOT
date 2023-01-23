@@ -2,8 +2,8 @@
   Localizable.strings
   WOT-iOS
 
-  Created by Pavel Yeshchyk on 6/4/15.
-  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+  Created on 6/4/15.
+  Copyright (c) 2015. All rights reserved.
 */
 
 
@@ -33,26 +33,8 @@ WOT_STRING_CHANGE_SORTING   = "Change sorting";
 WOT_STRING_CHANGE_GROUP     = "Change groupping";
 WOT_STRING_CHANGE_FILTER    = "Change filter";
 
-WOT_STRING_IS_PREMIUM       = "Premium";
-WOT_STRING_IS_NOT_PREMIUM   = "Not premium";
-
-WOT_STRING_LEVEL_1          = "I";
-WOT_STRING_LEVEL_2          = "II";
-WOT_STRING_LEVEL_3          = "III";
-WOT_STRING_LEVEL_4          = "IV";
-WOT_STRING_LEVEL_5          = "V";
-WOT_STRING_LEVEL_6          = "VI";
-WOT_STRING_LEVEL_7          = "VII";
-WOT_STRING_LEVEL_8          = "VIII";
-WOT_STRING_LEVEL_9          = "IX";
-WOT_STRING_LEVEL_10         = "X";
-
-WOT_STRING_AT_SPG           = "Tank Destroyer";
-WOT_STRING_SPG              = "Self-Propelled Guns";
-WOT_STRING_HT               = "Heavy";
-WOT_STRING_LT               = "light tank";
-WOT_STRING_MT               = "Medium";
-
+WOT_STRING_IS_NOT_GIFT      = "Is not gift";
+WOT_STRING_IS_GIFT          = "Is gift";
 
 ARMOR_BOARD                 = "Armor Board";
 ARMOR_FEDD                  = "Armor Fedd";
@@ -89,3 +71,41 @@ TYPE_I18N                   = "Type (national)";
 VALUES                      = "Values";
 WEIGHT                      = "Weight";
 
+WOT_IMAGE_BACK  = "WOTBackIconGray.png";
+WOT_IMAGE_CHECKMARK_DARK  = "WOTSelector-checkmark-dark.png";
+WOT_IMAGE_CHECKMARK_GRAY  = "WOTSelector-checkmark-gray.png";
+WOT_IMAGE_DATA_FLOW_CHART  = "Data-Flow-Chart-icon.png";
+WOT_IMAGE_DATA_LIST  = "Data-List-icon.png";
+WOT_IMAGE_DOWN  = "WOTArrowDown.png";
+WOT_IMAGE_GEAR  = "WOTiPadMenuGear.png";
+WOT_IMAGE_SEARCH  = "Search Gray.png";
+WOT_IMAGE_CANCEL  = "Cancel Gray.png";
+WOT_IMAGE_GLOBE  = "WOTGlobe.png";
+WOT_IMAGE_MESSAGING_CATEGORIZE  = "Messaging-Categorize-icon.png";
+WOT_IMAGE_UP  = "WOTArrowUp.png";
+WOT_IMAGE_USER  = "WOTLoggedInUser.png";
+
+WOT_KEY_ACCOUNT_ID  = "account_id";
+WOT_KEY_CODE  = "code";
+WOT_KEY_CONTOUR_IMAGE  = "contour_image";
+WOT_KEY_EXPIRES_AT  = "expires_at";
+WOT_KEY_HASHNAME  = "hashName";
+WOT_KEY_KEY  = "key";
+WOT_KEY_LOCATION  = "location";
+WOT_KEY_MESSAGE  = "message";
+WOT_KEY_NICKNAME  = "nickname";
+WOT_KEY_ORDERBY  = "orderBy";
+WOT_KEY_USER_ID  = "userId";
+WOT_KEY_VALUES  = "values";
+
+WOT_STRING_ARMOR  = "armor";
+WOT_STRING_OBSERVE  = "observe";
+WOT_STRING_FIRE  = "fire";
+WOT_STRING_MOBI  = "mobi";
+
+WOT_USERDEFAULTS_LOGIN_LANGUAGE  = "LoginLanguage";
+WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_EU  = "eu";
+
+
+WOT_VALUE_LANGUAGE_EU  = "eu";
+WOT_VALUE_LANGUAGE_RU  = "ru";

@@ -2,11 +2,12 @@
 //  WOTLanguageDatasource.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/4/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/4/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTLanguageDatasource.h"
+#import "NSThread+ExecutionOnMain.h"
 
 @interface WOTLanguage : NSObject
 
@@ -44,7 +45,7 @@
 @implementation WOTLanguageDatasource
 
 
-+ (WOTLanguageDatasource *)sharedInstance {
++ (WOTLanguageDatasource * _Nonnull)sharedInstance {
     
     static dispatch_once_t once;
     static id instance;
@@ -64,8 +65,8 @@
     self = [super init];
     if (self){
 
-        WOTLanguage *ruLanguage = [[WOTLanguage alloc] initWithLanguage:WOT_VALUE_LANGUAGE_RU applicationCode:WOT_VALUE_APPLICATION_ID_RU isSelected:YES];
-        WOTLanguage *euLanguage = [[WOTLanguage alloc] initWithLanguage:WOT_VALUE_LANGUAGE_EU applicationCode:WOT_VALUE_APPLICATION_ID_EU isSelected:NO];
+        WOTLanguage *ruLanguage = [[WOTLanguage alloc] initWithLanguage:WOT_VALUE_LANGUAGE_RU applicationCode:@"e3a1e0889ff9c76fa503177f351b853c" isSelected:YES];
+        WOTLanguage *euLanguage = [[WOTLanguage alloc] initWithLanguage:WOT_VALUE_LANGUAGE_EU applicationCode:@"e3a1e0889ff9c76fa503177f351b853c" isSelected:NO];
 
         self.availableLanguages = @[ruLanguage, euLanguage];
         

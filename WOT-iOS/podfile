@@ -1,10 +1,19 @@
-source 'https://github.com/CocoaPods/Specs.git'
-pod 'AFNetworking'
-pod 'BlocksKit'
-pod 'MMDrawerController'
-pod 'SDWebImage'
-pod 'Charts', '2.1.0'
-pod 'ASProgressPopUpView'
-pod 'WYPopoverController'
+#source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '9.0'
 
 use_frameworks!
+inhibit_all_warnings!
+
+target 'WOT-iOS' do
+    pod 'AFNetworking', :git => 'https://github.com/AFNetworking/AFNetworking'
+    pod 'BlocksKit', :git =>  'https://github.com/BlocksKit/BlocksKit'
+    pod 'MMDrawerController', :git => 'https://github.com/mutualmobile/MMDrawerController'
+    pod 'SDWebImage', :git => 'https://github.com/SDWebImage/SDWebImage'
+    #pod 'Charts', :git => 
+    pod 'ASProgressPopUpView', :git => 'https://github.com/alskipp/ASProgressPopUpView'
+    pod 'WYPopoverController', :git => 'https://github.com/nicolaschengdev/WYPopoverController'
+    pod 'SwiftGen', :git => 'https://github.com/SwiftGen/SwiftGen'
+    pod 'SwiftLint', :git => 'https://github.com/realm/SwiftLint'
+    pod 'SwiftFormat', :git => 'https://github.com/nicklockwood/SwiftFormat'
+end

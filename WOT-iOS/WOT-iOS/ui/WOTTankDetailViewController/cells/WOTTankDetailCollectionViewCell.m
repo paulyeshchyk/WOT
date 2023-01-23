@@ -2,8 +2,8 @@
 //  WOTTankDetailCollectionViewCell.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/19/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/19/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankDetailCollectionViewCell.h"
@@ -80,7 +80,7 @@ static const NSInteger RowHeight = 44.0f;
 
 - (void)invalidate {
     
-    self.bottomSeparatorView.backgroundColor = self.isLastInSection?[UIColor clearColor]:WOT_COLOR_BOTTOM_CELL_SEPARATOR;
+    self.bottomSeparatorView.backgroundColor = self.isLastInSection ? [UIColor clearColor] : WOT_COLOR_BOTTOM_CELL_SEPARATOR;
     
     [self.tableView reloadData];
 }

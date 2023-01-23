@@ -2,8 +2,8 @@
 //  WOTTankGridViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 9/14/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 9/14/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankGridViewController.h"
@@ -13,7 +13,7 @@
 
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic, strong)NSArray *subitems;
+@property (nonatomic, strong)WOTPivotDataModel *subitemsTree;
 
 @property (nonatomic, readonly) NSInteger columnsCount;
 
@@ -21,30 +21,32 @@
 
 @implementation WOTTankGridViewController
 
+@synthesize appManager;
+
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChanged:) name:UIDeviceOrientationDidChangeNotification object:nil];
     
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankGridCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankGridCollectionViewCell class])];
 }
 
-#warning crash  occurs after third time ui changed
 - (void)reload {
     
-    self.subitems = [self.delegate gridData];
+    self.subitemsTree = [self.delegate gridData];
+    
     [self.collectionView reloadData];
 }
 
 - (void)needToBeCleared {
 
-    self.subitems = nil;
+    self.subitemsTree = nil;
 }
 
 - (NSInteger)columnsCount {
@@ -62,22 +64,24 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return [self.subitems count];
+    return [[self.subitemsTree rootNodes] count];
 }
 
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    NSDictionary *subitem = self.subitems[indexPath.row];
-    
+
     WOTTankGridCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankGridCollectionViewCell class]) forIndexPath:indexPath];
-    result.metricName = subitem[@"caption"];
-    result.subitems = subitem[@"children"];
+#warning("remove comment")
+//    WOTNode *rootNode = [[self.subitemsTree rootNodes] allObjects][indexPath.row];
+//    result.metricName = rootNode.name;
+//    result.subitems = rootNode.children;
+    [result reloadCell];
     return result;
 }
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
 }
 
@@ -85,9 +89,9 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     NSInteger maxValue = 0;
-    for (id subItem in self.subitems) {
+    for (id rootNode in self.subitemsTree.rootNodes) {
         
-        maxValue = MAX(maxValue, [[subItem valueForKeyPath:@"children.@count"] integerValue]);
+        maxValue = MAX(maxValue, [[rootNode children] count]);
     }
     return [WOTTankGridCollectionViewCell sizeForSubitemsCount:maxValue columnsCount:self.columnsCount];
 }

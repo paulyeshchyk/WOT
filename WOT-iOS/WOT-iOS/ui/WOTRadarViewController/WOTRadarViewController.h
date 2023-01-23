@@ -2,20 +2,20 @@
 //  WOTRadarViewController.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/15/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/15/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "WOT_iOS-Swift.h"
+//#import "WOT_iOS-Swift.h"
 
 @protocol WOTRadarViewControllerDelegate <NSObject>
 
-- (RadarChartData *)radarData;
+//- (RadarChartData *)radarData;
 
 @end
 
-typedef RadarChartData *(^WOTRadarDataCallback)();
+//typedef RadarChartData *(^WOTRadarDataCallback)();
 
 @interface WOTRadarViewController : UIViewController
 

@@ -2,30 +2,33 @@
 //  WOTDrawerViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/3/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/3/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTDrawerViewController.h"
-#import "WOTMenuViewController.h"
 #import "MMDrawerVisualState.h"
-
-#import "WOTMenuProtocol.h"
-
+#import "UINavigationBar+WOT.h"
+#import "UIBarButtonItem+EventBlock.h"
 #import "WOTSessionManager.h"
+#import <WOT-Swift.h>
 
 @interface WOTDrawerViewController ()<WOTMenuDelegate>
 
 @property (nonatomic, strong) UIViewController<WOTMenuProtocol>* menu;
 @property (nonatomic, copy)Class visibleViewControllerClass;
+@property (nonatomic, assign)id<WOTCoredataStoreProtocol> _Nullable dataProvider;
 
 @end
 
 @implementation WOTDrawerViewController
 
+@synthesize appManager;
+
 + (UIViewController *)centerViewControllerForClassName:(Class )class title:(NSString *)title image:(UIImage *)image{
-    
-    UIViewController *centerViewController = [[class alloc] initWithNibName:NSStringFromClass(class) bundle:nil];
+
+    NSString *nibName = NSStringFromClass(class.self);
+    UIViewController *centerViewController = [[class alloc] initWithNibName:nibName bundle:nil];
     [centerViewController setTitle:title];
     return centerViewController;
 }
@@ -47,9 +50,15 @@
     self.menu.delegate = nil;
 }
 
-- (id)initWithMenu {
++ (WOTDrawerViewController * _Nonnull)newDrawer{
+    return [[WOTDrawerViewController alloc] initWithMenu];
+}
+
+- (id _Nonnull)initWithMenu {
+
+    WOTMenuDatasource *menuDatasource = [[WOTMenuDatasource alloc] init];
+    WOTMenuViewController *menuViewController = [[WOTMenuViewController alloc] initWithMenuDatasource: menuDatasource nibName:@"WOTMenuViewController" bundle: nil];
     
-    WOTMenuViewController *menuViewController = [[WOTMenuViewController alloc] initWithNibName:NSStringFromClass([WOTMenuViewController class]) bundle:nil];
     UINavigationController *leftNavigationController = [[UINavigationController alloc] initWithRootViewController:menuViewController];
     
     UIViewController *centerViewController = [WOTDrawerViewController centerViewControllerForClassName:menuViewController.selectedMenuItemClass title:menuViewController.selectedMenuItemTitle image:menuViewController.selectedMenuItemImage];
@@ -60,10 +69,13 @@
     
     self = [super initWithCenterViewController:centerNavigationController leftDrawerViewController:leftNavigationController];
     if (self){
-
+        
+        menuViewController.delegate = self;
         self.menu = menuViewController;
-        self.menu.delegate = self;
+
         self.visibleViewControllerClass = self.menu.selectedMenuItemClass;
+        
+        [self.menu rebuildMenu];
         [self setDrawerVisualStateBlock:[MMDrawerVisualState parallaxVisualStateBlockWithParallaxFactor:CGFLOAT_MAX]];
 
         self.openDrawerGestureModeMask = MMCloseDrawerGestureModePanningNavigationBar;
@@ -76,8 +88,22 @@
     
     [super viewDidLoad];
 
-    [[WOTSessionManager sharedInstance] invalidateTimer];
+    [UIViewController attemptRotationToDeviceOrientation];
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onLogout:) name:WOT_NOTIFICATION_LOGOUT object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+}
+
+- (BOOL)shouldAutorotate {
+    return YES;
 }
 
 #pragma mark - WOTMenuDelegate
@@ -117,10 +143,12 @@
 }
 
 - (void)loginPressedOnMenu:(id<WOTMenuProtocol>)menu {
- 
+
+//    id<WOTAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
+
     [self closeDrawerAnimated:YES completion:NULL];
     
-    [WOTSessionManager switchUser];
+//    [WOTSessionManager switchUserWithRequestManager:manager.requestManager];
 }
 
 #pragma mark - private

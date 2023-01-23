@@ -2,17 +2,20 @@
 //  WOTTankListSettingViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/12/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/12/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankListSettingViewController.h"
 #import "WOTTankListSettingsDatasource.h"
+#import "UINavigationBar+WOT.h"
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankListSettingViewController () <WOTTankListSettingsDatasourceListener>
 
 @property (nonatomic, strong)UIBarButtonItem *backItem;
 @property (nonatomic, strong)UIBarButtonItem *applyItem;
+@property (nonatomic, strong) WOTTankListSettingsDatasource *settingsDatasource;
 
 @end
 
@@ -20,7 +23,7 @@
 
 - (void)dealloc {
     
-    [[WOTTankListSettingsDatasource sharedInstance] unregisterListener:self];
+    [_settingsDatasource unregisterListener:self];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -28,6 +31,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
         
+        _settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
         self.setting = nil;
     }
     return self;
@@ -58,7 +62,7 @@
         
     }];
     
-    [[WOTTankListSettingsDatasource sharedInstance] registerListener:self];
+    [_settingsDatasource registerListener:self];
 
     [self.navigationItem setRightBarButtonItems:[self backItemsArray]];
     [self.navigationController.navigationBar setDarkStyle];

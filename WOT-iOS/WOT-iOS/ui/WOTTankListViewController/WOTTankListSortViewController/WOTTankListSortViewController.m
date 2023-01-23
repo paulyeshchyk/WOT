@@ -2,8 +2,8 @@
 //  WOTTankListSortViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/8/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/8/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankListSortViewController.h"
@@ -12,9 +12,11 @@
 #import "WOTTankListSettingNameChooserViewController.h"
 #import "WOTTankListSettingValueChangerViewController.h"
 #import "WOTTankListSortHeaderView.h"
-#import "ListSetting.h"
+#import <WOTData/WOTData.h>
 #import "WOTTankListSettingsDatasource+TableView.h"
 #import "WOTTankListSettingsDatasource+AvailableFields.h"
+#import "UINavigationBar+WOT.h"
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankListSortViewController () <UITableViewDataSource, UITableViewDelegate, WOTTankListSettingsDatasourceListener>
 
@@ -22,6 +24,8 @@
 @property (nonatomic, strong)UIBarButtonItem *backItem;
 
 @property (nonatomic, weak)id<WOTTableViewDatasourceProtocol> tableviewDatasource;
+@property (nonatomic, strong) WOTTankListSettingsDatasource *settingsDatasource;
+
 
 @end
 
@@ -30,7 +34,7 @@
 - (void)dealloc {
     
     [self.tableviewDatasource rollback];
-    [[WOTTankListSettingsDatasource sharedInstance] unregisterListener:self];
+    [_settingsDatasource unregisterListener:self];
 }
 
 
@@ -38,6 +42,8 @@
 
     [super viewDidLoad];
 
+    _settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
+    
     self.title = WOTString(WOT_STRING_GROUP_AND_SORT);
     
     __weak typeof(self)weakSelf = self;
@@ -65,18 +71,18 @@
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListSettingAddNewTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankListSettingAddNewTableViewCell class])];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListSortHeaderView class]) bundle:nil] forHeaderFooterViewReuseIdentifier:NSStringFromClass([WOTTankListSortHeaderView class])];
 
-    [[WOTTankListSettingsDatasource sharedInstance] registerListener:self];
+    [_settingsDatasource registerListener:self];
     
 }
 
 - (id<WOTTableViewDatasourceProtocol>)tableviewDatasource {
     
-    return [WOTTankListSettingsDatasource sharedInstance];
+    return _settingsDatasource;
 }
 
 - (id<WOTTankListSettingsAvailableFieldsProtocol>)staticFieldsDatasource {
     
-    return [WOTTankListSettingsDatasource sharedInstance];
+    return _settingsDatasource;
 }
 
 #pragma mark - UITableViewDatasource
@@ -221,13 +227,14 @@
     };
     vc.applyBlock = ^(){
 
-        [self.tableviewDatasource save];
+        [self.tableviewDatasource stash:^(NSError * _Nullable error) {
+            if (self.commitBlock) {
+                self.commitBlock();
+            }
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
 
-        if (self.commitBlock) {
-            self.commitBlock();
-        }
-        
-        [self.navigationController popViewControllerAnimated:YES];
     };
 
     [self.navigationController pushViewController:vc animated:YES];

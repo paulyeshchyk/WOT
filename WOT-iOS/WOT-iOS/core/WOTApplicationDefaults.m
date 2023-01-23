@@ -2,173 +2,55 @@
 //  WOTApplicationDefaults.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/18/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/18/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTApplicationDefaults.h"
 
-#import "ListSetting.h"
+#import <WOTData/WOTData.h>
+#import <WOTData/WOTData-Swift.h>
+#import <WOTPivot/WOTPivot.h>
 
-#import "WOTClearSessionRequest.h"
-#import "WOTRequestExecutor.h"
-#import "WOTSaveSessionRequest.h"
-#import "WOTSessionManager.h"
 #import "WOTTankListSettingsDatasource.h"
-
-#import "WOTWEBRequestLogin.h"
-#import "WOTWEBRequestLogout.h"
-#import "WOTWebRequestTankChassis.h"
-#import "WOTWEBRequestTankEngines.h"
-#import "WOTWebRequestTankGuns.h"
-#import "WOTWEBRequestTankProfile.h"
-#import "WOTWebRequestTankRadios.h"
-#import "WOTWEBRequestTanks.h"
-#import "WOTWebRequestTankTurrets.h"
-#import "WOTWEBRequestTankVehicles.h"
-
-#import "WOTWebResponseAdapterChassis.h"
-#import "WOTWebResponseAdapterEngines.h"
-#import "WOTWebResponseAdapterGuns.h"
-#import "WOTWebResponseAdapterLogin.h"
-#import "WOTWebResponseAdapterProfile.h"
-#import "WOTWebResponseAdapterRadios.h"
-#import "WOTWebResponseAdapterTanks.h"
-#import "WOTWebResponseAdapterTurrets.h"
-#import "WOTWebResponseAdapterVehicles.h"
+#import "NSTimer+BlocksKit.h"
+#import "WOTLoginViewController.h"
+#import "WOTRequestIds.h"
 
 @implementation WOTApplicationDefaults
 
 + (void)registerDefaultSettings {
     
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
-    
-    NSError *error = nil;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([ListSetting class])];
-    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
-    NSFetchedResultsController *fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-    [fetchedResultController performFetch:&error];
-    
-#warning will recreate objects if user has deleted everything
-    if ([[fetchedResultController fetchedObjects] count] == 0) {
+    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+    id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+    [coreDataProvider performMain:^(NSManagedObjectContext * _Nonnull context) {
+
+        NSString *entityName = NSStringFromClass([ListSetting class]);
+        NSError *error = nil;
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
+        [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
+        NSFetchedResultsController *fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+        [fetchedResultController performFetch:&error];
         
-        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOT_KEY_NATION_I18N ascending:NO orderBy:0 callback:NULL];
-        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOT_KEY_TYPE ascending:YES orderBy:1 callback:NULL];
-        
-        
-        [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOT_KEY_NATION_I18N ascending:YES orderBy:0 callback:NULL];
-        
-        [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOT_KEY_LEVEL value:@"6" callback:NULL];
-        
-        if ([context hasChanges]) {
+        #warning will recreate objects if user has deleted everything
+        if ([[fetchedResultController fetchedObjects] count] == 0) {
             
-            NSError *error = nil;
-            [context save:&error];
+            [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.nation ascending:NO orderBy:0 callback:NULL];
+            [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.type ascending:YES orderBy:1 callback:NULL];
+            
+            
+            [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOTApiKeys.nation ascending:YES orderBy:0 callback:NULL];
+            
+            [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOTApiKeys.tier value:@"6" callback:NULL];
+            
+            if ([context hasChanges]) {
+                
+                NSError *error = nil;
+                [context save:&error];
+            }
         }
-    }
-    
-}
-
-+ (void)registerRequests {
-
-    /**
-     * Login
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogin registerRequestClass:[WOTWEBRequestLogin class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogin registerDataAdapterClass:[WOTWebResponseAdapterLogin class]];
-
-    /**
-     * Logout
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogout registerRequestClass:[WOTWEBRequestLogout class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogout registerRequestCallback:^(id data, NSError *error) {
-        
-        if (error){
-            
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:[error.userInfo description] delegate:nil cancelButtonTitle:@"DISMISS" otherButtonTitles:nil] show];
-        } else {
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:WOT_NOTIFICATION_LOGOUT object:nil userInfo:nil];
-            WOTRequest *clearSessionRequest = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdClearSession];
-            [[WOTRequestExecutor sharedInstance] runRequest:clearSessionRequest withArgs:nil];
-            
-            WOTRequest *loginRequest = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
-            [[WOTRequestExecutor sharedInstance] runRequest:loginRequest withArgs:nil];
-        }
-        
     }];
-
-    /**
-     * Save Sassion
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdSaveSession registerRequestClass:[WOTSaveSessionRequest class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdSaveSession registerRequestCallback:^(id data, NSError *error) {
-        
-        [[WOTSessionManager sharedInstance] invalidateTimer];
-        
-    }];
-
-    /**
-     * Clear Sassion
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdClearSession registerRequestClass:[WOTClearSessionRequest class]];
-
-    /**
-     * Tanks.Tanks
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerDataAdapterClass:[WOTWebResponseAdapterTanks class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerRequestClass:[WOTWEBRequestTanks class]];
-
-    /**
-     * Tanks.Chassis
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerRequestClass:[WOTWebRequestTankChassis class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerDataAdapterClass:[WOTWebResponseAdapterChassis class]];
-    
-    /**
-     * Tanks.Turrets
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerRequestClass:[WOTWebRequestTankTurrets class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerDataAdapterClass:[WOTWebResponseAdapterTurrets class]];
-    
-    /**
-     * Tanks.Guns
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerRequestClass:[WOTWebRequestTankGuns class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerDataAdapterClass:[WOTWebResponseAdapterGuns class]];
-    
-    /**
-     * Tanks.Radios
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerRequestClass:[WOTWebRequestTankRadios class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerDataAdapterClass:[WOTWebResponseAdapterRadios class]];
-    
-    /**
-     * Tanks.Engines
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerRequestClass:[WOTWEBRequestTankEngines class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
-
-    /**
-     * Tanks.Vehicles
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
-    
-    /**
-     * Tanks.Modules
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestTankVehicles class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
-
-    /**
-     * Tanks.Profile
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerRequestClass:[WOTWEBRequestTankProfile class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerDataAdapterClass:[WOTWebResponseAdapterProfile class]];
-    
 }
-
 
 static NSString *WOTWEBRequestDefaultLanguage;
 
@@ -193,7 +75,7 @@ static NSString *WOTWEBRequestDefaultLanguage;
         NSString *language = [[NSUserDefaults standardUserDefaults] stringForKey:WOT_USERDEFAULTS_LOGIN_LANGUAGE];
         if ([language length] == 0){
             
-            WOTWEBRequestDefaultLanguage =  WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU;
+            WOTWEBRequestDefaultLanguage =  WOTApiDefaults.languageRU;
         } else {
             
             WOTWEBRequestDefaultLanguage = language;
@@ -201,13 +83,5 @@ static NSString *WOTWEBRequestDefaultLanguage;
     }
     return WOTWEBRequestDefaultLanguage;
 }
-
-
-+ (NSString *)host {
-    
-    return [NSString stringWithFormat:@"%@.%@",ApplicationHost,[self language]];
-}
-
-
 
 @end

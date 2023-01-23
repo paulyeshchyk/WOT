@@ -2,22 +2,23 @@
 //  WOTTankListViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/3/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/3/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankListViewController.h"
 
-#import "WOTRequestExecutor.h"
 #import "WOTTankListSortViewController.h"
+#import <WOT-Swift.h>
 
-#import "Tanks.h"
-#import "Vehicles.h"
+#import <WOTData/WOTData.h>
 #import "WOTTankListCollectionViewCell.h"
 #import "WOTTankListCollectionViewHeader.h"
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTTankDetailViewController.h"
 #import "WOTTankListSearchBar.h"
+#import "UIImage+Resize.h"
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -32,10 +33,13 @@
 @property (nonatomic, weak) WOTTankListSearchBar *searchBar;
 @property (nonatomic, copy) NSArray *leftBarButtonItems;
 @property (nonatomic, copy) NSString *searchBarText;
+@property (nonatomic, strong) WOTTankListSettingsDatasource *settingsDatasource;
 
 @end
 
 @implementation WOTTankListViewController
+
+@synthesize appManager;
 
 - (void)dealloc {
 
@@ -44,6 +48,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    _settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
     
     __weak typeof(self)weakSelf = self;
     self.settingsItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)] text:nil eventBlock:^(id sender) {
@@ -129,11 +135,11 @@
     
     WOTTankListCollectionViewCell *result = (WOTTankListCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankListCollectionViewCell class]) forIndexPath:indexPath];
 
-    Tanks *tank = (Tanks *)[self.fetchedResultController objectAtIndexPath:indexPath];
-    result.image = [tank image];
-    result.tankName = tank.name_i18n;
+    Vehicles *tank = (Vehicles *)[self.fetchedResultController objectAtIndexPath:indexPath];
+//    result.image = [tank image];
+    result.tankName = tank.name;
     result.tankType = tank.type;
-    result.level = [tank.level integerValue];
+    result.level = [tank.tier integerValue];
     return result;
 }
 
@@ -171,7 +177,7 @@
     }];
     
     WOTTankDetailViewController *detail = [[WOTTankDetailViewController alloc] initWithNibName:NSStringFromClass([WOTTankDetailViewController class]) bundle:nil];
-    Tanks *tank = [self.fetchedResultController objectAtIndexPath:indexPath];
+    Vehicles *tank = [self.fetchedResultController objectAtIndexPath:indexPath];
     detail.tankId = tank.tank_id;
 
     [detail.navigationItem setLeftBarButtonItem:backButtonItem];
@@ -183,12 +189,13 @@
 
     self.fetchedResultController.delegate = nil;
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
     [fetchRequest setSortDescriptors:self.sortDescriptors];
     [fetchRequest setPredicate:self.filterByPredicate];
     
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
-    self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:self.groupByField cacheName:nil];
+    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+    id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+    self.fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil];
     self.fetchedResultController.delegate = self;
     
     NSError *error = nil;
@@ -199,7 +206,7 @@
 
 - (NSPredicate *)filterByPredicate {
     
-    NSPredicate *filterByPredicate = [WOTTankListSettingsDatasource sharedInstance].filterBy;
+    NSPredicate *filterByPredicate = _settingsDatasource.filterBy;
     NSMutableArray *predicates = [[NSMutableArray alloc] init];
     if (filterByPredicate){
         
@@ -208,7 +215,7 @@
     
     if ([self.searchBarText length] != 0) {
 
-        NSPredicate *searchBarPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS[c] %@",WOT_KEY_NAME_I18N, self.searchBarText];
+        NSPredicate *searchBarPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS[c] %@",WOTApiKeys.name, self.searchBarText];
         [predicates addObject:searchBarPredicate];
     }
     return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
@@ -216,15 +223,15 @@
 
 - (NSArray *)sortDescriptors {
     
-    NSMutableArray *result = [[NSMutableArray alloc] initWithArray:[WOTTankListSettingsDatasource sharedInstance].sortBy];
-    [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]];
+    NSMutableArray *result = [[NSMutableArray alloc] initWithArray:_settingsDatasource.sortBy];
+    [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
 
     return result;
 }
 
 - (NSString *)groupByField {
     
-    return [WOTTankListSettingsDatasource sharedInstance].groupBy;
+    return _settingsDatasource.groupBy;
 }
 
 #pragma mark - private
