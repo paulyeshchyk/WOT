@@ -16,11 +16,3 @@ FOUNDATION_EXPORT double WOTDataVersionNumber;
 FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <WOTData/PublicHeader.h>
-
-#import "WOTDataDefines.h"
-
-#import "WOTWEBRequest+Stubs.h"
-#import "WOTWEBRequest+Stubs.h"
-
-
-#import "NSBundle+LanguageBundle.h"

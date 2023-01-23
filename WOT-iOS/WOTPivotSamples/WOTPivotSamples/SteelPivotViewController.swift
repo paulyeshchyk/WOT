@@ -8,7 +8,7 @@
 
 import UIKit
 import WOTPivot
-import WOTData
+import WOTApi
 import CoreData
 
 class SteelPivotViewController: UIViewController {
@@ -58,9 +58,7 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 }
 
 class SteelPivotFetchController: WOTDataFetchControllerProtocol {
-    func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void) {
-
-    }
+    func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void) {}
 
     var listener: WOTDataFetchControllerListenerProtocol?
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ContextSDK
 
 open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHolderProtocol {
     lazy public var dimension: WOTPivotDimensionProtocol = {
@@ -87,17 +88,21 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
         super.clearRootNodes()
     }
 
+    public typealias Context = LogInspectorContainerProtocol
+    private let appContext: Context
+
     @objc
-    required public init(fetchController fc: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator nc: WOTNodeCreatorProtocol, metadatasource mds: WOTDataModelMetadatasource) {
+    required public init(fetchController: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator: WOTNodeCreatorProtocol, metadatasource: WOTDataModelMetadatasource, context: Context) {
         shouldDisplayEmptyColumns = false
-        fetchController = fc
-        listener = modelListener
-        nodeCreator = nc
-        metadatasource = mds
+        self.fetchController = fetchController
+        self.listener = modelListener
+        self.nodeCreator = nodeCreator
+        self.metadatasource = metadatasource
+        self.appContext = context
 
         super.init()
 
-        fetchController?.setFetchListener(self)
+        fetchController.setFetchListener(self)
 
         self.dimension.registerCalculatorClass(WOTDimensionColumnCalculator.self, forNodeClass: WOTPivotColNode.self)
         self.dimension.registerCalculatorClass(WOTDimensionRowCalculator.self, forNodeClass: WOTPivotRowNode.self)
@@ -115,8 +120,8 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
 
         do {
             try fetchController?.performFetch(nodeCreator: nodeCreator)
-        } catch let error {
-            print(String(describing: error))
+        } catch {
+            appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
         }
     }
 

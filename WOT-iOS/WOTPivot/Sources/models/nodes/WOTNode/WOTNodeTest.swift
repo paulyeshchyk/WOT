@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import WOTPivot
 
 class WOTNodeTest: XCTestCase {
     var asyncExpectation: XCTestExpectation?

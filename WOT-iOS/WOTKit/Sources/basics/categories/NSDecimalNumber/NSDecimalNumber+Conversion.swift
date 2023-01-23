@@ -25,8 +25,8 @@ extension Double {
 }
 
 public class NSDecimalNumberArray {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey {
         case elements
     }
 
@@ -62,11 +62,3 @@ public class NSDecimalNumberArray {
         }
     }
 }
-
-//extension DecimalArray: JSONDecoding {
-//    public func decodeWith(_ decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: Fields.self)
-//        //
-//        self.elements = try container.decodeIfPresent([Int].self, forKey: .elements) ?? []
-//    }
-//}

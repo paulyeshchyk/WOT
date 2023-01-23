@@ -10,7 +10,6 @@ import Foundation
 typealias WOTIndexTypeAlias = [Int: [WOTNodeProtocol]]
 
 class WOTTreeConnectorNodeIndex: NSObject, WOTTreeConnectorNodeIndexProtocol {
-
     func add(nodes: [WOTNodeProtocol], level: NodeLevelType) {
         nodes.forEach { node in
             self.add(node: node, level: level)

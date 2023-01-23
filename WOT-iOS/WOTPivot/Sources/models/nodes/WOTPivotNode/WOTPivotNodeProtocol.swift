@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 @objc
 public enum WOTPivotCellType: Int {
