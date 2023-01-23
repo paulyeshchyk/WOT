@@ -67,15 +67,26 @@ extension UOWDecodeAndLinkMap: UOWRunnable {
                 return
             }
 
-            let jsonSyndicate = JSONSyndicate(appContext: appContext, modelClass: modelClass)
-            jsonSyndicate.decodeDepthLevel = self.decodingDepthLevel
-            jsonSyndicate.jsonMap = element
-            jsonSyndicate.socket = self.socket
-
-            jsonSyndicate.completion = { fetchResult, error in
+            let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
+            managedObjectLinkerHelper.socket = self.socket
+            managedObjectLinkerHelper.completion = { fetchResult, error in
                 exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: fetchResult, error: error))
             }
-            jsonSyndicate.run()
+
+            let mappingCoordinatorDecodeHelper = ManagedObjectDecodeHelper(appContext: appContext)
+            mappingCoordinatorDecodeHelper.jsonMap = element
+            mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
+                managedObjectLinkerHelper.run(fetchResult, error: error)
+            }
+
+            let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
+            datastoreFetchHelper.modelClass = modelClass
+            datastoreFetchHelper.nspredicate = element.contextPredicate.nspredicate(operator: .and)
+            datastoreFetchHelper.completion = { fetchResult, error in
+                mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
+            }
+
+            datastoreFetchHelper.run()
         }
     }
 }

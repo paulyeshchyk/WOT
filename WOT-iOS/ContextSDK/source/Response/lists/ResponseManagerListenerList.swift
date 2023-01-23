@@ -44,6 +44,7 @@ class ResponseManagerListenerList {
     }
 
     func responseManager(_ responseManager: ResponseManagerProtocol, didParseDataForRequest request: RequestProtocol, error: Error?) {
+        #warning("Crash is here")
         list[request.MD5]?.forEach { listener in
             listener.responseManager(responseManager, didFinishWorkOn: request, withError: error)
         }
