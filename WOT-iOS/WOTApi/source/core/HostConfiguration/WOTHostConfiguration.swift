@@ -24,18 +24,15 @@ public class WOTHostConfiguration: NSObject, HostConfigurationProtocol {
     }
 
     override public var description: String {
-        return "\(host):\(currentArguments)"
+        return "[\(type(of: self))] host: \(host), applicationID: \(applicationID)"
     }
-
-    private var currentArguments: String = ""
 
     // MARK: Public
 
     @objc
-    public func urlQuery(with: RequestArgumentsProtocol?) -> String {
-        let custom = ["application_id": applicationID]
-        currentArguments = with?.buildQuery(custom) ?? ""
-        return currentArguments
+    public func urlQuery(with arguments: RequestArgumentsProtocol?) -> String? {
+        var result = arguments?.allValues
+        result?.append(with: ["application_id": applicationID])
+        return result?.asURLQueryString()
     }
-
 }

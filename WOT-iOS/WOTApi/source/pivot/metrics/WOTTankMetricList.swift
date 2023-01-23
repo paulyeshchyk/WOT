@@ -61,7 +61,6 @@ public class WOTTankMetricsList: NSObject {
     public func remove(metric: WOTMetric) {
         metrics.remove(metric)
     }
-
 }
 
 // MARK: - ChartDataProtocol

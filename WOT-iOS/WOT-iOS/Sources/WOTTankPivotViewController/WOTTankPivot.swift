@@ -8,7 +8,6 @@
 
 import ContextSDK
 import WOTApi
-import WOTKit
 import WOTPivot
 
 // MARK: - WOTTankPivotNodeCreator
@@ -100,7 +99,6 @@ class WOTTankPivotMetadatasource: PivotMetaDatasourceProtocol {
     func filters() -> [NodeProtocol] {
         return [FilterPivotNode(name: "Filter")]
     }
-
 }
 
 // MARK: - WOTTankPivotModel
@@ -136,15 +134,15 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol, context _: PivotDataModel.Context) {
+    required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol, context _: Context) {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:context:) has not been implemented")
     }
 
-    @objc required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol, nodeIndex _: NodeIndexProtocol.Type, appContext _: NodeFetchControllerProtocol.Context) {
+    @objc required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol, nodeIndex _: NodeIndexProtocol.Type, appContext _: Context) {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:nodeIndex:context:) has not been implemented")
     }
 
-    required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: NodeFetchControllerProtocol.Context) {
+    required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: Context) {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 
@@ -182,5 +180,4 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
     func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
         //
     }
-
 }

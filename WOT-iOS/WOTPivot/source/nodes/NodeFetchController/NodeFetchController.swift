@@ -35,11 +35,11 @@ open class NodeFetchController: NSObject {
     public var fetchRequestContainer: FetchRequestContainerProtocol
 
     private var fetchResultController: NodeFetchedResultController?
-    private let appContext: NodeFetchControllerProtocol.Context
+    private let appContext: Context
 
     // MARK: Lifecycle
 
-    public required init(fetchRequestContainer: FetchRequestContainerProtocol, appContext: NodeFetchControllerProtocol.Context) {
+    public required init(fetchRequestContainer: FetchRequestContainerProtocol, appContext: Context) {
         self.fetchRequestContainer = fetchRequestContainer
         self.appContext = appContext
     }
@@ -50,7 +50,7 @@ open class NodeFetchController: NSObject {
 
     // MARK: Public
 
-    public func initFetchController(appContext: NodeFetchControllerProtocol.Context, block: @escaping (NodeFetchedResultController?, Error?) -> Void) throws {
+    public func initFetchController(appContext: Context, block: @escaping (NodeFetchedResultController?, Error?) -> Void) throws {
         //
         appContext.dataStore?.perform { [weak self] managedObjectContext in
             guard let fetchRequest = self?.fetchRequestContainer.fetchRequest else {
@@ -65,7 +65,6 @@ open class NodeFetchController: NSObject {
             }
         }
     }
-
 }
 
 // MARK: - NodeFetchControllerError
@@ -101,7 +100,7 @@ extension NodeFetchController: NSFetchedResultsControllerDelegate {
 // MARK: - NodeFetchController + NodeFetchControllerProtocol
 
 extension NodeFetchController: NodeFetchControllerProtocol {
-    open func performFetch(nodeCreator: NodeCreatorProtocol?, appContext: NodeFetchControllerProtocol.Context) throws {
+    open func performFetch(nodeCreator: NodeCreatorProtocol?, appContext: Context) throws {
         if let fetch = fetchResultController {
             try performFetch(with: fetch, nodeCreator: nodeCreator)
         } else {

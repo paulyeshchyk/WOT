@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankDetailProgressTableViewCell.h"
-#import <WOTKit/WOTKit.h>
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankDetailProgressTableViewCell ()
 

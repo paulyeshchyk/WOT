@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
-
 // MARK: - VehicleprofileEnginesHttpRequest
 
 public class VehicleprofileEnginesHttpRequest: HttpRequest {
@@ -18,14 +16,14 @@ public class VehicleprofileEnginesHttpRequest: HttpRequest {
     override public func httpAPIQueryPrefix() -> String? { "engine." }
 }
 
-// MARK: - VehicleprofileEnginesHttpRequest + ModelServiceProtocol
+// MARK: - VehicleprofileEnginesHttpRequest + RequestModelServiceProtocol
 
-extension VehicleprofileEnginesHttpRequest: ModelServiceProtocol {
+extension VehicleprofileEnginesHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }
 
-    public class func modelClass() -> PrimaryKeypathProtocol.Type? {
+    public class func modelClass() -> ModelClassType? {
         VehicleprofileEngine.self
     }
 

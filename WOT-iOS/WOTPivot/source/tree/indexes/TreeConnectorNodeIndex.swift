@@ -87,5 +87,4 @@ class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
         }
         return indexPath.first
     }
-
 }

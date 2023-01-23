@@ -52,3 +52,17 @@ public extension CGContext {
         }
     }
 }
+
+public extension CGRect {
+    func center() -> CGPoint {
+        return CGPoint(x: midX, y: midY)
+    }
+
+    func centerHorizontalBottomVertical() -> CGPoint {
+        return CGPoint(x: midX, y: origin.y + size.height)
+    }
+
+    func centerHorizontalTopVertical() -> CGPoint {
+        return CGPoint(x: midX, y: origin.y)
+    }
+}

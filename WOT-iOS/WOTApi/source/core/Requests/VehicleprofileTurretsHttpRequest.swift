@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
-
 // MARK: - VehicleprofileTurretsHttpRequest
 
 public class VehicleprofileTurretsHttpRequest: HttpRequest {
@@ -18,14 +16,14 @@ public class VehicleprofileTurretsHttpRequest: HttpRequest {
     override public func httpAPIQueryPrefix() -> String? { "turret." }
 }
 
-// MARK: - VehicleprofileTurretsHttpRequest + ModelServiceProtocol
+// MARK: - VehicleprofileTurretsHttpRequest + RequestModelServiceProtocol
 
-extension VehicleprofileTurretsHttpRequest: ModelServiceProtocol {
+extension VehicleprofileTurretsHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }
 
-    public class func modelClass() -> PrimaryKeypathProtocol.Type? {
+    public class func modelClass() -> ModelClassType? {
         VehicleprofileTurret.self
     }
 

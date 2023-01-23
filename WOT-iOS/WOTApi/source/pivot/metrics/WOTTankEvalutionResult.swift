@@ -41,5 +41,4 @@ public class WOTTankEvalutionResult: NSObject, WOTTankEvaluationResultProtocol {
         self.averageValue = averageValue
         super.init()
     }
-
 }

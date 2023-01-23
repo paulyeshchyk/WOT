@@ -7,7 +7,6 @@
 //
 
 import ContextSDK
-import WOTKit
 
 // MARK: - WOTWebProxyRequest
 
@@ -85,9 +84,9 @@ public class WOTWebProxyRequest: HttpRequest {
      */
 }
 
-// MARK: - WOTWebProxyRequest + ModelServiceProtocol
+// MARK: - WOTWebProxyRequest + RequestModelServiceProtocol
 
-extension WOTWebProxyRequest: ModelServiceProtocol {
+extension WOTWebProxyRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         JSONAdapter.self
     }
@@ -96,7 +95,7 @@ extension WOTWebProxyRequest: ModelServiceProtocol {
         -1
     }
 
-    public static func modelClass() -> PrimaryKeypathProtocol.Type? {
+    public static func modelClass() -> ModelClassType? {
         return nil
     }
 

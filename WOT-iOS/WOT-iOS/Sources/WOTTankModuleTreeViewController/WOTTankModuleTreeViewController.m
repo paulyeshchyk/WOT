@@ -15,10 +15,10 @@
 #import <WOTPivot/WOTPivot.h>
 #import <WOTApi/WOTApi.h>
 #import "UIImageView+WebCache.h"
-#import <WOTKit/WOTKit.h>
 #import <ContextSDK/ContextSDK-Swift.h>
 #import "UIToolbar+WOT.h"
 #import "UINavigationBar+WOT.h"
+#import "NSBundle+LanguageBundle.h"
 
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<NodeCreatorProtocol>
@@ -46,17 +46,17 @@
 }
 
 - (id<NodeProtocol> _Nonnull)createEmptyNode {
-    NSAssert(NO, @"not overriden yet");
+    NSAssert(NO, @"has not been implemented yet");
     return [[Node alloc] initWithName: @""];
 }
 
 - (id<NodeProtocol> _Nonnull)createNodeGroupWithName:(NSString * _Nonnull)name fetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
-    NSAssert(NO, @"not overriden yet");
+    NSAssert(NO, @"has not been implemented yet");
     return [[Node alloc] initWithName: @""];
 }
 
 - (NSArray<id<NodeProtocol>> * _Nonnull)createNodesWithFetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
-    NSAssert(NO, @"not overriden yet");
+    NSAssert(NO, @"has not been implemented yet");
     return @[[[Node alloc] initWithName: @""]];
 }
 
@@ -299,6 +299,7 @@
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest error:(NSError * _Nullable)error{
     [self reloadModel];
+    [requestManager removeListener: self];
 }
 
 
@@ -307,7 +308,7 @@
 }
 
 - (void)requestManager:(id<RequestManagerProtocol>)requestManager didCancelRequest:(id<RequestProtocol>)didCancelRequest reason:(id<RequestCancelReasonProtocol>)reason {
-    
+    [requestManager removeListener: self];
 }
 
 #pragma mark -

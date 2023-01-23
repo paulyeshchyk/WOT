@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
-
 // MARK: - ModulesTreeHttpRequest
 
 public class ModulesTreeHttpRequest: HttpRequest {
@@ -17,14 +15,14 @@ public class ModulesTreeHttpRequest: HttpRequest {
     override public var httpQueryItemName: String { WGWebQueryArgs.fields }
 }
 
-// MARK: - ModulesTreeHttpRequest + ModelServiceProtocol
+// MARK: - ModulesTreeHttpRequest + RequestModelServiceProtocol
 
-extension ModulesTreeHttpRequest: ModelServiceProtocol {
+extension ModulesTreeHttpRequest: RequestModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }
 
-    public class func modelClass() -> PrimaryKeypathProtocol.Type? {
+    public class func modelClass() -> ModelClassType? {
         ModulesTree.self
     }
 

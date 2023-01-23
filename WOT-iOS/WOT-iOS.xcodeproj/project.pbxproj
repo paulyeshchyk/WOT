@@ -36,17 +36,10 @@
 		DA39E25C296075140099D877 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E257296075140099D877 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA39E25D296075140099D877 /* WOTApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E258296075140099D877 /* WOTApi.framework */; };
 		DA39E25E296075140099D877 /* WOTApi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E258296075140099D877 /* WOTApi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DA39E25F296075140099D877 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E259296075140099D877 /* WOTKit.framework */; };
-		DA39E260296075140099D877 /* WOTKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E259296075140099D877 /* WOTKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA39E261296075140099D877 /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E25A296075140099D877 /* WOTPivot.framework */; };
 		DA39E262296075140099D877 /* WOTPivot.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E25A296075140099D877 /* WOTPivot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA39E267296089210099D877 /* WOTWebProxyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39E265296089210099D877 /* WOTWebProxyRequest.swift */; };
 		DA39E268296089210099D877 /* WOTRequestResponseDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39E266296089210099D877 /* WOTRequestResponseDataParser.swift */; };
-		DA39E27B29608EA20099D877 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DA39E27829608EA20099D877 /* NSString+RomanUtils.m */; };
-		DA39E27C29608EA20099D877 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = DA39E27A29608EA20099D877 /* RomanNumber.m */; };
-		DA39E28029608FE80099D877 /* UIView+StretchingConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = DA39E27F29608FE80099D877 /* UIView+StretchingConstraints.m */; };
-		DA39E286296090A90099D877 /* UINavigationBar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = DA39E283296090A90099D877 /* UINavigationBar+WOT.m */; };
-		DA39E287296090A90099D877 /* UIToolbar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = DA39E285296090A90099D877 /* UIToolbar+WOT.m */; };
 		DA81E754295316E600C60F31 /* Activity Grid Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F5295316E600C60F31 /* Activity Grid Yellow.png */; };
 		DA81E755295316E600C60F31 /* Activity Grid Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F6295316E600C60F31 /* Activity Grid Yellow@2x.png */; };
 		DA81E756295316E600C60F31 /* Activity Grid Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F7295316E600C60F31 /* Activity Grid Yellow@3x.png */; };
@@ -245,7 +238,14 @@
 		DA81EA5B29544F4900C60F31 /* WOTLanguageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81EA5729544F4900C60F31 /* WOTLanguageTableViewCell.m */; };
 		DA81EA5C29544F4900C60F31 /* WOTLanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA81EA5829544F4900C60F31 /* WOTLanguageTableViewCell.xib */; };
 		DA81EA5D29544F4900C60F31 /* WOTLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81EA5929544F4900C60F31 /* WOTLanguageSelectorViewController.m */; };
-		DACDB12E29606020005BBA72 /* UIBarButtonItem+EventBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDB12D29606020005BBA72 /* UIBarButtonItem+EventBlock.m */; };
+		DAA56E422976703B0092DA17 /* UIBarButtonItem+EventBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E252976703A0092DA17 /* UIBarButtonItem+EventBlock.m */; };
+		DAA56E432976703B0092DA17 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E282976703A0092DA17 /* NSString+RomanUtils.m */; };
+		DAA56E442976703B0092DA17 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E2A2976703A0092DA17 /* RomanNumber.m */; };
+		DAA56E452976703B0092DA17 /* UINavigationBar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E2D2976703A0092DA17 /* UINavigationBar+WOT.m */; };
+		DAA56E462976703B0092DA17 /* UIToolbar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E2F2976703A0092DA17 /* UIToolbar+WOT.m */; };
+		DAA56E472976703B0092DA17 /* UIView+StretchingConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E322976703A0092DA17 /* UIView+StretchingConstraints.m */; };
+		DAA56E482976703B0092DA17 /* NSBundle+LanguageBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E352976703A0092DA17 /* NSBundle+LanguageBundle.m */; };
+		DAA56E4A2976703B0092DA17 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E3B2976703A0092DA17 /* UIImage+Resize.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -265,7 +265,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				DA39E260296075140099D877 /* WOTKit.framework in Embed Frameworks */,
 				DA39E25E296075140099D877 /* WOTApi.framework in Embed Frameworks */,
 				DA39E262296075140099D877 /* WOTPivot.framework in Embed Frameworks */,
 				DA39E25C296075140099D877 /* ContextSDK.framework in Embed Frameworks */,
@@ -302,17 +301,6 @@
 		DA39E25A296075140099D877 /* WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA39E265296089210099D877 /* WOTWebProxyRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebProxyRequest.swift; sourceTree = "<group>"; };
 		DA39E266296089210099D877 /* WOTRequestResponseDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTRequestResponseDataParser.swift; sourceTree = "<group>"; };
-		DA39E26A296089F10099D877 /* WOTColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTColors.h; sourceTree = "<group>"; };
-		DA39E27729608EA20099D877 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
-		DA39E27829608EA20099D877 /* NSString+RomanUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RomanUtils.m"; sourceTree = "<group>"; };
-		DA39E27929608EA20099D877 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
-		DA39E27A29608EA20099D877 /* RomanNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomanNumber.m; sourceTree = "<group>"; };
-		DA39E27E29608FE80099D877 /* UIView+StretchingConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+StretchingConstraints.h"; sourceTree = "<group>"; };
-		DA39E27F29608FE80099D877 /* UIView+StretchingConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+StretchingConstraints.m"; sourceTree = "<group>"; };
-		DA39E282296090A90099D877 /* UINavigationBar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+WOT.h"; sourceTree = "<group>"; };
-		DA39E283296090A90099D877 /* UINavigationBar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+WOT.m"; sourceTree = "<group>"; };
-		DA39E284296090A90099D877 /* UIToolbar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+WOT.h"; sourceTree = "<group>"; };
-		DA39E285296090A90099D877 /* UIToolbar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+WOT.m"; sourceTree = "<group>"; };
 		DA81E6F5295316E600C60F31 /* Activity Grid Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow.png"; sourceTree = "<group>"; };
 		DA81E6F6295316E600C60F31 /* Activity Grid Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow@2x.png"; sourceTree = "<group>"; };
 		DA81E6F7295316E600C60F31 /* Activity Grid Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow@3x.png"; sourceTree = "<group>"; };
@@ -562,8 +550,23 @@
 		DA81EA5729544F4900C60F31 /* WOTLanguageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageTableViewCell.m; sourceTree = "<group>"; };
 		DA81EA5829544F4900C60F31 /* WOTLanguageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTLanguageTableViewCell.xib; sourceTree = "<group>"; };
 		DA81EA5929544F4900C60F31 /* WOTLanguageSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageSelectorViewController.m; sourceTree = "<group>"; };
-		DACDB12C29606020005BBA72 /* UIBarButtonItem+EventBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+EventBlock.h"; sourceTree = "<group>"; };
-		DACDB12D29606020005BBA72 /* UIBarButtonItem+EventBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+EventBlock.m"; sourceTree = "<group>"; };
+		DAA56E242976703A0092DA17 /* UIBarButtonItem+EventBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+EventBlock.h"; sourceTree = "<group>"; };
+		DAA56E252976703A0092DA17 /* UIBarButtonItem+EventBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+EventBlock.m"; sourceTree = "<group>"; };
+		DAA56E272976703A0092DA17 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
+		DAA56E282976703A0092DA17 /* NSString+RomanUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RomanUtils.m"; sourceTree = "<group>"; };
+		DAA56E292976703A0092DA17 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
+		DAA56E2A2976703A0092DA17 /* RomanNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomanNumber.m; sourceTree = "<group>"; };
+		DAA56E2C2976703A0092DA17 /* UINavigationBar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+WOT.h"; sourceTree = "<group>"; };
+		DAA56E2D2976703A0092DA17 /* UINavigationBar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+WOT.m"; sourceTree = "<group>"; };
+		DAA56E2E2976703A0092DA17 /* UIToolbar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+WOT.h"; sourceTree = "<group>"; };
+		DAA56E2F2976703A0092DA17 /* UIToolbar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+WOT.m"; sourceTree = "<group>"; };
+		DAA56E312976703A0092DA17 /* UIView+StretchingConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+StretchingConstraints.h"; sourceTree = "<group>"; };
+		DAA56E322976703A0092DA17 /* UIView+StretchingConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+StretchingConstraints.m"; sourceTree = "<group>"; };
+		DAA56E342976703A0092DA17 /* NSBundle+LanguageBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+LanguageBundle.h"; sourceTree = "<group>"; };
+		DAA56E352976703A0092DA17 /* NSBundle+LanguageBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+LanguageBundle.m"; sourceTree = "<group>"; };
+		DAA56E3A2976703A0092DA17 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		DAA56E3B2976703A0092DA17 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		DAA56E3E2976703A0092DA17 /* WOTColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTColors.h; sourceTree = "<group>"; };
 		E0CAF57B0233E28A614AE83F /* Pods-WOT-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -579,7 +582,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA39E25F296075140099D877 /* WOTKit.framework in Frameworks */,
 				DA39E25D296075140099D877 /* WOTApi.framework in Frameworks */,
 				DA39E261296075140099D877 /* WOTPivot.framework in Frameworks */,
 				DA39E25B296075140099D877 /* ContextSDK.framework in Frameworks */,
@@ -595,6 +597,7 @@
 			children = (
 				1DD646351B1C616A00B0EC76 /* Sources */,
 				1DD646CF1B1F4C9D00B0EC76 /* resources */,
+				1DD646361B1C616A00B0EC76 /* Supporting Files */,
 			);
 			path = "WOT-iOS";
 			sourceTree = "<group>";
@@ -635,8 +638,8 @@
 		1DD646351B1C616A00B0EC76 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DAA56E222976703A0092DA17 /* extensions */,
 				DA288F6B2965C0D000973561 /* WOTLaunchViewController */,
-				DACDB12A29605FEC005BBA72 /* extensions */,
 				DA39E264296088E50099D877 /* WOTWebProxyRequest */,
 				DA81EA5229544F4900C60F31 /* WOTLanguageSelectorViewController */,
 				DA81E95B2954497D00C60F31 /* WOTLoginViewController */,
@@ -652,7 +655,6 @@
 				DA81E9A52954497D00C60F31 /* WOTTankPivotViewController */,
 				DA81E9212954495400C60F31 /* WOTDrawerViewController */,
 				DA81E9242954495400C60F31 /* WOTMenuViewController */,
-				1DD646361B1C616A00B0EC76 /* Supporting Files */,
 				1D038A5F245ACE110015101F /* AppDelegate.swift */,
 			);
 			path = Sources;
@@ -667,6 +669,7 @@
 				1DD646381B1C616A00B0EC76 /* main.m */,
 			);
 			name = "Supporting Files";
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		1DD646CF1B1F4C9D00B0EC76 /* resources */ = {
@@ -718,45 +721,6 @@
 				DA39E265296089210099D877 /* WOTWebProxyRequest.swift */,
 			);
 			path = WOTWebProxyRequest;
-			sourceTree = "<group>";
-		};
-		DA39E269296089D90099D877 /* UIColor */ = {
-			isa = PBXGroup;
-			children = (
-				DA39E26A296089F10099D877 /* WOTColors.h */,
-			);
-			path = UIColor;
-			sourceTree = "<group>";
-		};
-		DA39E27629608EA20099D877 /* RomanNumber */ = {
-			isa = PBXGroup;
-			children = (
-				DA39E27729608EA20099D877 /* NSString+RomanUtils.h */,
-				DA39E27829608EA20099D877 /* NSString+RomanUtils.m */,
-				DA39E27929608EA20099D877 /* RomanNumber.h */,
-				DA39E27A29608EA20099D877 /* RomanNumber.m */,
-			);
-			path = RomanNumber;
-			sourceTree = "<group>";
-		};
-		DA39E27D29608FE80099D877 /* UIView */ = {
-			isa = PBXGroup;
-			children = (
-				DA39E27E29608FE80099D877 /* UIView+StretchingConstraints.h */,
-				DA39E27F29608FE80099D877 /* UIView+StretchingConstraints.m */,
-			);
-			path = UIView;
-			sourceTree = "<group>";
-		};
-		DA39E281296090A90099D877 /* UIBar */ = {
-			isa = PBXGroup;
-			children = (
-				DA39E282296090A90099D877 /* UINavigationBar+WOT.h */,
-				DA39E283296090A90099D877 /* UINavigationBar+WOT.m */,
-				DA39E284296090A90099D877 /* UIToolbar+WOT.h */,
-				DA39E285296090A90099D877 /* UIToolbar+WOT.m */,
-			);
-			path = UIBar;
 			sourceTree = "<group>";
 		};
 		DA81E6F3295316E600C60F31 /* images */ = {
@@ -1337,25 +1301,100 @@
 			path = cells;
 			sourceTree = "<group>";
 		};
-		DACDB12A29605FEC005BBA72 /* extensions */ = {
+		DAA56E222976703A0092DA17 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DA39E281296090A90099D877 /* UIBar */,
-				DA39E27D29608FE80099D877 /* UIView */,
-				DA39E27629608EA20099D877 /* RomanNumber */,
-				DA39E269296089D90099D877 /* UIColor */,
-				DACDB12B2960601F005BBA72 /* UIBarButtonItem */,
+				DAA56E232976703A0092DA17 /* UIBarButtonItem */,
+				DAA56E262976703A0092DA17 /* RomanNumber */,
+				DAA56E2B2976703A0092DA17 /* UIBar */,
+				DAA56E302976703A0092DA17 /* UIView */,
+				DAA56E332976703A0092DA17 /* NSBundle */,
+				DAA56E362976703A0092DA17 /* UIImage */,
+				DAA56E3C2976703A0092DA17 /* UIColor */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
 		};
-		DACDB12B2960601F005BBA72 /* UIBarButtonItem */ = {
+		DAA56E232976703A0092DA17 /* UIBarButtonItem */ = {
 			isa = PBXGroup;
 			children = (
-				DACDB12C29606020005BBA72 /* UIBarButtonItem+EventBlock.h */,
-				DACDB12D29606020005BBA72 /* UIBarButtonItem+EventBlock.m */,
+				DAA56E242976703A0092DA17 /* UIBarButtonItem+EventBlock.h */,
+				DAA56E252976703A0092DA17 /* UIBarButtonItem+EventBlock.m */,
 			);
 			path = UIBarButtonItem;
+			sourceTree = "<group>";
+		};
+		DAA56E262976703A0092DA17 /* RomanNumber */ = {
+			isa = PBXGroup;
+			children = (
+				DAA56E272976703A0092DA17 /* NSString+RomanUtils.h */,
+				DAA56E282976703A0092DA17 /* NSString+RomanUtils.m */,
+				DAA56E292976703A0092DA17 /* RomanNumber.h */,
+				DAA56E2A2976703A0092DA17 /* RomanNumber.m */,
+			);
+			path = RomanNumber;
+			sourceTree = "<group>";
+		};
+		DAA56E2B2976703A0092DA17 /* UIBar */ = {
+			isa = PBXGroup;
+			children = (
+				DAA56E2C2976703A0092DA17 /* UINavigationBar+WOT.h */,
+				DAA56E2D2976703A0092DA17 /* UINavigationBar+WOT.m */,
+				DAA56E2E2976703A0092DA17 /* UIToolbar+WOT.h */,
+				DAA56E2F2976703A0092DA17 /* UIToolbar+WOT.m */,
+			);
+			path = UIBar;
+			sourceTree = "<group>";
+		};
+		DAA56E302976703A0092DA17 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				DAA56E312976703A0092DA17 /* UIView+StretchingConstraints.h */,
+				DAA56E322976703A0092DA17 /* UIView+StretchingConstraints.m */,
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
+		DAA56E332976703A0092DA17 /* NSBundle */ = {
+			isa = PBXGroup;
+			children = (
+				DAA56E342976703A0092DA17 /* NSBundle+LanguageBundle.h */,
+				DAA56E352976703A0092DA17 /* NSBundle+LanguageBundle.m */,
+			);
+			path = NSBundle;
+			sourceTree = "<group>";
+		};
+		DAA56E362976703A0092DA17 /* UIImage */ = {
+			isa = PBXGroup;
+			children = (
+				DAA56E392976703A0092DA17 /* UIImage+Resize */,
+			);
+			path = UIImage;
+			sourceTree = "<group>";
+		};
+		DAA56E392976703A0092DA17 /* UIImage+Resize */ = {
+			isa = PBXGroup;
+			children = (
+				DAA56E3A2976703A0092DA17 /* UIImage+Resize.h */,
+				DAA56E3B2976703A0092DA17 /* UIImage+Resize.m */,
+			);
+			path = "UIImage+Resize";
+			sourceTree = "<group>";
+		};
+		DAA56E3C2976703A0092DA17 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				DAA56E3D2976703A0092DA17 /* UIColor+WOT */,
+			);
+			path = UIColor;
+			sourceTree = "<group>";
+		};
+		DAA56E3D2976703A0092DA17 /* UIColor+WOT */ = {
+			isa = PBXGroup;
+			children = (
+				DAA56E3E2976703A0092DA17 /* WOTColors.h */,
+			);
+			path = "UIColor+WOT";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1632,7 +1671,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#SwiftLint\n#TODO: build SwiftLint from PODS folder, using: make install\n\"${TOOLS_ROOT}/SwiftLint/bin/swiftlint\" lint\n";
+			shellScript = "#SwiftLint\n#TODO: build SwiftLint from PODS folder, using: make install\n\"${TOOLS_ROOT}/SwiftLint/bin/swiftlint\" --config \".swiftlint.yml\"\n";
 		};
 		1D9CAA3421119BD300B6CA5A /* Swiftgen */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1742,7 +1781,6 @@
 				DA81E9E42954497E00C60F31 /* WOTSplitViewController.swift in Sources */,
 				DA81E9F02954497E00C60F31 /* WOTTankTreeFetchController.swift in Sources */,
 				DA81EA4F29544A1F00C60F31 /* WOTNode+DetailGrid.m in Sources */,
-				DACDB12E29606020005BBA72 /* UIBarButtonItem+EventBlock.m in Sources */,
 				1D038A60245ACE110015101F /* AppDelegate.swift in Sources */,
 				DA81EA052954497E00C60F31 /* WOTTankListSettingNameChooserViewController.m in Sources */,
 				DA81E92F2954495400C60F31 /* WOTMenuViewController.swift in Sources */,
@@ -1766,38 +1804,41 @@
 				1D9CAA362111A09700B6CA5A /* strings.swift in Sources */,
 				DA81EA112954497E00C60F31 /* WOTTankListSettingAddNewTableViewCell.m in Sources */,
 				DA81EA242954497E00C60F31 /* WOTPivotRefreshControl.swift in Sources */,
-				DA39E28029608FE80099D877 /* UIView+StretchingConstraints.m in Sources */,
 				DA81EA342954497E00C60F31 /* WOTTankGridViewController.m in Sources */,
 				DA81EA412954497E00C60F31 /* WOTTankDetailCollectionViewFlowLayout.m in Sources */,
 				DA81EA432954497E00C60F31 /* WOTTankDetailTextTableViewCell.m in Sources */,
 				DA81E9F92954497E00C60F31 /* WOTProfileViewController.m in Sources */,
+				DAA56E482976703B0092DA17 /* NSBundle+LanguageBundle.m in Sources */,
 				DA81EA362954497E00C60F31 /* NSObject+WOTTankGridValueData.m in Sources */,
 				DA81E9F32954497E00C60F31 /* WOTTankTreeNodeCollectionViewCell.m in Sources */,
 				DA81EA0B2954497E00C60F31 /* WOTTankListSettingNameTableViewCell.m in Sources */,
 				DA39E268296089210099D877 /* WOTRequestResponseDataParser.swift in Sources */,
-				DA39E286296090A90099D877 /* UINavigationBar+WOT.m in Sources */,
 				DA81E9F12954497E00C60F31 /* WOTTankTreeConnectorCollectionViewCell.swift in Sources */,
 				DA81E92D2954495400C60F31 /* WOTMenuTableViewCell.m in Sources */,
+				DAA56E4A2976703B0092DA17 /* UIImage+Resize.m in Sources */,
 				DA81EA182954497E00C60F31 /* WOTTankListViewController.m in Sources */,
-				DA39E27B29608EA20099D877 /* NSString+RomanUtils.m in Sources */,
 				DA81EA0F2954497E00C60F31 /* WOTTankListSettingsDatasource+TableView.m in Sources */,
+				DAA56E432976703B0092DA17 /* NSString+RomanUtils.m in Sources */,
 				DA81E9F52954497E00C60F31 /* WOTTankConfigurationModuleMapping.m in Sources */,
 				DA81EA322954497E00C60F31 /* WOTTankPivotDataCollectionViewCell.m in Sources */,
 				1DD646391B1C616A00B0EC76 /* main.m in Sources */,
 				DA81EA0E2954497E00C60F31 /* WOTTankListSettingsDatasource+AvailableFields.m in Sources */,
 				DA81EA1F2954497E00C60F31 /* WOTTankListSearchBar.m in Sources */,
 				DA81E92B2954495400C60F31 /* WOTDrawerViewController.m in Sources */,
+				DAA56E472976703B0092DA17 /* UIView+StretchingConstraints.m in Sources */,
 				DA39E267296089210099D877 /* WOTWebProxyRequest.swift in Sources */,
 				DA81E9EC2954497E00C60F31 /* WOTRadarViewController.m in Sources */,
-				DA39E27C29608EA20099D877 /* RomanNumber.m in Sources */,
 				DA81E9EA2954497E00C60F31 /* WOTTankConfigurationItemHeaderFooter.m in Sources */,
+				DAA56E442976703B0092DA17 /* RomanNumber.m in Sources */,
 				DA81EA442954497E00C60F31 /* WOTTankDetailProgressTableViewCell.m in Sources */,
 				DA81EA462954497E00C60F31 /* WOTTankDetailCollectionViewCell.m in Sources */,
-				DA39E287296090A90099D877 /* UIToolbar+WOT.m in Sources */,
+				DAA56E422976703B0092DA17 /* UIBarButtonItem+EventBlock.m in Sources */,
 				DA81EA212954497E00C60F31 /* WOTPivotConstructorViewController.swift in Sources */,
 				DA81E9F62954497E00C60F31 /* WOTTankConfigurationModuleMapping+Factory.m in Sources */,
+				DAA56E462976703B0092DA17 /* UIToolbar+WOT.m in Sources */,
 				DA81EA1A2954497E00C60F31 /* WOTTankListCollectionViewCell.m in Sources */,
 				DA81EA032954497E00C60F31 /* WOTTankListCompoundViewTableViewCell.m in Sources */,
+				DAA56E452976703B0092DA17 /* UINavigationBar+WOT.m in Sources */,
 				DA81EA5D29544F4900C60F31 /* WOTLanguageSelectorViewController.m in Sources */,
 				DA81EA0D2954497E00C60F31 /* WOTTankListSettingValueChangerViewController.m in Sources */,
 			);

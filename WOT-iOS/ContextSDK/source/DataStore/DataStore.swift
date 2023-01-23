@@ -9,7 +9,7 @@
 
 open class DataStore {
 
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol
 
     public let appContext: Context
 
@@ -17,30 +17,7 @@ open class DataStore {
 
     public required init(appContext: Context) {
         self.appContext = appContext
-        appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
-    }
-
-}
-
-// MARK: - DataStoreError
-
-private enum DataStoreError: Error, CustomStringConvertible {
-    case noKeysDefinedForClass(String)
-    case clazzIsNotSupportable(String)
-    case contextNotSaved
-    case contextNotDefined
-    case objectNotCreated(AnyClass)
-    case notManagedObjectType(PrimaryKeypathProtocol.Type)
-
-    public var description: String {
-        switch self {
-        case .noKeysDefinedForClass(let clazz): return "[\(type(of: self))]: No keys defined for:[\(String(describing: clazz))]"
-        case .contextNotSaved: return "\(type(of: self)): Context is not saved"
-        case .objectNotCreated(let clazz): return "\(type(of: self)): Object is not created:[\(String(describing: clazz))]"
-        case .clazzIsNotSupportable(let clazz): return "\(type(of: self)): Class is not supported by mapper:[\(String(describing: clazz))]"
-        case .notManagedObjectType(let clazz): return "[\(type(of: self))]: Not ManagedObjectType:[\(String(describing: clazz))]"
-        case .contextNotDefined: return "[\(type(of: self))]: Context is not defined"
-        }
+        self.appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
 }
 
@@ -49,10 +26,6 @@ private enum DataStoreError: Error, CustomStringConvertible {
 extension DataStore: DataStoreProtocol {
 
     open func isClassValid(_: AnyObject) -> Bool {
-        fatalError("has not been implemented")
-    }
-
-    open func emptyFetchResult() throws -> FetchResultProtocol {
         fatalError("has not been implemented")
     }
 
@@ -84,7 +57,7 @@ extension DataStore: DataStoreProtocol {
 
     public func stash(managedObject: ManagedObjectProtocol, completion: @escaping DatastoreManagedObjectCompletion) {
         guard let managedObjectContext = managedObject.context else {
-            completion(managedObject, DataStoreStashError.contextNotFound(managedObject))
+            completion(managedObject, DataStoreError.contextNotFound(managedObject))
             return
         }
         managedObjectContext.save(appContext: appContext, completion: { error in
@@ -108,7 +81,7 @@ extension DataStore: DataStoreProtocol {
         }
     }
 
-    public func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, managedObjectContext: ManagedObjectContextProtocol?, completion: @escaping FetchResultCompletion) {
+    public func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, completion: @escaping FetchResultCompletion) {
         //
         guard isClassValid(modelClass) else {
             completion(nil, DataStoreError.notManagedObjectType(modelClass))
@@ -118,40 +91,47 @@ extension DataStore: DataStoreProtocol {
         let privateManagedObjectContext = newPrivateContext()
         privateManagedObjectContext.execute(appContext: appContext) { [weak self] privateManagedObjectContext in
             guard let self = self else {
-                completion(nil, DataStoreStashError.datastoreIsNil)
+                completion(nil, DataStoreError.datastoreIsNil)
                 return
             }
 
-            guard let managedObject = privateManagedObjectContext.findOrCreateObject(modelClass: modelClass, predicate: nspredicate) else {
+            guard let managedObject = privateManagedObjectContext.findOrCreateObject(appContext: self.appContext, modelClass: modelClass, predicate: nspredicate) else {
                 completion(nil, DataStoreError.objectNotCreated(modelClass))
                 return
             }
             self.stash(managedObjectContext: privateManagedObjectContext) { context, error in
-                guard error == nil else {
+                do {
+                    let fetchResult = try managedObject.fetchResult(context: context)
+                    completion(fetchResult, error)
+                } catch {
                     completion(nil, error)
-                    return
-                }
-                let originalFetchResult = managedObject.fetchResult(context: context)
-
-                let finalManagedObjectContext = managedObjectContext ?? self.workingContext()
-                finalManagedObjectContext.execute(appContext: self.appContext) { context in
-                    let fetchResult = originalFetchResult.makeDublicate(managedObjectContext: context)
-                    completion(fetchResult, nil)
                 }
             }
         }
     }
 }
 
-// MARK: - DataStoreStashError
+// MARK: - DataStoreError
 
-private enum DataStoreStashError: Error, CustomStringConvertible {
+private enum DataStoreError: Error, CustomStringConvertible {
+    case noKeysDefinedForClass(String)
+    case clazzIsNotSupportable(String)
     case contextNotFound(ManagedObjectProtocol)
+    case contextNotSaved
+    case contextNotDefined
+    case objectNotCreated(AnyClass)
+    case notManagedObjectType(PrimaryKeypathProtocol.Type)
     case datastoreIsNil
 
-    var description: String {
+    public var description: String {
         switch self {
+        case .noKeysDefinedForClass(let clazz): return "[\(type(of: self))]: No keys defined for:[\(String(describing: clazz))]"
+        case .contextNotSaved: return "\(type(of: self)): Context is not saved"
         case .contextNotFound(let managedObject): return "\(type(of: self)) Context not found for \(String(describing: managedObject))"
+        case .objectNotCreated(let clazz): return "\(type(of: self)): Object is not created:[\(String(describing: clazz))]"
+        case .clazzIsNotSupportable(let clazz): return "\(type(of: self)): Class is not supported by mapper:[\(String(describing: clazz))]"
+        case .notManagedObjectType(let clazz): return "[\(type(of: self))]: Not ManagedObjectType:[\(String(describing: clazz))]"
+        case .contextNotDefined: return "[\(type(of: self))]: Context is not defined"
         case .datastoreIsNil: return "\(type(of: self)) Datastore is nil"
         }
     }

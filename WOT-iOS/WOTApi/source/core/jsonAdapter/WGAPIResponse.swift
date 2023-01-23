@@ -102,7 +102,6 @@ public struct WGAPIResponseMeta: Codable {
         limit = try container.decodeIfPresent(Int.self, forKey: .limit)
         page = try container.decodeIfPresent(Int.self, forKey: .page)
     }
-
 }
 
 // MARK: - WGAPIResponseStatus
@@ -125,7 +124,6 @@ public enum WGAPIResponseStatus: String, Codable {
             self = .unknown
         }
     }
-
 }
 
 // MARK: - WGAPIError
@@ -142,7 +140,6 @@ public class WGAPIError: Error {
         code = try container.decodeIfPresent(Int.self, forKey: .code)
         message = try container.decodeIfPresent(String.self, forKey: .message)
     }
-
 }
 
 // MARK: - WGAPIError + CustomStringConvertible, Codable

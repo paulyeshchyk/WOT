@@ -199,7 +199,7 @@
 
     id<ContextProtocol> _Nonnull appContext = [WOTTankListSettingsDatasource appContext];
     [appContext.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
-        ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithModelClass:ListSetting.class predicate:compoundPredicate];
+        ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate];
         setting.key = key;
         setting.ascending = @(ascending);
         setting.type = WOTApiSettingType.key_type_sort;
@@ -221,7 +221,7 @@
 
     id<ContextProtocol> _Nonnull appContext = [WOTTankListSettingsDatasource appContext];
     [appContext.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
-        ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithModelClass:ListSetting.class predicate:compoundPredicate];
+        ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate];
         setting.key = key;
         setting.ascending = @(ascending);
         setting.type = WOTApiSettingType.key_type_group;
@@ -244,7 +244,7 @@
 
     id<ContextProtocol> _Nonnull appContext = [WOTTankListSettingsDatasource appContext];
     [appContext.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
-        ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithModelClass:ListSetting.class predicate:compoundPredicate];
+        ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate];
         setting.key = key;
         setting.ascending = @(NO);
         setting.type = WOTApiSettingType.key_type_filter;

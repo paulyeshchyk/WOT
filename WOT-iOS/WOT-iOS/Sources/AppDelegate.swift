@@ -6,34 +6,27 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
-
 // MARK: - AppDelegate
 
 @objc
 public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var window: UIWindow?
 
-    public var hostConfiguration: HostConfigurationProtocol?
-    public var requestManager: RequestManagerProtocol?
+    private let logPriorities: [LogEventType]? = [.error, .warning, .flow, .custom, .remoteFetch, .sqlite]
+    private let logOutput = OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)
+
+    public lazy var logInspector: LogInspectorProtocol? = LogInspector(priorities: logPriorities, output: [logOutput])
+    public lazy var hostConfiguration: HostConfigurationProtocol? = WOTHostConfiguration()
+    public lazy var requestRegistrator: RequestRegistratorProtocol? = WOTRequestRegistrator(appContext: self)
+    public lazy var requestManager: RequestManagerProtocol? = RequestManager(appContext: self)
+    public lazy var responseManager: ResponseManagerProtocol? = WOTResponseManager(appContext: self)
+    public lazy var dataStore: DataStoreProtocol? = WOTDataStore(appContext: self)
+    public lazy var decoderManager: DecoderManagerProtocol? = WOTDecoderManager()
     public var requestListener: RequestListenerProtocol?
-    public var sessionManager: SessionManagerProtocol?
-    public var logInspector: LogInspectorProtocol?
-    public var dataStore: DataStoreProtocol?
-    public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
     // MARK: Public
 
     public func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        let logPriorities: [LogEventType]? = [.error, .warning, .flow, .custom, .remoteFetch]
-        logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
-
-        hostConfiguration = WOTHostConfiguration()
-        sessionManager = SessionManager()
-        dataStore = WOTDataStore(appContext: self)
-        responseDataAdapterCreator = ResponseDataAdapterCreator(appContext: self)
-        requestManager = WOTRequestManager(appContext: self)
-
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = WOTDrawerViewController.newDrawer()
         window?.makeKeyAndVisible()
@@ -41,7 +34,3 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
         return true
     }
 }
-
-// MARK: - AppDelegate + ResponseDataAdapterCreatorContainerProtocol
-
-extension AppDelegate: ResponseDataAdapterCreatorContainerProtocol {}
