@@ -10,7 +10,7 @@
 
 @protocol ContextControllerProtocol;
 
-@interface WOTDrawerViewController : MMDrawerController<ContextControllerProtocol>
+@interface WOTDrawerViewController : MMDrawerController
 
 - (id _Nonnull)initWithMenu;
 + (WOTDrawerViewController * _Nonnull)newDrawer;

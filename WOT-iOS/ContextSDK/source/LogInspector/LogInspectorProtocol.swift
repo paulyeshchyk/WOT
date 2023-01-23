@@ -17,6 +17,7 @@ public enum LogEventType: Int, CustomStringConvertible {
     case custom
     case sqlite
     case performance
+    case uow
     // ---
     case lifeCycle
     case http
@@ -26,7 +27,7 @@ public enum LogEventType: Int, CustomStringConvertible {
     case remoteFetch
     case flow
 
-    public static var allValues: [LogEventType] { [.error, .lifeCycle, .http, .json, .info, .performance, .logic, .mapping, .sqlite, .remoteFetch, .flow, .custom] }
+    public static var allValues: [LogEventType] { [.error, .lifeCycle, .http, .json, .info, .performance, .logic, .mapping, .sqlite, .remoteFetch, .flow, .custom, .uow] }
 
     public var description: String {
         switch self {
@@ -36,6 +37,7 @@ public enum LogEventType: Int, CustomStringConvertible {
         case .custom: return "custom"
         case .performance: return "performance"
         case .sqlite: return "sqlite"
+        case .uow: return "uow"
         // ---
         case .lifeCycle: return "lifeCycle"
         case .http: return "http"
@@ -61,7 +63,7 @@ public protocol LogEventProtocol {
 
 @objc
 public protocol LogInspectorContainerProtocol {
-    @objc var logInspector: LogInspectorProtocol? { get set }
+    var logInspector: LogInspectorProtocol? { get set }
 }
 
 // MARK: - Loggable

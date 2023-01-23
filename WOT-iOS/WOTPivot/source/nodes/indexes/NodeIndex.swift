@@ -74,6 +74,5 @@ public class NodeIndex: NSObject, NodeIndexProtocol {
 
 @objc
 public class ObjCNodeIndex: NSObject {
-    @objc
-    public static let defaultIndex: NodeIndexProtocol = NodeIndex()
+    @objc public static let defaultIndex: NodeIndexProtocol = NodeIndex()
 }

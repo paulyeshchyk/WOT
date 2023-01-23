@@ -35,30 +35,25 @@ public class WOTTankMetricsList: NSObject {
 
     // MARK: Public
 
-    @objc
-    public func add(tankId: WOTTanksIDList) {
+    @objc public func add(tankId: WOTTanksIDList) {
         tankIDLists.insert(tankId)
     }
 
-    @objc
-    public func remove(tankId: WOTTanksIDList) {
+    @objc public func remove(tankId: WOTTanksIDList) {
         tankIDLists.remove(tankId)
     }
 
-    @objc
-    public func add(metrics: [WOTMetric]) {
+    @objc public func add(metrics: [WOTMetric]) {
         metrics.forEach {
             self.metrics.insert($0)
         }
     }
 
-    @objc
-    public func add(metric: WOTMetric) {
+    @objc public func add(metric: WOTMetric) {
         metrics.insert(metric)
     }
 
-    @objc
-    public func remove(metric: WOTMetric) {
+    @objc public func remove(metric: WOTMetric) {
         metrics.remove(metric)
     }
 }

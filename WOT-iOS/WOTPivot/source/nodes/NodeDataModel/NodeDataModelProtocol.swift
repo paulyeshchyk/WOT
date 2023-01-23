@@ -15,10 +15,13 @@ import ContextSDK
 @objc
 public protocol NodeDataModelProtocol {
 
+    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
+        & DecoderManagerContainerProtocol
+        & UoW_ManagerContainerProtocol
 
     var rootNodes: [NodeProtocol] { get }
     var endpointsCount: Int { get }

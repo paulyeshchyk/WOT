@@ -18,8 +18,7 @@ protocol WOTMenuDelegate: NSObjectProtocol {
 // MARK: - WOTMenuProtocol
 
 @objc
-protocol WOTMenuProtocol: NSObjectProtocol {
-    init(menuDatasource datasource: WOTMenuDatasource, nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
+protocol WOTMenuProtocol {
     var delegate: WOTMenuDelegate? { get set }
     var selectedMenuItemClass: AnyClass { get }
     var selectedMenuItemTitle: String { get }
@@ -29,7 +28,6 @@ protocol WOTMenuProtocol: NSObjectProtocol {
 
 // MARK: - WOTMenuViewController
 
-@objc
 class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourceDelegate {
 
     var menuDatasource: WOTMenuDatasourceProtocol?
@@ -62,9 +60,9 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourc
 
     // MARK: Lifecycle
 
-    required convenience init(menuDatasource datasource: WOTMenuDatasource, nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        menuDatasource = datasource
+    @objc required convenience init(menuDatasourceClass: WOTMenuDatasourceProtocol.Type) {
+        self.init(nibName: "WOTMenuViewController", bundle: nil)
+        menuDatasource = menuDatasourceClass.init()
         menuDatasource?.delegate = self
     }
 

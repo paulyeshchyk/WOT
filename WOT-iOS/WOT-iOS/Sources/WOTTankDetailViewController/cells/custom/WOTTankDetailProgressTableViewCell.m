@@ -30,7 +30,7 @@
     // Configure the view for the selected state
 }
 
-- (void)parseObject:(NSManagedObject *)obj withField:(WOTTankDetailField *)field {
+- (void)context:(NSManagedObjectContext *)context parseObject:(NSManagedObject *)obj withField:(WOTTankDetailField *)field {
 
     if (!obj || !field) {
         
@@ -39,7 +39,7 @@
     }
     
     __weak typeof(self) weak_self = self;
-    [field evaluateWithObject:obj completionBlock:^(NSDictionary *values) {
+    [field context:context evaluateWithObject:obj completionBlock:^(NSDictionary *values) {
 
         CGFloat progress = 0;
         CGFloat max = [values[@"max"] floatValue];

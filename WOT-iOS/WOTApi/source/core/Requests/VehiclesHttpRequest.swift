@@ -18,8 +18,8 @@ public class VehiclesHttpRequest: HttpRequest {
 // MARK: - VehiclesHttpRequest + RequestModelServiceProtocol
 
 extension VehiclesHttpRequest: RequestModelServiceProtocol {
-    public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
-        WGAPIResponseJSONAdapter.self
+    public class func responseDataDecoderClass() -> ResponseDataDecoderProtocol.Type {
+        WGApiJSONDataDecoder.self
     }
 
     public class func modelClass() -> ModelClassType? {

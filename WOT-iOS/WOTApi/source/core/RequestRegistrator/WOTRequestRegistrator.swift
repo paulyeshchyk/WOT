@@ -6,7 +6,7 @@
 //
 
 public class WOTRequestRegistrator: RequestRegistrator {
-    //
+
     public required init(appContext: Context) {
         super.init(appContext: appContext)
         do {

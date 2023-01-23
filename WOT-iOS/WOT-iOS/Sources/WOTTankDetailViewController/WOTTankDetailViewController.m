@@ -61,7 +61,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 @implementation WOTTankDetailViewController
 
-@synthesize appContext;
+//@synthesize appContext;
 
 #define WOT_REQUEST_ID_VEHICLE_ITEM @"WOT_REQUEST_ID_VEHICLE_ITEM"
 
@@ -89,7 +89,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 - (id)initWithContext:(id<ContextProtocol>)context {
     self = [super initWithNibName:NSStringFromClass([WOTTankDetailViewController class]) bundle:nil];
     if (self) {
-        self.appContext = context;
+//        self.appContext = context;
     }
     return self;
 }
@@ -271,7 +271,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
          * Default Profile
          */
         [WOTWEBRequestFactory fetchProfileDataWithProfileTankId: [tankId integerValue]
-                                                 requestManager: self.appContext.requestManager
+                                                     appContext: [UIApplication sharedApplication].delegate
                                                        listener: self
                                                           error: &error];
     }
@@ -322,7 +322,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: tankID
-                                                 appContext: self.appContext
+                                                 appContext: [UIApplication sharedApplication].delegate
                                                    listener: self
                                                       error: &error];
 }

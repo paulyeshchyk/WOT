@@ -7,6 +7,6 @@
 
 @objc
 public protocol MD5Protocol {
-    @objc
+
     var MD5: String { get }
 }

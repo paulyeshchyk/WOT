@@ -10,22 +10,16 @@
 
 @objc
 public protocol HostConfigurationContainerProtocol {
-    @objc var hostConfiguration: HostConfigurationProtocol? { get set }
+    var hostConfiguration: HostConfigurationProtocol? { get set }
 }
 
 // MARK: - HostConfigurationProtocol
 
 @objc
 public protocol HostConfigurationProtocol {
-    @objc
+
     var applicationID: String { get }
-
-    @objc
     var host: String { get }
-
-    @objc
     var scheme: String { get }
-
-    @objc
     func urlQuery(with: RequestArgumentsProtocol?) -> String?
 }

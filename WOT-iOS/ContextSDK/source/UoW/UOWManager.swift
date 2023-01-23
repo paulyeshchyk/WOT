@@ -149,6 +149,7 @@ extension UOWRunnable {
 // MARK: - UOWManager.Errors
 
 extension UOWManager {
+
     enum Errors: Error {
         case uowIsNotRunnable
         case uowHasNoRunnableBlock

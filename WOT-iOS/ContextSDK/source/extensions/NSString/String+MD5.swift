@@ -11,10 +11,9 @@ import CommonCrypto
 
 @objc
 public class MD5: NSString {
-    @objc
-    public static func MD5(from: NSString) -> NSString? {
-        return from.MD5_1()
-    }
+
+    @objc public static func MD5(from: NSString) -> NSString? { return from.MD5_1() }
+
 }
 
 extension String {

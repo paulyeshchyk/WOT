@@ -9,7 +9,7 @@
 
 @objc
 public protocol SessionManagerContainerProtocol {
-    @objc var sessionManager: SessionManagerProtocol? { get set }
+    var sessionManager: SessionManagerProtocol? { get set }
 }
 
 // MARK: - SessionManagerProtocol

@@ -10,6 +10,6 @@
 
 @protocol ContextControllerProtocol;
 
-@interface WOTTankListViewController : UIViewController<ContextControllerProtocol>
+@interface WOTTankListViewController : UIViewController
 
 @end
