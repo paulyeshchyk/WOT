@@ -44,13 +44,13 @@
 
 + (void)logout {
     
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdLogout];
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogout];
     [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
 }
 
 + (void)login {
 
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdLogin];
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
     [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
 }
 
@@ -82,15 +82,10 @@
     static id instance;
     dispatch_once(&once, ^{
         
-        if ([NSThread isMainThread]) {
-            instance = [[self alloc] init];
-        } else {
+        [NSThread executeOnMainThread:^{
             
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                instance = [[self alloc] init];
-            });
-        }
-        
+            instance = [[self alloc] init];
+        }];
     });
     return instance;
 }

@@ -141,19 +141,14 @@
 
         [self save];
         
-        if (completionBlock){
+        [NSThread executeOnMainThread:^{
             
-            if ([NSThread isMainThread]) {
+            if (completionBlock){
                 
                 completionBlock();
-            } else {
-                
-                dispatch_sync(dispatch_get_main_queue(),^(){
-                    
-                    completionBlock();
-                });
             }
-        }
+        }];
+        
     }];
 }
 

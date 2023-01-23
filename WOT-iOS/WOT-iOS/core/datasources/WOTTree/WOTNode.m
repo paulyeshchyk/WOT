@@ -10,20 +10,31 @@
 
 @interface WOTNode ()
 
-@property (nonatomic, strong)NSMutableOrderedSet *childList;
+@property (nonatomic, readwrite, strong)NSMutableOrderedSet *childList;
 @property (nonatomic, readwrite, strong)NSURL *imageURL;
+
 @end
 
 @implementation WOTNode
 
 - (void)dealloc {
     
-    [self.childList removeAllObjects];
+    [self removeAllNodes];
+}
+
+- (id)init {
+    
+    self = [super init];
+    if (self){
+    
+        self.isVisible = YES;
+    }
+    return self;
 }
 
 - (id)initWithName:(NSString *)name {
     
-    self = [super init];
+    self = [self init];
     if (self){
         
         self.name = name;
@@ -33,14 +44,19 @@
 
 - (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL{
     
-    self = [super init];
+    self = [self initWithName:name];
     if (self){
         
-        self.name = name;
         self.imageURL = imageURL;
     }
     return self;
 }
+
+- (NSUInteger)hash {
+    
+    return [self.name hash];
+}
+
 
 - (NSArray *)children {
     
@@ -53,8 +69,25 @@
         
         self.childList = [[NSMutableOrderedSet alloc] init];
     }
+    
     child.parent = self;
     [self.childList addObject:child];
+}
+
+- (void)removeAllNodes {
+    
+    [self.childList enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+       
+        node.parent = nil;
+        [node removeAllNodes];
+    }];
+    [self.childList removeAllObjects];
+}
+
+- (void)addChildArray:(NSArray *)childArray {
+    
+    NSSet *set = [NSSet setWithArray:childArray];
+    [self addChildren:set];
 }
 
 - (void)removeChild:(WOTNode *)child {
@@ -70,7 +103,14 @@
         self.childList = [[NSMutableOrderedSet alloc] init];
     }
     
+    [childrenSet enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
+        
+        node.parent = self;
+    }];
+    
+    
     [self.childList unionSet:childrenSet];
 }
+
 
 @end

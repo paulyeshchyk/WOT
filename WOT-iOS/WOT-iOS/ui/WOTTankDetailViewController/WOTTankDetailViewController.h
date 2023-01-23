@@ -10,6 +10,6 @@
 
 @interface WOTTankDetailViewController : UIViewController
 
-@property (nonatomic, copy)NSNumber * tankId;
+@property (nonatomic, strong) NSNumber *tankId;
 
 @end

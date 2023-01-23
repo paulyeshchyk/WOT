@@ -13,7 +13,6 @@
 @interface WOTWEBRequest () <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection *connection;
-@property (nonatomic, assign) NSUInteger privateHash;
 @property (nonatomic, strong) NSMutableData *data;
 
 @end
@@ -46,10 +45,6 @@ static NSString *urlEncode(NSString *string) {
     self = [super init];
     if (self){
         
-        NSUInteger urlHash = [[self queryIntoString] hash];
-        NSUInteger argHash = [self.args hash];
-        
-        self.privateHash =  urlHash ^ argHash;
         self.data = nil;
     }
     return self;
@@ -62,8 +57,9 @@ static NSString *urlEncode(NSString *string) {
 
 - (NSUInteger)hash {
 
-
-    return self.privateHash;
+    NSUInteger urlHash = [[self queryIntoString] hash];
+    NSUInteger argHash = [[self.args description] hash];
+    return  urlHash ^ argHash;
 }
 
 - (NSString *)description {
@@ -112,7 +108,8 @@ static NSString *urlEncode(NSString *string) {
 
     [super temp_executeWithArgs:args];
 
-    debugLog(@"webrequest-start%@-%@",self.availableInGroups, [self.url absoluteString]);
+    NSCAssert(self.availableInGroups, @"execution group is unknown");
+    
     NSURL *url = self.url;
     NSData *bodyData = self.httpBodyData;
     
@@ -123,15 +120,22 @@ static NSString *urlEncode(NSString *string) {
     self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [self.connection start];
     
+    [[WOTRequestExecutor sharedInstance] requestHasStarted:self];
 }
 
 - (void)cancel {
     
     [self.connection cancel];
+    [[WOTRequestExecutor sharedInstance] requestHasCanceled:self];
     
-    [[WOTRequestExecutor sharedInstance] removeRequest:self];
 }
 
+- (void)cancelAndRemoveFromQueue {
+    
+    [self cancel];
+
+    [[WOTRequestExecutor sharedInstance] removeRequest:self];
+}
 
 - (void)finalizeWithData:(id)data error:(NSError *)error {
     
@@ -212,7 +216,7 @@ static NSString *urlEncode(NSString *string) {
     [self parseData:self.data error:nil];
     self.data = nil;
     
-    debugLog(@"webrequest-finished:%@",self);
+    [[WOTRequestExecutor sharedInstance] requestHasFinishedLoadData:self];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -220,7 +224,7 @@ static NSString *urlEncode(NSString *string) {
     [self parseData:nil error:error];
     self.data = nil;
 
-    debugError(@"webrequest-failture:%@",self);
+    [[WOTRequestExecutor sharedInstance] requestHasFailed:self];
 }
 
 @end

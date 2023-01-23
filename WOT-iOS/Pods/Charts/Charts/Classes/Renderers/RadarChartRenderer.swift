@@ -65,7 +65,7 @@ public class RadarChartRenderer: ChartDataRendererBase
             var e = entries[j];
             
             var p = ChartUtils.getPosition(center: center, dist: CGFloat(e.value - _chart.chartYMin) * factor, angle: sliceangle * CGFloat(j) + _chart.rotationAngle);
-            
+            if (!(isnan(p.x) || isnan(p.x))){
             if (j == 0)
             {
                 CGPathMoveToPoint(path, nil, p.x, p.y);
@@ -73,6 +73,7 @@ public class RadarChartRenderer: ChartDataRendererBase
             else
             {
                 CGPathAddLineToPoint(path, nil, p.x, p.y);
+            }
             }
         }
         

@@ -17,10 +17,10 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gG7-y3-G6L">
                     <rect key="frame" x="4" y="4" width="312" height="560"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="gG7-y3-G6L" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="4" id="9Km-hj-tUQ"/>
                 <constraint firstItem="gG7-y3-G6L" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="4" id="RBe-IZ-ANU"/>

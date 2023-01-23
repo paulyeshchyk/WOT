@@ -57,23 +57,26 @@
         
         [requests enumerateKeysAndObjectsUsingBlock:^(NSNumber *requestId, id obj, BOOL *stop) {
             
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [NSThread executeOnMainThread:^{
                 
                 id args = requests[requestId];
-                WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:[requestId integerValue]];
-                [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+                WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:[requestId integerValue]];
                 
-#warning check groupId
-                [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicle"];
-                
-            });
+                NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ADOPT,requestId];
+                BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:groupId];
+                if (canAdd) {
+                    
+                    [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+                }
+            }];
+            
         }];
         
     }];
 }
 
 #pragma mark - private
-- (NSMutableDictionary *)parseVehicleObject:(NSDictionary *)jSON class:(Class)clazz context:(NSManagedObjectContext *)context key:(id)key{
+- (NSDictionary *)parseVehicleObject:(NSDictionary *)jSON class:(Class)clazz context:(NSManagedObjectContext *)context key:(id)key{
     
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
     
@@ -124,7 +127,7 @@
         }
     }
     
-    return result;
+    return [result copy];
 }
 
 /**

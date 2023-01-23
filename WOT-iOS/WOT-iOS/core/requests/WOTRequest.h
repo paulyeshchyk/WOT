@@ -22,5 +22,6 @@ typedef void(^WOTRequestCallback)(id data, NSError *error);
 
 - (void)temp_executeWithArgs:(NSDictionary *)args ;//DEPRECATED_ATTRIBUTE;
 - (void)cancel;
+- (void)cancelAndRemoveFromQueue;
 
 @end

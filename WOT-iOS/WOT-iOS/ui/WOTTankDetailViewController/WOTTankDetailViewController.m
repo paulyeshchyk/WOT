@@ -13,18 +13,22 @@
 #import "ModulesTree.h"
 
 #import "WOTRequestExecutor.h"
-#import "WOTTankDetailCollectionViewCell.h"
-#import "WOTTankDetailCollectionReusableView.h"
 #import "WOTTankDetailDatasource.h"
-#import "WOTTankDetailCollectionViewFlowLayout.h"
-#import "WOTTankConfigurationViewController.h"
+#import "WOTTankModuleTreeViewController.h"
 
 #import "WOTTankIdsDatasource.h"
 
 #import "WOTRadarViewController.h"
 #import "WOTTankDetailSection+Factory.h"
+#import "WOTRadarViewController.h"
+#import "WOTTankMetricsList.h"
+#import "WOTMetric.h"
+#import "WOTTanksIDList.h"
+#import "WOTTankMetricOptions.h"
 
-@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+#import "WOTMetric+Samples.h"
+
+@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate >
 
 @property (nonatomic, weak) IBOutlet UIToolbar *bottomBar;
 @property (nonatomic, weak) IBOutlet UIToolbar *topBar;
@@ -39,13 +43,17 @@
 @property (nonatomic, weak) IBOutlet UIButton *configurationTopButton;
 @property (nonatomic, weak) IBOutlet UIButton *configurationDefaultButton;
 
+@property (nonatomic, weak) IBOutlet UIView *radarContainer;
+
+@property (nonatomic, strong)WOTRadarViewController *radarViewController;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
-@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
-@property (nonatomic, strong) WOTTankDetailDatasource *datasource;
+
 @property (nonatomic, strong) NSError *fetchError;
+
+@property (nonatomic, assign)WOTTankMetricOptions metricOptions;
 @property (nonatomic, strong)Vehicles *vehicle;
-@property (nonatomic, readonly)NSString *requestsGroupId;
+@property (nonatomic, strong)NSMutableSet *runningRequestIDs;
 
 @end
 
@@ -53,10 +61,20 @@
 
 - (void)dealloc {
     
+    self.radarViewController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:self.requestsGroupId];
+
+    NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
+    [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:requestId];
+    
+    [self.runningRequestIDs enumerateObjectsUsingBlock:^(id requestID, BOOL *stop) {
+        
+        [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:requestID];
+    }];
+    
+    [self.runningRequestIDs removeAllObjects];
+    
     self.fetchedResultController.delegate = nil;
-    self.datasource = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -64,20 +82,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
         
-        self.datasource = [[WOTTankDetailDatasource alloc] init];
-        [self.datasource addSection:[WOTTankDetailSection engineSection]];
-        [self.datasource addSection:[WOTTankDetailSection chassisSection]];
-        [self.datasource addSection:[WOTTankDetailSection turretsSection]];
-        [self.datasource addSection:[WOTTankDetailSection radiosSection]];
-        [self.datasource addSection:[WOTTankDetailSection gunsSection]];
     }
     return self;
-}
-
-
-- (NSString *)requestsGroupId {
-    
-    return [NSString stringWithFormat:@"vehicles:%@",self.tankId];
 }
 
 - (NSString *)prevModuleNamesForModule:(ModulesTree *)moduleTree {
@@ -111,41 +117,86 @@
     
 }
 
+- (void)setMetricOptions:(WOTTankMetricOptions)metricOptions {
+
+    if (metricOptions == WOTTankMetricOptionNone) {
+        
+        if (_metricOptions == WOTTankMetricOptionNone) {
+            
+            _metricOptions = WOTTankMetricOptionArmor;
+        } else {
+            
+            //do nothing; leave as is
+        }
+    } else {
+        
+        _metricOptions = metricOptions;
+    }
+    
+    self.propertyArmorButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionArmor];
+    self.propertyObserveButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankDetailPropertySelectionObserve];
+    self.propertyFireButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankDetailPropertySelectionFire];
+    self.propertyMobilityButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankDetailPropertySelectionMobility];
+    [self updateUINeedReset:YES];
+}
+
+- (void)setVehicle:(Vehicles *)vehicle {
+
+    if (_vehicle != vehicle) {
+        
+        _vehicle = vehicle;
+        self.title = _vehicle.tanks.name_i18n;
+
+        NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[_vehicle.tier]];
+        
+        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
+        [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
+            
+            NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_BY_TIER, tankId];
+            if (!self.runningRequestIDs){
+                
+                self.runningRequestIDs = [[NSMutableSet alloc] init];
+            }
+            [self.runningRequestIDs addObject:groupId];
+            [self refetchTankID:[tankId stringValue] groupId:groupId];
+        }];
+    }
+    
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
 
+    self.metricOptions = WOTTankMetricOptionNone;
     
+    self.radarViewController = [[WOTRadarViewController alloc] initWithNibName:NSStringFromClass([WOTRadarViewController class]) bundle:nil];
+    [self.radarContainer addSubview:self.radarViewController.view];
+    [self.radarViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.radarViewController.view addStretchingConstraints];
+    [self.radarViewController setDelegate:self];
+
     [self.configurationCustomButton setSelected:YES];
     [self.propertyAllButton setSelected:YES];
-    
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionReusableView class]) bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionReusableView class])];
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionViewCell class])];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextObjectsDidChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
 
     [self.topBar setDarkStyle];
     [self.bottomBar setDarkStyle];
     
+    [self updateUINeedReset:NO];
 }
 
-- (void)setVehicle:(Vehicles *)vehicle {
+- (void)updateUINeedReset:(BOOL)needReset {
     
-    if (_vehicle != vehicle){
-
-        _vehicle = vehicle;
+    [NSThread executeOnMainThread:^{
         
-        [self refetchPossibleTiersForTier:_vehicle.tier];
-    }
-    
-}
-
-- (void)updateUI {
-    
-    self.title = self.vehicle.tanks.name_i18n;
-    
-    [self.collectionView reloadData];
-    [self.collectionView.collectionViewLayout invalidateLayout];
+        if (needReset) {
+            
+            [self.radarViewController needToBeCleared];
+        }
+        [self.radarViewController reload];
+    }];
 }
 
 - (NSFetchedResultsController *)fetchedResultController {
@@ -163,13 +214,21 @@
     return _fetchedResultController;
 }
 
-- (void)setTankId:(NSString *)tankId {
+- (void)setTankId:(NSNumber *)tankId {
     
-    _tankId = [tankId copy];
-    [self refetchTankID:[self.tankId stringValue]];
+    if (![tankId isEqual:_tankId]) {
+        
+        _tankId = [tankId copy];
+        
+        NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
+        [self refetchTankID:[_tankId stringValue] groupId:requestId];
 
-    
-    [self refetchCurrentVehicle];
+        NSError *error = nil;
+        [self.fetchedResultController performFetch:&error];
+        self.fetchError = error;
+        
+        self.vehicle =  [self.fetchedResultController.fetchedObjects lastObject];
+    }
 }
 
 - (void)setFetchError:(NSError *)fetchError {
@@ -177,7 +236,7 @@
     _fetchError = fetchError;
 }
 
-- (void)refetchTankID:(NSString *)tankID {
+- (void)refetchTankID:(NSString *)tankID groupId:(id)groupId{
 
     if (!([tankID integerValue] > 0)) {
         
@@ -189,33 +248,12 @@
     [args setObject:tankID forKey:WOT_KEY_TANK_ID];
     [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
 
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:self.requestsGroupId];
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankVehicles];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:groupId];
     if (canAdd) {
         
         [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
     }
-    
-}
-
-- (void)refetchCurrentVehicle {
-    
-    NSError *error = nil;
-    [self.fetchedResultController performFetch:&error];
-    self.fetchError = error;
-    
-    self.vehicle = [self.fetchedResultController.fetchedObjects lastObject];
-}
-
-- (void)refetchPossibleTiersForTier:(NSNumber *)tier {
-    
-    NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[tier]];
-    
-    NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
-    [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
-        
-        [self refetchTankID:[tankId stringValue]];
-    }];
 }
 
 
@@ -223,79 +261,8 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
  
     self.vehicle = [self.fetchedResultController.fetchedObjects lastObject];
-    [self updateUI];
-}
 
-
-#pragma mark - UICollectionViewDataSource
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-
-    return [self.datasource numberOfSections];
-}
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    
-    WOTTankDetailCollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionReusableView class]) forIndexPath:indexPath];
-    view.hasSubitems = ([self collectionView:collectionView numberOfItemsInSection:indexPath.section] > 0);
-    [view setViewName:[self.datasource sectionNameAtIndex:indexPath.section]];
-    return view;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-
-    NSString *query = [self.datasource queryAtSection:section];
-    NSSet *fetchedObjects = [[self.fetchedResultController.fetchedObjects valueForKeyPath:query] lastObject];
-    if (!fetchedObjects || ![fetchedObjects isKindOfClass:[NSSet class]]) {
-
-        return 0;
-    }
-    
-    id filteredObjects = [fetchedObjects allObjects];
-    NSInteger cnt = [filteredObjects count];
-    return cnt;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    WOTTankDetailCollectionViewCell *result =(WOTTankDetailCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionViewCell class]) forIndexPath:indexPath];
-
-    NSString *query = [self.datasource queryAtSection:indexPath.section];
-
-    NSArray * fields = [self.datasource metricsInSecton:indexPath.section];
-
-    id filteredObjects = [[[self.fetchedResultController.fetchedObjects valueForKeyPath:query] lastObject] allObjects];
-    
-    NSManagedObject *faultedObject = filteredObjects[indexPath.row];
-    
-    result.isLastInSection = (indexPath.row == ([self collectionView:collectionView numberOfItemsInSection:indexPath.section] - 1));
-    result.fetchedObject = faultedObject;
-    result.fields = fields;
-    [result invalidate];
-    return result;
-}
-
-#pragma mark - UICollectionViewDelegate
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-}
-
-#pragma mark - UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-
-    CGFloat separatorHeight = 1.0f;
-    CGSize initialSize = [(WOTTankDetailCollectionViewFlowLayout *)collectionViewLayout itemSize];
-    
-    NSArray * fields = [self.datasource metricsInSecton:indexPath.section];
-    CGSize result = [WOTTankDetailCollectionViewCell sizeFitSize:initialSize forFetchedObject:nil andFields:fields];
-    
-    return CGSizeMake(result.width, result.height + separatorHeight);
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    
-    CGSize initialSize = [(WOTTankDetailCollectionViewFlowLayout *)collectionViewLayout headerReferenceSize];
-    return initialSize;
+    [self updateUINeedReset:NO];
 }
 
 #pragma mark -
@@ -330,18 +297,8 @@
      
      */
 
-    __weak typeof(self)weakSelf = self;
-    BOOL isMain = [NSThread isMainThread];
-    if (isMain) {
-        
-        [self updateUI];
-    } else {
-        
-        dispatch_sync(dispatch_get_main_queue(), ^{
-
-            [weakSelf updateUI];
-        });
-    }
+    [self updateUINeedReset:NO];
+    
 }
 
 
@@ -354,7 +311,7 @@
     self.configurationTopButton.selected = NO;
     
     
-    WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
+    WOTTankModuleTreeViewController *configurationSelector = [[WOTTankModuleTreeViewController alloc] initWithNibName:NSStringFromClass([WOTTankModuleTreeViewController class]) bundle:nil];
     [configurationSelector setCancelBlock:^(){
         [self dismissViewControllerAnimated:YES completion:NULL];
     }];
@@ -366,7 +323,6 @@
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:configurationSelector];
     [self presentViewController:navController animated:YES completion:NULL];
-    
 }
 
 - (IBAction)onConfigurationTopSelection:(id)sender {
@@ -385,47 +341,36 @@
 
 - (IBAction)onPropertyAllSelection:(id)sender {
     
-    self.propertyAllButton.selected = YES;
-    self.propertyArmorButton.selected = NO;
-    self.propertyFireButton.selected = NO;
-    self.propertyMobilityButton.selected = NO;
 }
 
 - (IBAction)onPropertyArmorSelection:(id)sender {
     
-    self.propertyAllButton.selected = NO;
-    self.propertyArmorButton.selected = YES;
-    self.propertyFireButton.selected = NO;
-    self.propertyMobilityButton.selected = NO;
-    self.propertyObserveButton.selected = NO;
+    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionArmor];
 }
 
 - (IBAction)onPropertyFireSelection:(id)sender {
-    
-    self.propertyAllButton.selected = NO;
-    self.propertyArmorButton.selected = NO;
-    self.propertyFireButton.selected = YES;
-    self.propertyMobilityButton.selected = NO;
-    self.propertyObserveButton.selected = NO;
+
+    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankDetailPropertySelectionFire];
 }
 
 - (IBAction)onPropertyMobilitySelection:(id)sender {
-    
-    self.propertyAllButton.selected = NO;
-    self.propertyArmorButton.selected = NO;
-    self.propertyFireButton.selected = NO;
-    self.propertyMobilityButton.selected = YES;
-    self.propertyObserveButton.selected = NO;
+
+    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankDetailPropertySelectionMobility];
 }
 
 - (IBAction)onPropertyObserveSelection:(id)sender {
     
-    self.propertyAllButton.selected = NO;
-    self.propertyArmorButton.selected = NO;
-    self.propertyFireButton.selected = NO;
-    self.propertyMobilityButton.selected = NO;
-    self.propertyObserveButton.selected = YES;
+    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankDetailPropertySelectionObserve];
 }
 
+#pragma mark - WOTRadarViewControllerDelegate
+
+- (RadarChartData *)radarData {
+    
+    WOTTankMetricsList *sample = [[WOTTankMetricsList alloc] init];
+    [sample addTankID:[[WOTTanksIDList alloc] initWithId:self.tankId]];
+    [sample addMetrics:[WOTMetric metricsForOption:self.metricOptions]];
+    return sample.chartData;
+}
 
 @end
