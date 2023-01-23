@@ -62,7 +62,7 @@ public struct WOTPivotMetadataPermutator {
             if let result: WOTPivotNodeProtocol = endpoint.copy(with: nil) as? WOTPivotNodeProtocol {
                 resultArray.append(result)
 
-                if mutablePivotNodes.count > 0 {
+                if !mutablePivotNodes.isEmpty {
                     let children = iterateMiddle(templates: mutablePivotNodes, endpoints: nextEndPoints)
                     result.addChildArray(children)
                 } else {
@@ -77,7 +77,7 @@ public struct WOTPivotMetadataPermutator {
 
     private func iterateLast(endpoints: [WOTPivotNodeProtocol]?, predicates: [NSPredicate?]) -> [WOTPivotNodeProtocol] {
         var resultArray = [WOTPivotNodeProtocol]()
-        endpoints?.forEach({ (endpoint) in
+        endpoints?.forEach { (endpoint) in
             var subpredicates = predicates.compactMap { $0 }
             if let predicate = endpoint.predicate {
                 subpredicates.append(predicate)
@@ -89,7 +89,7 @@ public struct WOTPivotMetadataPermutator {
                 result.predicate = predicate
                 resultArray.append(result)
             }
-        })
+        }
         return resultArray
     }
 }

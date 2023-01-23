@@ -14,7 +14,7 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
     public static let sharedInstance = WOTNodeEnumerator()
 
     public func enumerateAll(node: WOTNodeProtocol, comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping WOTNodeProtocolCompletion) {
-        self.enumerateAll(children: node.children, comparator: comparator, childCompletion: childCompletion)
+        enumerateAll(children: node.children, comparator: comparator, childCompletion: childCompletion)
     }
 
     public func enumerateAll(children: [WOTNodeProtocol], comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping WOTNodeProtocolCompletion) {
@@ -33,7 +33,7 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         }
 
         var result: Int = 1
-        result += self.visibleParentsCount(node: parent)
+        result += visibleParentsCount(node: parent)
         return result
     }
 
@@ -43,12 +43,12 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         }
 
         var result: Int = 1
-        result += self.parentsCount(node: parent)
+        result += parentsCount(node: parent)
         return result
     }
 
     public func allItems(fromNode node: WOTNodeProtocol) -> [WOTNodeProtocol] {
-        return self.allItems(fromArray: node.children)
+        return allItems(fromArray: node.children)
     }
 
     public func allItems(fromArray array: [WOTNodeProtocol]) -> [WOTNodeProtocol] {
@@ -66,11 +66,11 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
             return nil
         }
 
-        guard root.children.count > 0 else {
+        guard !root.children.isEmpty else {
             return [root]
         }
 
-        return self.endpoints(array: root.children)
+        return endpoints(array: root.children)
     }
 
     public func endpoints(array: [WOTNodeProtocol]) -> [WOTNodeProtocol] {
@@ -98,7 +98,7 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
                 result += orValue
             }
         }
-        result += self.childrenWidth(siblingNode: parent, orValue: orValue)
+        result += childrenWidth(siblingNode: parent, orValue: orValue)
         return result
     }
 
@@ -117,7 +117,7 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
             let endpoints = self.endpoints(node: child)
             result += endpoints?.count ?? 0
         }
-        result += self.childrenCount(siblingNode: parent)
+        result += childrenCount(siblingNode: parent)
         return result
     }
 

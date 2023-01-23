@@ -6,8 +6,8 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import XCTest
 @testable import WOTPivot
+import XCTest
 
 class WOTDataModelTest: XCTestCase {
 //    lazy var model: WOTDataModelProtocol = {

@@ -6,15 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
 import ContextSDK
+import WOTKit
 
 // MARK: - KeypathProtocol
 
-extension Vehicleprofile {
+public extension Vehicleprofile {
     //
-    public typealias Fields = DataFieldsKeys
-    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
+    typealias Fields = DataFieldsKeys
+    enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case max_ammo
         case weight
         case hp
@@ -27,22 +27,25 @@ extension Vehicleprofile {
         case max_weight
     }
 
-    public enum RelativeKeys: String, CodingKey, CaseIterable {
+    enum RelativeKeys: String, CodingKey, CaseIterable {
         case modules
         case modulesTree
     }
 
     @objc
-    override public static func dataFieldsKeypaths() -> [String] {
+    override static func dataFieldsKeypaths() -> [String] {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
     @objc
-    override public static func relationFieldsKeypaths() -> [String] {
+    override static func relationFieldsKeypaths() -> [String] {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
-        return #keyPath(Vehicleprofile.hashName)
+    override class func primaryKeyPath(forType: PrimaryKeyType) -> String {
+        switch forType {
+        case .external: return #keyPath(Vehicleprofile.hashName)
+        case .internal: return #keyPath(Vehicleprofile.hashName)
+        }
     }
 }

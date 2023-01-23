@@ -12,29 +12,29 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     public var listener: WOTPivotDimensionListenerProtocol?
 
     private var rootNodeHolder: WOTPivotNodeHolderProtocol
-    required public init(rootNodeHolder: WOTPivotNodeHolderProtocol) {
+    public required init(rootNodeHolder: WOTPivotNodeHolderProtocol) {
         self.rootNodeHolder = rootNodeHolder
         super.init()
     }
 
-    required public init(enumerator: WOTNodeEnumeratorProtocol) {
+    public required init(enumerator _: WOTNodeEnumeratorProtocol) {
         fatalError("init(enumerator:) has not been implemented")
     }
 
     private var registeredCalculators = [AnyHashable: AnyClass]()
     public func registerCalculatorClass(_ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass) {
         let hash = hashValue(type: forNodeClass)
-        self.registeredCalculators[hash] = calculatorClass
+        registeredCalculators[hash] = calculatorClass
     }
 
     public func calculatorClass(forNodeClass: AnyClass) -> WOTDimensionCalculator.Type? {
         let hash = hashValue(type: forNodeClass)
-        let result: WOTDimensionCalculator.Type? = self.registeredCalculators[hash] as? WOTDimensionCalculator.Type
+        let result: WOTDimensionCalculator.Type? = registeredCalculators[hash] as? WOTDimensionCalculator.Type
         return result
     }
 
     public var rootNodeWidth: Int {
-        let rows = self.rootNodeHolder.rootRowsNode
+        let rows = rootNodeHolder.rootRowsNode
         let level = rows.isVisible ? 1 : 0
         return enumerator?.depth(forChildren: rows.children, initialLevel: level) ?? 0
     }
@@ -46,8 +46,8 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     }
 
     override public var contentSize: CGSize {
-        let height = self.getHeight()
-        let width = self.getWidth()
+        let height = getHeight()
+        let width = getWidth()
         return CGSize(width: width, height: height) // 156:11
     }
 
@@ -55,16 +55,16 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     #warning(" !!! TO BE refactored: too slow !!! ")
     override public func reload(forIndex externalIndex: Int, nodeCreator: WOTNodeCreatorProtocol?) {
-        self.index = externalIndex
+        index = externalIndex
 
-        let colNodeEndpoints = enumerator?.endpoints(node: self.rootNodeHolder.rootColsNode)
-        let rowNodeEndpoints = enumerator?.endpoints(node: self.rootNodeHolder.rootRowsNode)
-        let filterEndPoints = enumerator?.endpoints(node: self.rootNodeHolder.rootFilterNode)
+        let colNodeEndpoints = enumerator?.endpoints(node: rootNodeHolder.rootColsNode)
+        let rowNodeEndpoints = enumerator?.endpoints(node: rootNodeHolder.rootRowsNode)
+        let filterEndPoints = enumerator?.endpoints(node: rootNodeHolder.rootFilterNode)
 
         let dispatchGroup = DispatchGroup()
         colNodeEndpoints?.forEach { (colNode) in
-            rowNodeEndpoints?.forEach({ (rowNode) in
-                filterEndPoints?.forEach({ (filterNode) in
+            rowNodeEndpoints?.forEach { (rowNode) in
+                filterEndPoints?.forEach { (filterNode) in
 
                     dispatchGroup.enter()
 
@@ -83,8 +83,8 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
                         self.updateDimensions(dataNodes: dataNodes, colNode: colNode, rowNode: rowNode, filterNode: filterNode)
                         dispatchGroup.leave()
                     }
-                })
-            })
+                }
+            }
 
             dispatchGroup.notify(queue: DispatchQueue.main) {
                 self.listener?.didLoad(dimension: self)
@@ -92,14 +92,14 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
         }
     }
 
-    private func updateDimensions(dataNodes: [WOTNodeProtocol], colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) {
-        var result = self.index
+    private func updateDimensions(dataNodes: [WOTNodeProtocol], colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode _: WOTNodeProtocol) {
+        var result = index
 
-        self.setMaxWidth(dataNodes.count, forNode: colNode, byKey: String(format: "%d", rowNode.hash))
-        self.setMaxWidth(dataNodes.count, forNode: rowNode, byKey: String(format: "%d", colNode.hash))
+        setMaxWidth(dataNodes.count, forNode: colNode, byKey: String(format: "%d", rowNode.hash))
+        setMaxWidth(dataNodes.count, forNode: rowNode, byKey: String(format: "%d", colNode.hash))
 
         var idx: Int = 0
-        dataNodes.forEach({ (fetchedNode) in
+        dataNodes.forEach { (fetchedNode) in
             guard let dataNode = fetchedNode as? WOTPivotNodeProtocol else {
                 return
             }
@@ -110,12 +110,12 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
             dataNode.indexInsideStepParentColumn = idx
             self.rootNodeHolder.add(dataNode: dataNode)
             idx += 1
-        })
-        self.index = result
+        }
+        index = result
     }
 
     private func getWidth() -> Int {
-        let rootCols = self.rootNodeHolder.rootColsNode
+        let rootCols = rootNodeHolder.rootColsNode
         let columnEndpoints = enumerator?.endpoints(node: rootCols)
         let emptyDataColumnWidth = shouldDisplayEmptyColumns ? 1 : 0
 
@@ -124,13 +124,13 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
             let value = self.maxWidth(column, orValue: emptyDataColumnWidth)
             maxWidth += value
         }
-        return self.rootNodeWidth + maxWidth
+        return rootNodeWidth + maxWidth
     }
 
     private func getHeight() -> Int {
-        let rootRows = self.rootNodeHolder.rootRowsNode
+        let rootRows = rootNodeHolder.rootRowsNode
         let rowNodesEndpointsCount = enumerator?.endpoints(node: rootRows)?.count ?? 0
-        return self.rootNodeHeight + rowNodesEndpointsCount
+        return rootNodeHeight + rowNodesEndpointsCount
     }
 
     private func hashValue(type: Any.Type) -> Int {
@@ -138,7 +138,7 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     }
 
     public func pivotRect(forNode: WOTPivotNodeProtocol) -> CGRect {
-        guard let calculator = self.calculatorClass(forNodeClass: type(of: forNode)) else {
+        guard let calculator = calculatorClass(forNodeClass: type(of: forNode)) else {
             return .zero
         }
         let result = calculator.rectangle(forNode: forNode, dimension: self)

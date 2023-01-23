@@ -11,7 +11,4 @@ public protocol ResponseDataAdapterCreatorContainerProtocol {
 }
 
 @objc
-public protocol ResponseDataAdapterCreatorProtocol {
-    func responseDataAdapterInstance(for requestIdType: RequestIdType, request: RequestProtocol, managedObjectCreator: ManagedObjectCreatorProtocol) throws -> ResponseAdapterProtocol
-    func responseDataAdapterInstances(byRequestIdTypes: [RequestIdType], request: RequestProtocol, managedObjectCreator: ManagedObjectCreatorProtocol) -> [ResponseAdapterProtocol]
-}
+public protocol ResponseDataAdapterCreatorProtocol {}

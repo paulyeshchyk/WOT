@@ -8,16 +8,16 @@
 
 import UIKit
 
-extension CGRect {
-    public func center() -> CGPoint {
-        return CGPoint(x: self.midX, y: self.midY)
+public extension CGRect {
+    func center() -> CGPoint {
+        return CGPoint(x: midX, y: midY)
     }
 
-    public func centerHorizontalBottomVertical() -> CGPoint {
-        return CGPoint(x: self.midX, y: self.origin.y + self.size.height)
+    func centerHorizontalBottomVertical() -> CGPoint {
+        return CGPoint(x: midX, y: origin.y + size.height)
     }
 
-    public func centerHorizontalTopVertical() -> CGPoint {
-        return CGPoint(x: self.midX, y: self.origin.y)
+    func centerHorizontalTopVertical() -> CGPoint {
+        return CGPoint(x: midX, y: origin.y)
     }
 }

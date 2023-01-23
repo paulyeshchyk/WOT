@@ -23,7 +23,7 @@ open class WOTPivotViewController: UIViewController, ContextControllerProtocol {
                 return size ?? CGSize.zero
             }
             flowLayout?.itemRelativeRectCallback = { [weak self] (indexPath) in
-                let itemRect = self?.model.itemRect(atIndexPath: indexPath  as NSIndexPath)
+                let itemRect = self?.model.itemRect(atIndexPath: indexPath as NSIndexPath)
                 return itemRect ?? CGRect.zero
             }
             flowLayout?.itemLayoutStickyType = { [weak self] (indexPath) in
@@ -41,7 +41,7 @@ open class WOTPivotViewController: UIViewController, ContextControllerProtocol {
         return WOTPivotDataModel(enumerator: WOTNodeEnumerator.sharedInstance)
     }
 
-    lazy var model: WOTPivotDataModelProtocol  = {
+    lazy var model: WOTPivotDataModelProtocol = {
         return pivotModel()
     }()
 
@@ -59,81 +59,82 @@ open class WOTPivotViewController: UIViewController, ContextControllerProtocol {
     }
 
     func closePopover() {
-        self.hasOpenedPopover = false
+        hasOpenedPopover = false
     }
 
     func openPopover() {
-        self.hasOpenedPopover = true
+        hasOpenedPopover = true
     }
 
-    open func cell(forDataNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    open func cell(forDataNode _: WOTPivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 
     open func cell(forNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         switch node.cellType {
-        case .column, .row: return self.cell(forFixedNode: node, at: indexPath)
-        case .filter:       return self.cell(forFilterNode: node, at: indexPath)
-        case .data:         return self.cell(forDataNode: node, at: indexPath)
-        case .dataGroup:    return self.cell(forDataGroupNode: node, at: indexPath)
+        case .column,
+             .row: return cell(forFixedNode: node, at: indexPath)
+        case .filter: return cell(forFilterNode: node, at: indexPath)
+        case .data: return cell(forDataNode: node, at: indexPath)
+        case .dataGroup: return cell(forDataGroupNode: node, at: indexPath)
         }
     }
 
-    open func cell(forFixedNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    open func cell(forFixedNode _: WOTPivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 
-    open  func cell(forFilterNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    open func cell(forFilterNode _: WOTPivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 
-    open func cell(forDataGroupNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    open func cell(forDataGroupNode _: WOTPivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
 
-        self.collectionView?.bounces = true
-        self.collectionView?.alwaysBounceHorizontal = false
-        self.collectionView?.alwaysBounceVertical = false
+        collectionView?.bounces = true
+        collectionView?.alwaysBounceHorizontal = false
+        collectionView?.alwaysBounceVertical = false
 
         if #available(iOS 10.0, *) {
             self.collectionView?.refreshControl = self.refreshControl
         } else {
-            self.collectionView?.addSubview(self.refreshControl)
+            collectionView?.addSubview(refreshControl)
         }
 
-        self.navigationController?.navigationBar.setDarkStyle()
+        navigationController?.navigationBar.setDarkStyle()
 
-        self.registerCells()
-        self.model.loadModel()
+        registerCells()
+        model.loadModel()
     }
 
     open func registerCells() {}
 }
 
 extension WOTPivotViewController: UICollectionViewDataSource {
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let node = self.model.item(atIndexPath: indexPath as NSIndexPath) else {
+    public func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let node = model.item(atIndexPath: indexPath as NSIndexPath) else {
             return UICollectionViewCell()
         }
-        return self.cell(forNode: node, at: indexPath)
+        return cell(forNode: node, at: indexPath)
     }
 
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.model.itemsCount(section: section)
+    public func collectionView(_: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return model.itemsCount(section: section)
     }
 }
 
 extension WOTPivotViewController: UICollectionViewDelegate {
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let pivotNode = self.model.item(atIndexPath: indexPath as NSIndexPath)  else {
+    public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let pivotNode = model.item(atIndexPath: indexPath as NSIndexPath) else {
             return
         }
 
-        guard self.hasOpenedPopover == false else {
-            self.closePopover()
+        guard hasOpenedPopover == false else {
+            closePopover()
             return
         }
 
@@ -157,13 +158,13 @@ extension WOTPivotViewController: UICollectionViewDelegate {
         config.doneBlock = { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
         }
-        self.navigationController?.pushViewController(config, animated: true)
+        navigationController?.pushViewController(config, animated: true)
     }
 }
 
 @objc(WOTTankPivotViewController)
 class WOTTankPivotViewController: WOTPivotViewController {
-    typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & RequestRegistratorContainerProtocol & DataStoreContainerProtocol
+    typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & DataStoreContainerProtocol
     var cancelBlock: WOTTankPivotCompletionCancelBlock?
     var doneBlock: WOTTankPivotCompletionDoneBlock?
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
@@ -180,18 +181,18 @@ class WOTTankPivotViewController: WOTPivotViewController {
         super.viewDidLoad()
 
         let items = [UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(WOTTankPivotViewController.openConstructor(_:)))]
-        self.navigationItem.setRightBarButtonItems(items, animated: false)
+        navigationItem.setRightBarButtonItems(items, animated: false)
     }
 
     @objc
-    func openConstructor(_ sender: Any) {
+    func openConstructor(_: Any) {
         let vc = WOTPivotConstructorViewController(nibName: "WOTPivotConstructorViewController", bundle: Bundle.main)
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     @objc
-    func refresh(_ refreshControl: UIRefreshControl) {
-        self.model.loadModel()
+    func refresh(_: UIRefreshControl) {
+        model.loadModel()
     }
 
     static var registeredCells: [UICollectionViewCell.Type] = {
@@ -213,7 +214,7 @@ class WOTTankPivotViewController: WOTPivotViewController {
 
     override func cell(forDataNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         let ident = String(describing: WOTTankPivotDataCollectionViewCell.self)
-        guard let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotDataCollectionViewCell else {
+        guard let cell = collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotDataCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.symbol = node.name
@@ -222,9 +223,9 @@ class WOTTankPivotViewController: WOTPivotViewController {
         return cell
     }
 
-    override func cell(forDataGroupNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    override func cell(forDataGroupNode _: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         let ident = String(describing: WOTTankPivotDataGroupCollectionViewCell.self)
-        guard let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotDataGroupCollectionViewCell else {
+        guard let cell = collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotDataGroupCollectionViewCell else {
             return UICollectionViewCell()
         }
         return cell
@@ -232,16 +233,16 @@ class WOTTankPivotViewController: WOTPivotViewController {
 
     override public func cell(forFixedNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         let ident = String(describing: WOTTankPivotFixedCollectionViewCell.self)
-        guard let result = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as?  WOTTankPivotFixedCollectionViewCell else {
+        guard let result = collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotFixedCollectionViewCell else {
             return UICollectionViewCell()
         }
         result.textValue = node.name
         return result
     }
 
-    override public func cell(forFilterNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    override public func cell(forFilterNode _: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         let ident = String(describing: WOTTankPivotFilterCollectionViewCell.self)
-        guard let result = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) else {
+        guard let result = collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) else {
             return UICollectionViewCell()
         }
         return result
@@ -250,13 +251,13 @@ class WOTTankPivotViewController: WOTPivotViewController {
 
 extension WOTTankPivotViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.refreshControl.contentOffset = scrollView.contentOffset
+        refreshControl.contentOffset = scrollView.contentOffset
     }
 }
 
 extension WOTTankPivotViewController: WOTDataModelListener {
-    func didFinishLoadModel(error: Error?) {
-        self.collectionView?.reloadData()
-        self.refreshControl.endRefreshing()
+    func didFinishLoadModel(error _: Error?) {
+        collectionView?.reloadData()
+        refreshControl.endRefreshing()
     }
 }

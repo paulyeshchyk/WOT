@@ -9,19 +9,19 @@
 import Foundation
 
 public class WOTDimensionFilterCalculator: WOTDimensionCalculator {
-    override class func x(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
+    override class func x(forNode _: WOTNodeProtocol, dimension _: WOTPivotDimensionProtocol) -> Int {
         return 0
     }
 
-    override class func y(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
+    override class func y(forNode _: WOTNodeProtocol, dimension _: WOTPivotDimensionProtocol) -> Int {
         return 0
     }
 
-    override class func width(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
+    override class func width(forNode _: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         return dimension.rootNodeWidth
     }
 
-    override class func height(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
+    override class func height(forNode _: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         return dimension.rootNodeHeight
     }
 }

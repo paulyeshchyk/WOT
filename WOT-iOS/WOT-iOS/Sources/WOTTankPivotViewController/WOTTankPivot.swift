@@ -6,10 +6,10 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTPivot
 import ContextSDK
-import WOTKit
 import WOTApi
+import WOTKit
+import WOTPivot
 
 class WOTTankPivotNodeCreator: WOTPivotNodeCreator {
     #warning("Pivot configuration: collapse")
@@ -86,14 +86,14 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 }
 
 class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & RequestRegistratorContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol
 
     private let appContext: Context
     let uuid: UUID = UUID()
     var MD5: String { uuid.MD5 }
 
     required init(modelListener: WOTDataModelListener, context: Context, settingsDatasource: WOTTankListSettingsDatasource) {
-        self.appContext = context
+        appContext = context
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
         let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, context: context)
 
@@ -109,11 +109,11 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
         enumerator = WOTNodeEnumerator.sharedInstance
     }
 
-    required init(enumerator enumer: WOTNodeEnumeratorProtocol) {
+    required init(enumerator _: WOTNodeEnumeratorProtocol) {
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    required init(fetchController: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator: WOTNodeCreatorProtocol, metadatasource: WOTDataModelMetadatasource, context: WOTPivotDataModel.Context) {
+    required init(fetchController _: WOTDataFetchControllerProtocol, modelListener _: WOTDataModelListener, nodeCreator _: WOTNodeCreatorProtocol, metadatasource _: WOTDataModelMetadatasource, context _: WOTPivotDataModel.Context) {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:context:) has not been implemented")
     }
 
@@ -126,25 +126,35 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
     override func loadModel() {
         super.loadModel()
 
+        appContext.logInspector?.logEvent(EventFlowStart("Pivot"), sender: self)
+
         do {
-            try performWebRequest()
+            try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: appContext, listener: self)
         } catch {
             appContext.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
         }
     }
 
-    private func performWebRequest() throws {
-        try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: appContext, listener: self)
+    override func cancelLoad(reason: RequestCancelReasonProtocol) {
+        //
+        appContext.requestManager?.cancelRequests(groupId: WebRequestType.vehicles.rawValue, reason: reason)
     }
 
-    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
+    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
         if completionResultType == .finished || completionResultType == .noData {
             requestManager.removeListener(self)
+            appContext.logInspector?.logEvent(EventFlowEnd("Pivot"), sender: self)
         }
         DispatchQueue.main.async {
             super.loadModel()
         }
     }
 
-    func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {}
+    func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {
+        //
+    }
+
+    func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
+        //
+    }
 }

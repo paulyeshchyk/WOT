@@ -13,7 +13,7 @@ public protocol RequestArgumentsProtocol {
     func buildQuery(_ custom: JSON) -> String
 }
 
-public typealias ArgumentsType = Swift.Dictionary<Swift.AnyHashable, Any>
+public typealias ArgumentsType = [Swift.AnyHashable: Any]
 
 @objc
 open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
@@ -24,7 +24,7 @@ open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
 
     override public var description: String { "\(type(of: self)): \(String(describing: dictionary))" }
 
-    required public convenience init(_ dictionary: ArgumentsType) {
+    public required convenience init(_ dictionary: ArgumentsType) {
         self.init()
 
         dictionary.keys.forEach {

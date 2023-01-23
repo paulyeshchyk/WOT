@@ -9,19 +9,15 @@
 /* Begin PBXBuildFile section */
 		1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D60E509245FE541007E5CA8 /* WOTKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */; };
-		1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E52B245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift */; };
 		1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */; };
 		1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */; };
 		1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */; };
 		1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */; };
 		1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E562245FE7E4007E5CA8 /* RequestManager.swift */; };
 		1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */; };
-		1D60E5B7245FE7E5007E5CA8 /* LogInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E576245FE7E5007E5CA8 /* LogInspector.swift */; };
 		1D7E0695247D0460008CB848 /* WOTKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E0694247D045F008CB848 /* WOTKitTests.swift */; };
 		1D7E0697247D0460008CB848 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E506245FE541007E5CA8 /* WOTKit.framework */; };
-		1DFCC92124713456005F580E /* MappingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92024713456005F580E /* MappingCoordinator.swift */; };
 		1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */; };
-		DA046110294F58B3000BFE77 /* OSLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04610F294F58B3000BFE77 /* OSLogWrapper.swift */; };
 		DA0E8044295064EC00B44CC6 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0E8043295064EC00B44CC6 /* ContextSDK.framework */; platformFilter = ios; };
 		DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */; };
 		DA81E7CD295326B800C60F31 /* NSThread+ExecutionOnMain.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -70,7 +66,6 @@
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
 		1D60E50A245FE541007E5CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect_Center.swift; sourceTree = "<group>"; };
-		1D60E52B245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Conversion.swift"; sourceTree = "<group>"; };
 		1D60E54B245FE7E4007E5CA8 /* WOTDataTanksFetchControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataTanksFetchControllerTest.swift; sourceTree = "<group>"; };
 		1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseParser.swift; sourceTree = "<group>"; };
 		1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestBuilder.swift; sourceTree = "<group>"; };
@@ -78,15 +73,12 @@
 		1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiver.swift; sourceTree = "<group>"; };
 		1D60E562245FE7E4007E5CA8 /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
-		1D60E576245FE7E5007E5CA8 /* LogInspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInspector.swift; sourceTree = "<group>"; };
 		1D7E0692247D045F008CB848 /* WOTKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D7E0694247D045F008CB848 /* WOTKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTKitTests.swift; sourceTree = "<group>"; };
 		1D7E0696247D0460008CB848 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1DFCC92024713456005F580E /* MappingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingCoordinator.swift; sourceTree = "<group>"; };
 		1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDataAdapterCreator.swift; sourceTree = "<group>"; };
 		81FCA397B8AC1996D248ADE5 /* Pods-WOTKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTKit.debug.xcconfig"; path = "Target Support Files/Pods-WOTKit/Pods-WOTKit.debug.xcconfig"; sourceTree = "<group>"; };
 		83D702B700F7C58D88F5D178 /* Pods-WOTKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTKit.release.xcconfig"; path = "Target Support Files/Pods-WOTKit/Pods-WOTKit.release.xcconfig"; sourceTree = "<group>"; };
-		DA04610F294F58B3000BFE77 /* OSLogWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLogWrapper.swift; sourceTree = "<group>"; };
 		DA0E8043295064EC00B44CC6 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCatalogExtractor.swift; sourceTree = "<group>"; };
 		DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
@@ -166,8 +158,6 @@
 			isa = PBXGroup;
 			children = (
 				1D60E536245FE7E4007E5CA8 /* CoreData */,
-				1D60E575245FE7E5007E5CA8 /* LogInspector */,
-				1DFCC91D24713364005F580E /* FetchAndDecode */,
 				1D60E557245FE7E4007E5CA8 /* Network */,
 				1D60E51C245FE7A7007E5CA8 /* basics */,
 				1D60E509245FE541007E5CA8 /* WOTKit.h */,
@@ -198,7 +188,6 @@
 				DA81E7B729531EBF00C60F31 /* UIImage+Bundle */,
 				1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */,
 				1D60E528245FE7A7007E5CA8 /* CGRect */,
-				1D60E52A245FE7A7007E5CA8 /* NSDecimalNumber */,
 			);
 			path = categories;
 			sourceTree = "<group>";
@@ -217,14 +206,6 @@
 				1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */,
 			);
 			path = CGRect;
-			sourceTree = "<group>";
-		};
-		1D60E52A245FE7A7007E5CA8 /* NSDecimalNumber */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E52B245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift */,
-			);
-			path = NSDecimalNumber;
 			sourceTree = "<group>";
 		};
 		1D60E536245FE7E4007E5CA8 /* CoreData */ = {
@@ -283,15 +264,6 @@
 			path = Request;
 			sourceTree = "<group>";
 		};
-		1D60E575245FE7E5007E5CA8 /* LogInspector */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E576245FE7E5007E5CA8 /* LogInspector.swift */,
-				DA04610F294F58B3000BFE77 /* OSLogWrapper.swift */,
-			);
-			path = LogInspector;
-			sourceTree = "<group>";
-		};
 		1D60E5F324601DAB007E5CA8 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,14 +295,6 @@
 				1D7E0696247D0460008CB848 /* Info.plist */,
 			);
 			path = WOTKitTests;
-			sourceTree = "<group>";
-		};
-		1DFCC91D24713364005F580E /* FetchAndDecode */ = {
-			isa = PBXGroup;
-			children = (
-				1DFCC92024713456005F580E /* MappingCoordinator.swift */,
-			);
-			path = FetchAndDecode;
 			sourceTree = "<group>";
 		};
 		1DFCC92C24714AAF005F580E /* ResponseAdapterCreator */ = {
@@ -499,6 +463,7 @@
 				1D60E503245FE541007E5CA8 /* Frameworks */,
 				1D60E504245FE541007E5CA8 /* Resources */,
 				1D60E5EA246013C0007E5CA8 /* sourcekitten */,
+				DA8A95A0295C38C200BFB62E /* SwiftFormat */,
 			);
 			buildRules = (
 			);
@@ -623,6 +588,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		DA8A95A0295C38C200BFB62E /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"swiftformat\" \"${SRCROOT}\" --config \"../.swiftformat.yml\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -642,8 +625,6 @@
 				DA81E90E29536FF500C60F31 /* Reachability.m in Sources */,
 				1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */,
 				1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */,
-				1D60E5B7245FE7E5007E5CA8 /* LogInspector.swift in Sources */,
-				DA046110294F58B3000BFE77 /* OSLogWrapper.swift in Sources */,
 				DA81E87F2953530000C60F31 /* UIView+StretchingConstraints.m in Sources */,
 				DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */,
 				1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */,
@@ -654,8 +635,6 @@
 				DA81E917295370BA00C60F31 /* RomanNumber.m in Sources */,
 				DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
-				1DFCC92124713456005F580E /* MappingCoordinator.swift in Sources */,
-				1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */,
 				DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */,
 				DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */,
 			);

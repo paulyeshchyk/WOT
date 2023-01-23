@@ -15,17 +15,17 @@ public class EventWarning: LogEventProtocol {
         message = ""
     }
 
-    required public init?(message text: String) {
+    public required init?(message text: String) {
         message = text
     }
 
-    convenience public init?(message: String, details: CustomDebugStringConvertible?) {
+    public convenience init?(message: String, details: CustomDebugStringConvertible?) {
         var messages: [String] = .init()
 
         messages.append(message)
 
         if let details = details {
-            if details.debugDescription.count > 0 {
+            if !details.debugDescription.isEmpty {
                 messages.append(details.debugDescription)
             }
         }
@@ -33,7 +33,7 @@ public class EventWarning: LogEventProtocol {
         self.init(message: messages.joined(separator: "; details: "))
     }
 
-    convenience public init?(error: Error?, details: Any?) {
+    public convenience init?(error: Error?, details: Any?) {
         var messages: [String] = .init()
         if let error = error {
             messages.append(String(describing: error))

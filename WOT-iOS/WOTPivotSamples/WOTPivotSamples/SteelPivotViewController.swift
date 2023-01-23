@@ -6,10 +6,10 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-import UIKit
-import WOTPivot
-import WOTApi
 import CoreData
+import UIKit
+import WOTApi
+import WOTPivot
 
 class SteelPivotViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView?
@@ -26,7 +26,7 @@ class SteelPivotViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.model.loadModel()
+        model.loadModel()
     }
 }
 
@@ -58,12 +58,12 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 }
 
 class SteelPivotFetchController: WOTDataFetchControllerProtocol {
-    func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void) {}
+    func fetchedNodes(byPredicates _: [NSPredicate], nodeCreator _: WOTNodeCreatorProtocol?, filteredCompletion _: (NSPredicate, [AnyObject]?) -> Void) {}
 
     var listener: WOTDataFetchControllerListenerProtocol?
 
-    func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws {
-        self.listener?.fetchPerformed(by: self)
+    func performFetch(nodeCreator _: WOTNodeCreatorProtocol?) throws {
+        listener?.fetchPerformed(by: self)
     }
 
     func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol] {
@@ -81,8 +81,8 @@ class SteelPivotFetchController: WOTDataFetchControllerProtocol {
 }
 
 extension SteelPivotViewController: WOTDataModelListener {
-    func didFinishLoadModel(error: Error?) {
-        self.collectionView?.reloadData()
+    func didFinishLoadModel(error _: Error?) {
+        collectionView?.reloadData()
     }
 
     func metadataItems() -> [WOTNodeProtocol] {
@@ -97,13 +97,13 @@ extension SteelPivotViewController: WOTDataFetchControllerDelegateProtocol {
 }
 
 extension SteelPivotViewController: WOTNodeCreatorProtocol {
-    func createNodeGroup(name: String, fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> WOTNodeProtocol {
+    func createNodeGroup(name: String, fetchedObjects: [AnyObject], byPredicate _: NSPredicate?) -> WOTNodeProtocol {
         let result = WOTPivotDataGroupNode(name: name)
         result.fetchedObjects = fetchedObjects
         return result
     }
 
-    func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol {
+    func createNode(fetchedObject _: AnyObject?, byPredicate _: NSPredicate?) -> WOTNodeProtocol {
         return WOTPivotDataNode(name: "noname")
     }
 
@@ -123,15 +123,15 @@ extension SteelPivotViewController: WOTNodeCreatorProtocol {
         return WOTNode(name: name)
     }
 
-    func createNode(fetchedObject: NSManagedObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol {
+    func createNode(fetchedObject _: NSManagedObject?, byPredicate _: NSPredicate?) -> WOTNodeProtocol {
         return WOTNode(name: "Test")
     }
 
-    func createNodes(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> [WOTNodeProtocol] {
+    func createNodes(fetchedObjects _: [AnyObject], byPredicate _: NSPredicate?) -> [WOTNodeProtocol] {
         return [WOTNode(name: "Test")]
     }
 
-    func createNodeGroup(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> WOTNodeProtocol {
+    func createNodeGroup(fetchedObjects _: [AnyObject], byPredicate _: NSPredicate?) -> WOTNodeProtocol {
         return WOTNode(name: "Test")
     }
 }
@@ -139,7 +139,7 @@ extension SteelPivotViewController: WOTNodeCreatorProtocol {
 extension SteelPivotViewController: UICollectionViewDelegate {}
 
 extension SteelPivotViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return 1
     }
 

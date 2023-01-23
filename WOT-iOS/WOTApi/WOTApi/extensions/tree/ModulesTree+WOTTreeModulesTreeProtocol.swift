@@ -5,16 +5,16 @@
 //  Created by Paul on 21.12.22.
 //
 
-import WOTPivot
 import WOTKit
+import WOTPivot
 
 extension ModulesTree: WOTTreeModulesTreeProtocol {
     public func moduleType() -> String? {
-        return self.type
+        return type
     }
 
     public func moduleLocalImageURL() -> URL? {
-        guard let imageName = self.type else {
+        guard let imageName = type else {
             return nil
         }
 
@@ -22,25 +22,25 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
     }
 
     public func moduleName() -> String {
-        return self.name ?? ""
+        return name ?? ""
     }
 
-    public func moduleValue(forKey: String) -> Any? {
+    public func moduleValue(forKey _: String) -> Any? {
         return nil
     }
 
     public func moduleIdInt() -> Int {
-        return self.module_id!.intValue
+        return module_id!.intValue
     }
 
     public func isCompatible(forTankId: NSNumber) -> Bool {
-        guard let tanksSet = self.next_tanks as? Set<Vehicles> else { return false }
+        guard let tanksSet = next_tanks as? Set<Vehicles> else { return false }
         let filtered = tanksSet.filter { $0.tank_id?.intValue == forTankId.intValue }
-        return filtered.count > 0
+        return !filtered.isEmpty
     }
 
     public func next_nodesId() -> [Int]? {
-        return self.next_modules?.compactMap {
+        return next_modules?.compactMap {
             ($0 as? Module)?.module_id?.intValue
         }
     }

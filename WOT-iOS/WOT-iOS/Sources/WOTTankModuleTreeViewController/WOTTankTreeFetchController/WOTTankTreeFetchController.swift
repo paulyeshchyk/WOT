@@ -17,7 +17,7 @@ class WOTTankTreeFetchController: WOTDataFetchController {
 
         var result = [WOTNodeProtocol]()
 
-        let filtered = self.fetchedObjects()?.filter { predicate.evaluate(with: $0) }
+        let filtered = fetchedObjects()?.filter { predicate.evaluate(with: $0) }
 
         filtered?.forEach { fetchedObject in
             let transformed = self.transform(tank: fetchedObject, nodeCreator: nodeCreator)
@@ -41,7 +41,7 @@ class WOTTankTreeFetchController: WOTDataFetchController {
     }
 
     private func transform(tank: AnyObject, nodeCreator: WOTNodeCreatorProtocol?) -> [WOTNodeProtocol] {
-        guard let tankId = self.tankId(tank) else {
+        guard let tankId = tankId(tank) else {
             return []
         }
 
@@ -49,7 +49,7 @@ class WOTTankTreeFetchController: WOTDataFetchController {
             return []
         }
 
-        guard let modules = self.vehicleModules(tank) else {
+        guard let modules = vehicleModules(tank) else {
             return [root]
         }
 
@@ -62,9 +62,9 @@ class WOTTankTreeFetchController: WOTDataFetchController {
             }
         }
 
-        self.transform(modulesSet: modules, withId: tankId, nodeCreation: nodeCreation)
+        transform(modulesSet: modules, withId: tankId, nodeCreation: nodeCreation)
 
-        self.append(listofNodes: temporaryList, into: root)
+        append(listofNodes: temporaryList, into: root)
         return [root]
     }
 
@@ -72,8 +72,8 @@ class WOTTankTreeFetchController: WOTDataFetchController {
         listofNodes.forEach { ident, value in
 
             let parents = findTheParent(childId: ident, listOfNodes: listofNodes)
-            if  parents.count > 0 {
-                parents.forEach({$0.addChild(value)})
+            if !parents.isEmpty {
+                parents.forEach {$0.addChild(value)}
             } else {
                 root.addChild(value)
             }
@@ -110,7 +110,7 @@ class WOTTankTreeFetchController: WOTDataFetchController {
     }
 
     private func transform(modulesTree: ModulesTree, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
-        guard let submodules = modulesTree.next_modules as? Set<ModulesTree>, submodules.count > 0 else {
+        guard let submodules = modulesTree.next_modules as? Set<ModulesTree>, !submodules.isEmpty else {
             return
         }
         submodules.forEach { submodule in

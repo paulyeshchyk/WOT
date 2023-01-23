@@ -15,11 +15,11 @@ public class EventError: LogEventProtocol {
         message = ""
     }
 
-    required public init?(message text: String) {
+    public required init?(message text: String) {
         message = text
     }
 
-    convenience public init?(_ error: Error?, details: Any?) {
+    public convenience init?(_ error: Error?, details: Any?) {
         var messages: [String] = .init()
         if let error = error {
             messages.append(String(describing: error))

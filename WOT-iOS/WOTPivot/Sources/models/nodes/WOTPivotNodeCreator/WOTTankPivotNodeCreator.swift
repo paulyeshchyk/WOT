@@ -27,13 +27,13 @@ open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
         return result
     }
 
-    open func createNodeGroup(name: String = "Group1", fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> WOTNodeProtocol {
+    open func createNodeGroup(name: String = "Group1", fetchedObjects: [AnyObject], byPredicate _: NSPredicate?) -> WOTNodeProtocol {
         let result = WOTPivotDataGroupNode(name: name)
         result.fetchedObjects = fetchedObjects
         return result
     }
 
-    open func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol {
+    open func createNode(fetchedObject _: AnyObject?, byPredicate _: NSPredicate?) -> WOTNodeProtocol {
         return WOTPivotDataNode(name: "noname")
     }
 
@@ -42,7 +42,7 @@ open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
 
         if cnt == 0 {
             if useEmptyNode {
-                let node = self.createEmptyNode()
+                let node = createEmptyNode()
                 return [node]
             } else {
                 return []
@@ -50,8 +50,8 @@ open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
         } else if cnt == 1 {
             return nodes(for: fetchedObjects, byPredicate: byPredicate)
         } else {
-            if self.collapseToGroups {
-                let node = self.createNodeGroup(fetchedObjects: fetchedObjects, byPredicate: byPredicate)
+            if collapseToGroups {
+                let node = createNodeGroup(fetchedObjects: fetchedObjects, byPredicate: byPredicate)
                 return [node]
             } else {
                 return nodes(for: fetchedObjects, byPredicate: byPredicate)

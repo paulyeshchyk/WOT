@@ -7,17 +7,15 @@
 //
 
 open class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
-    private var linkedClazz: PrimaryKeypathProtocol.Type
-    private var linkedObjectID: AnyObject
+    private let drivenJoint: Joint
 
-    public init(linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject) {
-        self.linkedClazz = linkedClazz
-        self.linkedObjectID = linkedObjectID
+    public init(drivenJoint: Joint) {
+        self.drivenJoint = drivenJoint
     }
 
-    public func build() -> RequestPredicateComposition? {
+    public func build() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate(parentObjectIDList: nil)
-        lookupPredicate[.primary] = linkedClazz.primaryKey(forType: .internal, andObject: linkedObjectID)
+        lookupPredicate[.primary] = drivenJoint.theClass.primaryKey(forType: .internal, andObject: drivenJoint.theID)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }

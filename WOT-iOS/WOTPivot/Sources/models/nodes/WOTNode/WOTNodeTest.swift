@@ -6,8 +6,8 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import XCTest
 @testable import WOTPivot
+import XCTest
 
 class WOTNodeTest: XCTestCase {
     var asyncExpectation: XCTestExpectation?
@@ -67,7 +67,7 @@ class WOTNodeTest: XCTestCase {
                 XCTFail("wait for expectation error:\(String(describing: error))")
             }
 
-            XCTAssert(node.children.count == 0)
+            XCTAssert(node.children.isEmpty)
         }
     }
 
@@ -77,7 +77,7 @@ class WOTNodeTest: XCTestCase {
         parent.addChild(child)
         child.removeParent()
         XCTAssert(child.parent == nil)
-        XCTAssert(parent.children.count == 0)
+        XCTAssert(parent.children.isEmpty)
     }
 
     func testDeleteChild() {
@@ -157,11 +157,11 @@ class WOTNodeTest: XCTestCase {
         XCTAssert(node[0].parent === node)
     }
 
-    static let WOTNodeEmptyComparator: WOTNodeComparatorType = { (node1, node2, level) in
+    static let WOTNodeEmptyComparator: WOTNodeComparatorType = { (_, _, _) in
         return .orderedSame
     }
 
-    static let WOTNodeNameComparator: WOTNodeComparatorType = { (node1, node2, level) in
+    static let WOTNodeNameComparator: WOTNodeComparatorType = { (node1, node2, _) in
         return node1.name.compare(node2.name)
     }
 

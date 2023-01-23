@@ -8,19 +8,19 @@
 
 @objc
 public class WOTTreeModuleNode: WOTNode, WOTTreeModuleNodeProtocol {
-    private(set) public var modulesTree: WOTTreeModulesTreeProtocol
+    public private(set) var modulesTree: WOTTreeModulesTreeProtocol
     public var imageURL: URL? {
-        return self.modulesTree.moduleLocalImageURL()
+        return modulesTree.moduleLocalImageURL()
     }
 
     @objc
-    required public init(moduleTree module: WOTTreeModulesTreeProtocol) {
+    public required init(moduleTree module: WOTTreeModulesTreeProtocol) {
         modulesTree = module
         super.init(name: module.moduleName())
     }
 
     @objc
-    public required init(name nameValue: String) {
+    public required init(name _: String) {
         fatalError("init(name:) has not been implemented")
     }
 

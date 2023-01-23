@@ -9,18 +9,9 @@
 import ContextSDK
 
 open class HttpRequest: Request {
-    private class HttpRequestCancelEvent: LogEventProtocol {
-        var eventType: LogEventType { .info }
-        var message: String { reason.reasonDescription }
-        var name: String { "HttpRequestCancelEvent" }
-
-        private let reason: RequestCancelReasonProtocol
-        init(reason: RequestCancelReasonProtocol) {
-            self.reason = reason
-        }
+    override public var description: String {
+        "\(type(of: self)): \(path)"
     }
-
-    override open var description: String { "\(type(of: self)): \(httpDataReceiver?.description ?? "?")" }
 
     private var httpDataReceiver: HttpDataReceiver?
 
@@ -35,7 +26,7 @@ open class HttpRequest: Request {
         }
     }
 
-    override open func start() throws {
+    override open func start(completion: @escaping (() -> Void)) throws {
         let urlRequest = try HttpRequestBuilder().build(hostConfiguration: appContext.hostConfiguration,
                                                         httpMethod: httpMethod,
                                                         path: path,
@@ -44,28 +35,28 @@ open class HttpRequest: Request {
 
         httpDataReceiver = HttpDataReceiver(context: appContext, request: urlRequest)
         httpDataReceiver?.delegate = self
-        httpDataReceiver?.start()
+        httpDataReceiver?.start(completion: completion)
     }
 }
 
 extension HttpRequest: HttpDataReceiverDelegateProtocol {
-    public func didCancel(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol, error: Error?) {
+    public func didCancel(urlRequest _: URLRequest, receiver _: HttpDataReceiverProtocol, error: Error?) {
         for listener in listeners {
             listener.request(self, canceledWith: error)
         }
     }
 
-    public func didStart(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol) {
+    public func didStart(urlRequest: URLRequest, receiver _: HttpDataReceiverProtocol) {
         for listener in listeners {
             listener.request(self, startedWith: urlRequest)
         }
     }
 
-    public func didEnd(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol, data: Data?, error: Error?) {
+    public func didEnd(urlRequest _: URLRequest, receiver _: HttpDataReceiverProtocol, data: Data?, error: Error?) {
         for listener in listeners {
             listener.request(self, finishedLoadData: data, error: error)
         }
-        self.httpDataReceiver?.delegate = nil
+        httpDataReceiver?.delegate = nil
     }
 }
 
@@ -75,4 +66,15 @@ extension HttpRequest: HttpServiceProtocol {
     open var httpMethod: ContextSDK.HTTPMethod { return .POST }
     open var path: String { fatalError("WOTWEBRequest:path need to be overriden") }
     open var httpBodyData: Data? { nil }
+}
+
+private class HttpRequestCancelEvent: LogEventProtocol {
+    var eventType: LogEventType { .info }
+    var message: String { reason.reasonDescription }
+    var name: String { "HttpRequestCancelEvent" }
+
+    private let reason: RequestCancelReasonProtocol
+    init(reason: RequestCancelReasonProtocol) {
+        self.reason = reason
+    }
 }

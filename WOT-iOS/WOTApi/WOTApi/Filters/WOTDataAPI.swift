@@ -15,7 +15,7 @@ protocol WOTAPIDefaultsProtocol: NSObjectProtocol {}
 @objc
 public class WOTApiForeignKeys: NSObject, WOTAPIProtocol {
     @objc public static let vehicles_default_profile_hp: String = "vehicles.default_profile.hp"
-    @objc public static let vehicles_default_profile_weight: String =  "vehicles.default_profile.weight"
+    @objc public static let vehicles_default_profile_weight: String = "vehicles.default_profile.weight"
     @objc public static let vehicles_default_profile_gun_fire_rate: String = "vehicles.default_profile.gun.fire_rate"
 }
 
@@ -30,6 +30,7 @@ public class WGWebQueryArgs: NSObject {
 @objc
 public class WGWebRequestGroups: NSObject {
     @objc public static let vehicle_profile: RequestIdType = "vehicle_profile".hashValue
+    @objc public static let vehicle_tree: RequestIdType = "vehicle_tree".hashValue
     @objc public static let vehicle_list: RequestIdType = "vehicle_list".hashValue
     @objc public static let login: RequestIdType = "login".hashValue
     @objc public static let logout: RequestIdType = "logout".hashValue
@@ -56,15 +57,17 @@ public class WOTLoginFields: NSObject {
     @objc public static let nickname: String = "nickname"
     @objc public static let code: String = "code"
     @objc public static let hashName: String = "hashName"
-    @objc public static let key: String = "key"
     @objc public static let location: String = "location"
     @objc public static let message: String = "message"
-    @objc public static let values: String = "values"
     @objc public static let default_profile: String = "default_profile"
 }
 
 @objc
 public class WOTApiFields: NSObject, WOTAPIProtocol {
+    @objc public static let key: String = "key"
+    @objc public static let type: String = "type"
+    @objc public static let values: String = "values"
+
     @objc public static let modules_tree: String = "modules_tree"
     @objc public static let engines: String = "engines"
     @objc public static let suspensions: String = "suspensions"
@@ -78,7 +81,6 @@ public class WOTApiFields: NSObject, WOTAPIProtocol {
 
     @objc public static let name: String = "name"
     @objc public static let short_name: String = "short_name"
-    @objc public static let type: String = "type"
     @objc public static let tier: String = "tier"
     @objc public static let nation: String = "nation"
     @objc public static let next_modules: String = "next_modules"
@@ -103,10 +105,10 @@ public class WOTApiFields: NSObject, WOTAPIProtocol {
 
 public class WOTApiTankType: NSObject, WOTAPIProtocol {
     @objc public static let at_spg: String = "AT-SPG"
-    @objc public static let spg  = "SPG"
-    @objc public static let lightTank  = "lightTank"
-    @objc public static let mediumTank  = "mediumTank"
-    @objc public static let heavyTank  = "heavyTank"
+    @objc public static let spg = "SPG"
+    @objc public static let lightTank = "lightTank"
+    @objc public static let mediumTank = "mediumTank"
+    @objc public static let heavyTank = "heavyTank"
 }
 
 public class WOTApiDefaults: NSObject, WOTAPIDefaultsProtocol {

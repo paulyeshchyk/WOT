@@ -1,6 +1,6 @@
 #source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '9.0'
+platform :ios, '13.0'
 
 use_frameworks!
 inhibit_all_warnings!
@@ -22,7 +22,7 @@ target 'WOT-iOS' do
     pod 'WYPopoverController', '0.1.8'
     pod 'SwiftGen', '6.1.0'
     pod 'SwiftLint', '0.39.2'
-    pod 'SwiftFormat', '0.44.7'
+    pod 'SwiftFormat'
 end
 
 target 'WOTKit' do

@@ -26,7 +26,7 @@ class WOTPivotNodeIndex: WOTPivotNodeIndexProtocol {
         }
     }
 
-    func add(node: WOTNodeProtocol, level: NodeLevelType) {
+    func add(node: WOTNodeProtocol, level _: NodeLevelType) {
         let allItems = WOTNodeEnumerator.sharedInstance.allItems(fromNode: node)
         allItems.forEach { (node) in
             index[node.index] = node
@@ -34,14 +34,14 @@ class WOTPivotNodeIndex: WOTPivotNodeIndexProtocol {
     }
 
     var count: Int {
-        return self.index.keys.count
+        return index.keys.count
     }
 
     func item(indexPath: NSIndexPath) -> WOTNodeProtocol? {
-        return self.index[indexPath.row] as? WOTNodeProtocol
+        return index[indexPath.row] as? WOTNodeProtocol
     }
 
-    static let WOTNodeEmptyComparator: WOTNodeComparatorType = { (node1, node2, level) in
+    static let WOTNodeEmptyComparator: WOTNodeComparatorType = { (_, _, _) in
         return .orderedSame
     }
 

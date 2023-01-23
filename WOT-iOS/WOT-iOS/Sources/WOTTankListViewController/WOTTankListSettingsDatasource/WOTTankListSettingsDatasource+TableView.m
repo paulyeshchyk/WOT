@@ -42,15 +42,15 @@
             
             NSInteger indexOfType = [self.availableSections indexOfObject:type];
             NSInteger orderBy = [self objectsCountForSection:indexOfType];
-            [WOTTankListSettingsDatasource context:self.context createSortSettingForKey:value ascending:ascending orderBy:orderBy callback:callback];
+            [WOTTankListSettingsDatasource createSortSettingForKey:value ascending:ascending orderBy:orderBy callback:callback];
         } else if([type isEqualToString:WOTApiSettingType.key_type_group]){
             
             NSInteger indexOfType = [self.availableSections indexOfObject:type];
             NSInteger orderBy = [self objectsCountForSection:indexOfType];
-            [WOTTankListSettingsDatasource context:self.context createGroupBySettingForKey:value ascending:ascending orderBy:orderBy callback:callback];
+            [WOTTankListSettingsDatasource createGroupBySettingForKey:value ascending:ascending orderBy:orderBy callback:callback];
         } else if ([type isEqualToString:WOTApiSettingType.key_type_filter]) {
             
-            [WOTTankListSettingsDatasource context:self.context createFilterBySettingForKey:value value:filterValue callback:callback];
+            [WOTTankListSettingsDatasource createFilterBySettingForKey:value value:filterValue callback:callback];
         } else {
             NSCAssert(NO, @"SettingType is not defined");
         }
@@ -62,7 +62,7 @@
         
         if (callback) {
             
-            callback(nil, updatedSetting);
+            callback(updatedSetting);
         }
     }
 }
@@ -106,9 +106,8 @@
 }
 
 - (void)moveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath completionBlock:(WOTTankListSettingMoveCompletionCallback)completionBlock{
-    
-    [self.context performBlock:^{
-        
+    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
+    [appDelegate.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
         id <NSFetchedResultsSectionInfo> sectionInfo = [self sectionInfoAtIndex:indexPath.section];
         NSMutableArray *objectsAtSection = [[sectionInfo objects] mutableCopy];
 
@@ -120,40 +119,30 @@
             [self setting:setting setOrderIndex:idx];
         }];
 
-        [self stash:^(NSError * _Nullable error) {
-            
-        
-        [NSThread executeOnMainThread:^{
-            
-            if (completionBlock){
+        [appDelegate.dataStore stashWithObjectContext:context completion:^(NSError * _Nullable error) {
+            [NSThread executeOnMainThread:^{
                 
-                completionBlock();
-            }
+                if (completionBlock){
+                    
+                    completionBlock();
+                }
+            }];
         }];
-        }];
-
     }];
 }
 
 - (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self.context performBlock:^{
-        
+    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
+    [appDelegate.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+
         NSManagedObject *obj = [self objectAtIndexPath:indexPath];
         
-        [self.context deleteObject:obj];
-        [self stash:^(NSError * _Nullable error) {
-            
+        [(NSManagedObjectContext *)context deleteObject:obj];
+        [appDelegate.dataStore stashWithObjectContext:context completion:^(NSError * _Nullable error) {
+            //
         }];
     }];
-}
-
-- (void)rollback {
-    
-    if ([self.context hasChanges]) {
-        
-        [self.context rollback];
-    }
 }
 
 @end

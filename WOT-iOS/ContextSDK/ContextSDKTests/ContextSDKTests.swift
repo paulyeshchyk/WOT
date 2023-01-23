@@ -5,8 +5,8 @@
 //  Created by Paul on 19.12.22.
 //
 
-import XCTest
 @testable import ContextSDK
+import XCTest
 
 class ContextSDKTests: XCTestCase {
     override func setUpWithError() throws {
@@ -24,7 +24,7 @@ class ContextSDKTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        self.measure {
+        measure {
             // Put the code you want to measure the time of here.
         }
     }

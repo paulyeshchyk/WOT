@@ -44,8 +44,8 @@ public struct StringCodingKey: CodingKey, ExpressibleByStringLiteral {
 }
 
 // any json decoding
-extension JSONDecoder {
-    public func decodeAny<T>(_ type: T.Type, from data: Data) throws -> T {
+public extension JSONDecoder {
+    func decodeAny<T>(_: T.Type, from data: Data) throws -> T {
         guard let decoded = try decode(AnyCodable.self, from: data) as? T else {
             throw DecodingError.typeMismatch(T.self, DecodingError.Context(codingPath: [StringCodingKey(string: "")], debugDescription: "Decoding of \(T.self) failed"))
         }
@@ -54,15 +54,15 @@ extension JSONDecoder {
 }
 
 // any decoding
-extension KeyedDecodingContainer {
-    public func decodeAny<T>(_ type: T.Type, forKey key: K) throws -> T {
+public extension KeyedDecodingContainer {
+    func decodeAny<T>(_: T.Type, forKey key: K) throws -> T {
         guard let value = try decode(AnyCodable.self, forKey: key).value as? T else {
             throw DecodingError.typeMismatch(T.self, DecodingError.Context(codingPath: codingPath, debugDescription: "Decoding of \(T.self) failed"))
         }
         return value
     }
 
-    public func decodeAnyIfPresent<T>(_ type: T.Type, forKey key: K) throws -> T? {
+    func decodeAnyIfPresent<T>(_: T.Type, forKey key: K) throws -> T? {
         return try decodeOptional {
             guard let value = try decodeIfPresent(AnyCodable.self, forKey: key)?.value else { return nil }
             if let typedValue = value as? T {
@@ -73,7 +73,7 @@ extension KeyedDecodingContainer {
         }
     }
 
-    public func toDictionary() throws -> [String: Any] {
+    func toDictionary() throws -> [String: Any] {
         var dictionary: [String: Any] = [:]
         for key in allKeys {
             dictionary[key.stringValue] = try decodeAny(key)
@@ -81,25 +81,25 @@ extension KeyedDecodingContainer {
         return dictionary
     }
 
-    public func decode<T>(_ key: KeyedDecodingContainer.Key) throws -> T where T: Decodable {
+    func decode<T>(_ key: KeyedDecodingContainer.Key) throws -> T where T: Decodable {
         return try decode(T.self, forKey: key)
     }
 
-    public func decodeIfPresent<T>(_ key: KeyedDecodingContainer.Key) throws -> T? where T: Decodable {
+    func decodeIfPresent<T>(_ key: KeyedDecodingContainer.Key) throws -> T? where T: Decodable {
         return try decodeOptional {
             try decodeIfPresent(T.self, forKey: key)
         }
     }
 
-    public func decodeAny<T>(_ key: K) throws -> T {
+    func decodeAny<T>(_ key: K) throws -> T {
         return try decodeAny(T.self, forKey: key)
     }
 
-    public func decodeAnyIfPresent<T>(_ key: K) throws -> T? {
+    func decodeAnyIfPresent<T>(_ key: K) throws -> T? {
         return try decodeAnyIfPresent(T.self, forKey: key)
     }
 
-    public func decodeArray<T: Decodable>(_ key: K) throws -> [T] {
+    func decodeArray<T: Decodable>(_ key: K) throws -> [T] {
         var container = try nestedUnkeyedContainer(forKey: key)
         var array: [T] = []
         while !container.isAtEnd {
@@ -118,7 +118,7 @@ extension KeyedDecodingContainer {
         return array
     }
 
-    public func decodeArrayIfPresent<T: Decodable>(_ key: K) throws -> [T]? {
+    func decodeArrayIfPresent<T: Decodable>(_ key: K) throws -> [T]? {
         return try decodeOptional {
             if contains(key) {
                 return try decodeArray(key)
@@ -128,7 +128,7 @@ extension KeyedDecodingContainer {
         }
     }
 
-    fileprivate func decodeOptional<T>(_ closure: () throws -> T?) throws -> T? {
+    private func decodeOptional<T>(_ closure: () throws -> T?) throws -> T? {
         if CodingAPI.safeOptionalDecoding {
             do {
                 return try closure()
@@ -142,13 +142,13 @@ extension KeyedDecodingContainer {
 }
 
 // any encoding
-extension KeyedEncodingContainer {
-    public mutating func encodeAnyIfPresent<T>(_ value: T?, forKey key: K) throws {
+public extension KeyedEncodingContainer {
+    mutating func encodeAnyIfPresent<T>(_ value: T?, forKey key: K) throws {
         guard let value = value else { return }
         try encodeIfPresent(AnyCodable(value), forKey: key)
     }
 
-    public mutating func encodeAny<T>(_ value: T, forKey key: K) throws {
+    mutating func encodeAny<T>(_ value: T, forKey key: K) throws {
         try encode(AnyCodable(value), forKey: key)
     }
 }
@@ -160,13 +160,11 @@ public struct DateTime: Codable, Comparable {
 
     /// The date formatters used for decoding. They will be tried in order
     public static var dateDecodingFormatters: [DateFormatter] = {
-        return [
-            "yyyy-MM-dd'T'HH:mm:ssZZZZZ",
-            "yyyy-MM-dd'T'HH:mm:ss.ZZZZZ",
-            "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ",
-            "yyyy-MM-dd'T'HH:mm:ss'Z'",
-            "yyyy-MM-dd"
-        ].map { (format: String) -> DateFormatter in
+        return ["yyyy-MM-dd'T'HH:mm:ssZZZZZ",
+                "yyyy-MM-dd'T'HH:mm:ss.ZZZZZ",
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ",
+                "yyyy-MM-dd'T'HH:mm:ss'Z'",
+                "yyyy-MM-dd"].map { (format: String) -> DateFormatter in
             let formatter = DateFormatter()
             formatter.dateFormat = format
             return formatter
@@ -238,8 +236,8 @@ public struct DateDay: Codable, Comparable {
         self.date = date
         let dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
         guard let year = dateComponents.year,
-            let month = dateComponents.month,
-            let day = dateComponents.day else {
+              let month = dateComponents.month,
+              let day = dateComponents.day else {
             fatalError("Date does not contain correct components")
         }
         self.year = year
@@ -284,20 +282,20 @@ public struct DateDay: Codable, Comparable {
     }
 }
 
-extension DateFormatter {
-    public func string(from dateTime: DateTime) -> String {
+public extension DateFormatter {
+    func string(from dateTime: DateTime) -> String {
         return string(from: dateTime.date)
     }
 
-    public func string(from dateDay: DateDay) -> String {
+    func string(from dateDay: DateDay) -> String {
         return string(from: dateDay.date)
     }
 
-    public var iso8601: DateFormatter {
+    var iso8601: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        dateFormatter.dateFormat = self.dateFormat
+        dateFormatter.dateFormat = dateFormat
         return dateFormatter
     }
 }

@@ -5,8 +5,8 @@
 //  Created by Paul on 26.12.22.
 //
 
-import CoreData
 import ContextSDK
+import CoreData
 
 extension NSManagedObject: RequestableProtocol {
     @objc

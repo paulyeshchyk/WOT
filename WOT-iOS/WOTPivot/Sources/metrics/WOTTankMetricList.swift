@@ -21,23 +21,23 @@ public protocol WOTTankMetricsListProtocol {
 
 public class WOTTankMetricsList: NSObject {
     public var sortedMetrics: [WOTMetric] {
-        return self.metrics.sorted { (obj1, obj2) -> Bool in
+        return metrics.sorted { (obj1, obj2) -> Bool in
             guard let name1 = obj1.metricName, let name2 = obj2.metricName else { return false }
             return name1.compare(name2) == .orderedAscending
         }
     }
 
-    private var metrics =  Set<WOTMetric>()
-    private var tankIDLists =  Set<WOTTanksIDList>()
+    private var metrics = Set<WOTMetric>()
+    private var tankIDLists = Set<WOTTanksIDList>()
 
     @objc
     public func add(tankId: WOTTanksIDList) {
-        self.tankIDLists.insert(tankId)
+        tankIDLists.insert(tankId)
     }
 
     @objc
     public func remove(tankId: WOTTanksIDList) {
-        self.tankIDLists.remove(tankId)
+        tankIDLists.remove(tankId)
     }
 
     @objc
@@ -49,12 +49,12 @@ public class WOTTankMetricsList: NSObject {
 
     @objc
     public func add(metric: WOTMetric) {
-        self.metrics.insert(metric)
+        metrics.insert(metric)
     }
 
     @objc
     public func remove(metric: WOTMetric) {
-        self.metrics.remove(metric)
+        metrics.remove(metric)
     }
 }
 
@@ -113,7 +113,7 @@ extension WOTTankMetricsList: ChartDataProtocol {
         return ""
     }
 
-    private func dataset(tankIDList: WOTTanksIDList, atIndex: Int) -> Any {
+    private func dataset(tankIDList _: WOTTanksIDList, atIndex _: Int) -> Any {
         //    NSArray *yVals = [self yValsForTanksIDList:tankIDList];
         //    if (!yVals) {
         //
@@ -130,7 +130,7 @@ extension WOTTankMetricsList: ChartDataProtocol {
         return ""
     }
 
-    private func yVals(tankIDList: WOTTanksIDList) -> [Any] {
+    private func yVals(tankIDList _: WOTTanksIDList) -> [Any] {
         /*
              __block NSMutableArray *result = nil;
              __block NSInteger index = 0;

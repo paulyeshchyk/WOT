@@ -24,7 +24,9 @@ public class WOTRESTResponseDataParser: WOTRequestResponseDataParserProtocol, Lo
 
     public var appManager: WOTAppManagerProtocol?
     public var requestCoordinator: WOTRequestCoordinatorProtocol
+
     // MARK: - WOTRequestDataParserProtocol
+
     public required init(requestCoordinator rc: WOTRequestCoordinatorProtocol) {
         requestCoordinator = rc
     }
@@ -34,12 +36,12 @@ public class WOTRESTResponseDataParser: WOTRequestResponseDataParserProtocol, Lo
             throw RequestCoordinatorError.dataIsEmpty
         }
 
-        guard let requestIds = requestCoordinator.requestIds(forRequest: request), requestIds.count > 0 else {
+        guard let requestIds = requestCoordinator.requestIds(forRequest: request), !requestIds.isEmpty else {
             onRequestComplete(request, self, nil)
             return
         }
         var dataAdaptationPair: [DataAdaptationPair] = .init()
-        requestIds.forEach({ requestIdType in
+        requestIds.forEach { requestIdType in
             do {
                 let adapter = try requestCoordinator.responseAdapterInstance(for: requestIdType, request: request)
                 adapter.onComplete = onRequestComplete
@@ -49,9 +51,9 @@ public class WOTRESTResponseDataParser: WOTRequestResponseDataParserProtocol, Lo
             } catch let error {
                 appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
             }
-        })
+        }
 
-        if dataAdaptationPair.count == 0 {
+        if dataAdaptationPair.isEmpty {
             onRequestComplete(request, self, nil)
         }
 
@@ -61,5 +63,6 @@ public class WOTRESTResponseDataParser: WOTRequestResponseDataParserProtocol, Lo
     }
 
     // MARK: LogMessageSender-
+
     public var logSenderDescription: String = "WOTRequestDataParser"
 }

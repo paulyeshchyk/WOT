@@ -11,7 +11,6 @@ import UIKit
 public protocol ContextProtocol: LogInspectorContainerProtocol,
     DataStoreContainerProtocol,
     HostConfigurationContainerProtocol,
-    RequestRegistratorContainerProtocol,
     RequestManagerContainerProtocol,
     RequestListenerContainerProtocol,
     SessionManagerContainerProtocol,

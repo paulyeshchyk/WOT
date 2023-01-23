@@ -13,7 +13,7 @@ public enum LogEventType: Int {
     case warning
     case lifeCycle
     case threads
-    case web
+    case http
     case json
     case coredata
     case info
@@ -22,7 +22,9 @@ public enum LogEventType: Int {
     case mapping
     case localFetch
     case remoteFetch
-    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads,.web, .json, .coredata, .info, .performance, .logic, .mapping, .localFetch, .remoteFetch] }
+    case flow
+    case longTermOperation
+    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads,.http, .json, .coredata, .info, .performance, .logic, .mapping, .localFetch, .remoteFetch, .flow, .longTermOperation] }
 }
 
 @objc

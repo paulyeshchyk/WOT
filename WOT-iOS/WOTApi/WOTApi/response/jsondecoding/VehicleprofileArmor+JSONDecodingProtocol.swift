@@ -14,8 +14,8 @@ extension VehicleprofileArmor: JSONDecodingProtocol {
     public func decodeWith(_ decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
         //
-        self.front = try container.decodeAnyIfPresent(Int.self, forKey: .front)?.asDecimal
-        self.sides = try container.decodeAnyIfPresent(Int.self, forKey: .sides)?.asDecimal
-        self.rear = try container.decodeAnyIfPresent(Int.self, forKey: .rear)?.asDecimal
+        front = try container.decodeAnyIfPresent(Int.self, forKey: .front)?.asDecimal
+        sides = try container.decodeAnyIfPresent(Int.self, forKey: .sides)?.asDecimal
+        rear = try container.decodeAnyIfPresent(Int.self, forKey: .rear)?.asDecimal
     }
 }

@@ -32,7 +32,7 @@
 
 - (void)dealloc {
     
-    [self.tableviewDatasource rollback];
+//    [self.tableviewDatasource rollback];
     [_settingsDatasource unregisterListener:self];
 }
 
@@ -221,12 +221,11 @@
     
     vc.cancelBlock = ^(){
         
-        [self.tableviewDatasource rollback];
+//        [self.tableviewDatasource rollback];
         [self.navigationController popViewControllerAnimated:YES];
     };
     vc.applyBlock = ^(){
-
-        [self.tableviewDatasource stash:^(NSError * _Nullable error) {
+        [[self dataStore] stashWithBlock:^(NSError * _Nullable error) {
             if (self.commitBlock) {
                 self.commitBlock();
             }
@@ -238,6 +237,10 @@
 
     [self.navigationController pushViewController:vc animated:YES];
     
+}
+- (id<DataStoreProtocol> _Nonnull) dataStore {
+    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
+    return  appDelegate.dataStore;
 }
 
 #pragma mark - WOTTankListSettingsDatasourceListener

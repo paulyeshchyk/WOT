@@ -13,11 +13,11 @@ class TankPivotViewController: UIViewController {}
 extension TankPivotViewController: UICollectionViewDelegate {}
 
 extension TankPivotViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_: UICollectionView, cellForItemAt _: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 }

@@ -5,8 +5,7 @@
 //  Created by Paul on 26.12.22.
 //
 
-@objc
-open class DataStore: NSObject {
+open class DataStore {
     public enum DataStoreError: Error, CustomStringConvertible {
         case noKeysDefinedForClass(String)
         case clazzIsNotSupportable(String)
@@ -30,12 +29,11 @@ open class DataStore: NSObject {
 
     public let appContext: Context
 
-    required public init(context: Context) {
-        self.appContext = context
-        super.init()
+    public required init(appContext: Context) {
+        self.appContext = appContext
     }
 
-    open func isClassValid(_ clazz: AnyObject) -> Bool {
+    open func isClassValid(_: AnyObject) -> Bool {
         fatalError("should be overriden")
     }
 
@@ -55,55 +53,62 @@ extension DataStore: DataStoreProtocol {
         fatalError("should be overriden")
     }
 
-    open func fetchResultController(for request: AnyObject, andContext: ManagedObjectContextProtocol) throws -> AnyObject {
+    open func fetchResultController(for _: AnyObject, andContext _: ManagedObjectContextProtocol) throws -> AnyObject {
         fatalError("should be overriden")
     }
 
-    open func mainContextFetchResultController(for request: AnyObject, sectionNameKeyPath: String?, cacheName name: String?) throws -> AnyObject {
+    open func mainContextFetchResultController(for _: AnyObject, sectionNameKeyPath _: String?, cacheName _: String?) throws -> AnyObject {
         fatalError("should be overriden")
+    }
+
+    open func perform(block: @escaping ObjectContextCompletion) {
+        workingContext().execute { context in
+            block(context)
+        }
     }
 
     open func perform(objectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion) {
-        objectContext.execute {
-            block(objectContext)
+        objectContext.execute { context in
+            block(context)
         }
     }
 
     public func stash(block: @escaping ThrowableCompletion) {
-        stash(objectContext: self.workingContext(), block: block)
+        stash(objectContext: workingContext(), completion: block)
     }
 
-    public func stash(objectContext cntx: ManagedObjectContextProtocol?, block: @escaping ThrowableCompletion) {
+    public func stash(objectContext cntx: ManagedObjectContextProtocol?, completion: @escaping ThrowableCompletion) {
         guard let objectContext = cntx else {
-            block(DataStoreError.contextNotSaved)
+            completion(DataStoreError.contextNotSaved)
             return
         }
 
         let initialDate = Date()
 
-        appContext.logInspector?.logEvent(EventCDStashStart(context: objectContext), sender: self)
-
-        let customBlock: ThrowableCompletion = { [weak self] error in
-            block(error)
+        objectContext.save { [weak self] error in
+            completion(error)
             self?.appContext.logInspector?.logEvent(EventCDStashEnded(context: objectContext, initiatedIn: initialDate), sender: self)
+            self?.appContext.logInspector?.logEvent(EventTimeMeasure("Context save end"), sender: self)
         }
 
-        objectContext.save(completion: customBlock)
+        appContext.logInspector?.logEvent(EventCDStashStart(context: objectContext), sender: self)
         appContext.logInspector?.logEvent(EventTimeMeasure("Context save start"), sender: self)
     }
 
     public func fetchLocal(byModelClass modelClass: PrimaryKeypathProtocol.Type, requestPredicate: NSPredicate?, completion: @escaping FetchResultCompletion) {
         let localCallback: FetchResultCompletion = { fetchResult, error in
-            self.workingContext().execute {
-                let fetchResultForContext = fetchResult?.makeDublicate()
-                fetchResultForContext?.objectContext = self.workingContext()
+            self.workingContext().execute { managedObjectContext in
+                let fetchResultForContext = fetchResult?.makeDublicate(inContext: managedObjectContext)
                 completion(fetchResultForContext, error)
             }
         }
 
+        //
+        appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: modelClass)) - \(String(describing: requestPredicate))"), sender: self)
+
         guard isClassValid(modelClass) else {
             let error = DataStoreError.notManagedObjectType(modelClass)
-            let result = self.emptyFetchResult()
+            let result = emptyFetchResult()
             completion(result, error)
             return
         }
@@ -124,25 +129,26 @@ extension DataStore: DataStoreProtocol {
         }
     }
 
-    public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, predicate: ContextPredicate, completion: @escaping FetchResultCompletion) {
+    public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, predicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) {
+        //
+        appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: Clazz)) - \(String(describing: predicate))"), sender: self)
+
         guard isClassValid(Clazz) else {
             let error = DataStoreError.clazzIsNotSupportable(String(describing: Clazz))
             appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
-            let result = self.emptyFetchResult()
+            let result = emptyFetchResult()
             completion(result, error)
             return
         }
 
-        appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: Clazz)) - \(String(describing: predicate))"), sender: self)
-
-        guard let predicate = predicate.compoundPredicate(.and) else {
+        guard let predicate = predicate.nspredicate(operator: .and) else {
             let error = DataStoreError.noKeysDefinedForClass(String(describing: Clazz))
             let fetchResult = FetchResult(objectContext: objectContext, objectID: nil, predicate: nil, fetchStatus: .fetched)
             completion(fetchResult, error)
             return
         }
 
-        self.perform(objectContext: objectContext) {[weak self] managedObjectContext in
+        perform(objectContext: objectContext) {[weak self] managedObjectContext in
             if let managedObject = managedObjectContext.findOrCreateObject(forType: Clazz, predicate: predicate) {
                 let fetchResult = FetchResult(objectContext: managedObjectContext, objectID: managedObject.managedObjectID, predicate: predicate, fetchStatus: managedObject.fetchStatus)
                 completion(fetchResult, nil)

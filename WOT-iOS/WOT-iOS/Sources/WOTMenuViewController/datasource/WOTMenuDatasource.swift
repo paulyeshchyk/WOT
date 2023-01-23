@@ -29,9 +29,9 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
     weak var delegate: WOTMenuDatasourceDelegate?
 
     var availableViewControllers: [WOTMenuItem] = []
-    var visibleViewControllers: [WOTMenuItem]? = nil {
+    var visibleViewControllers: [WOTMenuItem]? {
         didSet {
-            self.delegate?.hasUpdatedData(self)
+            delegate?.hasUpdatedData(self)
         }
     }
 
@@ -40,34 +40,34 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
     override init() {
         super.init()
 
-        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankPivotViewController.self, controllerTitle: WOTApi.L10n.wotStringTankdeleyev, icon: UIImage(), userDependence: false))
-        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankListViewController.self, controllerTitle: WOTApi.L10n.wotStringTankopedia, icon: UIImage(), userDependence: false))
-        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTPlayersListViewController.self, controllerTitle: WOTApi.L10n.wotStringPlayers, icon: UIImage(), userDependence: false))
-        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTProfileViewController.self, controllerTitle: WOTApi.L10n.wotStringProfile, icon: UIImage(), userDependence: false))
+        availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankPivotViewController.self, controllerTitle: WOTApi.L10n.wotStringTankdeleyev, icon: UIImage(), userDependence: false))
+        availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankListViewController.self, controllerTitle: WOTApi.L10n.wotStringTankopedia, icon: UIImage(), userDependence: false))
+        availableViewControllers.append(WOTMenuItem(controllerClass: WOTPlayersListViewController.self, controllerTitle: WOTApi.L10n.wotStringPlayers, icon: UIImage(), userDependence: false))
+        availableViewControllers.append(WOTMenuItem(controllerClass: WOTProfileViewController.self, controllerTitle: WOTApi.L10n.wotStringProfile, icon: UIImage(), userDependence: false))
     }
 
     func object(at index: Int) -> WOTMenuItem? {
-        return self.visibleViewControllers?[index]
+        return visibleViewControllers?[index]
     }
 
     func objectsCount() -> Int {
-        return self.visibleViewControllers?.count ?? 0
+        return visibleViewControllers?.count ?? 0
     }
 
     func rebuild() {
         if WOTSessionManager.sessionHasBeenExpired() {
             let predicate = NSPredicate(format: "SELF.userDependence = NO")
-            self.visibleViewControllers = self.availableViewControllers.filter { predicate.evaluate(with: $0) }
+            visibleViewControllers = availableViewControllers.filter { predicate.evaluate(with: $0) }
         } else {
             var visibleViewControllers = [WOTMenuItem]()
-            visibleViewControllers.append(contentsOf: self.availableViewControllers)
+            visibleViewControllers.append(contentsOf: availableViewControllers)
             self.visibleViewControllers = visibleViewControllers
         }
     }
 }
 
 extension WOTMenuDatasource: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        self.rebuild()
+    func controllerDidChangeContent(_: NSFetchedResultsController<NSFetchRequestResult>) {
+        rebuild()
     }
 }

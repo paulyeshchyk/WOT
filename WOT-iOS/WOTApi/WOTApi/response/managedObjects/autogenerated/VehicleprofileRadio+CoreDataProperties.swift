@@ -9,49 +9,51 @@
 
 import CoreData
 
-extension VehicleprofileRadio {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<VehicleprofileRadio> {
+public extension VehicleprofileRadio {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<VehicleprofileRadio> {
         return NSFetchRequest<VehicleprofileRadio>(entityName: "VehicleprofileRadio")
     }
 
-    @NSManaged public var name: String?
-    @NSManaged public var radio_id: NSDecimalNumber?
-    @NSManaged public var signal_range: NSDecimalNumber?
-    @NSManaged public var tag: String?
-    @NSManaged public var tier: NSDecimalNumber?
-    @NSManaged public var weight: NSDecimalNumber?
-    @NSManaged public var modules: NSSet?
-    @NSManaged public var vehicle: NSSet?
-    @NSManaged public var vehicleprofile: Vehicleprofile?
-    @NSManaged public var vehicleprofileModule: Module?
+    @NSManaged var name: String?
+    @NSManaged var radio_id: NSDecimalNumber?
+    @NSManaged var signal_range: NSDecimalNumber?
+    @NSManaged var tag: String?
+    @NSManaged var tier: NSDecimalNumber?
+    @NSManaged var weight: NSDecimalNumber?
+    @NSManaged var modules: NSSet?
+    @NSManaged var vehicle: NSSet?
+    @NSManaged var vehicleprofile: Vehicleprofile?
+    @NSManaged var vehicleprofileModule: Module?
 }
 
 // MARK: Generated accessors for modules
-extension VehicleprofileRadio {
+
+public extension VehicleprofileRadio {
     @objc(addModulesObject:)
-    @NSManaged public func addToModules(_ value: VehicleprofileModule)
+    @NSManaged func addToModules(_ value: VehicleprofileModule)
 
     @objc(removeModulesObject:)
-    @NSManaged public func removeFromModules(_ value: VehicleprofileModule)
+    @NSManaged func removeFromModules(_ value: VehicleprofileModule)
 
     @objc(addModules:)
-    @NSManaged public func addToModules(_ values: NSSet)
+    @NSManaged func addToModules(_ values: NSSet)
 
     @objc(removeModules:)
-    @NSManaged public func removeFromModules(_ values: NSSet)
+    @NSManaged func removeFromModules(_ values: NSSet)
 }
 
 // MARK: Generated accessors for vehicle
-extension VehicleprofileRadio {
+
+public extension VehicleprofileRadio {
     @objc(addVehicleObject:)
-    @NSManaged public func addToVehicle(_ value: Vehicles)
+    @NSManaged func addToVehicle(_ value: Vehicles)
 
     @objc(removeVehicleObject:)
-    @NSManaged public func removeFromVehicle(_ value: Vehicles)
+    @NSManaged func removeFromVehicle(_ value: Vehicles)
 
     @objc(addVehicle:)
-    @NSManaged public func addToVehicle(_ values: NSSet)
+    @NSManaged func addToVehicle(_ values: NSSet)
 
     @objc(removeVehicle:)
-    @NSManaged public func removeFromVehicle(_ values: NSSet)
+    @NSManaged func removeFromVehicle(_ values: NSSet)
 }

@@ -40,11 +40,11 @@ extension WOTMasterDetailBehaviour {
 class WOTSplitViewController: UISplitViewController, WOTMasterControllerProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.preferredDisplayMode = .allVisible
+        preferredDisplayMode = .allVisible
         let left = WOTTankPivotViewController(nibName: "WOTTankPivotViewController", bundle: nil)
         let leftNC = UINavigationController(rootViewController: left)
         let right = WOTTankModuleTreeViewController(nibName: "WOTTankModuleTreeViewController", bundle: nil)
         let rightNC = UINavigationController(rootViewController: right)
-        self.viewControllers = [leftNC, rightNC]
+        viewControllers = [leftNC, rightNC]
     }
 }

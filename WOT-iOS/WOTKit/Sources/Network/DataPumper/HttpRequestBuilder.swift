@@ -31,7 +31,7 @@ struct HttpRequestBuilder {
     }
 
     private func buildURL(hostConfiguration: HostConfigurationProtocol?, path: String, args: RequestArgumentsProtocol?, bodyData: Data?) throws -> URL {
-        guard  let hostConfiguration = hostConfiguration else {
+        guard let hostConfiguration = hostConfiguration else {
             throw HttpRequestBuilderError.hostConfigurationIsNotDefined
         }
 

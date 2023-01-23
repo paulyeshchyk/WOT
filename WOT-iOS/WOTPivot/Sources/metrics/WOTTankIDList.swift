@@ -26,9 +26,9 @@ public class WOTTanksIDList: NSObject {
     }
 
     @objc
-    required public init(tankID: String) {
+    public required init(tankID: String) {
         super.init()
-        self.addObject(tankID)
+        addObject(tankID)
     }
 
     func addObject(_ object: String) {
