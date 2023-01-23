@@ -15,6 +15,7 @@ class ManagedObjectDecodeHelper {
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
+        & UOWManagerContainerProtocol
 
     private let appContext: Context
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
@@ -42,7 +43,7 @@ class ManagedObjectDecodeHelper {
             guard let modelClass = type(of: managedObject) as? PrimaryKeypathProtocol.Type else {
                 throw Errors.modelClassIsNotDefined
             }
-
+            #warning("Crash is here")
             guard let decoderType = appContext.decoderManager?.jsonDecoder(for: modelClass) else {
                 throw Errors.decoderIsNotDefined
             }

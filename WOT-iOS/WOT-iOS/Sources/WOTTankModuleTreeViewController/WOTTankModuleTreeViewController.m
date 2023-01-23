@@ -183,11 +183,15 @@
 }
 
 - (void)reloadModel {
-    if ( [self isViewLoaded] ){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.model loadModel];
-        });
+    //TODO: "To be checked"
+    if (![[NSThread currentThread] isMainThread]) {
+        NSAssert(NO, @"Thread should be main");
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ( [self isViewLoaded] ){
+            [self.model loadModel];
+        }
+    });
 }
 
 - (void)setTank_Id:(NSNumber *)value {
@@ -283,8 +287,10 @@
 #pragma mark - RequestListener
 
 - (void)request:(id<RequestProtocol>)request finishedLoadData:(NSData *)data error:(NSError *)error {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self reloadModel];
+    });
     [[self requestManager] removeListener: self];
-    [self reloadModel];
 }
 
 - (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(NSURLRequest * _Nonnull)urlRequest {
@@ -298,7 +304,9 @@
 #pragma mark - RequestManagerListener
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest error:(NSError * _Nullable)error{
-    [self reloadModel];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self reloadModel];
+    });
     [requestManager removeListener: self];
 }
 
