@@ -9,12 +9,15 @@
 public typealias NodeLevelType = Int
 public let NodeLevelTypeZero: Int = 0
 
+// MARK: - NodeIndexProtocol
+
 @objc
 public protocol NodeIndexProtocol {
     var count: Int { get }
     func doAutoincrementIndex(forNodes: [NodeProtocol]) -> Int
     func reset()
-    func item(indexPath: NSIndexPath) -> NodeProtocol?
+    func item(indexPath: IndexPath) -> NodeProtocol?
     func add(nodes: [NodeProtocol], level: NodeLevelType)
     func add(node: NodeProtocol, level: NodeLevelType)
+    init()
 }

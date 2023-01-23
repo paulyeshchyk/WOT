@@ -6,13 +6,14 @@
 //
 
 public struct Joint {
-    let theClass: PrimaryKeypathProtocol.Type
-    let theID: JSONValueType?
-    let thePredicate: ContextPredicateProtocol?
 
-    public init(theClass: PrimaryKeypathProtocol.Type, theID: JSONValueType?, thePredicate: ContextPredicateProtocol?) {
-        self.theClass = theClass
+    public init(modelClass: PrimaryKeypathProtocol.Type, theID: JSONValueType?, contextPredicate: ContextPredicateProtocol?) {
+        self.modelClass = modelClass
         self.theID = theID
-        self.thePredicate = thePredicate
+        self.contextPredicate = contextPredicate
     }
+
+    let modelClass: PrimaryKeypathProtocol.Type
+    let theID: JSONValueType?
+    let contextPredicate: ContextPredicateProtocol?
 }

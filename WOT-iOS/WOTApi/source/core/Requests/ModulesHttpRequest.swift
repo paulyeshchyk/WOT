@@ -8,6 +8,8 @@
 
 import WOTKit
 
+// MARK: - ModulesHttpRequest
+
 public class ModulesHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }
 
@@ -16,11 +18,9 @@ public class ModulesHttpRequest: HttpRequest {
     }
 }
 
-extension ModulesHttpRequest: ModelServiceProtocol {
-    public class func responseParserClass() -> ResponseParserProtocol.Type {
-        RESTResponseParser.self
-    }
+// MARK: - ModulesHttpRequest + ModelServiceProtocol
 
+extension ModulesHttpRequest: ModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

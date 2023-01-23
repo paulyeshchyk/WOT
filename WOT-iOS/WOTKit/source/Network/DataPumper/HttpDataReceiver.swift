@@ -8,42 +8,34 @@
 
 import ContextSDK
 
+// MARK: - HttpDataReceiver
+
 public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible {
-    enum WOTWebDataPumperError: Error, CustomStringConvertible {
-        case urlNotDefined
-        var description: String {
-            switch self {
-            case .urlNotDefined: return "[\(type(of: self))]: Url is not defined"
-            }
-        }
-    }
 
-    let request: URLRequest
-
-    public let uuid: UUID = UUID()
-    public var MD5: String { uuid.MD5 }
-
-    public var description: String { "\(type(of: self)): \(String(describing: request))" }
-
-    public weak var delegate: HttpDataReceiverDelegateProtocol?
-    private var urlDataTask: URLSessionDataTask?
-
-    private let context: HttpDataReceiverProtocol.Context
     public required init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
         self.request = request
         self.context = context
     }
 
     deinit {
+        if (state != .finished) {
+            context.logInspector?.log(.warning("deinit HttpDataReceiver when state != finished"), sender: self)
+        }
         urlDataTask?.cancelDataTask()
         urlDataTask = nil
     }
+
+    public weak var delegate: HttpDataReceiverDelegateProtocol?
+
+    public var MD5: String { uuid.MD5 }
+    public var description: String { "\(type(of: self)): \(String(describing: request))" }
 
     @discardableResult
     public func cancel() -> Bool {
         let result = urlDataTask?.cancelDataTask() ?? false
         urlDataTask = nil
         if result == true {
+            context.logInspector?.log(.remoteFetch(message: "Cancel URL: \(String(describing: request.url))"), sender: self)
             delegate?.didCancel(urlRequest: request, receiver: self, error: nil)
         }
         return result
@@ -57,12 +49,42 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
             delegate?.didEnd(urlRequest: request, receiver: self, data: nil, error: WOTWebDataPumperError.urlNotDefined)
             return
         }
-        urlDataTask = createDataTask(url: url, completion: completion)
+        urlDataTask = createDataTask(url: url) {
+            self.state = .finished
+            completion()
+        }
+        context.logInspector?.log(.remoteFetch(message: "Start URL: \(String(describing: request.url))"), sender: self)
         delegate?.didStart(urlRequest: request, receiver: self)
         urlDataTask?.resume()
     }
 
+    enum State {
+        case unknown
+        case started
+        case finished
+    }
+
+    enum WOTWebDataPumperError: Error, CustomStringConvertible {
+        case urlNotDefined
+
+        var description: String {
+            switch self {
+            case .urlNotDefined: return "[\(type(of: self))]: Url is not defined"
+            }
+        }
+    }
+
+    let request: URLRequest
+
+    private var state: State = .unknown
+
+    private let uuid: UUID = UUID()
+    private var urlDataTask: URLSessionDataTask?
+
+    private let context: HttpDataReceiverProtocol.Context
+
     private func createDataTask(url: URL, completion: @escaping () -> Void) -> URLSessionDataTask {
+        state = .started
         return URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             //
             completion()

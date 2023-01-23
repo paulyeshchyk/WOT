@@ -10,9 +10,24 @@ import ContextSDK
 import CoreData
 
 public class EmptyFetchResult: FetchResult {
-    public required convenience init() {
-        let cntx = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+
+    public init(inManagedObjectContext: ManagedObjectContextProtocol?) throws {
+        guard let cntx = inManagedObjectContext as? NSManagedObjectContext else {
+            throw EmptyFetchResultError.contextIsNotManagedObjectContext
+        }
         let objectID = NSManagedObjectID()
-        self.init(objectContext: cntx, objectID: objectID, predicate: nil, fetchStatus: .none)
+        super.init(objectID: objectID, managedObjectContext: cntx, predicate: nil, fetchStatus: .none)
+    }
+
+    required init() {
+        fatalError("init() has not been implemented")
+    }
+
+    required init(objectID _: AnyObject?, managedObjectContext _: ManagedObjectContextProtocol, predicate _: NSPredicate?, fetchStatus _: FetchStatus) {
+        fatalError("init(objectID:managedObjectContext:predicate:fetchStatus:) has not been implemented")
+    }
+
+    private enum EmptyFetchResultError: Error {
+        case contextIsNotManagedObjectContext
     }
 }

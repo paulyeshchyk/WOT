@@ -8,33 +8,46 @@
 
 import Foundation
 
+// MARK: - WOTSplitBehaviour
+
 struct WOTSplitBehaviour: OptionSet {
-    let rawValue: Int
     static let moduleTree = WOTSplitBehaviour(rawValue: 1)
+
+    let rawValue: Int
 }
+
+// MARK: - WOTMasterControllerProtocol
 
 @objc
 protocol WOTMasterControllerProtocol: NSObjectProtocol {}
+
+// MARK: - WOTDetailControllerProtocol
 
 @objc
 protocol WOTDetailControllerProtocol: NSObjectProtocol {
     func showDetail(detail: Any?)
 }
 
+// MARK: - WOTMasterDetailBehaviour
+
 struct WOTMasterDetailBehaviour {
-    var masterController: AnyClass
-    var detailController: AnyClass
-    var behaviourType: WOTSplitBehaviour
+
     init(master: AnyClass, detail: AnyClass, behaviour: WOTSplitBehaviour) {
         masterController = master
         detailController = detail
         behaviourType = behaviour
     }
+
+    var masterController: AnyClass
+    var detailController: AnyClass
+    var behaviourType: WOTSplitBehaviour
 }
 
 extension WOTMasterDetailBehaviour {
     static let PivotModuletree = WOTMasterDetailBehaviour(master: WOTSplitViewController.self, detail: WOTTankModuleTreeViewController.self, behaviour: .moduleTree)
 }
+
+// MARK: - WOTSplitViewController
 
 @objc
 class WOTSplitViewController: UISplitViewController, WOTMasterControllerProtocol {

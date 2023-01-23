@@ -229,12 +229,13 @@
         [self.navigationController popViewControllerAnimated:YES];
     };
     vc.applyBlock = ^(){
-        [[self dataStore] stashWithBlock:^(NSError * _Nullable error) {
+        [[self dataStore] stashWithBlock:^(id<ManagedObjectContextProtocol> _Nullable context, NSError * _Nullable error) {
             if (self.commitBlock) {
                 self.commitBlock();
             }
             
             [self.navigationController popViewControllerAnimated:YES];
+
         }];
 
     };

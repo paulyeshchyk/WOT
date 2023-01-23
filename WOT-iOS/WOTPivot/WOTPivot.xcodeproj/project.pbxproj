@@ -281,14 +281,6 @@
 			path = Node;
 			sourceTree = "<group>";
 		};
-		1DE558F82124571000576D41 /* PivotNodeDataModel */ = {
-			isa = PBXGroup;
-			children = (
-				1DE558FB2124571000576D41 /* NodeDataModel.swift */,
-			);
-			path = PivotNodeDataModel;
-			sourceTree = "<group>";
-		};
 		1DE558FF2124571000576D41 /* TreeDataModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,6 +361,7 @@
 		DA39E2C8296173B60099D877 /* NodeDataModel */ = {
 			isa = PBXGroup;
 			children = (
+				1DE558FB2124571000576D41 /* NodeDataModel.swift */,
 				DA39E2C9296173CA0099D877 /* NodeDataModelProtocol.swift */,
 				DA39E2CB2961744E0099D877 /* NodeCreatorProtocol.swift */,
 			);
@@ -379,10 +372,9 @@
 			isa = PBXGroup;
 			children = (
 				1DE558CD2124560500576D41 /* PivotNode */,
-				1DE558F82124571000576D41 /* PivotNodeDataModel */,
+				1DC6D4C6212576EA00A1C9C2 /* PivotDataModel */,
 				DA39E316296189540099D877 /* PivotNodeDimension */,
 				DA39E317296189730099D877 /* PivotDimensionCalculator */,
-				1DC6D4C6212576EA00A1C9C2 /* PivotDataModel */,
 				1D5D0AF923CCB012004B0314 /* PivotMetadataPermutator */,
 				1D5D021623C73330004B0314 /* PivotNodeCreator */,
 			);

@@ -9,7 +9,4 @@
 public protocol MD5Protocol {
     @objc
     var MD5: String { get }
-
-    @objc
-    var uuid: UUID { get }
 }

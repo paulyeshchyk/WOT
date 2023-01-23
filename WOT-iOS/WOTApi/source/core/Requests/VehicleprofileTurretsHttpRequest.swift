@@ -8,6 +8,8 @@
 
 import WOTKit
 
+// MARK: - VehicleprofileTurretsHttpRequest
+
 public class VehicleprofileTurretsHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }
 
@@ -16,11 +18,9 @@ public class VehicleprofileTurretsHttpRequest: HttpRequest {
     }
 }
 
-extension VehicleprofileTurretsHttpRequest: ModelServiceProtocol {
-    public class func responseParserClass() -> ResponseParserProtocol.Type {
-        RESTResponseParser.self
-    }
+// MARK: - VehicleprofileTurretsHttpRequest + ModelServiceProtocol
 
+extension VehicleprofileTurretsHttpRequest: ModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

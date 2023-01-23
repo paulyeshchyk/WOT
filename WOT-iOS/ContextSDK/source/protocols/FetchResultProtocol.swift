@@ -5,21 +5,13 @@
 //  Created by Paul on 26.12.22.
 //
 
-@objc
-public enum FetchStatus: Int {
-    case none
-    case fetched
-    case inserted
-    case updated
-    case recovered
-}
+// MARK: - FetchResultProtocol
 
 @objc
-public protocol FetchResultProtocol: AnyObject {
-    var fetchStatus: FetchStatus { get set }
+public protocol FetchResultProtocol: ManagedObjectContextContainerProtocol {
+    var fetchStatus: FetchStatus { get }
     var predicate: NSPredicate? { get set }
-    var managedObjectContext: ManagedObjectContextProtocol { get }
-    func makeDublicate(inContext: ManagedObjectContextProtocol) -> FetchResultProtocol
     func managedObject() -> ManagedObjectProtocol?
-    func managedObject(inManagedObjectContext context: ManagedObjectContextProtocol?) -> ManagedObjectProtocol?
+    func managedObject(inManagedObjectContext: ManagedObjectContextProtocol?) -> ManagedObjectProtocol?
+    func makeDublicate(managedObjectContext: ManagedObjectContextProtocol) -> FetchResultProtocol
 }

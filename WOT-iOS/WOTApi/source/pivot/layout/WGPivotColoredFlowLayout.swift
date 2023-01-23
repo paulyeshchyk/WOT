@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - WOTTankPivotLayoutProtocol
+
 @objc
 public protocol WOTTankPivotLayoutProtocol {
     var relativeContentSizeBlock: (() -> CGSize)? { get set }
@@ -15,7 +17,17 @@ public protocol WOTTankPivotLayoutProtocol {
     var itemLayoutStickyType: ((IndexPath) -> PivotStickyType)? { get set }
 }
 
+// MARK: - WGColoredFlowLayout
+
 public class WGColoredFlowLayout: UICollectionViewFlowLayout {
+
+    override public func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        let layoutAttributes = WGPivotSeparatorCollectionViewLayoutAttributes(forDecorationViewOfKind: elementKind, with: indexPath)
+        layoutAttributes.color = UIColor.darkGray
+        layoutAttributes.zIndex = -1
+        return layoutAttributes
+    }
+
     func layoutAttributesForDecorationView(ofKind elementKind: WOTPivotSeparatorKind, at indexPath: IndexPath, pivotAttributes: WGPivotLayoutCellAttributesProtocol) -> WGPivotSeparatorCollectionViewLayoutAttributes? {
         guard let layoutAttributes = layoutAttributesForDecorationView(ofKind: elementKind.rawValue, at: indexPath) as? WGPivotSeparatorCollectionViewLayoutAttributes else {
             return nil
@@ -25,27 +37,11 @@ public class WGColoredFlowLayout: UICollectionViewFlowLayout {
         layoutAttributes.zIndex = pivotAttributes.zIndex + 1
         return layoutAttributes
     }
-
-    override public func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        let layoutAttributes = WGPivotSeparatorCollectionViewLayoutAttributes(forDecorationViewOfKind: elementKind, with: indexPath)
-        layoutAttributes.color = UIColor.darkGray
-        layoutAttributes.zIndex = -1
-        return layoutAttributes
-    }
 }
 
-public class WGPivotColoredFlowLayout: WGColoredFlowLayout, WOTTankPivotLayoutProtocol {
-    public var relativeContentSizeBlock: (() -> CGSize)?
-    public var itemRelativeRectCallback: ((IndexPath) -> CGRect)?
-    public var itemLayoutStickyType: ((IndexPath) -> PivotStickyType)?
+// MARK: - WGPivotColoredFlowLayout
 
-    override public func prepare() {
-        super.prepare()
-        register(WGPivotSeparatorCollectionReusableView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.top.rawValue)
-        register(WGPivotSeparatorCollectionReusableView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.left.rawValue)
-        register(WGPivotSeparatorCollectionReusableView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.right.rawValue)
-        register(WGPivotSeparatorCollectionReusableView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.bottom.rawValue)
-    }
+public class WGPivotColoredFlowLayout: WGColoredFlowLayout, WOTTankPivotLayoutProtocol {
 
     override open var itemSize: CGSize {
         get {
@@ -77,6 +73,34 @@ public class WGPivotColoredFlowLayout: WGColoredFlowLayout, WOTTankPivotLayoutPr
         return true
     }
 
+    override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        var result = [UICollectionViewLayoutAttributes]()
+        guard let collectionView = collectionView else {
+            return result
+        }
+
+        for section in 0 ..< collectionView.numberOfSections {
+            for row in 0 ..< collectionView.numberOfItems(inSection: section) {
+                let indexPath = IndexPath(row: row, section: section)
+                let separatorAttributes = sepatorAttributes(for: collectionView, at: indexPath, in: rect)
+                result.append(contentsOf: separatorAttributes)
+            }
+        }
+        return result
+    }
+
+    public var relativeContentSizeBlock: (() -> CGSize)?
+    public var itemRelativeRectCallback: ((IndexPath) -> CGRect)?
+    public var itemLayoutStickyType: ((IndexPath) -> PivotStickyType)?
+
+    override public func prepare() {
+        super.prepare()
+        register(WGPivotSeparatorCollectionReusableView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.top.rawValue)
+        register(WGPivotSeparatorCollectionReusableView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.left.rawValue)
+        register(WGPivotSeparatorCollectionReusableView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.right.rawValue)
+        register(WGPivotSeparatorCollectionReusableView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.bottom.rawValue)
+    }
+
     func sepatorAttributes(for collectionView: UICollectionView, at indexPath: IndexPath, in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
         let contentOffset = collectionView.contentOffset
         let pivotAttributes = pivotLayoutCellAttributes(indexPath: indexPath, contentOffset: contentOffset)
@@ -92,22 +116,6 @@ public class WGPivotColoredFlowLayout: WGColoredFlowLayout, WOTTankPivotLayoutPr
         result.append(layoutAttributesForDecorationView(ofKind: .bottom, at: indexPath, pivotAttributes: pivotAttributes))
 
         return result.compactMap { $0 }
-    }
-
-    override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        var result = [UICollectionViewLayoutAttributes]()
-        guard let collectionView = collectionView else {
-            return result
-        }
-
-        for section in 0 ..< collectionView.numberOfSections {
-            for row in 0 ..< collectionView.numberOfItems(inSection: section) {
-                let indexPath = IndexPath(row: row, section: section)
-                let separatorAttributes = sepatorAttributes(for: collectionView, at: indexPath, in: rect)
-                result.append(contentsOf: separatorAttributes)
-            }
-        }
-        return result
     }
 }
 

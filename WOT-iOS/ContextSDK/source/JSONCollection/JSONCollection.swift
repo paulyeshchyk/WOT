@@ -5,10 +5,9 @@
 //  Created by Paul on 30.12.22.
 //
 
+// MARK: - JSONCollection
+
 public class JSONCollection: JSONCollectionProtocol {
-    private var collection = [JSON]()
-    private var custom: Any?
-    public var collectionType: JSONCollectionType
 
     public init(element: JSON) throws {
         collectionType = .element
@@ -24,6 +23,8 @@ public class JSONCollection: JSONCollectionProtocol {
         collectionType = .custom
         self.custom = custom
     }
+
+    public var collectionType: JSONCollectionType
 
     public func add(element object: JSON?) throws {
         guard collectionType == .array else {
@@ -54,7 +55,12 @@ public class JSONCollection: JSONCollectionProtocol {
         case .custom: return custom
         }
     }
+
+    private var collection = [JSON]()
+    private var custom: Any?
 }
+
+// MARK: - JSONCollection + DecoderContainer
 
 extension JSONCollection: DecoderContainer {
     public func decoder() throws -> Decoder {
@@ -64,6 +70,8 @@ extension JSONCollection: DecoderContainer {
     }
 }
 
+// MARK: - JSONCollectionError
+
 private enum JSONCollectionError: Error, CustomStringConvertible {
     case doesnotConformsToJSON(Any?)
     case nilArray
@@ -72,6 +80,7 @@ private enum JSONCollectionError: Error, CustomStringConvertible {
     case notAbleToGetElement(JSONCollectionType)
     case notAbleToAddNilElement
     case cantUseCustomAsArray
+
     var description: String {
         switch self {
         case .cantUseCustomAsArray: return "[\(type(of: self))]: Custom type can't be used as colletion"

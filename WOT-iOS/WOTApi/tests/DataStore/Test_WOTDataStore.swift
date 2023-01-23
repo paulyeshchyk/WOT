@@ -9,9 +9,14 @@
 @testable import WOTApi
 import XCTest
 
-private class tempLogInspectorContainer: LogInspectorContainerProtocol {
+// MARK: - tempLogInspectorContainer
+
+private class tempLogInspectorContainer: LogInspectorContainerProtocol, DataStoreContainerProtocol {
     var logInspector: LogInspectorProtocol?
+    var dataStore: DataStoreProtocol?
 }
+
+// MARK: - Test_DataStore
 
 class Test_DataStore: XCTestCase {
     func test_modelurl() {

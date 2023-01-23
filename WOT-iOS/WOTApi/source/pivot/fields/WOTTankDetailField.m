@@ -12,7 +12,7 @@
 
 - (void)evaluateWithObject:(id)object completionBlock:(EvaluateCompletionBlock)completionBlock {
     
-    NSCAssert(NO, @"should be overriden");
+    NSCAssert(NO, @"has not been implemented");
 
 }
 @end

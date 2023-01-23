@@ -16,7 +16,6 @@ FOUNDATION_EXPORT const unsigned char WOTKitVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <WOTKit/PublicHeader.h>
 
-#import <WOTKit/NSThread+ExecutionOnMain.h>
 #import <WOTKit/UIColor+HSB.h>
 #import <WOTKit/NSBundle+LanguageBundle.h>
 #import <WOTKit/UIImage+Resize.h>

@@ -7,20 +7,38 @@
 
 import WOTKit
 
-public class VehiclesTreeManagedObjectCreator: ManagedObjectCreator {
-    public convenience init() {
-        self.init(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
+// MARK: - VehiclesTreeManagedObjectExtractor
+
+public class VehiclesTreeManagedObjectExtractor: ManagedObjectExtractable {
+    public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
+
+    public func extractJSON(from: JSON) -> JSON? {
+        return from
     }
+}
+
+// MARK: - VehiclesTreeManagedObjectCreator
+
+public class VehiclesTreeManagedObjectCreator: ManagedObjectLinker {
+
+    public convenience init(modelClass: PrimaryKeypathProtocol.Type, appContext: Context) throws {
+        let emptyFetchResult = try appContext.dataStore?.emptyFetchResult()
+        let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nil)
+        self.init(modelClass: modelClass, masterFetchResult: emptyFetchResult, anchor: anchor)
+    }
+
+    public typealias Context = DataStoreContainerProtocol
 
     override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-    override public func onJSONExtraction(json: JSON) -> JSON? {
-        return json
+
+    override public func extractJSON(from: JSON) -> JSON? {
+        return from
     }
 
-    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectCreatorContext, completion: @escaping FetchResultCompletion) {
+    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
         // MARK: stash
 
-        appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
+        appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
             completion(fetchResult, error)
         }
     }

@@ -7,14 +7,17 @@
 
 import UIKit
 
+// MARK: - ContextProtocol
+
 @objc
 public protocol ContextProtocol: LogInspectorContainerProtocol,
     DataStoreContainerProtocol,
     HostConfigurationContainerProtocol,
     RequestManagerContainerProtocol,
     RequestListenerContainerProtocol,
-    SessionManagerContainerProtocol,
-    MappingCoordinatorContainerProtocol {}
+    SessionManagerContainerProtocol {}
+
+// MARK: - ContextControllerProtocol
 
 @objc
 public protocol ContextControllerProtocol {

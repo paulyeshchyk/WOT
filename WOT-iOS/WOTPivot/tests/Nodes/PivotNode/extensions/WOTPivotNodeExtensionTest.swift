@@ -27,8 +27,8 @@ class WOTPivotFilterNodeTest: XCTestCase {
         let horizontal = UInt8(PivotStickyType.horizontal.rawValue)
         let vertical = UInt8(PivotStickyType.vertical.rawValue)
         let raw = PivotStickyType.RawValue(horizontal | vertical)
-
-        XCTAssert(node.stickyType == PivotStickyType(rawValue: raw))
+        let typeFromRaw = PivotStickyType(rawValue: raw)
+        XCTAssert(node.stickyType.rawValue == typeFromRaw.rawValue)
     }
 
     func testRow() {

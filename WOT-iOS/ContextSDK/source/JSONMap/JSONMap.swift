@@ -5,20 +5,23 @@
 //  Created by Paul on 31.12.22.
 //
 
-public class JSONMap: JSONCollectionContainerProtocol {
-    public let managedObjectContext: ManagedObjectContextProtocol
-    public let predicate: ContextPredicateProtocol
-    public let jsonCollection: JSONCollectionProtocol
+// MARK: - JSONMap
 
-    public init(json: JSONCollectionProtocol?, managedObjectContext: ManagedObjectContextProtocol, predicate: ContextPredicateProtocol) throws {
-        guard let json = json else {
+public class JSONMap: JSONCollectionContainerProtocol {
+
+    public init(jsonCollection: JSONCollectionProtocol?, predicate contextPredicate: ContextPredicateProtocol) throws {
+        guard let jsonCollection = jsonCollection else {
             throw JSONMapError.jsonIsNil
         }
-        jsonCollection = json
-        self.managedObjectContext = managedObjectContext
-        self.predicate = predicate
+        self.jsonCollection = jsonCollection
+        self.contextPredicate = contextPredicate
     }
+
+    public let contextPredicate: ContextPredicateProtocol
+    public let jsonCollection: JSONCollectionProtocol
 }
+
+// MARK: - JSONMapError
 
 private enum JSONMapError: Error, CustomStringConvertible {
     case jsonIsNil
@@ -30,9 +33,12 @@ private enum JSONMapError: Error, CustomStringConvertible {
     }
 }
 
+// MARK: - JSONManagedObjectMapError
+
 public enum JSONManagedObjectMapError: Error, CustomStringConvertible {
     case notAnElement(JSONCollectionContainerProtocol)
     case notAnArray(JSONCollectionContainerProtocol)
+
     public var description: String {
         switch self {
         case .notAnArray(let map): return "[\(type(of: self))]: Not an array: \(String(describing: map))"

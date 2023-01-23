@@ -8,12 +8,16 @@
 
 import WOTKit
 
+// MARK: - WOTMenuDelegate
+
 @objc
 protocol WOTMenuDelegate: NSObjectProtocol {
     var currentUserName: String { get }
     func menu(_ menu: WOTMenuProtocol, didSelectControllerClass controllerClass: AnyClass, title: String, image: UIImage)
     func loginPressedOnMenu(_ menu: WOTMenuProtocol)
 }
+
+// MARK: - WOTMenuProtocol
 
 @objc
 protocol WOTMenuProtocol: NSObjectProtocol {
@@ -25,9 +29,10 @@ protocol WOTMenuProtocol: NSObjectProtocol {
     func rebuildMenu()
 }
 
+// MARK: - WOTMenuViewController
+
 @objc
 class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourceDelegate {
-    var menuDatasource: WOTMenuDatasourceProtocol?
 
     required convenience init(menuDatasource datasource: WOTMenuDatasource, nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         self.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -39,18 +44,21 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourc
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    var menuDatasource: WOTMenuDatasourceProtocol?
+
     @IBOutlet var tableView: UITableView?
+    weak var delegate: WOTMenuDelegate?
+
     var selectedIndex: NSInteger = 0 {
         didSet {
             delegate?.menu(self, didSelectControllerClass: selectedMenuItemClass, title: selectedMenuItemTitle, image: selectedMenuItemImage)
         }
     }
-
-    func rebuildMenu() {
-        menuDatasource?.rebuild()
-    }
-
-    weak var delegate: WOTMenuDelegate?
 
     var selectedMenuItemClass: AnyClass {
         guard let item = menuDatasource?.object(at: selectedIndex) else {
@@ -69,9 +77,8 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourc
         return item?.icon ?? UIImage()
     }
 
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func rebuildMenu() {
+        menuDatasource?.rebuild()
     }
 
     override func viewDidLoad() {
@@ -85,14 +92,6 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourc
         redrawNavigationBar()
     }
 
-    fileprivate func redrawNavigationBar() {
-        navigationController?.navigationBar.setDarkStyle()
-        let image = UIImage(named: WOTApi.L10n.wotImageUser)
-        let backButton = UIBarButtonItem(image: image, style: UIBarButtonItem.Style.done, target: self, action: #selector(WOTMenuViewController.loginPressed(_:)))
-        navigationItem.leftBarButtonItems = [backButton]
-        navigationItem.title = delegate?.currentUserName
-    }
-
     @objc func loginPressed(_: AnyObject?) {
         delegate?.loginPressedOnMenu(self)
     }
@@ -104,7 +103,17 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourc
         selectedIndex = 0
         tableView?.reloadData()
     }
+
+    fileprivate func redrawNavigationBar() {
+        navigationController?.navigationBar.setDarkStyle()
+        let image = UIImage(named: WOTApi.L10n.wotImageUser)
+        let backButton = UIBarButtonItem(image: image, style: UIBarButtonItem.Style.done, target: self, action: #selector(WOTMenuViewController.loginPressed(_:)))
+        navigationItem.leftBarButtonItems = [backButton]
+        navigationItem.title = delegate?.currentUserName
+    }
 }
+
+// MARK: - WOTMenuViewController + UITableViewDataSource, UITableViewDelegate
 
 extension WOTMenuViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
@@ -127,6 +136,8 @@ extension WOTMenuViewController: UITableViewDataSource, UITableViewDelegate {
         selectedIndex = indexPath.row
     }
 }
+
+// MARK: - DefaultMenuViewController
 
 class DefaultMenuViewController: UIViewController, ContextControllerProtocol {
     var appContext: ContextProtocol?

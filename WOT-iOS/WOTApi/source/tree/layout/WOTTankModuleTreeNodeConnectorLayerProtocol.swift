@@ -8,8 +8,12 @@
 
 import UIKit
 
+// MARK: - WOTTankModuleTreeNodeConnectorLayerProtocol
+
 @objc
 public protocol WOTTankModuleTreeNodeConnectorLayerProtocol: NSObjectProtocol {}
+
+// MARK: - WOTTankConfigurationFlowCellLayoutProtocol
 
 @objc
 public protocol WOTTankConfigurationFlowCellLayoutProtocol {

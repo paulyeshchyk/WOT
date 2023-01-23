@@ -9,9 +9,7 @@
 import UIKit
 
 public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
-    public var listener: DimensionLoadListenerProtocol?
 
-    private var rootNodeHolder: PivotNodeDatasourceProtocol
     public required init(rootNodeHolder: PivotNodeDatasourceProtocol) {
         self.rootNodeHolder = rootNodeHolder
         super.init()
@@ -21,17 +19,7 @@ public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    private var registeredCalculators = [AnyHashable: AnyClass]()
-    public func registerCalculatorClass(_ calculatorClass: PivotDimensionCalculator.Type, forNodeClass: AnyClass) {
-        let hash = hashValue(type: forNodeClass)
-        registeredCalculators[hash] = calculatorClass
-    }
-
-    public func calculatorClass(forNodeClass: AnyClass) -> PivotDimensionCalculator.Type? {
-        let hash = hashValue(type: forNodeClass)
-        let result: PivotDimensionCalculator.Type? = registeredCalculators[hash] as? PivotDimensionCalculator.Type
-        return result
-    }
+    public var listener: DimensionLoadListenerProtocol?
 
     public var rootNodeWidth: Int {
         let rows = rootNodeHolder.rootRowsNode
@@ -51,9 +39,17 @@ public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
         return CGSize(width: width, height: height) // 156:11
     }
 
-    private var index: NodeIndexType = 0
+    public func registerCalculatorClass(_ calculatorClass: PivotDimensionCalculator.Type, forNodeClass: AnyClass) {
+        let hash = hashValue(type: forNodeClass)
+        registeredCalculators[hash] = calculatorClass
+    }
 
-    #warning(" !!! TO BE refactored: too slow !!! ")
+    public func calculatorClass(forNodeClass: AnyClass) -> PivotDimensionCalculator.Type? {
+        let hash = hashValue(type: forNodeClass)
+        let result: PivotDimensionCalculator.Type? = registeredCalculators[hash] as? PivotDimensionCalculator.Type
+        return result
+    }
+
     override public func reload(forIndex externalIndex: Int, nodeCreator: NodeCreatorProtocol?) {
         index = externalIndex
 
@@ -67,7 +63,6 @@ public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
                 filterEndPoints?.forEach { (filterNode) in
 
                     dispatchGroup.enter()
-
                     #warning("should we use predicate instead of fullPredicate ?")
                     let colFullPredicate = (colNode as? PivotNodeProtocol)?.predicate
                     let rowFullPredicate = (rowNode as? PivotNodeProtocol)?.predicate
@@ -85,12 +80,26 @@ public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
                     }
                 }
             }
-
-            dispatchGroup.notify(queue: DispatchQueue.main) {
-                self.listener?.didLoad(dimension: self)
-            }
+        }
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            self.listener?.didLoad(dimension: self)
         }
     }
+
+    public func pivotRect(forNode: PivotNodeProtocol) -> CGRect {
+        guard let calculator = calculatorClass(forNodeClass: type(of: forNode)) else {
+            return .zero
+        }
+        let result = calculator.rectangle(forNode: forNode, dimension: self)
+        forNode.relativeRect = NSValue(cgRect: result)
+        return result
+    }
+
+    private var rootNodeHolder: PivotNodeDatasourceProtocol
+    private var registeredCalculators = [AnyHashable: AnyClass]()
+    private var index: NodeIndexType = 0
+
+    #warning(" !!! TO BE refactored: too slow !!! ")
 
     private func updateDimensions(dataNodes: [NodeProtocol], colNode: NodeProtocol, rowNode: NodeProtocol, filterNode _: NodeProtocol) {
         var result = index
@@ -135,14 +144,5 @@ public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
 
     private func hashValue(type: Any.Type) -> Int {
         return ObjectIdentifier(type).hashValue
-    }
-
-    public func pivotRect(forNode: PivotNodeProtocol) -> CGRect {
-        guard let calculator = calculatorClass(forNodeClass: type(of: forNode)) else {
-            return .zero
-        }
-        let result = calculator.rectangle(forNode: forNode, dimension: self)
-        forNode.relativeRect = NSValue(cgRect: result)
-        return result
     }
 }

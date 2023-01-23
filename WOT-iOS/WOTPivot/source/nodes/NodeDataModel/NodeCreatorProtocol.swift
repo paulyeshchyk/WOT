@@ -8,6 +8,8 @@
 
 public typealias NodeComparator = (_ left: NodeProtocol, _ right: NodeProtocol) -> Bool
 
+// MARK: - NodeCreatorProtocol
+
 @objc
 public protocol NodeCreatorProtocol {
     var collapseToGroups: Bool { get }

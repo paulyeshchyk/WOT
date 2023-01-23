@@ -7,14 +7,31 @@
 //
 
 open class Node: NSObject, NodeProtocol {
+
     @objc
     public required init(name nameValue: String) {
         super.init()
         name = nameValue
     }
 
+    open var name: String = ""
+    open var children: [NodeProtocol] = [NodeProtocol]()
+
+    private(set) open var parent: NodeProtocol?
+
+    open var isVisible: Bool = true
+
+    open var index: NodeIndexType = 0
+
     override open var hash: Int {
         return self.fullName.hashValue
+    }
+
+    open var fullName: String {
+        guard let parent = self.parent else {
+            return self.name
+        }
+        return String(format: "%@.%@", parent.fullName, self.name)
     }
 
     open subscript(index: Int) -> NodeProtocol {
@@ -27,27 +44,9 @@ open class Node: NSObject, NodeProtocol {
         }
     }
 
-    open var name: String = ""
-    fileprivate var hiddenParent: NodeProtocol?
-
-    open var children: [NodeProtocol] = [NodeProtocol]()
-
-    private(set) open var parent: NodeProtocol?
-
-    open var isVisible: Bool = true
-
-    open var fullName: String {
-        guard let parent = self.parent else {
-            return self.name
-        }
-        return String(format: "%@.%@", parent.fullName, self.name)
-    }
-
     open func value(key _: AnyHashable) -> Any? {
         return nil
     }
-
-    open var index: NodeIndexType = 0
 
     open func copy(with _: NSZone? = nil) -> Any {
         let result = type(of: self).init(name: name)
@@ -118,4 +117,6 @@ open class Node: NSObject, NodeProtocol {
         self.parent = nil
         parent.unlinkChild(self)
     }
+
+    fileprivate var hiddenParent: NodeProtocol?
 }

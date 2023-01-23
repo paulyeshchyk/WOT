@@ -51,9 +51,7 @@
     static dispatch_once_t once;
     static id instance;
     dispatch_once(&once, ^{
-        
-        [NSThread executeOnMainThread:^{
-            
+        [NSThread executeOnMainWithCompletion:^{
             instance = [[self alloc] init];
         }];
     });

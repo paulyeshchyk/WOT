@@ -6,9 +6,6 @@
 //
 
 public class ContextPredicate: NSObject, ContextPredicateProtocol {
-    /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
-    /// parents identifier has been taken from a list
-    public var parentObjectIDList: [AnyObject] = []
 
     public convenience init(parentObjectIDList idList: [AnyObject]?) {
         self.init()
@@ -17,6 +14,10 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
             parentObjectIDList.append(contentsOf: compacted)
         }
     }
+
+    /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
+    /// parents identifier has been taken from a list
+    public var parentObjectIDList: [AnyObject] = []
 
     override public var description: String {
         let objects = expressions()
@@ -29,8 +30,6 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
         }
         return result.joined(separator: ";")
     }
-
-    private var _expressions: [ContextExpressionType: Set<ContextExpression>] = .init()
 
     public subscript(pkType: ContextExpressionType) -> ContextExpressionProtocol? {
         get {
@@ -71,4 +70,6 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
         case .or: return NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         }
     }
+
+    private var _expressions: [ContextExpressionType: Set<ContextExpression>] = .init()
 }

@@ -11,29 +11,23 @@ import ContextSDK
 
 @objc
 public class WOTWEBRequestFactory: NSObject {
-    private enum HttpRequestFactoryError: Error, CustomStringConvertible {
-        case objectNotDefined
-        public var description: String {
-            switch self {
-            case .objectNotDefined: return "[\(type(of: self))]: Object not defined"
-            }
-        }
-    }
+    //
+    public typealias Context = DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol
 
-    public static func fetchVehiclePivotData(inContext appContext: LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
+    public static func fetchVehiclePivotData(appContext: WOTWEBRequestFactory.Context, listener: RequestManagerListenerProtocol) throws {
         guard let request = try appContext.requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
         let arguments = RequestArguments()
         arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
-
-        let pivotLinker = VehiclesPivotDataManagedObjectCreator()
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: pivotLinker, listener: listener)
+        let extractor = VehiclesPivotManagedObjectExtractor()
+        let pivotLinker = try VehiclesPivotDataManagedObjectCreator(modelClass: Vehicles.self, appContext: appContext)
+        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: pivotLinker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc
-    public static func fetchVehicleTreeData(vehicleId: Int, appContext: LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
+    public static func fetchVehicleTreeData(vehicleId: Int, appContext: DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
         guard let request = try appContext.requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
@@ -41,9 +35,9 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues([vehicleId], forKey: WOTApiFields.tank_id)
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
-
-        let treeViewLinker = VehiclesTreeManagedObjectCreator()
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: treeViewLinker, listener: listener)
+        let extractor = VehiclesTreeManagedObjectExtractor()
+        let treeViewLinker = try VehiclesTreeManagedObjectCreator(modelClass: Vehicles.self, appContext: appContext)
+        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: treeViewLinker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc
@@ -59,5 +53,15 @@ public class WOTWEBRequestFactory: NSObject {
 //        appContext.logInspector?.logEvent(EventFlowStart(request), sender: self)
 //        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: nil)
 //        requestManager.addListener(listener, forRequest: request)
+    }
+
+    private enum HttpRequestFactoryError: Error, CustomStringConvertible {
+        case objectNotDefined
+
+        public var description: String {
+            switch self {
+            case .objectNotDefined: return "[\(type(of: self))]: Object not defined"
+            }
+        }
     }
 }

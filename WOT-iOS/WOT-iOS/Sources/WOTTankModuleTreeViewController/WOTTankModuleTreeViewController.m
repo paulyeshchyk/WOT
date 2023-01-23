@@ -62,7 +62,7 @@
 
 @end
 
-@interface WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)<PivotFetchControllerDelegateProtocol>
+@interface WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)<FetchRequestContainerProtocol>
 @end
 
 @implementation WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)
@@ -101,11 +101,6 @@
 @implementation WOTTankModuleTreeViewController
 @synthesize appContext;
 @synthesize MD5;
-@synthesize uuid;
-
-- (NSUUID *)uuid {
-    return [NSUUID UUID];
-}
 
 - (NSString *)MD5 {
     return [MD5 MD5From:@"WOTTankModuleTreeViewController"];
@@ -131,13 +126,14 @@
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
         
-        WOTTankTreeFetchController* fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self
-                                                                                                               appContext:appDelegate];
+        WOTTankTreeFetchController* fetchController = [[WOTTankTreeFetchController alloc] initWithObjCFetchRequestContainer:self
+                                                                                                                 appContext:appDelegate];
         self.model = [[TreeDataModel alloc] initWithFetchController: fetchController
-                                                              listener: self
-                                                            enumerator: [NodeEnumerator sharedInstance]
-                                                           nodeCreator: self
-                                                             nodeIndex: ObjCNodeIndex.defaultIndex ];
+                                                           listener: self
+                                                         enumerator: [NodeEnumerator sharedInstance]
+                                                        nodeCreator: self
+                                                          nodeIndex: NodeIndex.self
+                                                         appContext: appDelegate];
     }
     return self;
 }
@@ -295,7 +291,7 @@
     [self reloadModel];
 
     id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-    [[appDelegate logInspector] logEvent: [[EventFlowEnd alloc] init:@"Tree"] sender:self];
+//    [[appDelegate logInspector] logEvent: [[EventFlowEnd alloc] init:@"Tree"] sender:self];
 }
 
 - (void)requestManager:(id<RequestManagerProtocol>)requestManager didCancelRequest:(id<RequestProtocol>)didCancelRequest reason:(id<RequestCancelReasonProtocol>)reason {
@@ -325,12 +321,10 @@
     
 }
 
-- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {
-    if (completionResultType == WOTRequestManagerCompletionResultTypeFinished ) {
-        [self reloadModel];
-        id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-        [[appDelegate logInspector] logEvent: [[EventFlowEnd alloc] init:@"Tree"] sender:self];
-    }
+- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest error:(NSError * _Nullable)error{
+    [self reloadModel];
+//    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
+//    [[appDelegate logInspector] logEvent: [[EventFlowEnd alloc] init:@"Tree"] sender:self];
 }
 
 

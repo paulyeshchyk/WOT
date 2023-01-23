@@ -9,16 +9,18 @@
 import ContextSDK
 import CoreData
 
+// MARK: - NSManagedObjectContext + ManagedObjectContextProtocol
+
 extension NSManagedObjectContext: ManagedObjectContextProtocol {
     // MARK: - ManagedObjectContextLookupProtocol
 
     public func execute(appContext: ManagedObjectContextLookupProtocol.Context, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
         let uuid = UUID()
-        let initiationDate = Date()
-        appContext.logInspector?.logEvent(EvenDatastoreWillExecute(uuid: uuid), sender: self)
+        let executionStartTime = Date()
+        appContext.logInspector?.log(.sqlite(message: "exec start operation: \(uuid.MD5), in: \(String(describing: self))"), sender: self)
         perform {
             block(self)
-            appContext.logInspector?.logEvent(EvenDatastoreDidExecute(uuid: uuid, initiatedIn: initiationDate), sender: self)
+            appContext.logInspector?.log(.sqlite(message: "exec end (\(Date().elapsed(from: executionStartTime))s) operation: \(uuid.MD5), in: \(String(describing: self))"), sender: self)
         }
     }
 
@@ -30,9 +32,9 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return object(with: objectID)
     }
 
-    public func findOrCreateObject(forType: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
-        guard let foundObject = try? lastObject(forType: forType, predicate: predicate, includeSubentities: false) else {
-            return insertNewObject(forType: forType)
+    public func findOrCreateObject(modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
+        guard let foundObject = try? lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
+            return insertNewObject(forType: modelClass)
         }
         return foundObject
     }
@@ -54,13 +56,11 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
             return
         }
 
-        let uuid = UUID()
-        let initiationDate = Date()
-        appContext.logInspector?.logEvent(EvenDatastoreWillSave(uuid: uuid, description: name ?? "?"), sender: self)
+        appContext.logInspector?.log(.sqlite(message: "save-start"), sender: self)
         performAndWait {
             do {
                 try self.save()
-                appContext.logInspector?.logEvent(EvenDatastoreDidSave(uuid: uuid, initiatedIn: initiationDate, description: name ?? "?"), sender: self)
+                appContext.logInspector?.log(.sqlite(message: "save-end"), sender: self)
 
                 if let parent = self.parent {
                     parent.save(appContext: appContext, completion: privateCompletion)
@@ -68,7 +68,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
                     privateCompletion(nil)
                 }
             } catch {
-                appContext.logInspector?.logEvent(EvenDatastoreSaveFailed(uuid: uuid, initiatedIn: initiationDate, description: name ?? "?"), sender: self)
+                appContext.logInspector?.log(.sqlite(message: "save-fail"), sender: self)
                 privateCompletion(error)
             }
         }
@@ -102,8 +102,8 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 }
 
 extension NSManagedObjectContext {
-    private func lastObject(forType: AnyObject, predicate: NSPredicate?, includeSubentities: Bool) throws -> ManagedObjectProtocol? {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: forType))
+    private func lastObject(modelClass: AnyObject, predicate: NSPredicate?, includeSubentities: Bool) throws -> ManagedObjectProtocol? {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: modelClass))
         request.fetchLimit = 1
         request.predicate = predicate
         request.includesSubentities = includeSubentities

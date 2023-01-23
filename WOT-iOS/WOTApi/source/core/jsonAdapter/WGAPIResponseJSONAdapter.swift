@@ -8,7 +8,6 @@
 import ContextSDK
 
 public class WGAPIResponseJSONAdapter: JSONAdapter {
-    //
 
     override public var responseClass: AnyClass {
         return WGAPIResponse.self

@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: - WOTMenuItemProtocol
+
 @objc
 protocol WOTMenuItemProtocol: NSObjectProtocol {
     var controllerClass: AnyClass { get }
@@ -17,12 +19,10 @@ protocol WOTMenuItemProtocol: NSObjectProtocol {
     init(controllerClass clazz: AnyClass, controllerTitle title: String, icon image: UIImage, userDependence dependence: Bool)
 }
 
+// MARK: - WOTMenuItem
+
 @objc
 class WOTMenuItem: NSObject {
-    @objc private(set) var controllerClass: ContextControllerProtocol.Type
-    @objc private(set) var controllerTitle: String
-    @objc private(set) var icon: UIImage
-    @objc private(set) var userDependence: Bool
 
     init(controllerClass clazz: ContextControllerProtocol.Type, controllerTitle title: String, icon image: UIImage, userDependence dependence: Bool) {
         controllerClass = clazz
@@ -30,4 +30,9 @@ class WOTMenuItem: NSObject {
         icon = image
         userDependence = dependence
     }
+
+    @objc private(set) var controllerClass: ContextControllerProtocol.Type
+    @objc private(set) var controllerTitle: String
+    @objc private(set) var icon: UIImage
+    @objc private(set) var userDependence: Bool
 }

@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - PivotNodeProtocol
+
 @objc
 public protocol PivotNodeProtocol: NodeProtocol {
     var imageURL: NSURL? { get set }
@@ -23,6 +25,8 @@ public protocol PivotNodeProtocol: NodeProtocol {
     var stepParentRow: NodeProtocol? { get set }
 }
 
+// MARK: - PivotCellType
+
 @objc
 public enum PivotCellType: Int {
     case filter
@@ -31,6 +35,8 @@ public enum PivotCellType: Int {
     case data
     case dataGroup
 }
+
+// MARK: - PivotMetadataType
 
 @objc
 public enum PivotMetadataType: Int {

@@ -28,13 +28,13 @@
 
 - (NSPredicate *)predicateForAllPlayingVehiclesWithObject:(id)object {
     
-    NSCAssert(NO, @"should be overriden");
+    NSCAssert(NO, @"has not been implemented");
     return nil;
 }
 
 - (NSPredicate *)predicateForAnyObject:(NSArray *)objects {
 
-    NSCAssert(NO, @"should be overriden");
+    NSCAssert(NO, @"has not been implemented");
     return nil;
 }
 

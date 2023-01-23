@@ -8,6 +8,7 @@
 
 #import "WOTSessionManager.h"
 #import <WOTKit/WOTKit.h>
+#import <ContextSDK/ContextSDK-Swift.h>
 
 @interface WOTSessionManager ()
 
@@ -95,8 +96,7 @@
     static id instance;
     dispatch_once(&once, ^{
         
-        [NSThread executeOnMainThread:^{
-            
+        [NSThread executeOnMainWithCompletion:^{
             instance = [[self alloc] init];
         }];
     });
