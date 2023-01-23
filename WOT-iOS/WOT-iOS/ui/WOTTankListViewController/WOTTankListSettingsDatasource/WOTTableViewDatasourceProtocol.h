@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, WOTTankListSettingType) {
     WOTTankListSettingTypeValueChanger
 };
 
-typedef void(^WOTTankListSettingUpateCallback)(id setting);
+typedef void(^WOTTankListSettingUpateCallback)(id context, id setting);
 typedef void(^WOTTankListSettingMoveCompletionCallback)(void);
 
 

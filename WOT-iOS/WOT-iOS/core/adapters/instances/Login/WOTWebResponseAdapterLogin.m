@@ -17,45 +17,42 @@
     if (error){
         
         [[[UIAlertView alloc] initWithTitle:@"Error" message:[error.userInfo description] delegate:nil cancelButtonTitle:@"DISMISS" otherButtonTitles:nil] show];
+        return;
+    }
+    
+    NSString *location = data[WOT_KEY_DATA][WOT_KEY_LOCATION];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:location]];
+    
+    UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+    UIViewController *presentedViewController = [[rootViewController.presentedViewController childViewControllers] firstObject];
+    if ([presentedViewController isKindOfClass:[WOTLoginViewController class]]){
+        
+        WOTLoginViewController *loginController = (WOTLoginViewController *)presentedViewController;
+        loginController.request = request;
+        [loginController reloadData];
+        
     } else {
         
-        NSString *location = data[WOT_KEY_DATA][WOT_KEY_LOCATION];
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:location]];
+        WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:NSStringFromClass([WOTLoginViewController class]) bundle:nil];
+        loginController.request = request;
+        loginController.redirectUrlPath = data[WOT_KEY_REDIRECT_URI];
+        [loginController setCallback:loginCallback];
         
-        UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
-        UIViewController *presentedViewController = [[rootViewController.presentedViewController childViewControllers] firstObject];
-        if ([presentedViewController isKindOfClass:[WOTLoginViewController class]]){
-            
-            WOTLoginViewController *loginController = (WOTLoginViewController *)presentedViewController;
-            loginController.request = request;
-            [loginController reloadData];
-            
-        } else {
-            
-            WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:NSStringFromClass([WOTLoginViewController class]) bundle:nil];
-            loginController.request = request;
-            loginController.redirectUrlPath = data[WOT_KEY_REDIRECT_URI];
-            [loginController setCallback:^(NSError *error, NSString *userID, NSString *access_token, NSString *account_id, NSNumber *expires_at){
-                
-                NSMutableDictionary *args =[[NSMutableDictionary alloc] init];
-                if (error) args[WOT_KEY_ERROR]=error;
-                if (userID) args[WOT_KEY_USER_ID]=userID;
-                if (access_token) args[WOT_KEY_ACCESS_TOKEN]=access_token;
-                if (account_id) args[WOT_KEY_ACCOUNT_ID]=account_id;
-                if (expires_at) args[WOT_KEY_EXPIRES_AT]=expires_at;//@([[NSDate date] timeIntervalSince1970] + 60.0f*0.25f);//
-                
-                WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdSaveSession];
-                [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
-
-                
-                [rootViewController dismissViewControllerAnimated:YES completion:NULL];
-            }];
-            
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
-            
-            [rootViewController presentViewController:nav animated:YES completion:NULL];
-        }
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
+        
+        [rootViewController presentViewController:nav animated:YES completion:NULL];
     }
 }
+
+WOTLoginCallback loginCallback = ^(WOTLogin *wotLogin){
+
+    NSDictionary *args = [wotLogin asDictionary];
+    
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdSaveSession];
+    [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+
+    UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+    [rootViewController dismissViewControllerAnimated:YES completion:NULL];
+};
 
 @end

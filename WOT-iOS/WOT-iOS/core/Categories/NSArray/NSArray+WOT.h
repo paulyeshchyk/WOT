@@ -10,6 +10,6 @@
 
 @interface NSArray (WOT)
 
-+ (BOOL)hasDataInArray:(NSArray *)array;
+@property (nonatomic) BOOL hasItems;
 
 @end

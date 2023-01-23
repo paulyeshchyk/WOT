@@ -13,9 +13,9 @@
 @property (nonatomic, strong)NSArray *expressionDescriptions;
 @property (nonatomic, strong)NSArray *keyPaths;
 
-
-- (NSPredicate *)predicateForObject:(id)object;
-
 + (WOTTankDetailFieldExpression *)expressionName:(NSString *)expressionName fieldWithExpressionDescriptions:(NSArray *)expressionDescriptions  keyPaths:(NSArray *)keyPaths;
+
+- (NSPredicate *)predicateForAllPlayingVehiclesWithObject:(id)object;
+- (NSPredicate *)predicateForAnyObject:(NSArray *)objects;
 
 @end

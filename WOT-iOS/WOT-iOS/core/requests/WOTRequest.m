@@ -22,14 +22,20 @@
     self = [super init];
     if (self){
         
-//        [self updateHash];
+        self.listener = nil;
     }
     return self;
 }
 
+- (void)dealloc {
+    
+    NSCAssert(self.listener == nil, @"listener should be nilled before");
+    self.listener = nil;
+}
 
 - (void)temp_executeWithArgs:(NSDictionary *)args{
     
+    NSCAssert(self.listener, @"listener is not defined");
     self.args = [args copy];
 }
 

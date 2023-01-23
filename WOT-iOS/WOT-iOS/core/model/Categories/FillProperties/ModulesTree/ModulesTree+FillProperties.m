@@ -52,11 +52,12 @@
 - (WOTModuleType)moduleType {
     
     WOTModuleType type = WOTModuleTypeUnknown;
-    if ([[self nextEngines] count] != 0) type |= WOTModuleTypeEngine;
-    if ([[self nextChassis] count] != 0) type |= WOTModuleTypeChassis;
-    if ([[self nextGuns] count] != 0) type |= WOTModuleTypeGuns;
-    if ([[self nextRadios] count] != 0) type |= WOTModuleTypeRadios;
-    if ([[self nextTurrets] count] != 0) type |= WOTModuleTypeTurrets;
+    
+    type |= self.nextEngines.hasItems ? WOTModuleTypeEngine : 0;
+    type |= self.nextChassis.hasItems ? WOTModuleTypeChassis : 0;
+    type |= self.nextGuns.hasItems ? WOTModuleTypeGuns : 0;
+    type |= self.nextRadios.hasItems ? WOTModuleTypeRadios : 0;
+    type |= self.nextTurrets.hasItems ? WOTModuleTypeTurrets : 0;
     
     return type;
 }

@@ -19,8 +19,8 @@
 @implementation WOTTree
 
 - (void)dealloc {
-    
-    [self.rootNodes_ removeAllObjects];
+
+    [self removeAllNodes];
 }
 
 - (NSSet *)rootNodes {

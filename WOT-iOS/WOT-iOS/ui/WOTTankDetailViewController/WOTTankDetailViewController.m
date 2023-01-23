@@ -18,9 +18,10 @@
 
 #import "WOTTankIdsDatasource.h"
 
-#import "WOTRadarViewController.h"
 #import "WOTTankDetailSection+Factory.h"
-#import "WOTRadarViewController.h"
+
+#import "WOTTankGridViewController.h"
+
 #import "WOTTankMetricsList.h"
 #import "WOTMetric.h"
 #import "WOTTanksIDList.h"
@@ -28,12 +29,16 @@
 
 #import "WOTMetric+Samples.h"
 
-@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate >
+#import "WOTRadarViewController.h"
+
+@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIToolbar *bottomBar;
 @property (nonatomic, weak) IBOutlet UIToolbar *topBar;
 
-@property (nonatomic, weak) IBOutlet UIButton *propertyAllButton;
+@property (nonatomic, weak) IBOutlet UIButton *viewModeRadarButton;
+@property (nonatomic, weak) IBOutlet UIButton *viewModeGridButton;
+
 @property (nonatomic, weak) IBOutlet UIButton *propertyMobilityButton;
 @property (nonatomic, weak) IBOutlet UIButton *propertyArmorButton;
 @property (nonatomic, weak) IBOutlet UIButton *propertyObserveButton;
@@ -43,14 +48,16 @@
 @property (nonatomic, weak) IBOutlet UIButton *configurationTopButton;
 @property (nonatomic, weak) IBOutlet UIButton *configurationDefaultButton;
 
-@property (nonatomic, weak) IBOutlet UIView *radarContainer;
-
+@property (nonatomic, strong) NSArray *viewContainerConstraints;
+@property (nonatomic, weak) IBOutlet UIView *viewContainer;
+@property (nonatomic, strong)WOTTankGridViewController *gridViewController;
 @property (nonatomic, strong)WOTRadarViewController *radarViewController;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
 
 @property (nonatomic, strong) NSError *fetchError;
 
+@property (nonatomic, assign)WOTTankDetailViewMode viewMode;
 @property (nonatomic, assign)WOTTankMetricOptions metricOptions;
 @property (nonatomic, strong)Vehicles *vehicle;
 @property (nonatomic, strong)NSMutableSet *runningRequestIDs;
@@ -61,7 +68,6 @@
 
 - (void)dealloc {
     
-    self.radarViewController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
@@ -75,6 +81,9 @@
     [self.runningRequestIDs removeAllObjects];
     
     self.fetchedResultController.delegate = nil;
+    
+    self.radarViewController.delegate = nil;
+    self.radarViewController = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -147,55 +156,94 @@
         _vehicle = vehicle;
         self.title = _vehicle.tanks.name_i18n;
 
-        NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[_vehicle.tier]];
-        
-        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
-        [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
-            
-            NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_BY_TIER, tankId];
-            if (!self.runningRequestIDs){
-                
-                self.runningRequestIDs = [[NSMutableSet alloc] init];
-            }
-            [self.runningRequestIDs addObject:groupId];
-            [self refetchTankID:[tankId stringValue] groupId:groupId];
-        }];
+        [self fetchPlayableVehiclesForTier:_vehicle.tier];
+//        [self fetchDefaultConfigurationForTankId:[_vehicle.tank_id stringValue]];
+    }
+}
+
+- (void)setViewMode:(WOTTankDetailViewMode)viewMode {
+
+    if (viewMode != _viewMode) {
+    
+        _viewMode = viewMode;
     }
     
+    self.viewModeGridButton.selected = (_viewMode == WOTTankDetailViewModeGrid);
+    self.viewModeRadarButton.selected = (_viewMode == WOTTankDetailViewModeRadar);
+    [self updateUINeedReset:YES];
 }
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
 
-    self.metricOptions = WOTTankMetricOptionNone;
-    
     self.radarViewController = [[WOTRadarViewController alloc] initWithNibName:NSStringFromClass([WOTRadarViewController class]) bundle:nil];
-    [self.radarContainer addSubview:self.radarViewController.view];
-    [self.radarViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.radarViewController.view addStretchingConstraints];
     [self.radarViewController setDelegate:self];
 
+    self.gridViewController = [[WOTTankGridViewController alloc] initWithNibName:NSStringFromClass([WOTTankGridViewController class]) bundle:nil];
+    [self.gridViewController setDelegate:self];
+    
+    self.metricOptions = WOTTankMetricOptionNone;
+    self.viewMode = WOTTankDetailViewModeGrid;
+
     [self.configurationCustomButton setSelected:YES];
-    [self.propertyAllButton setSelected:YES];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextObjectsDidChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
 
     [self.topBar setDarkStyle];
     [self.bottomBar setDarkStyle];
-    
-    [self updateUINeedReset:NO];
 }
 
 - (void)updateUINeedReset:(BOOL)needReset {
     
     [NSThread executeOnMainThread:^{
         
-        if (needReset) {
+        if ([self.viewContainerConstraints count] != 0) {
             
-            [self.radarViewController needToBeCleared];
+            [self.viewContainer removeConstraints:self.viewContainerConstraints];
+            self.viewContainerConstraints = nil;
         }
-        [self.radarViewController reload];
+        
+        [self.viewContainer.subviews enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
+            [subview removeFromSuperview];
+        }];
+        
+        UIView *viewToAdd = nil;
+        switch (self.viewMode) {
+                
+            case WOTTankDetailViewModeGrid:{
+                
+                viewToAdd = self.gridViewController.view;
+                if (needReset) {
+                    [self.gridViewController needToBeCleared];
+                }
+                [self.gridViewController reload];
+                break;
+            }
+            case WOTTankDetailViewModeRadar :{
+
+                viewToAdd = self.radarViewController.view;
+                
+                if (needReset) {
+                    
+                    [self.radarViewController needToBeCleared];
+                }
+                [self.radarViewController reload];
+
+                break;
+            }
+        
+            default: {
+                break;
+            }
+        }
+        
+        if (viewToAdd) {
+            
+            [self.viewContainer addSubview:viewToAdd];
+            self.viewContainerConstraints = [[viewToAdd addStretchingConstraints] copy];
+        }
+        
     }];
 }
 
@@ -228,12 +276,55 @@
         self.fetchError = error;
         
         self.vehicle =  [self.fetchedResultController.fetchedObjects lastObject];
+        
+        
+        /*
+         * Default Profile
+         */
+        [self executeDefaultProfileRequestForTankId:[tankId stringValue]];
+        
     }
 }
 
 - (void)setFetchError:(NSError *)fetchError {
     
     _fetchError = fetchError;
+}
+
+
+#pragma mark - private
+//
+//- (void)fetchDefaultConfigurationForTankId:(id)tankId {
+//    
+//    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
+//    [args setObject:tankId forKey:WOT_KEY_TANK_ID];
+//
+//    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
+//    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
+//    if (canAdd) {
+//        
+//        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+//    }
+//}
+
+- (void)fetchPlayableVehiclesForTier:(id)tier {
+    
+    
+    return;
+    
+    NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[tier]];
+    
+    NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
+    [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
+        
+        NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_BY_TIER, tankId];
+        if (!self.runningRequestIDs){
+            
+            self.runningRequestIDs = [[NSMutableSet alloc] init];
+        }
+        [self.runningRequestIDs addObject:groupId];
+        [self refetchTankID:[tankId stringValue] groupId:groupId];
+    }];
 }
 
 - (void)refetchTankID:(NSString *)tankID groupId:(id)groupId{
@@ -255,6 +346,22 @@
         [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
     }
 }
+
+
+- (void)executeDefaultProfileRequestForTankId:(id)tankId {
+    
+    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
+    [args setObject:tankId forKey:WOT_KEY_TANK_ID];
+    
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
+    if (canAdd) {
+        
+        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+    }
+}
+
+
 
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -339,8 +446,14 @@
     self.configurationTopButton.selected = NO;
 }
 
-- (IBAction)onPropertyAllSelection:(id)sender {
+- (IBAction)onViewModeRadarSelection:(id)sender {
     
+    self.viewMode = WOTTankDetailViewModeRadar;
+}
+
+- (IBAction)onViewModeGridSelection:(id)sender {
+    
+    self.viewMode = WOTTankDetailViewModeGrid;
 }
 
 - (IBAction)onPropertyArmorSelection:(id)sender {
@@ -371,6 +484,20 @@
     [sample addTankID:[[WOTTanksIDList alloc] initWithId:self.tankId]];
     [sample addMetrics:[WOTMetric metricsForOption:self.metricOptions]];
     return sample.chartData;
+}
+
+#pragma mark - WOTGridViewControllerDelegate
+
+- (id)gridData {
+    
+    NSArray *result = @[@{@"children":@{@"Lorem 1":@"1",@"Lorem 2":@"2"}, @"caption":@"Lorem"},
+                        @{@"children":@{@"Lorem ips 1":@"1",@"\tLorem ips 2":@"3",@"\tLorem ips 3":@"3",@"\tLorem ips 4":@"4",@"\tLorem ips 11":@"11",@"Lorem ips 12":@"13",@"Lorem ips 13":@"13",@"Lorem ips 14":@"14"}, @"caption":@"Lorem ips"},
+                        @{@"children":@{@"Lorem ips 101":@"101",@"Lorem ips 102":@"103",@"Lorem ips 103":@"103",@"Lorem ips 104":@"104",@"Lorem ips 1011":@"1011",@"Lorem ips 1012":@"1013",@"Lorem ips 1013":@"1013",@"Lorem ips 1014":@"1014"}, @"caption":@"Lorem ips"},
+                        @{@"children":@{@"Lorem ips 201":@"201",@"Lorem ips 102":@"103",@"Lorem ips 103":@"103",@"Lorem ips 104":@"104",@"Lorem ips 2011":@"2011",@"Lorem ips 2012":@"2013",@"Lorem ips 2013":@"2013",@"Lorem ips 2014":@"2014"}, @"caption":@"Lorem ips"}
+                        ];
+    
+    
+    return result;
 }
 
 @end

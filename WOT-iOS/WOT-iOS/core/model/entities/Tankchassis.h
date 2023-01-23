@@ -2,14 +2,14 @@
 //  Tankchassis.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 7/10/15.
+//  Created by Pavel Yeshchyk on 9/9/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class ModulesTree, Vehicles;
+@class ModulesTree, VehicleprofileSuspension, Vehicles;
 
 @interface Tankchassis : NSManagedObject
 
@@ -23,20 +23,26 @@
 @property (nonatomic, retain) NSDecimalNumber * price_credit;
 @property (nonatomic, retain) NSDecimalNumber * price_gold;
 @property (nonatomic, retain) NSDecimalNumber * rotation_speed;
-@property (nonatomic, retain) NSSet *vehicles;
 @property (nonatomic, retain) NSSet *modulesTree;
+@property (nonatomic, retain) NSSet *vehicles;
+@property (nonatomic, retain) NSSet *vehicleprofileSuspension;
 @end
 
 @interface Tankchassis (CoreDataGeneratedAccessors)
+
+- (void)addModulesTreeObject:(ModulesTree *)value;
+- (void)removeModulesTreeObject:(ModulesTree *)value;
+- (void)addModulesTree:(NSSet *)values;
+- (void)removeModulesTree:(NSSet *)values;
 
 - (void)addVehiclesObject:(Vehicles *)value;
 - (void)removeVehiclesObject:(Vehicles *)value;
 - (void)addVehicles:(NSSet *)values;
 - (void)removeVehicles:(NSSet *)values;
 
-- (void)addModulesTreeObject:(ModulesTree *)value;
-- (void)removeModulesTreeObject:(ModulesTree *)value;
-- (void)addModulesTree:(NSSet *)values;
-- (void)removeModulesTree:(NSSet *)values;
+- (void)addVehicleprofileSuspensionObject:(VehicleprofileSuspension *)value;
+- (void)removeVehicleprofileSuspensionObject:(VehicleprofileSuspension *)value;
+- (void)addVehicleprofileSuspension:(NSSet *)values;
+- (void)removeVehicleprofileSuspension:(NSSet *)values;
 
 @end

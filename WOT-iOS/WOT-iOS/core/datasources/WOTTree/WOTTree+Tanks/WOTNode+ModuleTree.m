@@ -9,6 +9,7 @@
 #import "WOTNode+ModuleTree.h"
 #import "ModulesTree+UI.h"
 #import "ModulesTree+FillProperties.h"
+#import "ModulesTree+CustomName.h"
 #import <objc/runtime.h>
 
 @implementation WOTNode (ModuleTree)
@@ -17,7 +18,7 @@
 - (id)initWithModuleTree:(ModulesTree *)module {
 
     NSURL *imageURL = [module localImageURL];
-    WOTNode *result = [self initWithName:module.name imageURL:imageURL];
+    WOTNode *result = [self initWithName:module.customName imageURL:imageURL];
     if (result){
         
         [result setModuleTree:module];

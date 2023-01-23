@@ -2,7 +2,7 @@
 //  Tanks.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 7/14/15.
+//  Created by Pavel Yeshchyk on 9/9/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
@@ -26,7 +26,8 @@
 @dynamic tank_id;
 @dynamic type;
 @dynamic type_i18n;
-@dynamic vehicles;
 @dynamic modulesTree;
+@dynamic vehicles;
+@dynamic vehicleprofiles;
 
 @end

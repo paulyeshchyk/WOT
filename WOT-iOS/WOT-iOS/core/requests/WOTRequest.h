@@ -6,12 +6,13 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "WOTRequestListener.h"
 
 typedef void(^WOTRequestCallback)(id data, NSError *error);
 
 @interface WOTRequest : NSObject
 
+@property (nonatomic, assign)id<WOTRequestListener>listener;
 @property (nonatomic, copy) WOTRequestCallback callback;
 @property (nonatomic, readonly) NSDictionary *args;
 

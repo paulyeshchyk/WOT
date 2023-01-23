@@ -2,14 +2,14 @@
 //  Tankradios.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 7/10/15.
+//  Created by Pavel Yeshchyk on 9/9/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class NSManagedObject, Vehicles;
+@class ModulesTree, VehicleprofileRadio, Vehicles;
 
 @interface Tankradios : NSManagedObject
 
@@ -22,20 +22,26 @@
 @property (nonatomic, retain) NSString * nation_i18n;
 @property (nonatomic, retain) NSDecimalNumber * price_credit;
 @property (nonatomic, retain) NSDecimalNumber * price_gold;
-@property (nonatomic, retain) NSSet *vehicles;
 @property (nonatomic, retain) NSSet *modulesTree;
+@property (nonatomic, retain) NSSet *vehicles;
+@property (nonatomic, retain) NSSet *vehicleprofileRadio;
 @end
 
 @interface Tankradios (CoreDataGeneratedAccessors)
+
+- (void)addModulesTreeObject:(ModulesTree *)value;
+- (void)removeModulesTreeObject:(ModulesTree *)value;
+- (void)addModulesTree:(NSSet *)values;
+- (void)removeModulesTree:(NSSet *)values;
 
 - (void)addVehiclesObject:(Vehicles *)value;
 - (void)removeVehiclesObject:(Vehicles *)value;
 - (void)addVehicles:(NSSet *)values;
 - (void)removeVehicles:(NSSet *)values;
 
-- (void)addModulesTreeObject:(NSManagedObject *)value;
-- (void)removeModulesTreeObject:(NSManagedObject *)value;
-- (void)addModulesTree:(NSSet *)values;
-- (void)removeModulesTree:(NSSet *)values;
+- (void)addVehicleprofileRadioObject:(VehicleprofileRadio *)value;
+- (void)removeVehicleprofileRadioObject:(VehicleprofileRadio *)value;
+- (void)addVehicleprofileRadio:(NSSet *)values;
+- (void)removeVehicleprofileRadio:(NSSet *)values;
 
 @end

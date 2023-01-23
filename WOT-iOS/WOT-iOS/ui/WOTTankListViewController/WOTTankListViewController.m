@@ -21,17 +21,17 @@
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (nonatomic, strong)NSFetchedResultsController *fetchedResultController;
-@property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic, readonly)NSArray *sortDescriptors;
-@property (nonatomic, readonly)NSPredicate *filterByPredicate;
-@property (nonatomic, readonly)NSString *groupByField;
-@property (nonatomic, strong)UIBarButtonItem *settingsItem;
-@property (nonatomic, strong)UIBarButtonItem *searchItem;
-@property (nonatomic, weak)WOTTankListSearchBar *searchBar;
-@property (nonatomic, copy)NSArray *leftBarButtonItems;
-@property (nonatomic, copy)NSString *searchBarText;
+@property (nonatomic, readonly) NSArray *sortDescriptors;
+@property (nonatomic, readonly) NSPredicate *filterByPredicate;
+@property (nonatomic, readonly) NSString *groupByField;
+@property (nonatomic, strong) UIBarButtonItem *settingsItem;
+@property (nonatomic, strong) UIBarButtonItem *searchItem;
+@property (nonatomic, weak) WOTTankListSearchBar *searchBar;
+@property (nonatomic, copy) NSArray *leftBarButtonItems;
+@property (nonatomic, copy) NSString *searchBarText;
 
 @end
 
@@ -88,6 +88,8 @@
                 [self invalidateFetchedResultController];
             }];
 
+            [self.searchBar becomeFirstResponder];
+            
             [self saveTitleViewState];
             [self searchBarMakeVisible];
             [((UIButton *)self.searchItem.customView )setImage:[self searchItemCancelImage] forState:UIControlStateNormal];
@@ -97,33 +99,6 @@
     
     [self.navigationItem setRightBarButtonItems:@[self.searchItem, self.settingsItem]];
 
-#warning implement listener
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerRequestCallback:^(id data, NSError *error) {
-        
-        if (!error) {
-            
-            NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-            [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
-            WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankVehicles];
-            BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_LIST];
-            if (canAdd) {
-                
-                [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
-            }
-        } else {
-            
-            debugError(@"request-fail:%@",error.localizedDescription);
-        }
-        
-    }];
-    
-    NSDictionary *args = @{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]};
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTanks];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_TANK_LIST];
-    if (canAdd) {
-
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
-    }
 
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankListCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListCollectionViewHeader class]) bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankListCollectionViewHeader class])];

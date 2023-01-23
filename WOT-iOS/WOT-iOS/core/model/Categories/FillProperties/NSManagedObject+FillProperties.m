@@ -11,25 +11,29 @@
 @implementation NSManagedObject (FillProperties)
 
 - (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
-
-    NSCAssert(NO, @"should be overriden");
+    
+    NSString *exceptionText = [NSString stringWithFormat:@"should be overriden %@:%s",NSStringFromClass([self class]), __FUNCTION__];
+    NSCAssert(NO, exceptionText);
 }
 
 + (NSArray *)availableFields {
     
-    NSCAssert(NO, @"should be overriden");
+    NSString *exceptionText = [NSString stringWithFormat:@"should be overriden %@:%s",NSStringFromClass([self class]), __FUNCTION__];
+    NSCAssert(NO, exceptionText);
     return nil;
 }
 
 + (NSArray *)availableLinks {
     
-    NSCAssert(NO, @"should be overriden");
+    NSString *exceptionText = [NSString stringWithFormat:@"should be overriden %@:%s",NSStringFromClass([self class]), __FUNCTION__];
+    NSCAssert(NO, exceptionText);
     return nil;
 }
 
 + (NSArray *)embeddedLinks {
     
-    NSCAssert(NO, @"should be overriden");
+    NSString *exceptionText = [NSString stringWithFormat:@"should be overriden %@:%s",NSStringFromClass([self class]), __FUNCTION__];
+    NSCAssert(NO, exceptionText);
     return nil;
 }
 

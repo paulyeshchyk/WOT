@@ -2,7 +2,7 @@
 //  ModulesTree.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 7/14/15.
+//  Created by Pavel Yeshchyk on 9/9/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
@@ -18,18 +18,18 @@
 
 @implementation ModulesTree
 
-@dynamic type;
-@dynamic name;
-@dynamic price_xp;
-@dynamic price_credit;
-@dynamic module_id;
 @dynamic is_default;
-@dynamic nextModules;
-@dynamic nextTanks;
+@dynamic module_id;
+@dynamic name;
+@dynamic price_credit;
+@dynamic price_xp;
+@dynamic type;
 @dynamic nextChassis;
 @dynamic nextEngines;
 @dynamic nextGuns;
+@dynamic nextModules;
 @dynamic nextRadios;
+@dynamic nextTanks;
 @dynamic nextTurrets;
 @dynamic prevModules;
 

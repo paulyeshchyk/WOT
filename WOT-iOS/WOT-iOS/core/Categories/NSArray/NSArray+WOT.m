@@ -9,16 +9,11 @@
 #import "NSArray+WOT.h"
 
 @implementation NSArray (WOT)
+@dynamic hasItems;
 
-+ (BOOL)hasDataInArray:(NSArray *)array {
-
-    if (![array isKindOfClass:[NSArray class]]) {
-        
-        return NO;
-    }
+- (BOOL)hasItems {
     
-    return ([array count] != 0);
-    
+    return ([self count] != 0);
 }
 
 @end

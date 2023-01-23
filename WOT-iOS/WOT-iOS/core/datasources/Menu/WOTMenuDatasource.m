@@ -37,7 +37,6 @@
         [self.availableViewControllers addObject:[[WOTMenuItem alloc] initWithClass:[WOTPlayersListViewController class] title:WOTString(WOT_STRING_PLAYERS) image:nil userDependence:NO]];
         [self.availableViewControllers addObject:[[WOTMenuItem alloc] initWithClass:[WOTProfileViewController class] title:WOTString(WOT_STRING_PROFILE) image:nil userDependence:YES]];
 
-    
         NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([UserSession class])];
         [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_EXPIRES_AT ascending:NO]]];

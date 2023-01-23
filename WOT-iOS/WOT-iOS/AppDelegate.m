@@ -10,6 +10,9 @@
 
 #import "WOTDrawerViewController.h"
 #import "WOTApplicationDefaults.h"
+#import "WOTApplicationStartupRequests.h"
+
+
 
 @interface AppDelegate ()
 
@@ -24,6 +27,9 @@
 
     [WOTApplicationDefaults registerRequests];
     [WOTApplicationDefaults registerDefaultSettings];
+    
+    [WOTApplicationStartupRequests executeAllStartupRequests];
+
     
     self.wotDrawerViewController = [[WOTDrawerViewController alloc] initWithMenu];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

@@ -120,21 +120,18 @@ static NSString *urlEncode(NSString *string) {
     self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [self.connection start];
     
-    [[WOTRequestExecutor sharedInstance] requestHasStarted:self];
+    [self.listener requestHasStarted:self];
 }
 
 - (void)cancel {
     
     [self.connection cancel];
-    [[WOTRequestExecutor sharedInstance] requestHasCanceled:self];
-    
+    [self.listener requestHasCanceled:self];
 }
 
 - (void)cancelAndRemoveFromQueue {
     
     [self cancel];
-
-    [[WOTRequestExecutor sharedInstance] removeRequest:self];
 }
 
 - (void)finalizeWithData:(id)data error:(NSError *)error {
@@ -158,7 +155,9 @@ static NSString *urlEncode(NSString *string) {
     } else {
         
         NSError *serializationError = nil;
-        NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&serializationError];
+        NSMutableDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data
+                                                                        options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+                                                                          error:&serializationError];
         if (serializationError) {
             
             [self finalizeWithData:nil error:serializationError];
@@ -176,11 +175,13 @@ static NSString *urlEncode(NSString *string) {
                 NSMutableDictionary *result = nil;
                 if (jsonData) {
                     
-                    result = [NSMutableDictionary dictionaryWithDictionary:jsonData];
+                    result = [jsonData mutableCopy];
                 } else {
                     
                     result = [[NSMutableDictionary alloc] init];
                 }
+                
+                [result clearNullValues];
                 
                 [result addEntriesFromDictionary:self.userInfo];
                 [self finalizeWithData:result error:nil];
@@ -216,7 +217,7 @@ static NSString *urlEncode(NSString *string) {
     [self parseData:self.data error:nil];
     self.data = nil;
     
-    [[WOTRequestExecutor sharedInstance] requestHasFinishedLoadData:self];
+    [self.listener requestHasFinishedLoadData:self];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -224,7 +225,7 @@ static NSString *urlEncode(NSString *string) {
     [self parseData:nil error:error];
     self.data = nil;
 
-    [[WOTRequestExecutor sharedInstance] requestHasFailed:self];
+    [self.listener requestHasFailed:self];
 }
 
 @end

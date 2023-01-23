@@ -2,12 +2,13 @@
 //  Tankguns.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 7/10/15.
+//  Created by Pavel Yeshchyk on 9/9/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
 #import "Tankguns.h"
 #import "ModulesTree.h"
+#import "VehicleprofileGun.h"
 #import "Vehicles.h"
 
 
@@ -22,7 +23,8 @@
 @dynamic price_credit;
 @dynamic price_gold;
 @dynamic rate;
-@dynamic vehicles;
 @dynamic modulesTree;
+@dynamic vehicles;
+@dynamic vehicleprofileGun;
 
 @end

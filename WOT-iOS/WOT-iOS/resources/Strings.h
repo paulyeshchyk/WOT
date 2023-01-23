@@ -9,6 +9,7 @@
 #ifndef WOT_iOS_Strings_h
 #define WOT_iOS_Strings_h
 
+#define ApplicationHost @"https://api.worldoftanks"
 #define ApplicationRedirectURI @"https://api.worldoftanks.ru/wot/blank/" //"https://ru.wargaming.net/developers/api_explorer/wot/auth/login/complete/"
 
 #define WOT_IMAGE_BACK @"WOTBackIconGray.png"
@@ -41,6 +42,7 @@
 #define WOT_KEY_EXPIRES_AT @"expires_at"
 #define WOT_KEY_FIELDS @"fields"
 #define WOT_KEY_FIRE_STARTING_CHANCE @"fire_starting_chance"
+#define WOT_KEY_HASHNAME @"hashName"
 #define WOT_KEY_IMAGE @"image"
 #define WOT_KEY_IMAGE_SMALL @"image_small"
 #define WOT_KEY_IS_GIFT @"is_gift"
@@ -54,6 +56,7 @@
 #define WOT_KEY_NAME @"name"
 #define WOT_KEY_MODULES_TREE @"modules_tree"
 #define WOT_KEY_NAME_I18N @"name_i18n"
+#define WOT_KEY_DPM @"dpm"
 #define WOT_KEY_NATION @"nation"
 #define WOT_KEY_NATION_I18N @"nation_i18n"
 #define WOT_KEY_NICKNAME @"nickname"
@@ -93,6 +96,7 @@
 #define WOT_STRING_NATION_JAPAN @"japan"
 #define WOT_STRING_NATION_CHINA @"china"
 #define WOT_STRING_NATION_FRANCE @"france"
+#define WOT_STRING_NATION_CZECH @"czech"
 
 
 #define WOT_STRING_AT_SPG @"WOT_STRING_AT_SPG"
@@ -157,6 +161,7 @@
 #define WOT_STRING_EDIT @"WOT_STRING_EDIT"
 #define WOT_STRING_GROUP_AND_SORT @"WOT_STRING_GROUP_AND_SORT"
 #define WOT_STRING_IS_PREMIUM @"WOT_STRING_IS_PREMIUM"
+#define WOT_STRING_IS_NOT_PREMIUM @"WOT_STRING_IS_NOT_PREMIUM"
 #define WOT_STRING_LEVEL @"WOT_STRING_LEVEL"
 #define WOT_STRING_LOGIN @"WOT_STRING_LOGIN"
 #define WOT_STRING_NAME_I18N @"WOT_STRING_NAME_I18N"
@@ -183,9 +188,12 @@
 #define WOT_VALUE_LANGUAGE_RU @"ru"
 
 #define WOT_REQUEST_ID_TANK_LIST @"WOT_REQUEST_ID_TANK_LIST"
+#define WOT_REQUEST_ID_LOGIN @"WOT_REQUEST_ID_LOGIN"
+#define WOT_REQUEST_ID_LOGOUT @"WOT_REQUEST_ID_LOGOUT"
 #define WOT_REQUEST_ID_VEHICLE_LIST @"WOT_REQUEST_ID_VEHICLE_LIST"
 #define WOT_REQUEST_ID_VEHICLE_ITEM @"WOT_REQUEST_ID_VEHICLE_ITEM"
 #define WOT_REQUEST_ID_VEHICLE_BY_TIER @"WOT_REQUEST_ID_VEHICLE_BY_TIER"
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
+#define WOT_REQUEST_ID_VEHICLE_PROFILE @"WOT_REQUEST_ID_VEHICLE_PROFILE"
 
 #endif

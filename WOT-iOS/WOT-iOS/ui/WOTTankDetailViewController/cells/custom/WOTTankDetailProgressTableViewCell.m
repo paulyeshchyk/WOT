@@ -45,9 +45,12 @@
         CGFloat max = [values[@"max"] floatValue];
         CGFloat this = [values[@"this"] floatValue];
         if (max != 0) {
+            
             progress = this/max;
         }
+        
         [self.progressView setProgress:progress animated:YES];
+        
 //        [self.progressView setAverageValue:values[@"av"]];
 //        [self.progressView setThisValue:values[@"this"]];
 //        [self.progressView setMaxValue:values[@"max"]];

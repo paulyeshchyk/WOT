@@ -19,7 +19,7 @@
 
 - (void)dealloc {
     
-    [self removeAllNodes];
+    [self removeAllNodesWithCompletionBlock:NULL];
 }
 
 - (id)init {
@@ -30,6 +30,15 @@
         self.isVisible = YES;
     }
     return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    
+    WOTNode *result = [[[self class] allocWithZone: zone] init];
+    result.isVisible = self.isVisible;
+    result.imageURL = self.imageURL;
+    result.name = self.name;
+    return result;
 }
 
 - (id)initWithName:(NSString *)name {
@@ -74,12 +83,16 @@
     [self.childList addObject:child];
 }
 
-- (void)removeAllNodes {
+- (void)removeAllNodesWithCompletionBlock:(WOTNodeRemoveCompletionBlock)completionBlock {
     
     [self.childList enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
-       
+
+        if (completionBlock) {
+            
+            completionBlock(node);
+        }
         node.parent = nil;
-        [node removeAllNodes];
+        [node removeAllNodesWithCompletionBlock:completionBlock];
     }];
     [self.childList removeAllObjects];
 }
@@ -90,8 +103,12 @@
     [self addChildren:set];
 }
 
-- (void)removeChild:(WOTNode *)child {
+- (void)removeChild:(WOTNode *)child completionBlock:(WOTNodeRemoveCompletionBlock)completionBlock{
 
+    if (completionBlock) {
+        
+        completionBlock(child);
+    }
     child.parent = nil;
     [self.childList removeObject:child];
 }
@@ -111,6 +128,22 @@
     
     [self.childList unionSet:childrenSet];
 }
+
+
+//#pragma mark - NSCopying
+//- (id)copyWithZone:(NSZone *)zone {
+//    
+//    
+//    WOTNode *copy = [[[self class] allocWithZone: zone] init];
+//    copy.name = self.name;
+//    copy.subtitle = self.subtitle;
+//    copy.imageurlPath = self.imageurlPath;
+//    copy.redirectedurlPath = self.redirectedurlPath;
+//    copy.streamType = self.streamType;
+//    copy.duration = self.duration;
+//    copy.position = self.position;
+//    
+//}
 
 
 @end

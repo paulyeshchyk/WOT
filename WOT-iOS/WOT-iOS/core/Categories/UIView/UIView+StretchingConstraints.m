@@ -7,24 +7,30 @@
 
 @implementation UIView (StretchingConstraints)
 
-- (void)addStretchingConstraints {
+- (NSArray *)addStretchingConstraints {
 
+    NSMutableArray *result = [[NSMutableArray alloc] init];
     self.translatesAutoresizingMaskIntoConstraints = NO;
 
     if (self.superview) {
 
-        [self.superview addConstraints:[NSLayoutConstraint
-                                        constraintsWithVisualFormat:@"V:|[self]|"
-                                        options:kNilOptions
-                                        metrics:nil
-                                        views:NSDictionaryOfVariableBindings(self)]];
+        [result addObjectsFromArray:[NSLayoutConstraint
+                           constraintsWithVisualFormat:@"V:|[self]|"
+                           options:kNilOptions
+                           metrics:nil
+                           views:NSDictionaryOfVariableBindings(self)]];
 
-        [self.superview addConstraints:[NSLayoutConstraint
-                                        constraintsWithVisualFormat:@"H:|[self]|"
-                                        options:kNilOptions
-                                        metrics:nil
-                                        views:NSDictionaryOfVariableBindings(self)]];
+        [result addObjectsFromArray:[NSLayoutConstraint
+                           constraintsWithVisualFormat:@"H:|[self]|"
+                           options:kNilOptions
+                           metrics:nil
+                           views:NSDictionaryOfVariableBindings(self)]];
+        
+        
+        [self.superview addConstraints:result];
+
     }
+    return result;
 }
 
 @end

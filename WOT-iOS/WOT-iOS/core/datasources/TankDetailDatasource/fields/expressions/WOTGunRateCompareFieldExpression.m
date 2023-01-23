@@ -30,7 +30,7 @@
     return self;
 }
 
-- (NSPredicate *)predicateForObject:(id)object {
+- (NSPredicate *)predicateForAllPlayingVehiclesWithObject:(id)object {
     
     id level = [[object valueForKeyPath:@"vehicles.tier"] allObjects];
     NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:level];

@@ -7,8 +7,9 @@
 //
 
 #import "WOTRequest.h"
+#import "WOTRequestListener.h"
 
-@interface WOTRequestExecutor : NSObject
+@interface WOTRequestExecutor : NSObject <WOTRequestListener>
 
 + (WOTRequestExecutor *)sharedInstance;
 
@@ -23,13 +24,5 @@
 - (void)runRequest:(WOTRequest *)request withArgs:(NSDictionary *)args ;//DEPRECATED_ATTRIBUTE;
 
 - (void)cancelRequestsByGroupId:(NSString *)groupId;
-- (void)removeRequest:(WOTRequest *)request;
-
-- (void)requestHasFailed:(WOTRequest *)request;
-- (void)requestHasFinishedLoadData:(WOTRequest *)request;
-- (void)requestHasCanceled:(WOTRequest *)request;
-- (void)requestHasStarted:(WOTRequest *)request;
-
-
 
 @end

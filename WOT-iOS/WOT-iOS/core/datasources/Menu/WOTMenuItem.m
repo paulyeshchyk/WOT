@@ -10,16 +10,26 @@
 
 @implementation WOTMenuItem
 
+- (void)dealloc {
+    
+}
+
 - (id)initWithClass:(Class)class title:(NSString *)title image:(UIImage *)image userDependence:(BOOL)userDependence {
     
     self = [super init];
     if (self){
+        
         self.controllerClass = class;
         self.controllerTitle = title;
         self.icon = image;
         self.userDependence = userDependence;
     }
     return self;
+}
+
+- (Class)controllerClass {
+    
+    return _controllerClass;
 }
 
 @end

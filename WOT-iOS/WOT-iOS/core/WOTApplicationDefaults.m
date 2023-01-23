@@ -9,34 +9,35 @@
 #import "WOTApplicationDefaults.h"
 
 #import "ListSetting.h"
+
+#import "WOTClearSessionRequest.h"
+#import "WOTRequestExecutor.h"
+#import "WOTSaveSessionRequest.h"
+#import "WOTSessionManager.h"
 #import "WOTTankListSettingsDatasource.h"
 
-#import "WOTRequestExecutor.h"
 #import "WOTWEBRequestLogin.h"
 #import "WOTWEBRequestLogout.h"
-
-#import "WOTWebResponseAdapterLogin.h"
-#import "WOTWebResponseAdapterTanks.h"
-#import "WOTSaveSessionRequest.h"
-#import "WOTClearSessionRequest.h"
 #import "WOTWebRequestTankChassis.h"
-#import "WOTWebRequestTankTurrets.h"
-#import "WOTWebRequestTankGuns.h"
-#import "WOTWebRequestTankRadios.h"
-
-#import "WOTSessionManager.h"
-#import "WOTWEBRequestTanks.h"
 #import "WOTWEBRequestTankEngines.h"
-#import "WOTWebResponseAdapterEngines.h"
+#import "WOTWebRequestTankGuns.h"
+#import "WOTWEBRequestTankProfile.h"
+#import "WOTWebRequestTankRadios.h"
+#import "WOTWEBRequestTanks.h"
+#import "WOTWebRequestTankTurrets.h"
 #import "WOTWEBRequestTankVehicles.h"
-#import "WOTWebResponseAdapterVehicles.h"
+
 #import "WOTWebResponseAdapterChassis.h"
-#import "WOTWebResponseAdapterTurrets.h"
+#import "WOTWebResponseAdapterEngines.h"
 #import "WOTWebResponseAdapterGuns.h"
+#import "WOTWebResponseAdapterLogin.h"
+#import "WOTWebResponseAdapterProfile.h"
 #import "WOTWebResponseAdapterRadios.h"
+#import "WOTWebResponseAdapterTanks.h"
+#import "WOTWebResponseAdapterTurrets.h"
+#import "WOTWebResponseAdapterVehicles.h"
 
 @implementation WOTApplicationDefaults
-
 
 + (void)registerDefaultSettings {
     
@@ -159,6 +160,13 @@
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestTankVehicles class]];
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
+
+    /**
+     * Tanks.Profile
+     **/
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerRequestClass:[WOTWEBRequestTankProfile class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerDataAdapterClass:[WOTWebResponseAdapterProfile class]];
+    
 }
 
 
@@ -197,7 +205,7 @@ static NSString *WOTWEBRequestDefaultLanguage;
 
 + (NSString *)host {
     
-    return [NSString stringWithFormat:@"%@.%@",@"https://api.worldoftanks",[self language]];
+    return [NSString stringWithFormat:@"%@.%@",ApplicationHost,[self language]];
 }
 
 

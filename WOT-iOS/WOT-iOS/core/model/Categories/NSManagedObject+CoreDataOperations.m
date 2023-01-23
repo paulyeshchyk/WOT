@@ -42,6 +42,10 @@
     if (!result){
         
         result = [self insertNewObjectInManagedObjectContext:managedObjectContext];
+    } else {
+        if ([[result class] isSubclassOfClass:NSClassFromString(@"Vehicleprofile")]) {
+            debugLog(@"has found dublicate");
+        }
     }
     return result;
 }
