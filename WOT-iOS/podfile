@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+pod 'AFNetworking'
+pod 'BlocksKit'
+pod 'MMDrawerController'
+pod 'SDWebImage'
+pod 'Charts', '2.1.0'
+pod 'ASProgressPopUpView'
+pod 'EnrichedNSLog', '~> 1.0'
+pod 'WYPopoverController'
+
+use_frameworks!

@@ -1,0 +1,46 @@
+//
+//  WOTPrefixHeader.pch
+//  WOT-iOS
+//
+//  Created by Pavel Yeshchyk on 6/1/15.
+//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//
+
+#ifndef WOT_iOS_WOTPrefixHeader_pch
+#define WOT_iOS_WOTPrefixHeader_pch
+
+#import "UINavigationBar+WOT.h"
+#import "UIToolbar+WOT.h"
+#import "NSArray+WOT.h"
+#import "UIImageView+WebCache.h"
+#import "NSString+WOTValue.h"
+#import "UIImage+Resize.h"
+#import "NSBundle+LanguageBundle.h"
+#import "NSManagedObject+CoreDataOperations.h"
+#import "UIView+StretchingConstraints.h"
+#import "NSExpressionDescription+WOT.h"
+#import "UIKit+AFNetworking.h"
+#import "UIBarButtonItem+EventBlock.h"
+#import "NSManagedObject+FillProperties.h"
+#import <ASProgressPopUpView/ASProgressPopUpView.h>
+
+#import "WOTApplicationDefaults.h"
+#import "WOTWebResponseLink.h"
+
+#import "WOTCoreDataProvider.h"
+#import "Strings.h"
+
+#import "WOTMacro.h"
+#import "WOTEnums.h"
+#import "WOTError.h"
+#import "WOTErrorCodes.h"
+#import "WOTColors.h"
+
+#import <Availability.h>
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "ExtendNSLog.h"
+#endif
+
+#endif
