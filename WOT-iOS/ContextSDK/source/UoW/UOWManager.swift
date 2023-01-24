@@ -76,9 +76,7 @@ public class UOWManager: UOWManagerProtocol {
             throw Errors.uowIsNotRunnable
         }
 
-        guard let block = runnable.block(forCompletion: listenerCompletion) else {
-            throw Errors.uowHasNoRunnableBlock
-        }
+        let block = try runnable.block(forCompletion: listenerCompletion)
         block()
     }
 }
@@ -87,18 +85,14 @@ extension UOWRunnable {
 
     /**
      ~~~
-     // sample:
-         guard let block = runnable.block(forCompletion: listenerCompletion) else {
-             throw Errors.uowHasNoRunnableBlock
-         }
-         block()
+        // sample:
+        let block = try runnable.block(forCompletion: listenerCompletion)
+        block()
      ~~~
      */
 
-    func block(forCompletion: @escaping(ListenerCompletionType)) -> (() -> Void)? {
-        guard let runnableBlock = runnableBlock() else {
-            return nil
-        }
+    func block(forCompletion: @escaping(ListenerCompletionType)) throws -> (() -> Void) {
+        guard let runnableBlock = runnableBlock() else { throw UOWManager.Errors.uowHasNoRunnableBlock }
 
         return {
             runnableBlock(forCompletion) { escapedListenerCompletion, result in
@@ -109,16 +103,14 @@ extension UOWRunnable {
 
     /**
      ~~~
-     // sample:
-         guard let op = runnable.serialQueueOperation(forCompletion: listenerCompletion) else {
-             throw Errors.uowIsNotRunnable
-         }
-         oq.addOperation(op)
+        // sample:
+        let op = try runnable.serialQueueOperation(forCompletion: listenerCompletion)
+        oq.addOperation(op)
      ~~~
      */
 
-    func serialQueueOperation(forCompletion: @escaping(ListenerCompletionType)) -> Operation? {
-        guard let runnableBlock = runnableBlock() else { return nil }
+    func serialQueueOperation(forCompletion: @escaping(ListenerCompletionType)) throws -> Operation {
+        guard let runnableBlock = runnableBlock() else { throw UOWManager.Errors.uowHasNoBlockForSerialOperation }
         return BlockOperation {
             runnableBlock(forCompletion) { escapedListenerCompletion, result in
                 escapedListenerCompletion(result)
@@ -128,15 +120,13 @@ extension UOWRunnable {
 
     /**
      ~~~
-     // sample:
-     guard let op = runnable.asyncOperation(forCompletion: listenerCompletion) else {
-             throw Errors.uowIsNotRunnable
-         }
-         oq.addOperation(op)
+        // sample:
+        let op = try runnable.asyncOperation(forCompletion: listenerCompletion)
+        oq.addOperation(op)
      ~~~
      */
-    func asyncOperation(forCompletion: @escaping(ListenerCompletionType)) -> Operation? {
-        guard let runnableBlock = runnableBlock() else { return nil }
+    func asyncOperation(forCompletion: @escaping(ListenerCompletionType)) throws -> Operation {
+        guard let runnableBlock = runnableBlock() else { throw UOWManager.Errors.uowHasNoBlockForAsyncOperation }
         return AsyncBlockOperation { ch in
             runnableBlock(forCompletion) { escapedListenerCompletion, result in
                 escapedListenerCompletion(result)
@@ -152,5 +142,7 @@ extension UOWManager {
     enum Errors: Error {
         case uowIsNotRunnable
         case uowHasNoRunnableBlock
+        case uowHasNoBlockForAsyncOperation
+        case uowHasNoBlockForSerialOperation
     }
 }
