@@ -38,6 +38,10 @@ public protocol UOWResultProtocol {
 
 public typealias ListenerCompletionType = ((Any) -> Void)
 
+/// returns count of successfully executed runs
+/// and errors set
+public typealias SequenceCompletionType = ((Int, Error?) -> Void)
+
 // MARK: - UOWRunnable
 
 protocol UOWRunnable {
@@ -60,6 +64,8 @@ public protocol UOWManagerProtocol {
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     func run(_ uow: UOWProtocol, listenerCompletion: @escaping(ListenerCompletionType)) throws
+
+    func run(sequence: [UOWProtocol], listenerCompletion: @escaping(SequenceCompletionType)) throws
 }
 
 // MARK: - UOWManager
@@ -76,10 +82,33 @@ public class UOWManager: UOWManagerProtocol {
             throw Errors.uowIsNotRunnable
         }
 
-        let block = try runnable.block(forCompletion: listenerCompletion)
-        block()
+        let oq = UOWOperationQueue()
+        let op = try runnable.blockOperation(forCompletion: listenerCompletion)
+        oq.addOperation(op)
+    }
+
+    var observation: NSKeyValueObservation?
+    public func run(sequence: [UOWProtocol], listenerCompletion: @escaping(SequenceCompletionType)) throws {
+        //
+        let set = sequence.compactMap {
+            return try? ($0 as? UOWRunnable)?.blockOperation { _ in
+                //
+            }
+        }
+        let sequenceOperationQueue = UOWOperationQueue()
+        sequenceOperationQueue.addOperations(set, waitUntilFinished: false)
+        observation = sequenceOperationQueue.observe(\.operationCount) { operationQueue, _ in
+            if operationQueue.operationCount == 0 {
+                listenerCompletion(0, nil)
+                self.observation = nil
+            }
+        }
     }
 }
+
+// MARK: - UOWOperationQueue
+
+class UOWOperationQueue: OperationQueue {}
 
 extension UOWRunnable {
 
@@ -104,13 +133,13 @@ extension UOWRunnable {
     /**
      ~~~
         // sample:
-        let op = try runnable.serialQueueOperation(forCompletion: listenerCompletion)
+        let op = try runnable.syncOperation(forCompletion: listenerCompletion)
         oq.addOperation(op)
      ~~~
      */
 
-    func serialQueueOperation(forCompletion: @escaping(ListenerCompletionType)) throws -> Operation {
-        guard let runnableBlock = runnableBlock() else { throw UOWManager.Errors.uowHasNoBlockForSerialOperation }
+    func blockOperation(forCompletion: @escaping(ListenerCompletionType)) throws -> Operation {
+        guard let runnableBlock = runnableBlock() else { throw UOWManager.Errors.uowHasNoBlockForBlockOperation }
         return BlockOperation {
             runnableBlock(forCompletion) { escapedListenerCompletion, result in
                 escapedListenerCompletion(result)
@@ -134,6 +163,22 @@ extension UOWRunnable {
             }
         }
     }
+
+    /**
+     ~~~
+        // sample:
+        let op = try runnable.concurrentOperation(forCompletion: listenerCompletion)
+        oq.addOperation(op)
+     ~~~
+     */
+    func concurrentOperation(forCompletion: @escaping(ListenerCompletionType)) throws -> Operation {
+        guard let runnableBlock = runnableBlock() else { throw UOWManager.Errors.uowHasNoBlockForAsyncOperation }
+        return ConcurrentBlockOperation {
+            runnableBlock(forCompletion) { escapedListenerCompletion, result in
+                escapedListenerCompletion(result)
+            }
+        }
+    }
 }
 
 // MARK: - UOWManager.Errors
@@ -143,6 +188,6 @@ extension UOWManager {
         case uowIsNotRunnable
         case uowHasNoRunnableBlock
         case uowHasNoBlockForAsyncOperation
-        case uowHasNoBlockForSerialOperation
+        case uowHasNoBlockForBlockOperation
     }
 }

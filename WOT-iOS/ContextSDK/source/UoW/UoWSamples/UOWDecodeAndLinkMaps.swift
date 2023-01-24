@@ -8,12 +8,14 @@
 // MARK: - UOWDecodeAndLinkMapsProtocol
 
 public protocol UOWDecodeAndLinkMapsProtocol: UOWProtocol {
+
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
         & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & UOWManagerContainerProtocol
+
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     var appContext: Context? { get set }
@@ -81,18 +83,22 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
                 return
             }
 
-            for (index, element) in elements.enumerated() {
+            let sequence = elements.map { element -> UOWDecodeAndLinkMap in
                 let uow = UOWDecodeAndLinkMap()
                 uow.appContext = appContext
                 uow.modelClass = modelClass
                 uow.map = element
                 uow.socket = self.socket
                 uow.decodingDepthLevel = self.decodingDepthLevel
-                try? appContext.uowManager.run(uow) { _ in
-                    if index == (elements.count - 1) {
-                        exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: nil))
-                    }
+                return uow
+            }
+
+            do {
+                try appContext.uowManager.run(sequence: sequence) { _, error in
+                    exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
                 }
+            } catch {
+                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
             }
         }
     }

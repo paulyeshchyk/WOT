@@ -66,6 +66,27 @@ public class ConcurrentOperation: Operation {
     }
 }
 
+// MARK: - ConcurrentBlockOperation
+
+public class ConcurrentBlockOperation: ConcurrentOperation {
+    private let closure: () -> Void
+
+    // MARK: Lifecycle
+
+    public init(closure: @escaping () -> Void) {
+        self.closure = closure
+        super.init()
+    }
+
+    // MARK: Open
+
+    override open func main() {
+        super.main()
+        closure()
+    }
+
+}
+
 // MARK: - ConcurrentOperationError
 
 public enum ConcurrentOperationError: Error, CustomStringConvertible {
