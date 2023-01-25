@@ -11,6 +11,7 @@
 class RequestGrouppedListenerList {
 
     private var list = [AnyHashable: [RequestManagerListenerProtocol]]()
+    private let recursiveLock = NSRecursiveLock()
 
     // MARK: Internal
 
@@ -33,26 +34,31 @@ class RequestGrouppedListenerList {
     }
 
     func addListener(_ listener: RequestManagerListenerProtocol, forRequest: RequestProtocol) throws {
+        recursiveLock.lock()
         let requestMD5 = forRequest.MD5
         if var listeners = list[requestMD5] {
             let filtered = listeners.filter { $0.MD5 == listener.MD5 }
-            guard filtered.isEmpty else {
-                throw RequestGrouppedListenerList.Errors.dublicate
+            if !filtered.isEmpty {
+                listeners.append(listener)
+                list[requestMD5] = listeners
+            } else {
+                // throw RequestGrouppedListenerList.Errors.dublicate
             }
-            listeners.append(listener)
-            list[requestMD5] = listeners
         } else {
             list[requestMD5] = [listener]
         }
+        recursiveLock.unlock()
     }
 
     func removeListener(_ listener: RequestManagerListenerProtocol) {
+        recursiveLock.lock()
         for MD5 in list.keys {
             if var listeners = list[MD5] {
                 listeners.removeAll(where: { $0.MD5 == listener.MD5 })
                 list[MD5] = listeners
             }
         }
+        recursiveLock.unlock()
     }
 }
 
