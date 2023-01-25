@@ -116,6 +116,15 @@ public class UOWManager: UOWManagerProtocol {
     }
 }
 
+extension Array where Element: Operation {
+    /// Execute block after all operations from the array.
+    func onFinish(_ block: @escaping () -> Void) {
+        let doneOperation = BlockOperation(block: block)
+        forEach { [unowned doneOperation] in doneOperation.addDependency($0) }
+        OperationQueue().addOperation(doneOperation)
+    }
+}
+
 // MARK: - UOWProgress
 
 class UOWProgress {

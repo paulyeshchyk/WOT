@@ -31,6 +31,6 @@ public protocol NodeDimensionProtocol: NSObjectProtocol {
 
 // MARK: - DimensionLoadListenerProtocol
 
-public protocol DimensionLoadListenerProtocol {
+public protocol DimensionLoadListenerProtocol: AnyObject {
     func didLoad(dimension: NodeDimensionProtocol)
 }

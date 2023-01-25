@@ -7,12 +7,15 @@
 //
 
 public class RowPivotDimensionCalculator: PivotDimensionCalculator {
+    //
+    private static let enumerator = NodeEnumerator()
+
     override class func x(forNode: NodeProtocol, dimension _: PivotNodeDimensionProtocol) -> Int {
-        return NodeEnumerator.sharedInstance.visibleParentsCount(node: forNode)
+        return enumerator.visibleParentsCount(node: forNode)
     }
 
     override class func y(forNode: NodeProtocol, dimension: PivotNodeDimensionProtocol) -> Int {
-        var result: Int = NodeEnumerator.sharedInstance.childrenWidth(siblingNode: forNode, orValue: 1)
+        var result: Int = enumerator.childrenWidth(siblingNode: forNode, orValue: 1)
         result += dimension.rootNodeHeight
         return result
     }
@@ -22,6 +25,6 @@ public class RowPivotDimensionCalculator: PivotDimensionCalculator {
     }
 
     override class func height(forNode: NodeProtocol, dimension _: PivotNodeDimensionProtocol) -> Int {
-        return NodeEnumerator.sharedInstance.endpoints(node: forNode)?.count ?? 0
+        return enumerator.endpoints(node: forNode)?.count ?? 0
     }
 }

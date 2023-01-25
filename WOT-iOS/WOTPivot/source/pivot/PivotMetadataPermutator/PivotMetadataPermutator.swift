@@ -9,6 +9,8 @@
 // MARK: - PivotMetadataPermutator
 
 public struct PivotMetadataPermutator {
+    //
+    private let enumerator = NodeEnumerator()
 
     // MARK: Lifecycle
 
@@ -27,7 +29,7 @@ public struct PivotMetadataPermutator {
 
         var endpoints: [PivotNodeProtocol]?
         if let nextPivotNode = mutableTemplates.popLast() {
-            endpoints = NodeEnumerator.sharedInstance.endpoints(node: nextPivotNode) as? [PivotNodeProtocol]
+            endpoints = enumerator.endpoints(node: nextPivotNode) as? [PivotNodeProtocol]
         }
 
         return iterateMiddle(templates: mutableTemplates, endpoints: endpoints)
@@ -40,7 +42,7 @@ public struct PivotMetadataPermutator {
         var mutablePivotNodes = templates
         var nextEndPoints: [PivotNodeProtocol]?
         if let nextPivotNode = mutablePivotNodes.popLast() {
-            nextEndPoints = NodeEnumerator.sharedInstance.endpoints(node: nextPivotNode) as? [PivotNodeProtocol]
+            nextEndPoints = enumerator.endpoints(node: nextPivotNode) as? [PivotNodeProtocol]
         }
 
         endpoints?.forEach { (endpoint) in

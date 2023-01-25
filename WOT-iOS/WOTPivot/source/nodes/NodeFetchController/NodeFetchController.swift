@@ -31,11 +31,11 @@ public extension NodeFetchController {
 
 open class NodeFetchController: NSObject {
 
-    public var listener: NodeFetchControllerListenerProtocol?
-    public var fetchRequestContainer: FetchRequestContainerProtocol
+    public weak var listener: NodeFetchControllerListenerProtocol?
+    public weak var fetchRequestContainer: FetchRequestContainerProtocol?
 
-    private var fetchResultController: NodeFetchedResultController?
-    private let appContext: Context
+    private weak var fetchResultController: NodeFetchedResultController?
+    private weak var appContext: Context?
 
     // MARK: Lifecycle
 
@@ -53,11 +53,11 @@ open class NodeFetchController: NSObject {
     public func initFetchController(appContext: Context, block: @escaping (NodeFetchedResultController?, Error?) -> Void) throws {
         //
         appContext.dataStore?.perform { [weak self] managedObjectContext in
-            guard let fetchRequest = self?.fetchRequestContainer.fetchRequest else {
-                block(nil, NodeFetchControllerError.requestNotFound)
-                return
-            }
             do {
+                guard let fetchRequestContainer = self?.fetchRequestContainer else {
+                    throw NodeFetchControllerError.fetchContainerIsNil
+                }
+                let fetchRequest = fetchRequestContainer.fetchRequest
                 let result = try appContext.dataStore?.fetchResultController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext) as? NodeFetchedResultController
                 block(result, nil)
             } catch {
@@ -73,12 +73,14 @@ enum NodeFetchControllerError: Error, CustomStringConvertible {
     case contextIsNotDefined
     case requestNotFound
     case noFetchResultControllerCreated
+    case fetchContainerIsNil
 
     var description: String {
         switch self {
         case .contextIsNotDefined: return "Context not defined"
         case .requestNotFound: return "Request not found"
         case .noFetchResultControllerCreated: return "no FetchResultController created"
+        case .fetchContainerIsNil: return "Fetch container is nil"
         }
     }
 }
@@ -111,12 +113,12 @@ extension NodeFetchController: NodeFetchControllerProtocol {
                 self?.fetchResultController?.delegate = self
 
                 if let err = error {
-                    self?.appContext.logInspector?.log(.error(err), sender: self)
+                    self?.appContext?.logInspector?.log(.error(err), sender: self)
                 } else {
                     do {
                         try self?.performFetch(with: fetchResultController, nodeCreator: nodeCreator)
                     } catch {
-                        self?.appContext.logInspector?.log(.error(error), sender: self)
+                        self?.appContext?.logInspector?.log(.error(error), sender: self)
                     }
                 }
             }

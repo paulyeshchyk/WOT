@@ -25,6 +25,7 @@ open class RequestManager: NSObject {
 
     private let grouppedListenerList: RequestGrouppedListenerList
     private let grouppedRequestList: RequestGrouppedRequestList
+    private var requests: [RequestProtocol] = []
 
     // MARK: Lifecycle
 
@@ -76,6 +77,7 @@ extension RequestManager {
     private func removeRequest(_ request: RequestProtocol) {
         grouppedRequestList.removeRequest(request)
         request.removeListener(self)
+        requests.removeAll(where: { $0.MD5 == request.MD5 })
     }
 }
 
@@ -115,6 +117,7 @@ extension RequestManager: RequestManagerProtocol {
         try grouppedRequestList.addRequest(request, forGroupId: request.MD5.hashValue)
 
         request.addListener(self)
+        requests.append(request)
 
         if let listener = listener {
             try grouppedListenerList.addListener(listener, forRequest: request)

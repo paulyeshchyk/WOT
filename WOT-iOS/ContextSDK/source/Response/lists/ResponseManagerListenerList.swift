@@ -32,6 +32,7 @@ class ResponseManagerListenerList {
     // MARK: Internal
 
     func responseManager(_ responseManager: ResponseManagerProtocol, didStartRequest request: RequestProtocol) {
+        #warning("crash is here")
         list[request.MD5]?.forEach {
             $0.responseManager(responseManager, didStartWorkOn: request)
         }

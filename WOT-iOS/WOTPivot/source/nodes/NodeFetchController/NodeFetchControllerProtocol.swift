@@ -29,5 +29,5 @@ public protocol NodeFetchControllerProtocol {
 @objc
 public protocol NodeFetchControllerListenerProtocol {
     func fetchPerformed(by: NodeFetchControllerProtocol)
-    func fetchFailed(by: NodeFetchControllerProtocol, withError: Error)
+    func fetchFailed(by: NodeFetchControllerProtocol?, withError: Error)
 }

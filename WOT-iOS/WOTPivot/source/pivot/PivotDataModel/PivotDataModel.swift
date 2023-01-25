@@ -27,53 +27,62 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
 
     // WOTPivotNodeHolderProtocol
     public lazy var rootFilterNode: NodeProtocol = {
-        let result = self.nodeCreator.createNode(name: "root filters")
-        self.add(rootNode: result)
-        return result
+        if let result = self.nodeCreator?.createNode(name: "root filters") {
+            self.add(rootNode: result)
+            return result
+        } else {
+            fatalError("self.nodeCreator deallocated")
+        }
     }()
 
     public lazy var rootColsNode: NodeProtocol = {
-        let result = self.nodeCreator.createNode(name: "root cols")
-        self.add(rootNode: result)
-        return result
+        if let result = self.nodeCreator?.createNode(name: "root cols") {
+            self.add(rootNode: result)
+            return result
+        } else {
+            fatalError("self.nodeCreator deallocated")
+        }
     }()
 
     public lazy var rootRowsNode: NodeProtocol = {
-        let result = self.nodeCreator.createNode(name: "root rows")
-        self.add(rootNode: result)
-        return result
+        if let result = self.nodeCreator?.createNode(name: "root rows") {
+            self.add(rootNode: result)
+            return result
+        } else {
+            fatalError("self.nodeCreator deallocated")
+        }
     }()
 
     public lazy var rootDataNode: NodeProtocol = {
-        let result = self.nodeCreator.createNode(name: "root data")
-        self.add(rootNode: result)
-        return result
+        if let result = self.nodeCreator?.createNode(name: "root data") {
+            self.add(rootNode: result)
+            return result
+        } else {
+            fatalError("self.nodeCreator deallocated")
+        }
     }()
 
-    public lazy var rootNode: NodeProtocol = {
-        let result = self.nodeCreator.createNode(name: "root")
-        self.add(rootNode: result)
-        return result
+    private lazy var rootNode: NodeProtocol = {
+        if let result = self.nodeCreator?.createNode(name: "root") {
+            self.add(rootNode: result)
+            return result
+        } else {
+            fatalError("self.nodeCreator deallocated")
+        }
     }()
 
     public var shouldDisplayEmptyColumns: Bool
 
-    public var fetchController: NodeFetchControllerProtocol?
-    public var nodeCreator: NodeCreatorProtocol
-
-    override public var enumerator: NodeEnumeratorProtocol? {
-        didSet {
-            dimension.enumerator = enumerator
-        }
-    }
+    public weak var fetchController: NodeFetchControllerProtocol?
+    public weak var nodeCreator: NodeCreatorProtocol?
 
     @objc
     public var contentSize: CGSize {
         return dimension.contentSize
     }
 
-    private var listener: NodeDataModelListener?
-    private var metadatasource: PivotMetaDatasourceProtocol
+    private weak var listener: NodeDataModelListener?
+    private weak var metadatasource: PivotMetaDatasourceProtocol?
 
     // MARK: Lifecycle
 
@@ -131,7 +140,10 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         appContext.logInspector?.log(.flow(name: "pivot", message: "Start"), sender: self)
 
         do {
-            try fetchController?.performFetch(nodeCreator: nodeCreator, appContext: appContext)
+            guard let fetchController = fetchController else {
+                throw Errors.noFetchControllerFound
+            }
+            try fetchController.performFetch(nodeCreator: nodeCreator, appContext: appContext)
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }
@@ -189,8 +201,9 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     private func makePivot() {
         clearMetadataItems()
 
-        let items = metadatasource.metadataItems()
-        add(metadataItems: items)
+        if let items = metadatasource?.metadataItems() {
+            add(metadataItems: items)
+        }
 
         let metadataIndex = nodeIndex.doAutoincrementIndex(forNodes: [rootFilterNode, rootColsNode, rootRowsNode])
         dimension.reload(forIndex: metadataIndex, nodeCreator: nodeCreator)
@@ -198,6 +211,14 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
 
     private func failPivot(_ error: Error) {
         listener?.didFinishLoadModel(error: error)
+    }
+}
+
+// MARK: - %t + PivotDataModel.Errors
+
+extension PivotDataModel {
+    enum Errors: Error {
+        case noFetchControllerFound
     }
 }
 
@@ -214,7 +235,7 @@ extension PivotDataModel: DimensionLoadListenerProtocol {
 // MARK: - PivotDataModel + NodeFetchControllerListenerProtocol
 
 extension PivotDataModel: NodeFetchControllerListenerProtocol {
-    public func fetchFailed(by _: NodeFetchControllerProtocol, withError: Error) {
+    public func fetchFailed(by _: NodeFetchControllerProtocol?, withError: Error) {
         failPivot(withError)
     }
 
