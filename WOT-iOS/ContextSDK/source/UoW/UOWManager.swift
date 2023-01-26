@@ -72,6 +72,7 @@ public protocol UOWManagerProtocol {
 
 public class UOWManager: UOWManagerProtocol {
 
+    private let workingQueue: DispatchQueue = DispatchQueue(label: "UOWManagerQueue", qos: .userInitiated)
     private let appContext: Context
     public init(appContext: Context) {
         self.appContext = appContext
@@ -84,7 +85,9 @@ public class UOWManager: UOWManagerProtocol {
 
         let oq = UOWOperationQueue()
         let op = try runnable.blockOperation { obj in
-            listenerCompletion(obj)
+            self.workingQueue.async {
+                listenerCompletion(obj)
+            }
         }
         oq.addOperation(op)
     }
@@ -102,7 +105,9 @@ public class UOWManager: UOWManagerProtocol {
                     }
 
                     if !isInProgress {
-                        listenerCompletion(0, nil)
+                        self.workingQueue.async {
+                            listenerCompletion(0, nil)
+                        }
                         completed = true
                     }
                 }

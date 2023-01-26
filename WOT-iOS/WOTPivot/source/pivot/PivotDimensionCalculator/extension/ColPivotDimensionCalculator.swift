@@ -8,7 +8,6 @@
 
 public class ColPivotDimensionCalculator: PivotDimensionCalculator {
     //
-    private static let enumerator = NodeEnumerator()
 
     override class func x(forNode: NodeProtocol, dimension: PivotNodeDimensionProtocol) -> Int {
         var result: Int = dimension.childrenMaxWidth(forNode, orValue: 0)
@@ -17,11 +16,11 @@ public class ColPivotDimensionCalculator: PivotDimensionCalculator {
     }
 
     override class func y(forNode: NodeProtocol, dimension _: PivotNodeDimensionProtocol) -> Int {
-        return enumerator.visibleParentsCount(node: forNode)
+        return NodeEnumerator().visibleParentsCount(node: forNode)
     }
 
     override class func width(forNode: NodeProtocol, dimension: PivotNodeDimensionProtocol) -> Int {
-        let endpoints = enumerator.endpoints(node: forNode)
+        let endpoints = NodeEnumerator().endpoints(node: forNode)
         let cnt = endpoints?.count ?? 0
         guard cnt > 0 else {
             return 1
