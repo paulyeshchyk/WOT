@@ -25,19 +25,21 @@ class ManagedObjectLinkerHelper {
     // MARK: Internal
 
     func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
-        guard let fetchResult = fetchResult, error == nil else {
-            completion?(fetchResult, error ?? Errors.fetchResultIsNotPresented)
-            return
-        }
-
-        let linker = ManagedObjectLinker(appContext: appContext)
-        linker.socket = socket
-        linker.fetchResult = fetchResult
-        linker.completion = completion
-
+        appContext.logInspector?.log(.flow(name: "moLink", message: "start"), sender: self)
         do {
+            guard let fetchResult = fetchResult, error == nil else {
+                throw error ?? Errors.fetchResultIsNotPresented
+            }
+
+            let linker = ManagedObjectLinker(appContext: appContext)
+            linker.socket = socket
+            linker.fetchResult = fetchResult
+            linker.completion = completion
+
             try linker.run()
+            appContext.logInspector?.log(.flow(name: "moLink", message: "finish"), sender: self)
         } catch {
+            appContext.logInspector?.log(.flow(name: "moLink", message: "finish"), sender: self)
             completion?(fetchResult, error)
         }
     }

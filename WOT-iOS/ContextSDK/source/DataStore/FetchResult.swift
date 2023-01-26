@@ -13,7 +13,7 @@ public typealias FetchResultThrowingCompletion = (FetchResultProtocol?, Error?) 
 @objc
 open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
 
-    public let managedObjectContext: ManagedObjectContextProtocol
+    public weak var managedObjectContext: ManagedObjectContextProtocol?
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
 
@@ -24,7 +24,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         } catch {
             entityName = "<Invalid>"
         }
-        return "<\(type(of: self)): context-name \(managedObjectContext.name ?? ""), entity-name \(entityName)>"
+        return "<\(type(of: self)): context-name \(managedObjectContext?.name ?? ""), entity-name \(entityName)>"
     }
 
     private var managedRef: ManagedRefProtocol?
@@ -35,7 +35,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         fatalError("")
     }
 
-    public required init(managedRef: ManagedRefProtocol?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) {
+    public required init(managedRef: ManagedRefProtocol?, managedObjectContext: ManagedObjectContextProtocol?, predicate: NSPredicate?, fetchStatus: FetchStatus) {
         self.managedRef = managedRef
         self.predicate = predicate
         self.fetchStatus = fetchStatus

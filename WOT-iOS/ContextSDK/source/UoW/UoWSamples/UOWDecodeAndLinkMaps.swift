@@ -69,35 +69,35 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
 
     func runnableBlock() -> UOWRunnable.RunnableBlockType? {
         return { exitToPassThrough, exit in
-            guard let appContext = self.appContext else {
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: nil))
-                return
-            }
-            guard let modelClass = self.modelClass else {
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: nil))
-                return
-            }
-
-            guard let elements = self.maps?.compactMap({ $0 }) else {
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: Errors.noMapProvided))
-                return
-            }
-
-            let sequence = elements.map { element -> UOWDecodeAndLinkMap in
-                let uow = UOWDecodeAndLinkMap()
-                uow.appContext = appContext
-                uow.modelClass = modelClass
-                uow.map = element
-                uow.socket = self.socket
-                uow.decodingDepthLevel = self.decodingDepthLevel
-                return uow
-            }
-
             do {
+                self.appContext?.logInspector?.log(.flow(name: "mapAndLink", message: "start"), sender: self)
+                guard let appContext = self.appContext else {
+                    throw Errors.noAppContextProvided
+                }
+                guard let modelClass = self.modelClass else {
+                    throw Errors.noModelClassProvided
+                }
+
+                guard let elements = self.maps?.compactMap({ $0 }) else {
+                    throw Errors.noMapProvided
+                }
+
+                let sequence = elements.map { element -> UOWDecodeAndLinkMap in
+                    let uow = UOWDecodeAndLinkMap()
+                    uow.appContext = appContext
+                    uow.modelClass = modelClass
+                    uow.map = element
+                    uow.socket = self.socket
+                    uow.decodingDepthLevel = self.decodingDepthLevel
+                    return uow
+                }
+
                 try appContext.uowManager.run(sequence: sequence) { _, error in
+                    self.appContext?.logInspector?.log(.flow(name: "mapAndLink", message: "finish"), sender: self)
                     exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
                 }
             } catch {
+                self.appContext?.logInspector?.log(.flow(name: "mapAndLink", message: "finish"), sender: self)
                 exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
             }
         }
@@ -109,5 +109,7 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
 extension UOWDecodeAndLinkMaps {
     enum Errors: Error {
         case noMapProvided
+        case noAppContextProvided
+        case noModelClassProvided
     }
 }

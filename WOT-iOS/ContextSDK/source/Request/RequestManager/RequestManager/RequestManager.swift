@@ -22,10 +22,12 @@ open class RequestManager: NSObject {
 
     private let uuid = UUID()
     private let appContext: Context
+    private let workingQueue = DispatchQueue(label: "RequestManagerQueue")
 
     private let grouppedListenerList: RequestGrouppedListenerList
     private let grouppedRequestList: RequestGrouppedRequestList
     private var requests: [RequestProtocol] = []
+    private let recursiveLock = NSRecursiveLock()
 
     // MARK: Lifecycle
 
@@ -73,11 +75,19 @@ extension RequestManager: RequestListenerProtocol {
 }
 
 extension RequestManager {
+    private func addRequest(_ request: RequestProtocol) {
+        recursiveLock.lock()
+        requests.append(request)
+        recursiveLock.unlock()
+    }
 
     private func removeRequest(_ request: RequestProtocol) {
         grouppedRequestList.removeRequest(request)
         request.removeListener(self)
+
+        recursiveLock.lock()
         requests.removeAll(where: { $0.MD5 == request.MD5 })
+        recursiveLock.unlock()
     }
 }
 
@@ -116,8 +126,9 @@ extension RequestManager: RequestManagerProtocol {
         //
         try grouppedRequestList.addRequest(request, forGroupId: request.MD5.hashValue)
 
+        addRequest(request)
+
         request.addListener(self)
-        requests.append(request)
 
         if let listener = listener {
             try grouppedListenerList.addListener(listener, forRequest: request)

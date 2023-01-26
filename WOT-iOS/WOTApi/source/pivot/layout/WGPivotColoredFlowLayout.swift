@@ -145,7 +145,7 @@ private extension WGPivotColoredFlowLayout {
 
     private func stickyType(indexPath: IndexPath) -> PivotStickyType {
         guard let block = itemLayoutStickyType else {
-            return .float
+            return .float()
         }
         return block(indexPath)
     }
@@ -169,13 +169,13 @@ private extension WGPivotColoredFlowLayout {
         let height: CGFloat = relativeRect.size.height * CGFloat(itemSize.height)
 
         var cellZIndex = -5
-        if (stickyType.rawValue & PivotStickyType.vertical.rawValue) == PivotStickyType.vertical.rawValue {
+        if (stickyType.rawValue & PivotStickyType.vertical().rawValue) == PivotStickyType.vertical().rawValue {
             if contentOffset.y > 0 {
                 y += contentOffset.y
             }
             cellZIndex += 2
         }
-        if (stickyType.rawValue & PivotStickyType.horizontal.rawValue) == PivotStickyType.horizontal.rawValue {
+        if (stickyType.rawValue & PivotStickyType.horizontal().rawValue) == PivotStickyType.horizontal().rawValue {
             if contentOffset.x > 0 {
                 x += contentOffset.x
             }

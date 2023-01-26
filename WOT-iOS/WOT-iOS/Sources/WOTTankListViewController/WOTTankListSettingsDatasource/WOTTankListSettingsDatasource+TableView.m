@@ -105,7 +105,8 @@
 
 - (void)moveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath completionBlock:(WOTTankListSettingMoveCompletionCallback)completionBlock{
     id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-    [appDelegate.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+    NSError *error = nil;
+    [appDelegate.dataStore performWithMode:PerformModeRead error:&error block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
         id <NSFetchedResultsSectionInfo> sectionInfo = [self sectionInfoAtIndex:indexPath.section];
         NSMutableArray *objectsAtSection = [[sectionInfo objects] mutableCopy];
 
@@ -131,7 +132,8 @@
 - (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath {
     
     id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-    [appDelegate.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+    NSError *error = nil;
+    [appDelegate.dataStore performWithMode:PerformModeRead error:&error block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
 
         NSManagedObject *obj = [self objectAtIndexPath:indexPath];
         

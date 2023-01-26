@@ -30,6 +30,7 @@ class ManagedObjectDecodeHelper {
     // MARK: Internal
 
     func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
+        appContext.logInspector?.log(.flow(name: "moDecode", message: "start"), sender: self)
         do {
             guard let fetchResult = fetchResult, error == nil else {
                 throw error ?? Errors.fetchResultIsNotPresented
@@ -38,25 +39,35 @@ class ManagedObjectDecodeHelper {
                 throw Errors.contextPredicateIsNotDefined
             }
 
-            let managedObject = try fetchResult.managedObject()
+            try appContext.dataStore?.perform(mode: .readwrite, block: { managedObjectContext in
 
-            guard let modelClass = type(of: managedObject) as? PrimaryKeypathProtocol.Type else {
-                throw Errors.modelClassIsNotDefined
-            }
-            #warning("Crash is here")
-            guard let decoderType = appContext.decoderManager?.jsonDecoder(for: modelClass) else {
-                throw Errors.decoderIsNotDefined
-            }
+                do {
+                    let managedObject = try fetchResult.managedObject(inManagedObjectContext: managedObjectContext)
 
-            #warning("Provide crc check")
-            let decoder = decoderType.init(appContext: appContext)
-            decoder.managedObject = managedObject
-            try decoder.decode(using: jsonMap, forDepthLevel: DecodingDepthLevel.initial)
+                    guard let modelClass = type(of: managedObject) as? PrimaryKeypathProtocol.Type else {
+                        throw Errors.modelClassIsNotDefined
+                    }
+                    #warning("Crash is here")
+                    guard let decoderType = self.appContext.decoderManager?.jsonDecoder(for: modelClass) else {
+                        throw Errors.decoderIsNotDefined
+                    }
 
-            appContext.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
-                self.completion?(fetchResult, error)
-            }
+                    #warning("Provide crc check")
+                    let decoder = decoderType.init(appContext: self.appContext)
+                    decoder.managedObject = managedObject
+                    try decoder.decode(using: jsonMap, forDepthLevel: DecodingDepthLevel.initial)
+
+                    self.appContext.dataStore?.stash(managedObjectContext: managedObjectContext, completion: { _, error in
+                        self.appContext.logInspector?.log(.flow(name: "moDecode", message: "finish"), sender: self)
+                        self.completion?(fetchResult, error)
+                    })
+                } catch {
+                    self.appContext.logInspector?.log(.flow(name: "moDecode", message: "finish"), sender: self)
+                    self.completion?(fetchResult, error)
+                }
+            })
         } catch {
+            appContext.logInspector?.log(.flow(name: "moDecode", message: "finish"), sender: self)
             completion?(fetchResult, error)
         }
     }
@@ -67,6 +78,7 @@ class ManagedObjectDecodeHelper {
 extension ManagedObjectDecodeHelper {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
+        case contextNotFound
         case fetchResultIsNotPresented
         case contextPredicateIsNotDefined
         case fetchResultIsNotJSONDecodable(FetchResultProtocol?)
@@ -75,6 +87,7 @@ extension ManagedObjectDecodeHelper {
 
         public var description: String {
             switch self {
+            case .contextNotFound: return "[\(type(of: self))]: context not found"
             case .fetchResultIsNotJSONDecodable(let fetchResult): return "[\(type(of: self))]: fetch result(\(type(of: fetchResult)) is not JSONDecodableProtocol"
             case .contextPredicateIsNotDefined: return "\(type(of: self)): Context predicate is not defined"
             case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"

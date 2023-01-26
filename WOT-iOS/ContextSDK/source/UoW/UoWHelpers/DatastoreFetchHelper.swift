@@ -26,7 +26,9 @@ class DatastoreFetchHelper {
     // MARK: Internal
 
     func run() {
+        appContext.logInspector?.log(.flow(name: "moFetch", message: "start"), sender: self)
         guard let modelClass = modelClass else {
+            appContext.logInspector?.log(.flow(name: "moFetch", message: "finish"), sender: self)
             completion?(nil, Errors.modelClassIsNotDefined)
             return
         }
@@ -34,6 +36,7 @@ class DatastoreFetchHelper {
         appContext.dataStore?.fetch(modelClass: modelClass,
                                     nspredicate: nspredicate,
                                     completion: { fetchResult, error in
+                                        self.appContext.logInspector?.log(.flow(name: "moFetch", message: "finish"), sender: self)
                                         self.completion?(fetchResult, error)
                                     })
     }

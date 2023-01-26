@@ -28,7 +28,7 @@ open class PivotViewController: UIViewController, ContextControllerProtocol {
             }
             flowLayout?.itemLayoutStickyType = { [weak self] (indexPath) in
                 let node = self?.model.node(atIndexPath: indexPath) as? PivotNodeProtocol
-                return node?.stickyType ?? .float
+                return node?.stickyType ?? .float()
             }
         }
     }

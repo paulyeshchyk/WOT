@@ -17,7 +17,7 @@ public class ColPivotNode: PivotNode {
     }
 
     override public var stickyType: PivotStickyType {
-        return PivotStickyType.vertical
+        return PivotStickyType.vertical()
     }
 
     override public var cellType: PivotCellType {

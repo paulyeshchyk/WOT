@@ -53,40 +53,44 @@ extension UOWDecodeAndLinkMap: UOWRunnable {
 
     func runnableBlock() -> UOWRunnable.RunnableBlockType? {
         return { exitToPassThrough, exit in
-            guard let appContext = self.appContext else {
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: nil))
-                return
-            }
-            guard let modelClass = self.modelClass else {
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: nil))
-                return
-            }
+            self.appContext?.logInspector?.log(.flow(name: "decodeLink", message: "start"), sender: self)
+            do {
+                guard let appContext = self.appContext else {
+                    throw Errors.noAppContextProvided
+                }
+                guard let modelClass = self.modelClass else {
+                    throw Errors.noAppContextProvided
+                }
 
-            guard let element = self.map else {
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: Errors.noMapProvided))
-                return
-            }
+                guard let element = self.map else {
+                    throw Errors.noMapProvided
+                }
 
-            let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
-            managedObjectLinkerHelper.socket = self.socket
-            managedObjectLinkerHelper.completion = { fetchResult, error in
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: fetchResult, error: error))
-            }
+                let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
+                managedObjectLinkerHelper.socket = self.socket
+                managedObjectLinkerHelper.completion = { fetchResult, error in
+                    self.appContext?.logInspector?.log(.flow(name: "decodeLink", message: "finish"), sender: self)
+                    exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: fetchResult, error: error))
+                }
 
-            let mappingCoordinatorDecodeHelper = ManagedObjectDecodeHelper(appContext: appContext)
-            mappingCoordinatorDecodeHelper.jsonMap = element
-            mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
-                managedObjectLinkerHelper.run(fetchResult, error: error)
-            }
+                let mappingCoordinatorDecodeHelper = ManagedObjectDecodeHelper(appContext: appContext)
+                mappingCoordinatorDecodeHelper.jsonMap = element
+                mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
+                    managedObjectLinkerHelper.run(fetchResult, error: error)
+                }
 
-            let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
-            datastoreFetchHelper.modelClass = modelClass
-            datastoreFetchHelper.nspredicate = element.contextPredicate.nspredicate(operator: .and)
-            datastoreFetchHelper.completion = { fetchResult, error in
-                mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
-            }
+                let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
+                datastoreFetchHelper.modelClass = modelClass
+                datastoreFetchHelper.nspredicate = element.contextPredicate.nspredicate(operator: .and)
+                datastoreFetchHelper.completion = { fetchResult, error in
+                    mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
+                }
 
-            datastoreFetchHelper.run()
+                datastoreFetchHelper.run()
+            } catch {
+                self.appContext?.logInspector?.log(.flow(name: "decodeLink", message: "finish"), sender: self)
+                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
+            }
         }
     }
 }
@@ -96,5 +100,7 @@ extension UOWDecodeAndLinkMap: UOWRunnable {
 extension UOWDecodeAndLinkMap {
     enum Errors: Error {
         case noMapProvided
+        case noAppContextProvided
+        case noModelClassProvided
     }
 }

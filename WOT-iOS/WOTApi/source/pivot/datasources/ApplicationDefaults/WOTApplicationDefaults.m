@@ -19,7 +19,9 @@
     
     id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
-    [coreDataProvider performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+    NSError *error = nil;
+    
+    [coreDataProvider performWithMode:PerformModeRead error:&error block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
         
         NSString *entityName = NSStringFromClass([ListSetting class]);
         NSError *error = nil;

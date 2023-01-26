@@ -12,7 +12,7 @@
 public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var window: UIWindow?
 
-    private let logPriorities: [LogEventType]? = [.error, .warning, .flow, .custom, .remoteFetch, .sqlite]
+    private let logPriorities: [LogEventType]? = [.error, .warning, .flow, .custom, .remoteFetch]// , .sqlite
     private let logOutput = OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)
 
     public lazy var uowManager: UOWManagerProtocol = UOWManager(appContext: self)

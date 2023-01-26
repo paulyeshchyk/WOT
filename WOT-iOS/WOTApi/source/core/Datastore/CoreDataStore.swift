@@ -39,8 +39,6 @@ open class CoreDataStore: DataStore {
         return coordinator
     }()
 
-    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(persistentStoreCoordinator: self.persistentStoreCoordinator)
-
     private lazy var managedObjectModel: NSManagedObjectModel? = {
         guard let modelURL = self.modelURL else {
             return nil
@@ -50,16 +48,18 @@ open class CoreDataStore: DataStore {
 
     // MARK: Public
 
-    private lazy var privateContext: ManagedObjectContextProtocol = CoreDataStore.privateQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
+    private lazy var privateContext: NSManagedObjectContext = CoreDataStore.privateQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
 
     @objc
     override public func newPrivateContext() -> ManagedObjectContextProtocol {
         privateContext
     }
 
+    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
+
     @objc
     override public func workingContext() -> ManagedObjectContextProtocol {
-        return mainContext
+        mainContext
     }
 
     override public func fetchResultController(fetchRequest: AnyObject, managedObjectContext: ManagedObjectContextProtocol) throws -> AnyObject {
@@ -77,6 +77,7 @@ open class CoreDataStore: DataStore {
         guard let request = request as? NSFetchRequest<NSFetchRequestResult> else {
             throw CoreDataStoreError.requestIsNotNSFetchRequest
         }
+        let mainContext = workingContext() as! NSManagedObjectContext
         return NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
     }
 

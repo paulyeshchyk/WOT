@@ -52,7 +52,7 @@ open class NodeFetchController: NSObject {
 
     public func initFetchController(appContext: Context, block: @escaping (NodeFetchedResultController?, Error?) -> Void) throws {
         //
-        appContext.dataStore?.perform { [weak self] managedObjectContext in
+        try appContext.dataStore?.perform(mode: .read) { [weak self] managedObjectContext in
             do {
                 guard let fetchRequestContainer = self?.fetchRequestContainer else {
                     throw NodeFetchControllerError.fetchContainerIsNil
