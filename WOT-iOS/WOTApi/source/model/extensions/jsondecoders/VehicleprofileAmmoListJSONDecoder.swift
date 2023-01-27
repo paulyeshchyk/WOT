@@ -17,7 +17,16 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
+        // MARK: - do check decodingDepth
+
+        if decodingDepthLevel?.nextDepthLevel?.maxReached() ?? false {
+            appContext.logInspector?.log(.warning(error: VehicleprofileAmmoListJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
+            return
+        }
+
+        // MARK: - relation mapping
+
         //
         let profilesJSON = try map.data(ofType: [JSON].self)
 
@@ -34,7 +43,6 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -44,6 +52,21 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
             uow.decodingDepthLevel = decodingDepthLevel
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+        }
+    }
+}
+
+// MARK: - %t + VehicleprofileAmmoListJSONDecoder.VehicleprofileAmmoListJSONDecoderErrors
+
+extension VehicleprofileAmmoListJSONDecoder {
+
+    enum VehicleprofileAmmoListJSONDecoderErrors: Error, CustomStringConvertible {
+        case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+
+        public var description: String {
+            switch self {
+            case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
+            }
         }
     }
 }

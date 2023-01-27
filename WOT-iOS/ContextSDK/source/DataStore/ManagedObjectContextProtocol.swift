@@ -29,7 +29,7 @@ public protocol ManagedObjectContextLookupProtocol: AnyObject {
     typealias Context = LogInspectorContainerProtocol
 
     func object(managedRef: ManagedRefProtocol?) throws -> ManagedObjectProtocol
-    func findOrCreateObject(appContext: Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol?
+    func findOrCreateObject(appContext: Context?, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol?
     func execute(appContext: Context, with: @escaping ManagedObjectContextProtocol.ContextCompletion)
 }
 

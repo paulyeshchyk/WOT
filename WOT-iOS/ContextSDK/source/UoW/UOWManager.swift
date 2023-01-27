@@ -182,7 +182,12 @@ class UOWProgress {
 
 // MARK: - UOWOperationQueue
 
-class UOWOperationQueue: OperationQueue {}
+class UOWOperationQueue: OperationQueue {
+    override init() {
+        super.init()
+        qualityOfService = .background
+    }
+}
 
 extension UOWRunnable {
 

@@ -7,7 +7,7 @@
 
 // MARK: - ManagedObjectDecodeHelper
 
-class ManagedObjectDecodeHelper {
+class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConvertible {
 
     #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
@@ -18,22 +18,34 @@ class ManagedObjectDecodeHelper {
         & UOWManagerContainerProtocol
 
     private let appContext: Context
+    var description: String {
+        "[\(type(of: self))] \(debugDescription)"
+    }
+
+    var debugDescription: String {
+        ""
+    }
+
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var jsonMap: JSONMapProtocol?
+    private var decodingDepthLevel: DecodingDepthLevel?
 
     // MARK: Lifecycle
 
-    init(appContext: Context) {
+    init(appContext: Context, decodingDepthLevel: DecodingDepthLevel?) {
         self.appContext = appContext
+        self.decodingDepthLevel = decodingDepthLevel
     }
 
     // MARK: Internal
 
-    func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
-        appContext.logInspector?.log(.flow(name: "moDecode", message: "start"), sender: self)
+    func run(_ fetchResult: FetchResultProtocol?) {
+        //
         do {
-            guard let fetchResult = fetchResult, error == nil else {
-                throw error ?? Errors.fetchResultIsNotPresented
+            appContext.logInspector?.log(.uow(name: "moDecode", message: "start \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
+
+            guard let fetchResult = fetchResult else {
+                throw Errors.fetchResultIsNotPresented
             }
             guard let jsonMap = jsonMap else {
                 throw Errors.contextPredicateIsNotDefined
@@ -47,27 +59,27 @@ class ManagedObjectDecodeHelper {
                     guard let modelClass = type(of: managedObject) as? PrimaryKeypathProtocol.Type else {
                         throw Errors.modelClassIsNotDefined
                     }
-                    #warning("Crash is here")
+
                     guard let decoderType = self.appContext.decoderManager?.jsonDecoder(for: modelClass) else {
                         throw Errors.decoderIsNotDefined
                     }
 
-                    #warning("Provide crc check")
                     let decoder = decoderType.init(appContext: self.appContext)
                     decoder.managedObject = managedObject
-                    try decoder.decode(using: jsonMap, forDepthLevel: DecodingDepthLevel.initial)
+
+                    try decoder.decode(using: jsonMap, decodingDepthLevel: self.decodingDepthLevel)
 
                     self.appContext.dataStore?.stash(managedObjectContext: managedObjectContext, completion: { _, error in
-                        self.appContext.logInspector?.log(.flow(name: "moDecode", message: "finish"), sender: self)
+                        self.appContext.logInspector?.log(.uow(name: "moDecode", message: "finish \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
                         self.completion?(fetchResult, error)
                     })
                 } catch {
-                    self.appContext.logInspector?.log(.flow(name: "moDecode", message: "finish"), sender: self)
+                    self.appContext.logInspector?.log(.uow(name: "moDecode", message: "finish \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
                     self.completion?(fetchResult, error)
                 }
             })
         } catch {
-            appContext.logInspector?.log(.flow(name: "moDecode", message: "finish"), sender: self)
+            appContext.logInspector?.log(.uow(name: "moDecode", message: "finish \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
             completion?(fetchResult, error)
         }
     }

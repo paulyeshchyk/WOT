@@ -17,11 +17,19 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
-        //
+
+        // MARK: - do check decodingDepth
+
+        if decodingDepthLevel?.nextDepthLevel?.maxReached() ?? false {
+            appContext.logInspector?.log(.warning(error: VehicleprofileModuleJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
+            return
+        }
+
+        // MARK: - relation mapping
 
         if let gun_id = element?[#keyPath(VehicleprofileModule.gun_id)] {
             //
@@ -38,7 +46,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
             try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
@@ -57,7 +65,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
             try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
@@ -76,7 +84,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
             try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
@@ -95,7 +103,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
             try appContext.requestManager?.startRequest(request!, listener: nil)
         }
 
@@ -114,8 +122,23 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
 
             #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
             try appContext.requestManager?.startRequest(request!, listener: nil)
+        }
+    }
+}
+
+// MARK: - %t + VehicleprofileModuleJSONDecoder.VehicleprofileModuleJSONDecoderErrors
+
+extension VehicleprofileModuleJSONDecoder {
+
+    enum VehicleprofileModuleJSONDecoderErrors: Error, CustomStringConvertible {
+        case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+
+        public var description: String {
+            switch self {
+            case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
+            }
         }
     }
 }

@@ -17,11 +17,19 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
         //
         let ammoJSON = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: ammoJSON)
-        //
+
+        // MARK: - do check decodingDepth
+
+        if decodingDepthLevel?.nextDepthLevel?.maxReached() ?? false {
+            appContext.logInspector?.log(.warning(error: VehicleprofileAmmoJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
+            return
+        }
+
+        // MARK: - relation mapping
 
         // MARK: - Penetration
 
@@ -38,7 +46,6 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathPenetration)
             let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -67,7 +74,6 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathDamage)
             let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -79,6 +85,21 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
+        }
+    }
+}
+
+// MARK: - %t + VehicleprofileAmmoJSONDecoder.VehicleprofileAmmoJSONDecoderErrors
+
+extension VehicleprofileAmmoJSONDecoder {
+
+    enum VehicleprofileAmmoJSONDecoderErrors: Error, CustomStringConvertible {
+        case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+
+        var description: String {
+            switch self {
+            case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
+            }
         }
     }
 }

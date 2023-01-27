@@ -21,10 +21,14 @@ extension JSONMapProtocol {
 
 // MARK: - JSONMap
 
-public class JSONMap: JSONMapProtocol, CustomStringConvertible {
+public class JSONMap: JSONMapProtocol, CustomStringConvertible, CustomDebugStringConvertible {
 
     public var description: String {
-        return "[\(type(of: self))]: data: \(String(describing: jsonCollection)), predicate: \(String(describing: contextPredicate))"
+        return "[\(type(of: self))] \(debugDescription)"
+    }
+
+    public var debugDescription: String {
+        "predicate: \(String(describing: contextPredicate)), data: \(String(describing: jsonCollection))"
     }
 
     public let contextPredicate: ContextPredicateProtocol

@@ -135,6 +135,10 @@ extension RequestManager: RequestManagerProtocol {
 
     public func startRequest(_ request: RequestProtocol, listener: RequestManagerListenerProtocol?) throws {
         //
+        if request.decodingDepthLevel?.maxReached() ?? false {
+            throw Errors.maxLevelReached(request.decodingDepthLevel?.rawValue ?? -1)
+        }
+        //
         try grouppedRequestList.addRequest(request, forGroupId: request.MD5.hashValue)
 
         addRequest(request)
@@ -170,6 +174,7 @@ extension RequestManager: RequestManagerProtocol {
 extension RequestManager {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
+        case maxLevelReached(Int)
         case adapterNotFound(RequestProtocol)
         case notAModelService(RequestProtocol)
         case noRequestIds(RequestProtocol)
@@ -184,6 +189,7 @@ extension RequestManager {
 
         public var description: String {
             switch self {
+            case .maxLevelReached(let level): return "\(type(of: self)): Max level reached: \(level)"
             case .notAModelService(let request): return "\(type(of: self)): Not a model service: \(String(describing: request))"
             case .adapterNotFound(let request): return "\(type(of: self)): Adapter not found for request: \(String(describing: request))"
             case .noRequestIds(let request): return "\(type(of: self)): No request ids for request: \(String(describing: request))"

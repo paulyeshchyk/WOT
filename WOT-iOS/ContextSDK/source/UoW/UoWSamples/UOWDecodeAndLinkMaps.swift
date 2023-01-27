@@ -49,6 +49,31 @@ public class UOWDecodeAndLinkMaps: UOWDecodeAndLinkMapsProtocol {
     }
 }
 
+// MARK: - UOWDecodeAndLinkMaps + CustomStringConvertible, CustomDebugStringConvertible
+
+extension UOWDecodeAndLinkMaps: CustomStringConvertible, CustomDebugStringConvertible {
+
+    public var description: String {
+        "[\(type(of: self))] \(debugDescription)"
+    }
+
+    public var debugDescription: String {
+        let modelDescription: String?
+        if let modelClass = modelClass {
+            modelDescription = "model: \(type(of: modelClass))"
+        } else {
+            modelDescription = nil
+        }
+        let socketDescription: String?
+        if let socket = socket {
+            socketDescription = "socket: \(String(describing: socket))"
+        } else {
+            socketDescription = nil
+        }
+        return [modelDescription, socketDescription].compactMap { $0 }.joined(separator: ", ")
+    }
+}
+
 // MARK: - UOWDecodeAndLinkMapsResult
 
 struct UOWDecodeAndLinkMapsResult: UOWResultProtocol {
@@ -70,12 +95,12 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
     func runnableBlock() -> UOWRunnable.RunnableBlockType? {
         return { exitToPassThrough, exit in
             do {
-                self.appContext?.logInspector?.log(.flow(name: "mapAndLink", message: "start"), sender: self)
-                guard let appContext = self.appContext else {
-                    throw Errors.noAppContextProvided
-                }
                 guard let modelClass = self.modelClass else {
                     throw Errors.noModelClassProvided
+                }
+                self.appContext?.logInspector?.log(.uow(name: "mapAndLink", message: "start \(self.debugDescription)"), sender: self)
+                guard let appContext = self.appContext else {
+                    throw Errors.noAppContextProvided
                 }
 
                 guard let elements = self.maps?.compactMap({ $0 }) else {
@@ -93,11 +118,11 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
                 }
 
                 try appContext.uowManager.run(sequence: sequence) { _, error in
-                    self.appContext?.logInspector?.log(.flow(name: "mapAndLink", message: "finish"), sender: self)
+                    self.appContext?.logInspector?.log(.uow(name: "mapAndLink", message: "finish \(self.debugDescription)"), sender: self)
                     exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
                 }
             } catch {
-                self.appContext?.logInspector?.log(.flow(name: "mapAndLink", message: "finish"), sender: self)
+                self.appContext?.logInspector?.log(.flow(name: "mapAndLink", message: "finish \(self.debugDescription)"), sender: self)
                 exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
             }
         }

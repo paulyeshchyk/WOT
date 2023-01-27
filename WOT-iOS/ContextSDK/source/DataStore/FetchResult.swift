@@ -14,17 +14,45 @@ public typealias FetchResultThrowingCompletion = (FetchResultProtocol?, Error?) 
 open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
 
     public weak var managedObjectContext: ManagedObjectContextProtocol?
-    public var fetchStatus: FetchStatus = .none
+    public var fetchStatus: FetchStatus = .none {
+        didSet {
+            print("FetchStatus: \(fetchStatus)")
+        }
+    }
+
     public var predicate: NSPredicate?
 
     override public var description: String {
-        let entityName: String
+        return "[\(type(of: self))] \(self.debugDescription)"
+    }
+
+    override public var debugDescription: String {
+        let entityNameDescr: String?
         do {
-            entityName = try managedObject().entityName
+            entityNameDescr = try managedObject().entityName
         } catch {
-            entityName = "<Invalid>"
+            entityNameDescr = nil
         }
-        return "<\(type(of: self)): context-name \(managedObjectContext?.name ?? ""), entity-name \(entityName)>"
+        let predicateDescr: String?
+        if let predicate = predicate {
+            predicateDescr = "predicate \(String(describing: predicate))"
+        } else {
+            predicateDescr = nil
+        }
+
+        let contextNameDescr: String?
+        if let contextName = managedObjectContext?.name {
+            contextNameDescr = "contextName \(contextName)"
+        } else {
+            contextNameDescr = nil
+        }
+        let managedObjRefDescr: String?
+        if let managedObjRef = managedRef {
+            managedObjRefDescr = "managedRef \(String(describing: managedObjRef))"
+        } else {
+            managedObjRefDescr = nil
+        }
+        return [entityNameDescr, predicateDescr, managedObjRefDescr, contextNameDescr].compactMap { $0 }.joined(separator: ", ")
     }
 
     private var managedRef: ManagedRefProtocol?

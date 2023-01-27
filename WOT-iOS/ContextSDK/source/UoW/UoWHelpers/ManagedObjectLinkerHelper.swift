@@ -7,10 +7,18 @@
 
 // MARK: - ManagedObjectLinkerHelper
 
-class ManagedObjectLinkerHelper {
+class ManagedObjectLinkerHelper: CustomStringConvertible, CustomDebugStringConvertible {
 
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
+
+    var description: String {
+        "[\(type(of: self))] \(debugDescription)"
+    }
+
+    var debugDescription: String {
+        "\(String(describing: socket, orValue: "<null>"))"
+    }
 
     let appContext: Context
     var socket: JointSocketProtocol?
@@ -24,11 +32,12 @@ class ManagedObjectLinkerHelper {
 
     // MARK: Internal
 
-    func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
-        appContext.logInspector?.log(.flow(name: "moLink", message: "start"), sender: self)
+    func run(_ fetchResult: FetchResultProtocol?) {
+        let fetchResultDescription = "fetchResult: \(String(describing: fetchResult, orValue: "<null>"))"
+        appContext.logInspector?.log(.uow(name: "moLink", message: "start \(debugDescription) \(fetchResultDescription)"), sender: self)
         do {
-            guard let fetchResult = fetchResult, error == nil else {
-                throw error ?? Errors.fetchResultIsNotPresented
+            guard let fetchResult = fetchResult else {
+                throw Errors.fetchResultIsNotPresented
             }
 
             let linker = ManagedObjectLinker(appContext: appContext)
@@ -37,9 +46,9 @@ class ManagedObjectLinkerHelper {
             linker.completion = completion
 
             try linker.run()
-            appContext.logInspector?.log(.flow(name: "moLink", message: "finish"), sender: self)
+            appContext.logInspector?.log(.uow(name: "moLink", message: "finish \(debugDescription) \(fetchResultDescription)"), sender: self)
         } catch {
-            appContext.logInspector?.log(.flow(name: "moLink", message: "finish"), sender: self)
+            appContext.logInspector?.log(.uow(name: "moLink", message: "finish \(debugDescription) \(fetchResultDescription)"), sender: self)
             completion?(fetchResult, error)
         }
     }

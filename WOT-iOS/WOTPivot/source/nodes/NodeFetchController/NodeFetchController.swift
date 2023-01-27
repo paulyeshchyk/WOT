@@ -102,6 +102,7 @@ extension NodeFetchController: NSFetchedResultsControllerDelegate {
 // MARK: - NodeFetchController + NodeFetchControllerProtocol
 
 extension NodeFetchController: NodeFetchControllerProtocol {
+    //
     open func performFetch(nodeCreator: NodeCreatorProtocol?, appContext: Context) throws {
         if let fetch = fetchResultController {
             try performFetch(with: fetch, nodeCreator: nodeCreator)

@@ -36,6 +36,7 @@ public protocol DataStoreProtocol {
     @available(*, deprecated)
     @objc func newPrivateContext() -> ManagedObjectContextProtocol
 
+    @available(*, deprecated, message: "NSPredicate to be used; see developer.apple.com/documentation/coredata/nsmanagedobjectcontext (Concurrency)")
     @objc func perform(mode: PerformMode, block: @escaping ManagedObjectContextProtocol.ContextCompletion) throws
 
     @objc func fetchResultController(fetchRequest: AnyObject, managedObjectContext: ManagedObjectContextProtocol) throws -> AnyObject

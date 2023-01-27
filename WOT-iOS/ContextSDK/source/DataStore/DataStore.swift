@@ -73,24 +73,20 @@ extension DataStore: DataStoreProtocol {
 
             try perform(mode: .readwrite, block: { [weak self] privateManagedObjectContext in
 
-                guard let self = self else {
-                    completion(nil, DataStoreError.datastoreIsNil)
-                    return
-                }
-
-                guard let managedObject = privateManagedObjectContext.findOrCreateObject(appContext: self.appContext, modelClass: modelClass, predicate: nspredicate) else {
+                guard let managedObject = privateManagedObjectContext.findOrCreateObject(appContext: self?.appContext, modelClass: modelClass, predicate: nspredicate) else {
                     completion(nil, DataStoreError.objectNotCreated(modelClass))
                     return
                 }
-
-                self.stash(managedObjectContext: privateManagedObjectContext) { context, error in
+                let fetchStatus = managedObject.fetchStatus
+                self?.stash(managedObjectContext: privateManagedObjectContext) { context, error in
                     do {
-                        let fetchResult = try managedObject.fetchResult(context: context)
+                        let fetchResult = try managedObject.fetchResult(context: context, fetchStatus: fetchStatus)
                         completion(fetchResult, error)
                     } catch {
                         completion(nil, error)
                     }
                 }
+
             })
         } catch {
             completion(nil, error)

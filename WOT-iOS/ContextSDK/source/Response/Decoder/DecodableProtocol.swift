@@ -46,24 +46,44 @@ private enum DecodableProtocolError: Error, CustomStringConvertible {
 // MARK: - DecodingDepthLevel
 
 @objc
+
 public class DecodingDepthLevel: NSObject, RawRepresentable {
+
     public required init?(rawValue: Int) {
         self.rawValue = rawValue
+        maxLevel = 1
+        super.init()
+    }
+
+    public required init?(rawValue: Int, maxLevel: Int) {
+        self.rawValue = rawValue
+        self.maxLevel = maxLevel
         super.init()
     }
 
     public var rawValue: Int
+    public var maxLevel: Int = 1
 
-    public static let initial: DecodingDepthLevel? = DecodingDepthLevel(rawValue: 0)
+    override public var description: String {
+        return "[\(type(of: self))] rawValue: \(rawValue), maxLevel: \(maxLevel)"
+    }
+
+    public static func initial(maxLevel: Int) -> DecodingDepthLevel? {
+        let result = DecodingDepthLevel(rawValue: 0, maxLevel: 1)
+        result?.maxLevel = maxLevel
+        return result
+    }
 
     public typealias RawValue = Int
 
-    public var next: DecodingDepthLevel? { DecodingDepthLevel(rawValue: rawValue + 1) }
+    public var nextDepthLevel: DecodingDepthLevel? {
+        DecodingDepthLevel(rawValue: rawValue + 1, maxLevel: maxLevel)
+    }
 
     // MARK: Public
 
     public func maxReached() -> Bool {
-        rawValue < 2// (Int.max - 1)
+        rawValue >= maxLevel
     }
 }
 
@@ -82,7 +102,7 @@ public protocol JSONDecoderProtocol: AnyObject {
 
     var managedObject: ManagedAndDecodableObjectType? { get set }
     init(appContext: Context)
-    func decode(using: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws
+    func decode(using: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws
 }
 
 // MARK: - JSONCollectionProtocol

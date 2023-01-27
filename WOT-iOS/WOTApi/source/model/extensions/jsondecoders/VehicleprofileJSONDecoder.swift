@@ -17,12 +17,21 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
+
+        // MARK: - do check decodingDepth
+
+        if decodingDepthLevel?.nextDepthLevel?.maxReached() ?? false {
+            appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
+            return
+        }
+
+        // MARK: - relation mapping
+
         let jsonRef = try JSONRef(data: element, modelClass: Vehicleprofile.self)
-        //
 
         // MARK: - Link items
 
@@ -44,7 +53,6 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: ammoKeypath)
             let jsonMap = try JSONMap(data: jsonArray, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -55,7 +63,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noAmmoList(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noAmmoList(tank_id)), sender: self)
         }
 
         // MARK: - Armor
@@ -70,7 +78,6 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: armorKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -81,7 +88,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noArmor(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noArmor(tank_id)), sender: self)
         }
 
         // MARK: - Module
@@ -97,7 +104,6 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: modulesKeypath)
 
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -108,7 +114,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noModule(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noModule(tank_id)), sender: self)
         }
 
         // MARK: - Engine
@@ -125,7 +131,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: engineKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
+
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
             uow.maps = [jsonMap]
@@ -135,7 +141,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noEngine(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noEngine(tank_id)), sender: self)
         }
 
         // MARK: - Gun
@@ -153,7 +159,6 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             #warning("managedRef!")
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: gunKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -164,7 +169,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noGun(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noGun(tank_id)), sender: self)
         }
 
         // MARK: - Suspension
@@ -181,7 +186,6 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: suspensionKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -192,7 +196,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noSuspension(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noSuspension(tank_id)), sender: self)
         }
 
         // MARK: - Turret
@@ -209,7 +213,6 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: turretKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -220,7 +223,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noTurret(tank_id)), sender: self)
         }
 
         // MARK: - Radio
@@ -237,7 +240,6 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: radioKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -248,7 +250,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noTurret(tank_id)), sender: self)
         }
     }
 }
@@ -296,28 +298,33 @@ extension Vehicleprofile {
     }
 }
 
-// MARK: - VehicleProfileMappingError
+// MARK: - VehicleprofileJSONDecoder.VehicleprofileJSONDecoderErrors
 
-public enum VehicleProfileMappingError: Error, CustomStringConvertible {
-    case noAmmoList(NSDecimalNumber?)
-    case noArmor(NSDecimalNumber?)
-    case noModule(NSDecimalNumber?)
-    case noEngine(NSDecimalNumber?)
-    case noGun(NSDecimalNumber?)
-    case noSuspension(NSDecimalNumber?)
-    case noTurret(NSDecimalNumber?)
-    case noRadio(NSDecimalNumber?)
+extension VehicleprofileJSONDecoder {
 
-    public var description: String {
-        switch self {
-        case .noAmmoList(let profile): return "[\(type(of: self))]: No ammo list in profile with id: \(profile ?? -1)"
-        case .noArmor(let profile): return "[\(type(of: self))]: No armor in profile with id: \(profile ?? -1)"
-        case .noModule(let profile): return "[\(type(of: self))]: No module in profile with id: \(profile ?? -1)"
-        case .noEngine(let profile): return "[\(type(of: self))]: No engine in profile with id: \(profile ?? -1)"
-        case .noGun(let profile): return "[\(type(of: self))]: No gun in profile with id: \(profile ?? -1)"
-        case .noSuspension(let profile): return "[\(type(of: self))]: No suspension in profile with id: \(profile ?? -1)"
-        case .noTurret(let profile): return "[\(type(of: self))]: No turret in profile with id: \(profile ?? -1)"
-        case .noRadio(let profile): return "[\(type(of: self))]: No radio in profile with id: \(profile ?? -1)"
+    public enum VehicleprofileJSONDecoderErrors: Error, CustomStringConvertible {
+        case noAmmoList(NSDecimalNumber?)
+        case noArmor(NSDecimalNumber?)
+        case noModule(NSDecimalNumber?)
+        case noEngine(NSDecimalNumber?)
+        case noGun(NSDecimalNumber?)
+        case noSuspension(NSDecimalNumber?)
+        case noTurret(NSDecimalNumber?)
+        case noRadio(NSDecimalNumber?)
+        case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+
+        public var description: String {
+            switch self {
+            case .noAmmoList(let profile): return "[\(type(of: self))]: No ammo list in profile with id: \(profile ?? -1)"
+            case .noArmor(let profile): return "[\(type(of: self))]: No armor in profile with id: \(profile ?? -1)"
+            case .noModule(let profile): return "[\(type(of: self))]: No module in profile with id: \(profile ?? -1)"
+            case .noEngine(let profile): return "[\(type(of: self))]: No engine in profile with id: \(profile ?? -1)"
+            case .noGun(let profile): return "[\(type(of: self))]: No gun in profile with id: \(profile ?? -1)"
+            case .noSuspension(let profile): return "[\(type(of: self))]: No suspension in profile with id: \(profile ?? -1)"
+            case .noTurret(let profile): return "[\(type(of: self))]: No turret in profile with id: \(profile ?? -1)"
+            case .noRadio(let profile): return "[\(type(of: self))]: No radio in profile with id: \(profile ?? -1)"
+            case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
+            }
         }
     }
 }

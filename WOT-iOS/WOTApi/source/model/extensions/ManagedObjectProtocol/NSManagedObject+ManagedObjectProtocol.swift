@@ -13,7 +13,12 @@ import CoreData
 extension NSManagedObject: ManagedObjectProtocol {
     //
     public var entityName: String { return entity.name ?? "<unknown>" }
-    public var fetchStatus: FetchStatus { isInserted ? .inserted : .fetched }
+    public var fetchStatus: FetchStatus {
+        isInserted ?
+            .inserted :
+            .fetched
+    }
+
     public var context: ManagedObjectContextProtocol? { managedObjectContext }
     public func managedRef() throws -> ManagedRefProtocol {
         return try ManagedRef(modelClass: type(of: self), managedObjectID: objectID)

@@ -77,7 +77,9 @@ open class CoreDataStore: DataStore {
         guard let request = request as? NSFetchRequest<NSFetchRequestResult> else {
             throw CoreDataStoreError.requestIsNotNSFetchRequest
         }
-        let mainContext = workingContext() as! NSManagedObjectContext
+        guard let mainContext = workingContext() as? NSManagedObjectContext else {
+            throw CoreDataStoreError.workingContextIsNotNSManagedObjectContext
+        }
         return NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
     }
 
@@ -163,12 +165,14 @@ private enum CoreDataStoreError: Error, CustomStringConvertible {
     case contextNotSaved
     case contextIsNotNSManagedObjectContext
     case requestIsNotNSFetchRequest
+    case workingContextIsNotNSManagedObjectContext
 
     var description: String {
         switch self {
         case .contextNotSaved: return "\(type(of: self)): Context is not saved"
         case .contextIsNotNSManagedObjectContext: return "context is notNSManagedObjectContext"
         case .requestIsNotNSFetchRequest: return "request is not NSFetchRequest"
+        case .workingContextIsNotNSManagedObjectContext: return "Working context is not NSManagedObjectContext"
         }
     }
 }
