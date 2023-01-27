@@ -20,7 +20,7 @@ public protocol RequestRegistratorProtocol {
 
     typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
-    func createRequest(requestConfiguration: RequestConfigurationProtocol, responseConfiguration: ResponseConfigurationProtocol) throws -> RequestProtocol
+    func createRequest(requestConfiguration: RequestConfigurationProtocol, responseConfiguration: ResponseConfigurationProtocol, decodingDepthLevel: DecodingDepthLevel?) throws -> RequestProtocol
 
     func registerServiceClass(_ serviceClass: RequestModelServiceProtocol.Type) throws
 }

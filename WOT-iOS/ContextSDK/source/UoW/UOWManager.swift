@@ -72,6 +72,7 @@ public protocol UOWManagerProtocol {
 
 public class UOWManager: UOWManagerProtocol {
 
+    private let workingQueue: DispatchQueue = DispatchQueue(label: "UOWManagerQueue", qos: .userInitiated)
     private let appContext: Context
     public init(appContext: Context) {
         self.appContext = appContext
@@ -84,7 +85,9 @@ public class UOWManager: UOWManagerProtocol {
 
         let oq = UOWOperationQueue()
         let op = try runnable.blockOperation { obj in
-            listenerCompletion(obj)
+            self.workingQueue.async {
+                listenerCompletion(obj)
+            }
         }
         oq.addOperation(op)
     }
@@ -102,7 +105,9 @@ public class UOWManager: UOWManagerProtocol {
                     }
 
                     if !isInProgress {
-                        listenerCompletion(0, nil)
+                        self.workingQueue.async {
+                            listenerCompletion(0, nil)
+                        }
                         completed = true
                     }
                 }
@@ -113,6 +118,15 @@ public class UOWManager: UOWManagerProtocol {
 
         let sequenceOperationQueue = UOWOperationQueue()
         sequenceOperationQueue.addOperations(set, waitUntilFinished: false)
+    }
+}
+
+extension Array where Element: Operation {
+    /// Execute block after all operations from the array.
+    func onFinish(_ block: @escaping () -> Void) {
+        let doneOperation = BlockOperation(block: block)
+        forEach { [unowned doneOperation] in doneOperation.addDependency($0) }
+        OperationQueue().addOperation(doneOperation)
     }
 }
 
@@ -168,7 +182,12 @@ class UOWProgress {
 
 // MARK: - UOWOperationQueue
 
-class UOWOperationQueue: OperationQueue {}
+class UOWOperationQueue: OperationQueue {
+    override init() {
+        super.init()
+        qualityOfService = .background
+    }
+}
 
 extension UOWRunnable {
 

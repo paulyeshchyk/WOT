@@ -17,6 +17,7 @@ class RequestGrouppedRequestList {
     private var list: [RequestIdType: [RequestProtocol]] = [:]
 
     private let appContext: Context
+    private let recursiveLock = NSRecursiveLock()
 
     // MARK: Lifecycle
 
@@ -27,6 +28,7 @@ class RequestGrouppedRequestList {
     // MARK: Internal
 
     func addRequest(_ request: RequestProtocol, forGroupId groupId: RequestIdType) throws {
+        recursiveLock.lock()
         if list.keys.isEmpty {
             appContext.logInspector?.log(.flow(name: "group", message: "Start: <\(String(describing: request))>"), sender: self)
         }
@@ -36,12 +38,14 @@ class RequestGrouppedRequestList {
             requestsForID.append(contentsOf: available)
         }
         let filtered = requestsForID.filter { $0.MD5 == request.MD5 }
-        guard filtered.isEmpty else {
-            throw RequestGrouppedRequestList.Errors.dublicate
+        if !filtered.isEmpty {
+            request.addGroup(groupId)
+            requestsForID.append(request)
+            list[groupId] = requestsForID
+        } else {
+            // throw RequestGrouppedRequestList.Errors.dublicate
         }
-        request.addGroup(groupId)
-        requestsForID.append(request)
-        list[groupId] = requestsForID
+        recursiveLock.unlock()
     }
 
     func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol, completion: @escaping CancelCompletion) {
@@ -59,6 +63,7 @@ class RequestGrouppedRequestList {
     }
 
     func removeRequest(_ request: RequestProtocol) {
+        recursiveLock.lock()
         for group in request.availableInGroups {
             if var grouppedRequests = list[group] {
                 let cnt = grouppedRequests.count
@@ -74,6 +79,7 @@ class RequestGrouppedRequestList {
         if list.keys.isEmpty {
             appContext.logInspector?.log(.flow(name: "group", message: "End: <\(String(describing: request))>"), sender: self)
         }
+        recursiveLock.unlock()
     }
 }
 

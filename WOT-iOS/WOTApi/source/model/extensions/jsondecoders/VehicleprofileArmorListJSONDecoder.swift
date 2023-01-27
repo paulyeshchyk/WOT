@@ -17,7 +17,16 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
+        // MARK: - do check decodingDepth
+
+        if decodingDepthLevel?.nextDepthLevel?.maxReached() ?? false {
+            appContext.logInspector?.log(.warning(error: VehicleprofileArmorListJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
+            return
+        }
+
+        // MARK: - relation mapping
+
         //
         let armorListJSON = try map.data(ofType: JSON.self)
 
@@ -33,7 +42,6 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: keypathturret)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -44,7 +52,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext.logInspector?.log(.warning(error: VehicleProfileArmorListError.turretNotFound), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileArmorListJSONDecoderErrors.turretNotFound), sender: self)
         }
 
         // MARK: - hull
@@ -60,7 +68,6 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: keypathhull)
 
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
             let uow = UOWDecodeAndLinkMaps()
             uow.appContext = appContext
@@ -71,7 +78,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
-            appContext.logInspector?.log(.warning(error: VehicleProfileArmorListError.hullNotFound), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileArmorListJSONDecoderErrors.hullNotFound), sender: self)
         }
     }
 }
@@ -89,16 +96,21 @@ extension VehicleprofileArmorList {
     }
 }
 
-// MARK: - VehicleProfileArmorListError
+// MARK: - VehicleprofileArmorListJSONDecoder.VehicleprofileArmorListJSONDecoderErrors
 
-private enum VehicleProfileArmorListError: Error, CustomStringConvertible {
-    case hullNotFound
-    case turretNotFound
+extension VehicleprofileArmorListJSONDecoder {
 
-    var description: String {
-        switch self {
-        case .turretNotFound: return "[\(type(of: self))]: Turret not found"
-        case .hullNotFound: return "[\(type(of: self))]: Hull not found"
+    enum VehicleprofileArmorListJSONDecoderErrors: Error, CustomStringConvertible {
+        case hullNotFound
+        case turretNotFound
+        case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+
+        var description: String {
+            switch self {
+            case .turretNotFound: return "[\(type(of: self))]: Turret not found"
+            case .hullNotFound: return "[\(type(of: self))]: Hull not found"
+            case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
+            }
         }
     }
 }

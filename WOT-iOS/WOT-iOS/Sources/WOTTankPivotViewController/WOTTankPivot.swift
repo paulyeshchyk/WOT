@@ -23,10 +23,14 @@ class WOTTankPivotNodeCreator: PivotNodeCreator {
     override public func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> NodeProtocol {
         let name = (fetchedObject as? Vehicles)?.name ?? ""
         let type = (fetchedObject as? Vehicles)?.type ?? ""
+        guard let tankId = (fetchedObject as? Vehicles)?.tank_id?.decimalValue else {
+            fatalError("tankid is not defined")
+        }
         let color = WOTNodeFactory.typeColors()[type] as? UIColor
         let result = DataPivotNode(name: name)
         result.predicate = byPredicate
-        result.data1 = fetchedObject
+        #warning("Direct access to ManagedObject property (tank_id)")
+        result.data1 = NSDecimalNumber(decimal: tankId)
         result.dataColor = color
         return result
     }
@@ -36,7 +40,7 @@ class WOTTankPivotNodeCreator: PivotNodeCreator {
 
 class WOTTankPivotFetchRequest: FetchRequestContainerProtocol {
 
-    var settingsDatasource: WOTTankListSettingsDatasource
+    weak var settingsDatasource: WOTTankListSettingsDatasource?
 
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> {
         let result = NSFetchRequest<NSFetchRequestResult>(entityName: "Vehicles")
@@ -45,17 +49,14 @@ class WOTTankPivotFetchRequest: FetchRequestContainerProtocol {
         return result
     }
 
-    // MARK: Lifecycle
-
-    init(datasource: WOTTankListSettingsDatasource) {
-        settingsDatasource = datasource
-    }
-
     // MARK: Private
 
     private func sortDescriptors() -> [NSSortDescriptor] {
         let tankIdDescriptor = NSSortDescriptor(key: "tank_id", ascending: true)
-        var result = settingsDatasource.sortBy
+        var result: [NSSortDescriptor] = []
+        if let sortBy = settingsDatasource?.sortBy {
+            result.append(contentsOf: sortBy)
+        }
         result.append(tankIdDescriptor)
         return result
     }
@@ -110,24 +111,18 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
     override var description: String { "\(type(of: self))" }
 
     private let uuid = UUID()
+    private let metadatasource = WOTTankPivotMetadatasource()
+    private let customNodeCreator = WOTTankPivotNodeCreator()
 
     // MARK: Lifecycle
 
-    required init(modelListener: NodeDataModelListener, settingsDatasource: WOTTankListSettingsDatasource, appContext: Context) {
-        let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
-        let fetchController = NodeFetchController(fetchRequestContainer: fetchRequest, appContext: appContext)
-
-        let metadatasource = WOTTankPivotMetadatasource()
-        let nodeCreator = WOTTankPivotNodeCreator()
-
+    required init(modelListener: NodeDataModelListener, fetchController: NodeFetchControllerProtocol, appContext: Context) {
         super.init(fetchController: fetchController,
                    modelListener: modelListener,
-                   nodeCreator: nodeCreator,
+                   nodeCreator: customNodeCreator,
                    metadatasource: metadatasource,
                    nodeIndex: NodeIndex.self,
                    appContext: appContext)
-
-        enumerator = NodeEnumerator.sharedInstance
     }
 
     required init(enumerator _: NodeEnumeratorProtocol) {

@@ -17,7 +17,7 @@ class VehicleprofileAmmoDamageJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, decodingDepthLevel _: DecodingDepthLevel?) throws {
         //
         let array = try map.data(ofType: [Double].self)
         let ammoDamage = try MinAvgMax(array)
@@ -26,14 +26,17 @@ class VehicleprofileAmmoDamageJSONDecoder: JSONDecoderProtocol {
     }
 }
 
-// MARK: - VehicleprofileAmmoDamageError
+// MARK: - %t + VehicleprofileAmmoDamageJSONDecoder.VehicleprofileAmmoDamageJSONDecoderErrors
 
-private enum VehicleprofileAmmoDamageError: Error, CustomStringConvertible {
-    case arrayIsNotContainingThreeElements
+extension VehicleprofileAmmoDamageJSONDecoder {
 
-    var description: String {
-        switch self {
-        case .arrayIsNotContainingThreeElements: return "[\(type(of: self))]: Dublicate"
+    enum VehicleprofileAmmoDamageJSONDecoderErrors: Error, CustomStringConvertible {
+        case arrayIsNotContainingThreeElements
+
+        var description: String {
+            switch self {
+            case .arrayIsNotContainingThreeElements: return "[\(type(of: self))]: Dublicate"
+            }
         }
     }
 }

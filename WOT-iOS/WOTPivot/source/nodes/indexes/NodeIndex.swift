@@ -9,8 +9,10 @@
 // MARK: - NodeIndex
 
 public class NodeIndex: NSObject, NodeIndexProtocol {
+    //
+    private let enumerator = NodeEnumerator()
 
-    public static let Comparator: NodeComparatorType = { (_, _, _) in
+    private static let Comparator: NodeComparatorType = { (_, _, _) in
         return .orderedSame
     }
 
@@ -48,7 +50,7 @@ public class NodeIndex: NSObject, NodeIndexProtocol {
     }
 
     public func add(node: NodeProtocol, level _: NodeLevelType) {
-        let allItems = NodeEnumerator.sharedInstance.allItems(fromNode: node)
+        let allItems = enumerator.allItems(fromNode: node)
         allItems.forEach { (node) in
             index[node.index] = node
         }
@@ -61,7 +63,7 @@ public class NodeIndex: NSObject, NodeIndexProtocol {
     public func doAutoincrementIndex(forNodes nodes: [NodeProtocol]) -> Int {
         var result: Int = 0
         nodes.forEach { (node) in
-            NodeEnumerator.sharedInstance.enumerateAll(node: node, comparator: NodeIndex.Comparator) { (node) in
+            enumerator.enumerateAll(node: node, comparator: NodeIndex.Comparator) { (node) in
                 node.index = result
                 result += 1
             }

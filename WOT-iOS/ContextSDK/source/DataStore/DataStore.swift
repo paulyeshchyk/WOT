@@ -47,32 +47,15 @@ extension DataStore: DataStoreProtocol {
         fatalError("has not been implemented")
     }
 
-    open func perform(block: @escaping ObjectContextCompletion) {
-        perform(managedObjectContext: workingContext(), block: block)
+    open func perform(mode: PerformMode, block: @escaping ManagedObjectContextProtocol.ContextCompletion) throws {
+        switch mode {
+        case .read: perform(managedObjectContext: workingContext(), block: block)
+        case .readwrite: perform(managedObjectContext: newPrivateContext(), block: block)
+        }
     }
 
-    private func perform(managedObjectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion) {
+    private func perform(managedObjectContext: ManagedObjectContextProtocol, block: @escaping ManagedObjectContextProtocol.ContextCompletion) {
         managedObjectContext.execute(appContext: appContext, with: block)
-    }
-
-    public func stash(managedObject: ManagedObjectProtocol, completion: @escaping DatastoreManagedObjectCompletion) {
-        guard let managedObjectContext = managedObject.context else {
-            completion(managedObject, DataStoreError.contextNotFound(managedObject))
-            return
-        }
-        managedObjectContext.save(appContext: appContext, completion: { error in
-            completion(managedObject, error)
-        })
-    }
-
-    public func stash(fetchResult: FetchResultProtocol, completion: @escaping DatastoreFetchResultCompletion) {
-        fetchResult.managedObjectContext.save(appContext: appContext) { error in
-            completion(fetchResult, error)
-        }
-    }
-
-    public func stash(block: @escaping ThrowableContextCompletion) {
-        stash(managedObjectContext: workingContext(), completion: block)
     }
 
     public func stash(managedObjectContext: ManagedObjectContextProtocol, completion: @escaping ThrowableContextCompletion) {
@@ -83,30 +66,30 @@ extension DataStore: DataStoreProtocol {
 
     public func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, completion: @escaping FetchResultCompletion) {
         //
-        guard isClassValid(modelClass) else {
-            completion(nil, DataStoreError.notManagedObjectType(modelClass))
-            return
-        }
-
-        let privateManagedObjectContext = newPrivateContext()
-        privateManagedObjectContext.execute(appContext: appContext) { [weak self] privateManagedObjectContext in
-            guard let self = self else {
-                completion(nil, DataStoreError.datastoreIsNil)
-                return
+        do {
+            guard isClassValid(modelClass) else {
+                throw DataStoreError.notManagedObjectType(modelClass)
             }
 
-            guard let managedObject = privateManagedObjectContext.findOrCreateObject(appContext: self.appContext, modelClass: modelClass, predicate: nspredicate) else {
-                completion(nil, DataStoreError.objectNotCreated(modelClass))
-                return
-            }
-            self.stash(managedObjectContext: privateManagedObjectContext) { context, error in
-                do {
-                    let fetchResult = try managedObject.fetchResult(context: context)
-                    completion(fetchResult, error)
-                } catch {
-                    completion(nil, error)
+            try perform(mode: .readwrite, block: { [weak self] privateManagedObjectContext in
+
+                guard let managedObject = privateManagedObjectContext.findOrCreateObject(appContext: self?.appContext, modelClass: modelClass, predicate: nspredicate) else {
+                    completion(nil, DataStoreError.objectNotCreated(modelClass))
+                    return
                 }
-            }
+                let fetchStatus = managedObject.fetchStatus
+                self?.stash(managedObjectContext: privateManagedObjectContext) { context, error in
+                    do {
+                        let fetchResult = try managedObject.fetchResult(context: context, fetchStatus: fetchStatus)
+                        completion(fetchResult, error)
+                    } catch {
+                        completion(nil, error)
+                    }
+                }
+
+            })
+        } catch {
+            completion(nil, error)
         }
     }
 }

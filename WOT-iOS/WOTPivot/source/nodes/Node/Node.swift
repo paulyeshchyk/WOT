@@ -11,7 +11,7 @@ open class Node: NSObject, NodeProtocol {
     open var name: String = ""
     open var children: [NodeProtocol] = [NodeProtocol]()
 
-    private(set) open var parent: NodeProtocol?
+    private(set) open weak var parent: NodeProtocol?
 
     open var isVisible: Bool = true
 
@@ -27,8 +27,6 @@ open class Node: NSObject, NodeProtocol {
         }
         return String(format: "%@.%@", parent.fullName, name)
     }
-
-    fileprivate var hiddenParent: NodeProtocol?
 
     // MARK: Lifecycle
 

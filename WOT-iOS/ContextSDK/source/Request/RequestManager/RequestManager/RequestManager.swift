@@ -22,9 +22,12 @@ open class RequestManager: NSObject {
 
     private let uuid = UUID()
     private let appContext: Context
+    private let workingQueue = DispatchQueue(label: "RequestManagerQueue", qos: .userInitiated)
 
     private let grouppedListenerList: RequestGrouppedListenerList
     private let grouppedRequestList: RequestGrouppedRequestList
+    private var requests: [RequestProtocol] = []
+    private let recursiveLock = NSRecursiveLock()
 
     // MARK: Lifecycle
 
@@ -45,7 +48,9 @@ open class RequestManager: NSObject {
 extension RequestManager: RequestListenerProtocol {
 
     public func request(_ request: RequestProtocol, startedWith _: URLRequest) {
-        grouppedListenerList.didStartRequest(request, requestManager: self)
+        workingQueue.async {
+            self.grouppedListenerList.didStartRequest(request, requestManager: self)
+        }
     }
 
     public func request(_ request: RequestProtocol, canceledWith _: Error?) {
@@ -64,7 +69,9 @@ extension RequestManager: RequestListenerProtocol {
 
         do {
             try appContext.responseManager?.addListener(self, forRequest: request)
-            appContext.responseManager?.startWorkingOn(request, withData: data)
+            workingQueue.async {
+                self.appContext.responseManager?.startWorkingOn(request, withData: data)
+            }
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }
@@ -72,10 +79,20 @@ extension RequestManager: RequestListenerProtocol {
 }
 
 extension RequestManager {
+    //
+    private func addRequest(_ request: RequestProtocol) {
+        recursiveLock.lock()
+        requests.append(request)
+        recursiveLock.unlock()
+    }
 
     private func removeRequest(_ request: RequestProtocol) {
         grouppedRequestList.removeRequest(request)
         request.removeListener(self)
+
+        recursiveLock.lock()
+        requests.removeAll(where: { $0.MD5 == request.MD5 })
+        recursiveLock.unlock()
     }
 }
 
@@ -89,7 +106,11 @@ extension RequestManager: ResponseManagerListener {
 
     public func responseManager(_ responseManager: ResponseManagerProtocol, didFinishWorkOn request: RequestProtocol, withError error: Error?) {
         responseManager.removeListener(self, forRequest: request)
-        grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
+
+        workingQueue.async {
+            self.grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
+        }
+
         if let error = error {
             appContext.logInspector?.log(.error(error), sender: self)
         }
@@ -100,7 +121,9 @@ extension RequestManager: ResponseManagerListener {
     public func responseManager(_ responseManager: ResponseManagerProtocol, didCancelWorkOn request: RequestProtocol, reason: ResponseCancelReasonProtocol) {
         responseManager.removeListener(self, forRequest: request)
 
-        grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: reason.error)
+        workingQueue.async {
+            self.grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: reason.error)
+        }
 
         removeRequest(request)
     }
@@ -112,7 +135,13 @@ extension RequestManager: RequestManagerProtocol {
 
     public func startRequest(_ request: RequestProtocol, listener: RequestManagerListenerProtocol?) throws {
         //
+        if request.decodingDepthLevel?.maxReached() ?? false {
+            throw Errors.maxLevelReached(request.decodingDepthLevel?.rawValue ?? -1)
+        }
+        //
         try grouppedRequestList.addRequest(request, forGroupId: request.MD5.hashValue)
+
+        addRequest(request)
 
         request.addListener(self)
 
@@ -126,10 +155,11 @@ extension RequestManager: RequestManagerProtocol {
     }
 
     public func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
-        //
-        grouppedRequestList.cancelRequests(groupId: groupId, reason: reason) { [weak self] request, reason in
-            guard let self = self else { return }
-            self.grouppedListenerList.didCancelRequest(request, requestManager: self, reason: reason)
+        workingQueue.async {
+            self.grouppedRequestList.cancelRequests(groupId: groupId, reason: reason) { [weak self] request, reason in
+                guard let self = self else { return }
+                self.grouppedListenerList.didCancelRequest(request, requestManager: self, reason: reason)
+            }
         }
     }
 
@@ -144,6 +174,7 @@ extension RequestManager: RequestManagerProtocol {
 extension RequestManager {
     // Errors
     private enum Errors: Error, CustomStringConvertible {
+        case maxLevelReached(Int)
         case adapterNotFound(RequestProtocol)
         case notAModelService(RequestProtocol)
         case noRequestIds(RequestProtocol)
@@ -158,6 +189,7 @@ extension RequestManager {
 
         public var description: String {
             switch self {
+            case .maxLevelReached(let level): return "\(type(of: self)): Max level reached: \(level)"
             case .notAModelService(let request): return "\(type(of: self)): Not a model service: \(String(describing: request))"
             case .adapterNotFound(let request): return "\(type(of: self)): Adapter not found for request: \(String(describing: request))"
             case .noRequestIds(let request): return "\(type(of: self)): No request ids for request: \(String(describing: request))"

@@ -49,6 +49,31 @@ public class UOWDecodeAndLinkMaps: UOWDecodeAndLinkMapsProtocol {
     }
 }
 
+// MARK: - UOWDecodeAndLinkMaps + CustomStringConvertible, CustomDebugStringConvertible
+
+extension UOWDecodeAndLinkMaps: CustomStringConvertible, CustomDebugStringConvertible {
+
+    public var description: String {
+        "[\(type(of: self))] \(debugDescription)"
+    }
+
+    public var debugDescription: String {
+        let modelDescription: String?
+        if let modelClass = modelClass {
+            modelDescription = "model: \(type(of: modelClass))"
+        } else {
+            modelDescription = nil
+        }
+        let socketDescription: String?
+        if let socket = socket {
+            socketDescription = "socket: \(String(describing: socket))"
+        } else {
+            socketDescription = nil
+        }
+        return [modelDescription, socketDescription].compactMap { $0 }.joined(separator: ", ")
+    }
+}
+
 // MARK: - UOWDecodeAndLinkMapsResult
 
 struct UOWDecodeAndLinkMapsResult: UOWResultProtocol {
@@ -69,35 +94,35 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
 
     func runnableBlock() -> UOWRunnable.RunnableBlockType? {
         return { exitToPassThrough, exit in
-            guard let appContext = self.appContext else {
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: nil))
-                return
-            }
-            guard let modelClass = self.modelClass else {
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: nil))
-                return
-            }
-
-            guard let elements = self.maps?.compactMap({ $0 }) else {
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: Errors.noMapProvided))
-                return
-            }
-
-            let sequence = elements.map { element -> UOWDecodeAndLinkMap in
-                let uow = UOWDecodeAndLinkMap()
-                uow.appContext = appContext
-                uow.modelClass = modelClass
-                uow.map = element
-                uow.socket = self.socket
-                uow.decodingDepthLevel = self.decodingDepthLevel
-                return uow
-            }
-
             do {
+                guard let modelClass = self.modelClass else {
+                    throw Errors.noModelClassProvided
+                }
+                self.appContext?.logInspector?.log(.uow(name: "mapAndLink", message: "start \(self.debugDescription)"), sender: self)
+                guard let appContext = self.appContext else {
+                    throw Errors.noAppContextProvided
+                }
+
+                guard let elements = self.maps?.compactMap({ $0 }) else {
+                    throw Errors.noMapProvided
+                }
+
+                let sequence = elements.map { element -> UOWDecodeAndLinkMap in
+                    let uow = UOWDecodeAndLinkMap()
+                    uow.appContext = appContext
+                    uow.modelClass = modelClass
+                    uow.map = element
+                    uow.socket = self.socket
+                    uow.decodingDepthLevel = self.decodingDepthLevel
+                    return uow
+                }
+
                 try appContext.uowManager.run(sequence: sequence) { _, error in
+                    self.appContext?.logInspector?.log(.uow(name: "mapAndLink", message: "finish \(self.debugDescription)"), sender: self)
                     exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
                 }
             } catch {
+                self.appContext?.logInspector?.log(.flow(name: "mapAndLink", message: "finish \(self.debugDescription)"), sender: self)
                 exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
             }
         }
@@ -109,5 +134,7 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
 extension UOWDecodeAndLinkMaps {
     enum Errors: Error {
         case noMapProvided
+        case noAppContextProvided
+        case noModelClassProvided
     }
 }

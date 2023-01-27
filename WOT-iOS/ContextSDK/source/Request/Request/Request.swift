@@ -51,7 +51,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
     public required init(appContext: RequestProtocol.Context) {
         self.appContext = appContext
         self.appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
-        decodingDepthLevel = DecodingDepthLevel.initial
+        decodingDepthLevel = DecodingDepthLevel.initial(maxLevel: 1)
     }
 
     deinit {

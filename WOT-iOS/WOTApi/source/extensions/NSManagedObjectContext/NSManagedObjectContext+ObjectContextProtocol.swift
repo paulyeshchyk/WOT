@@ -15,7 +15,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 
     // MARK: - ManagedObjectContextLookupProtocol
 
-    public func execute(appContext: ManagedObjectContextProtocol.Context, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
+    public func execute(appContext: ManagedObjectContextProtocol.Context, with block: @escaping ManagedObjectContextProtocol.ContextCompletion) {
         let uuid = UUID()
         let executionStartTime = Date()
         appContext.logInspector?.log(.sqlite(message: LogMessages.perform_start(uuid, self).description), sender: self)
@@ -32,7 +32,11 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return object(with: objectID)
     }
 
-    public func findOrCreateObject(appContext: ManagedObjectContextProtocol.Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
+    public func findOrCreateObject(appContext: ManagedObjectContextProtocol.Context?, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
+        guard let appContext = appContext else {
+            return nil
+        }
+
         do {
             guard let foundObject = try lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
                 appContext.logInspector?.log(.sqlite(message: LogMessages.select_fail(predicate, self).description), sender: self)
@@ -89,6 +93,8 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
                 block(nil)
             }
         } catch {
+            block(error)
+            appContext.logInspector?.log(.error(error), sender: self)
             appContext.logInspector?.log(.sqlite(message: LogMessages.save_fail(executionStartTime, self).description), sender: self)
         }
     }

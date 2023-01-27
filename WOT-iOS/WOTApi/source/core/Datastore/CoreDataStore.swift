@@ -39,8 +39,6 @@ open class CoreDataStore: DataStore {
         return coordinator
     }()
 
-    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(persistentStoreCoordinator: self.persistentStoreCoordinator)
-
     private lazy var managedObjectModel: NSManagedObjectModel? = {
         guard let modelURL = self.modelURL else {
             return nil
@@ -50,16 +48,18 @@ open class CoreDataStore: DataStore {
 
     // MARK: Public
 
-    private lazy var privateContext: ManagedObjectContextProtocol = CoreDataStore.privateQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
+    private lazy var privateContext: NSManagedObjectContext = CoreDataStore.privateQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
 
     @objc
     override public func newPrivateContext() -> ManagedObjectContextProtocol {
         privateContext
     }
 
+    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
+
     @objc
     override public func workingContext() -> ManagedObjectContextProtocol {
-        return mainContext
+        mainContext
     }
 
     override public func fetchResultController(fetchRequest: AnyObject, managedObjectContext: ManagedObjectContextProtocol) throws -> AnyObject {
@@ -76,6 +76,9 @@ open class CoreDataStore: DataStore {
     override public func mainContextFetchResultController(fetchRequest request: AnyObject, sectionNameKeyPath _: String?, cacheName _: String?) throws -> AnyObject {
         guard let request = request as? NSFetchRequest<NSFetchRequestResult> else {
             throw CoreDataStoreError.requestIsNotNSFetchRequest
+        }
+        guard let mainContext = workingContext() as? NSManagedObjectContext else {
+            throw CoreDataStoreError.workingContextIsNotNSManagedObjectContext
         }
         return NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
     }
@@ -162,12 +165,14 @@ private enum CoreDataStoreError: Error, CustomStringConvertible {
     case contextNotSaved
     case contextIsNotNSManagedObjectContext
     case requestIsNotNSFetchRequest
+    case workingContextIsNotNSManagedObjectContext
 
     var description: String {
         switch self {
         case .contextNotSaved: return "\(type(of: self)): Context is not saved"
         case .contextIsNotNSManagedObjectContext: return "context is notNSManagedObjectContext"
         case .requestIsNotNSFetchRequest: return "request is not NSFetchRequest"
+        case .workingContextIsNotNSManagedObjectContext: return "Working context is not NSManagedObjectContext"
         }
     }
 }

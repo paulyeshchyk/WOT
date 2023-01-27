@@ -9,13 +9,14 @@
 
 @objc
 public protocol ManagedObjectContextContainerProtocol {
-    var managedObjectContext: ManagedObjectContextProtocol { get }
+    var managedObjectContext: ManagedObjectContextProtocol? { get }
 }
 
 // MARK: - ManagedObjectContextProtocol
 
 @objc
 public protocol ManagedObjectContextProtocol: ManagedObjectContextLookupProtocol, ManagedObjectContextSaveProtocol {
+    typealias ContextCompletion = (ManagedObjectContextProtocol) -> Void
 
     var name: String? { get }
 }
@@ -28,8 +29,8 @@ public protocol ManagedObjectContextLookupProtocol: AnyObject {
     typealias Context = LogInspectorContainerProtocol
 
     func object(managedRef: ManagedRefProtocol?) throws -> ManagedObjectProtocol
-    func findOrCreateObject(appContext: Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol?
-    func execute(appContext: Context, with: @escaping (ManagedObjectContextProtocol) -> Void)
+    func findOrCreateObject(appContext: Context?, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol?
+    func execute(appContext: Context, with: @escaping ManagedObjectContextProtocol.ContextCompletion)
 }
 
 // MARK: - ManagedObjectContextSaveProtocol

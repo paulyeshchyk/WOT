@@ -28,6 +28,7 @@ public protocol ListenerListContainerProtocol {
 class ResponseManagerListenerList {
 
     private var list = [AnyHashable: [ResponseManagerListener]]()
+    private let recursiveLock = NSRecursiveLock()
 
     // MARK: Internal
 
@@ -44,7 +45,6 @@ class ResponseManagerListenerList {
     }
 
     func responseManager(_ responseManager: ResponseManagerProtocol, didParseDataForRequest request: RequestProtocol, error: Error?) {
-        #warning("Crash is here")
         list[request.MD5]?.forEach { listener in
             listener.responseManager(responseManager, didFinishWorkOn: request, withError: error)
         }
@@ -56,36 +56,41 @@ class ResponseManagerListenerList {
 extension ResponseManagerListenerList: ListenerListContainerProtocol {
 
     func addListener(_ listener: ResponseManagerListener, forRequest: RequestProtocol) throws {
+        recursiveLock.lock()
         let requestMD5 = forRequest.MD5
-        #warning("Crash is here")
         if var listeners = list[requestMD5] {
             let filtered = listeners.filter { $0.MD5 == listener.MD5 }
-            guard filtered.isEmpty else {
-                throw ResponseManagerListenerList.Errors.dublicate
+            if !filtered.isEmpty {
+                listeners.append(listener)
+                list[requestMD5] = listeners
+            } else {
+                // throw ResponseManagerListenerList.Errors.dublicate
             }
-            listeners.append(listener)
-            list[requestMD5] = listeners
         } else {
             list[requestMD5] = [listener]
         }
+        recursiveLock.unlock()
     }
 
     func removeListener(_ listener: ResponseManagerListener) {
+        recursiveLock.lock()
         for MD5 in list.keys {
             if var listeners = list[MD5] {
                 listeners.removeAll(where: { $0.MD5 == listener.MD5 })
                 list[MD5] = listeners
             }
         }
+        recursiveLock.unlock()
     }
 
     func removeListener(_ listener: ResponseManagerListener, forRequest: RequestProtocol) {
+        recursiveLock.lock()
         let MD5 = forRequest.MD5
-        #warning("Crash is here")
         if var listeners = list[MD5] {
             listeners.removeAll(where: { $0.MD5 == listener.MD5 })
             list[MD5] = listeners
         }
+        recursiveLock.unlock()
     }
 }
 

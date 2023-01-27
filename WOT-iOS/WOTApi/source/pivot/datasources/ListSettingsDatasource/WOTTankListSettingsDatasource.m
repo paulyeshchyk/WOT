@@ -26,8 +26,9 @@
     
     self = [super init];
     if (self){
-
-        [[WOTTankListSettingsDatasource appContext].dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+        id<DataStoreProtocol> dataStore = [WOTTankListSettingsDatasource appContext].dataStore;
+        NSError *error = nil;
+        [dataStore performWithMode:PerformModeRead error:&error block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
             fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:(NSManagedObjectContext *)context];
             [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiFields.type ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOTApiKeyOrderBy.orderBy ascending:YES]]];
@@ -198,7 +199,8 @@
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
 
     id<ContextProtocol> _Nonnull appContext = [WOTTankListSettingsDatasource appContext];
-    [appContext.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+    NSError *error = nil;
+    [appContext.dataStore performWithMode:PerformModeRead error:&error block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
         ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate];
         setting.key = key;
         setting.ascending = @(ascending);
@@ -220,7 +222,8 @@
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
 
     id<ContextProtocol> _Nonnull appContext = [WOTTankListSettingsDatasource appContext];
-    [appContext.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+    NSError *error = nil;
+    [appContext.dataStore performWithMode:PerformModeRead error:&error block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
         ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate];
         setting.key = key;
         setting.ascending = @(ascending);
@@ -243,7 +246,8 @@
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate,valuesPredicate]];
 
     id<ContextProtocol> _Nonnull appContext = [WOTTankListSettingsDatasource appContext];
-    [appContext.dataStore performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+    NSError *error = nil;
+    [appContext.dataStore performWithMode:PerformModeRead error:&error block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
         ListSetting *setting = (ListSetting *)[context findOrCreateObjectWithAppContext:appContext modelClass:ListSetting.class predicate:compoundPredicate];
         setting.key = key;
         setting.ascending = @(NO);

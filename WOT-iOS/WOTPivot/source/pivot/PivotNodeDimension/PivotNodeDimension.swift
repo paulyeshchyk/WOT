@@ -10,7 +10,7 @@ import UIKit
 
 public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
 
-    public var listener: DimensionLoadListenerProtocol?
+    public weak var listener: DimensionLoadListenerProtocol?
 
     public var rootNodeWidth: Int {
         let rows = rootNodeHolder.rootRowsNode
@@ -30,7 +30,7 @@ public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
         return CGSize(width: width, height: height) // 156:11
     }
 
-    private var rootNodeHolder: PivotNodeDatasourceProtocol
+    private unowned var rootNodeHolder: PivotNodeDatasourceProtocol
     private var registeredCalculators = [AnyHashable: AnyClass]()
     private var index: NodeIndexType = 0
 

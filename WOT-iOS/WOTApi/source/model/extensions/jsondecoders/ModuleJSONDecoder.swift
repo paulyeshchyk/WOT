@@ -17,19 +17,27 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
 
     weak var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
-        //
+
+        // MARK: - do check decodingDepth
+
+        if decodingDepthLevel?.nextDepthLevel?.maxReached() ?? false {
+            appContext.logInspector?.log(.warning(error: ModuleJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
+            return
+        }
+
+        // MARK: - relation mapping
 
         let filteredJsonRef = map.contextPredicate.jsonRefs.filter { $0.modelClass == Vehicles.self }.first
         guard let parentHostPin = try filteredJsonRef?.getJointPin(idKeyPath: #keyPath(Vehicles.tank_id)) else {
-            throw ModuleMappingError.noParentsFound
+            throw ModuleJSONDecoderErrors.noParentsFound
         }
 
         guard let module_id = element?[#keyPath(Module.module_id)] else {
-            throw ModuleMappingError.moduleIdNotDefined
+            throw ModuleJSONDecoderErrors.moduleIdNotDefined
         }
 
         let type = element?[#keyPath(Module.type)]
@@ -40,10 +48,10 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
         moduleDecoder.parentHostPin = parentHostPin
         moduleDecoder.type = type
         guard let managedRef = try managedObject?.managedRef() else {
-            throw ModuleMappingError.invalidManagedRef
+            throw ModuleJSONDecoderErrors.invalidManagedRef
         }
 
-        try moduleDecoder.decode(moduleManagedRef: managedRef)
+        try moduleDecoder.decode(moduleManagedRef: managedRef, decodingDepthLevel: decodingDepthLevel)
     }
 }
 
@@ -88,38 +96,38 @@ public class ModuleDecoder {
         //
     }
 
-    func decode(moduleManagedRef: ManagedRefProtocol) throws {
+    func decode(moduleManagedRef: ManagedRefProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
         let moduleType = try VehicleModuleType.fromString(type)
         switch moduleType {
         case .vehicleGun:
             let pin = JointPin(modelClass: VehicleprofileGun.self, identifier: module_id, contextPredicate: nil)
             let socket = JointSocket(managedRef: moduleManagedRef, identifier: module_id, keypath: #keyPath(Module.gun))
             let extractor = Module.GunExtractor()
-            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, parentHostPin: parentHostPin)
+            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, parentHostPin: parentHostPin, decodingDepthLevel: decodingDepthLevel)
         case .vehicleRadio:
             let pin = JointPin(modelClass: VehicleprofileRadio.self, identifier: module_id, contextPredicate: nil)
             let socket = JointSocket(managedRef: moduleManagedRef, identifier: module_id, keypath: #keyPath(Module.radio))
             let extractor = Module.RadioExtractor()
-            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, parentHostPin: parentHostPin)
+            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, parentHostPin: parentHostPin, decodingDepthLevel: decodingDepthLevel)
         case .vehicleEngine:
             let pin = JointPin(modelClass: VehicleprofileEngine.self, identifier: module_id, contextPredicate: nil)
             let socket = JointSocket(managedRef: moduleManagedRef, identifier: module_id, keypath: #keyPath(Module.engine))
             let extractor = Module.EngineExtractor()
-            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, parentHostPin: parentHostPin)
+            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, parentHostPin: parentHostPin, decodingDepthLevel: decodingDepthLevel)
         case .vehicleChassis:
             let pin = JointPin(modelClass: VehicleprofileSuspension.self, identifier: module_id, contextPredicate: nil)
             let socket = JointSocket(managedRef: moduleManagedRef, identifier: module_id, keypath: #keyPath(Module.suspension))
             let extractor = Module.SuspensionExtractor()
-            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, parentHostPin: parentHostPin)
+            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, parentHostPin: parentHostPin, decodingDepthLevel: decodingDepthLevel)
         case .vehicleTurret:
             let pin = JointPin(modelClass: VehicleprofileTurret.self, identifier: module_id, contextPredicate: nil)
             let socket = JointSocket(managedRef: moduleManagedRef, identifier: module_id, keypath: #keyPath(Module.turret))
             let extractor = Module.TurretExtractor()
-            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, parentHostPin: parentHostPin)
+            try fetch_module(appContext: appContext, pin: pin, socket: socket, extractor: extractor, parentHostPin: parentHostPin, decodingDepthLevel: decodingDepthLevel)
         }
     }
 
-    private func fetch_module(appContext: Context, pin: JointPinProtocol, socket: JointSocketProtocol, extractor: ManagedObjectExtractable, parentHostPin: JointPinProtocol?) throws {
+    private func fetch_module(appContext: Context, pin: JointPinProtocol, socket: JointSocketProtocol, extractor: ManagedObjectExtractable, parentHostPin: JointPinProtocol?, decodingDepthLevel: DecodingDepthLevel?) throws {
         guard let parentHostPin = parentHostPin else {
             return
         }
@@ -132,7 +140,7 @@ public class ModuleDecoder {
         httpRequestConfiguration.modelFieldKeyPaths = pin.modelClass.fieldsKeypaths()
         httpRequestConfiguration.composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
 
-        let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
+        let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
         try appContext.requestManager?.startRequest(request!, listener: self)
     }
 }
@@ -154,12 +162,25 @@ extension ModuleDecoder: RequestManagerListenerProtocol {
     }
 }
 
-// MARK: - ModuleMappingError
+// MARK: - ModuleJSONDecoder.ModuleJSONDecoderErrors
 
-private enum ModuleMappingError: Error {
-    case noParentsFound
-    case moduleIdNotDefined
-    case invalidManagedRef
+extension ModuleJSONDecoder {
+
+    enum ModuleJSONDecoderErrors: Error, CustomStringConvertible {
+        case noParentsFound
+        case moduleIdNotDefined
+        case invalidManagedRef
+        case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+
+        public var description: String {
+            switch self {
+            case .noParentsFound: return "[\(type(of: self))]: No parents found"
+            case .moduleIdNotDefined: return "[\(type(of: self))]: module id is not defined"
+            case .invalidManagedRef: return "[\(type(of: self))]: invalid managed ref"
+            case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
+            }
+        }
+    }
 }
 
 extension Module {
