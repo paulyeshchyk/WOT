@@ -103,9 +103,9 @@ extension NodeFetchController: NSFetchedResultsControllerDelegate {
 
 extension NodeFetchController: NodeFetchControllerProtocol {
     //
-    open func performFetch(nodeCreator: NodeCreatorProtocol?, appContext: Context) throws {
+    open func performFetch(appContext: Context) throws {
         if let fetch = fetchResultController {
-            try performFetch(with: fetch, nodeCreator: nodeCreator)
+            try performFetch(with: fetch)
         } else {
             try initFetchController(appContext: appContext) { [weak self] fetchResultController, error in
 
@@ -117,7 +117,7 @@ extension NodeFetchController: NodeFetchControllerProtocol {
                     self?.appContext?.logInspector?.log(.error(err), sender: self)
                 } else {
                     do {
-                        try self?.performFetch(with: fetchResultController, nodeCreator: nodeCreator)
+                        try self?.performFetch(with: fetchResultController)
                     } catch {
                         self?.appContext?.logInspector?.log(.error(error), sender: self)
                     }
@@ -126,7 +126,7 @@ extension NodeFetchController: NodeFetchControllerProtocol {
         }
     }
 
-    private func performFetch(with: NodeFetchedResultController?, nodeCreator _: NodeCreatorProtocol?) throws {
+    private func performFetch(with: NodeFetchedResultController?) throws {
         guard let fetchResultController = with else {
             throw NodeFetchControllerError.noFetchResultControllerCreated
         }
