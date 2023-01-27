@@ -42,7 +42,7 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
     func run(_ fetchResult: FetchResultProtocol?) {
         //
         do {
-            appContext.logInspector?.log(.uow(name: "moDecode", message: "start \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
+            appContext.logInspector?.log(.uow("moDecode", message: "start \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
 
             guard let fetchResult = fetchResult else {
                 throw Errors.fetchResultIsNotPresented
@@ -70,16 +70,16 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
                     try decoder.decode(using: jsonMap, decodingDepthLevel: self.decodingDepthLevel)
 
                     self.appContext.dataStore?.stash(managedObjectContext: managedObjectContext, completion: { _, error in
-                        self.appContext.logInspector?.log(.uow(name: "moDecode", message: "finish \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
+                        self.appContext.logInspector?.log(.uow("moDecode", message: "finish \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
                         self.completion?(fetchResult, error)
                     })
                 } catch {
-                    self.appContext.logInspector?.log(.uow(name: "moDecode", message: "finish \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
+                    self.appContext.logInspector?.log(.uow("moDecode", message: "finish \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
                     self.completion?(fetchResult, error)
                 }
             })
         } catch {
-            appContext.logInspector?.log(.uow(name: "moDecode", message: "finish \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
+            appContext.logInspector?.log(.uow("moDecode", message: "finish \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
             completion?(fetchResult, error)
         }
     }

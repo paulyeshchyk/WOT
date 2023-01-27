@@ -47,16 +47,16 @@ class DatastoreFetchHelper: CustomStringConvertible, CustomDebugStringConvertibl
 
     func run() {
         guard let modelClass = modelClass else {
-            appContext.logInspector?.log(.uow(name: "moFetch", message: "finish \(debugDescription)"), sender: self)
+            appContext.logInspector?.log(.uow("moFetch", message: "finish \(debugDescription)"), sender: self)
             completion?(nil, Errors.modelClassIsNotDefined)
             return
         }
-        appContext.logInspector?.log(.uow(name: "moFetch", message: "start \(debugDescription)"), sender: self)
+        appContext.logInspector?.log(.uow("moFetch", message: "start \(debugDescription)"), sender: self)
 
         appContext.dataStore?.fetch(modelClass: modelClass,
                                     nspredicate: nspredicate,
                                     completion: { fetchResult, error in
-                                        self.appContext.logInspector?.log(.uow(name: "moFetch", message: "finish \(self.debugDescription)"), sender: self)
+                                        self.appContext.logInspector?.log(.uow("moFetch", message: "finish \(self.debugDescription)"), sender: self)
                                         self.completion?(fetchResult, error)
                                     })
     }

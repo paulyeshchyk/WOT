@@ -117,8 +117,8 @@ extension Loggable {
         Loggable(type: .flow, name: name, message: message)
     }
 
-    public static func uow(name: String, message: String) -> Loggable {
-        Loggable(type: .uow, message: "\(name) \(message)")
+    public static func uow(_ clazz: String, message: String) -> Loggable {
+        Loggable(type: .uow, name: clazz, message: "\(message)")
     }
 
     public static func performance(name: String, message: String) -> Loggable {

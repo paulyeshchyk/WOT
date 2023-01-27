@@ -59,13 +59,9 @@ public class UOWDecodeAndLinkMap: UOWDecodeAndLinkMapProtocol, CustomStringConve
     public var socket: JointSocketProtocol?
     public var decodingDepthLevel: DecodingDepthLevel?
 
-    public init() {
-        //
-    }
+    public init() {}
 
-    deinit {
-        //
-    }
+    deinit {}
 }
 
 // MARK: - UOWDecodeAndLinkMap + UOWRunnable
@@ -74,7 +70,7 @@ extension UOWDecodeAndLinkMap: UOWRunnable {
 
     func runnableBlock() -> UOWRunnable.RunnableBlockType? {
         return { exitToPassThrough, exit in
-            self.appContext?.logInspector?.log(.uow(name: "decodeLink", message: "start \(self.debugDescription)"), sender: self)
+            self.appContext?.logInspector?.log(.uow("moParse", message: "start \(self.debugDescription)"), sender: self)
             do {
                 guard let modelClass = self.modelClass else {
                     throw Errors.noAppContextProvided
@@ -91,7 +87,7 @@ extension UOWDecodeAndLinkMap: UOWRunnable {
                 managedObjectLinkerHelper.socket = self.socket
                 managedObjectLinkerHelper.completion = { fetchResult, error in
                     if let error = error { appContext.logInspector?.log(.error(error), sender: self) }
-                    self.appContext?.logInspector?.log(.uow(name: "decodeLink", message: "finish \(self.debugDescription)"), sender: self)
+                    self.appContext?.logInspector?.log(.uow("moParse", message: "finish \(self.debugDescription)"), sender: self)
                     exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: fetchResult, error: error))
                 }
 
@@ -112,7 +108,7 @@ extension UOWDecodeAndLinkMap: UOWRunnable {
 
                 datastoreFetchHelper.run()
             } catch {
-                self.appContext?.logInspector?.log(.uow(name: "decodeLink", message: "finish \(self.debugDescription)"), sender: self)
+                self.appContext?.logInspector?.log(.uow("moParse", message: "finish \(self.debugDescription)"), sender: self)
                 exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
             }
         }
