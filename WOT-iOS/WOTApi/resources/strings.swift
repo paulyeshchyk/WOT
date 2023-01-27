@@ -176,6 +176,8 @@ public enum L10n {
     public static let wotStringPreview = L10n.tr("Localizable", "WOT_STRING_PREVIEW")
     /// Profile
     public static let wotStringProfile = L10n.tr("Localizable", "WOT_STRING_PROFILE")
+    /// Reload
+    public static let wotStringReload = L10n.tr("Localizable", "WOT_STRING_RELOAD")
     /// Reorder
     public static let wotStringReorder = L10n.tr("Localizable", "WOT_STRING_REORDER")
     /// SELECT lang

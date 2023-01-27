@@ -15,6 +15,7 @@ WOT_KEY_SETTING_TYPE_SORT   = "Sorting";
 
 WOT_STRING_ANONYMOUS_USER   = "Anonymous user";
 WOT_STRING_APPLY            = "Apply";
+WOT_STRING_RELOAD           = "Reload";
 WOT_STRING_BACK             = "Back";
 WOT_STRING_CANCEL           = "Cancel";
 WOT_STRING_COMPOUND         = "Compound";
