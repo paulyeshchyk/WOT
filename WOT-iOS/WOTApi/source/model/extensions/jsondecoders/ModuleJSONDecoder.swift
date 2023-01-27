@@ -24,7 +24,7 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
 
         // MARK: - do check decodingDepth
 
-        if decodingDepthLevel?.nextDepthLevel?.maxReached() ?? false {
+        if decodingDepthLevel?.maxReached() ?? false {
             appContext.logInspector?.log(.warning(error: ModuleJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
             return
         }
@@ -51,7 +51,7 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
             throw ModuleJSONDecoderErrors.invalidManagedRef
         }
 
-        try moduleDecoder.decode(moduleManagedRef: managedRef, decodingDepthLevel: decodingDepthLevel)
+        try moduleDecoder.decode(moduleManagedRef: managedRef, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
     }
 }
 

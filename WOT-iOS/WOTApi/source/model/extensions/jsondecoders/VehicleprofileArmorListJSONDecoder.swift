@@ -20,7 +20,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
     func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
         // MARK: - do check decodingDepth
 
-        if decodingDepthLevel?.nextDepthLevel?.maxReached() ?? false {
+        if decodingDepthLevel?.maxReached() ?? false {
             appContext.logInspector?.log(.warning(error: VehicleprofileArmorListJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
             return
         }
@@ -48,7 +48,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
+            uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
@@ -74,7 +74,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
+            uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {

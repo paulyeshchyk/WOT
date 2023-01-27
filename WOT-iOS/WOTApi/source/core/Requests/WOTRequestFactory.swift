@@ -38,12 +38,12 @@ public class WOTWEBRequestFactory: NSObject {
         httpJSONResponseConfiguration.extractor = VehiclesPivotManagedObjectExtractor()
 
         let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-        httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
+        httpRequestConfiguration.modelFieldKeyPaths = modelClass.dataFieldsKeypaths()// modelClass.fieldsKeypaths()
         httpRequestConfiguration.composer = nil
 
         guard let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration,
                                                                              responseConfiguration: httpJSONResponseConfiguration,
-                                                                             decodingDepthLevel: DecodingDepthLevel.initial(maxLevel: 1))
+                                                                             decodingDepthLevel: DecodingDepthLevel.initial(maxLevel: 0))
         else {
             throw HttpRequestFactoryError.objectNotDefined
         }

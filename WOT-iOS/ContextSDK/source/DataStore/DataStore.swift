@@ -48,10 +48,12 @@ extension DataStore: DataStoreProtocol {
     }
 
     open func perform(mode: PerformMode, block: @escaping ManagedObjectContextProtocol.ContextCompletion) throws {
+        let contextForMode: ManagedObjectContextProtocol
         switch mode {
-        case .read: perform(managedObjectContext: workingContext(), block: block)
-        case .readwrite: perform(managedObjectContext: newPrivateContext(), block: block)
+        case .read: contextForMode = workingContext()
+        case .readwrite: contextForMode = newPrivateContext()
         }
+        perform(managedObjectContext: contextForMode, block: block)
     }
 
     private func perform(managedObjectContext: ManagedObjectContextProtocol, block: @escaping ManagedObjectContextProtocol.ContextCompletion) {

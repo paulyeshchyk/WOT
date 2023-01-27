@@ -346,6 +346,8 @@
     NSFetchRequest * result = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
     result.sortDescriptors = [self sortDescriptors];
     result.predicate = [self fetchCustomPredicate];
+    result.includesSubentities = true;
+    result.includesPendingChanges = true;
     return result;
 }
 

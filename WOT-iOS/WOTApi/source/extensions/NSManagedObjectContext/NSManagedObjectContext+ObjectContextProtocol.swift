@@ -62,21 +62,12 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
             return
         }
 
-        guard concurrencyType == .privateQueueConcurrencyType else {
-            perform {
-                block(NSManagedObjectContextError.isNotPrivateQueueConcurrencyType)
-            }
-            return
-        }
-
         let executionStartTime = Date()
         appContext.logInspector?.log(.sqlite(message: LogMessages.perform4Save_start(self).description), sender: self)
 
-        perform {
-            self._save(appContext: appContext) { error in
-                appContext.logInspector?.log(.sqlite(message: LogMessages.perform4Save_done(executionStartTime, self).description), sender: self)
-                block(error)
-            }
+        _save(appContext: appContext) { error in
+            appContext.logInspector?.log(.sqlite(message: LogMessages.perform4Save_done(executionStartTime, self).description), sender: self)
+            block(error)
         }
     }
 
@@ -88,10 +79,15 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
             appContext.logInspector?.log(.sqlite(message: LogMessages.save_done(executionStartTime, self).description), sender: self)
 
             if let parent = parent {
-                parent.save(appContext: appContext, completion: block)
-            } else {
-                block(nil)
+                parent.performAndWait {
+                    parent.save(appContext: appContext) { error in
+                        if error != nil {
+                            appContext.logInspector?.log(.error(error), sender: self)
+                        }
+                    }
+                }
             }
+            block(nil)
         } catch {
             block(error)
             appContext.logInspector?.log(.error(error), sender: self)

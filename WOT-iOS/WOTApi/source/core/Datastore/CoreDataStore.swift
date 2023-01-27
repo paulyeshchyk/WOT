@@ -48,14 +48,14 @@ open class CoreDataStore: DataStore {
 
     // MARK: Public
 
-    private lazy var privateContext: NSManagedObjectContext = CoreDataStore.privateQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
+    private lazy var masterContext: NSManagedObjectContext = CoreDataStore.masterContext(persistentStoreCoordinator: persistentStoreCoordinator)
+
+    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(parentContext: masterContext)
 
     @objc
     override public func newPrivateContext() -> ManagedObjectContextProtocol {
-        privateContext
+        CoreDataStore.privateQueueConcurrencyContext(parentContext: mainContext)
     }
-
-    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
 
     @objc
     override public func workingContext() -> ManagedObjectContextProtocol {
@@ -90,19 +90,31 @@ open class CoreDataStore: DataStore {
 
 extension CoreDataStore {
     //
-    private static func mainQueueConcurrencyContext(persistentStoreCoordinator: NSPersistentStoreCoordinator?) -> NSManagedObjectContext {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+    private static func masterContext(persistentStoreCoordinator: NSPersistentStoreCoordinator) -> NSManagedObjectContext {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.name = "Main <\(UUID().MD5)>"
         managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
         managedObjectContext.undoManager = nil
+        // managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return managedObjectContext
     }
 
-    private static func privateQueueConcurrencyContext(persistentStoreCoordinator: NSPersistentStoreCoordinator?) -> NSManagedObjectContext {
+    //
+    private static func mainQueueConcurrencyContext(parentContext: NSManagedObjectContext) -> NSManagedObjectContext {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        managedObjectContext.name = "Main <\(UUID().MD5)>"
+        managedObjectContext.parent = parentContext
+        managedObjectContext.undoManager = nil
+        // managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        return managedObjectContext
+    }
+
+    private static func privateQueueConcurrencyContext(parentContext: NSManagedObjectContext) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.name = "Private <\(UUID().MD5)>"
-        managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
+        managedObjectContext.parent = parentContext
         managedObjectContext.undoManager = nil
+        // managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return managedObjectContext
     }
 }

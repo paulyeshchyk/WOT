@@ -24,7 +24,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
         // MARK: - do check decodingDepth
 
-        if decodingDepthLevel?.nextDepthLevel?.maxReached() ?? false {
+        if decodingDepthLevel?.maxReached() ?? false {
             appContext.logInspector?.log(.warning(error: ModulesTreeJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
             return
         }
@@ -36,7 +36,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
         if let nextTanks = moduleTreeJSON?[nextTanksKeypath] as? [JSONValueType] {
             for nextTank in nextTanks {
-                fetchNextTank(tank_id: nextTank, decodingDepthLevel: decodingDepthLevel)
+                fetchNextTank(tank_id: nextTank, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
             }
         }
 
@@ -45,7 +45,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
         if let nextModules = moduleTreeJSON?[nextModulesKeypath] as? [JSONValueType] {
             for nextModuleID in nextModules {
-                fetchNextModule(nextModuleID: nextModuleID, map: map, decodingDepthLevel: decodingDepthLevel)
+                fetchNextModule(nextModuleID: nextModuleID, map: map, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
             }
         }
 
@@ -53,7 +53,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
         let currentModuleKeypath = #keyPath(ModulesTree.module_id)
         if let identifier = moduleTreeJSON?[currentModuleKeypath] {
-            fetchCurrentModule(identifier: identifier, map: map, moduleTreeJSON: moduleTreeJSON, decodingDepthLevel: decodingDepthLevel)
+            fetchCurrentModule(identifier: identifier, map: map, moduleTreeJSON: moduleTreeJSON, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
         }
     }
 

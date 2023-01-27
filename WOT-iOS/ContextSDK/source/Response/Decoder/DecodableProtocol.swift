@@ -83,7 +83,7 @@ public class DecodingDepthLevel: NSObject, RawRepresentable {
     // MARK: Public
 
     public func maxReached() -> Bool {
-        rawValue >= maxLevel
+        rawValue > maxLevel
     }
 }
 
