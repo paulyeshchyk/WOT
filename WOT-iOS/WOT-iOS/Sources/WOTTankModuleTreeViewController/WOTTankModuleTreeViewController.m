@@ -76,15 +76,13 @@
     [super viewDidLoad];
     
     __weak __typeof(self) weakSelf = self;
-    UIBarButtonItem *doneButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:[NSString localization:WOT_STRING_APPLY] eventBlock:^(id sender) {
+    UIBarButtonItem *reloadButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:[NSString localization:WOT_STRING_RELOAD] eventBlock:^(id sender) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (strongSelf) {
-            if (strongSelf.doneBlock) {
-                strongSelf.doneBlock(nil);
-            }
+            [strongSelf reloadModel];
         }
     }];
-    [self.navigationItem setRightBarButtonItems:@[doneButtonItem]];
+    [self.navigationItem setRightBarButtonItems:@[reloadButtonItem]];
     
     
     UIBarButtonItem *cancelButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:[NSString localization:WOT_STRING_BACK] eventBlock:^(id sender) {
@@ -346,6 +344,8 @@
     NSFetchRequest * result = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
     result.sortDescriptors = [self sortDescriptors];
     result.predicate = [self fetchCustomPredicate];
+    result.includesSubentities = true;
+    result.includesPendingChanges = true;
     return result;
 }
 

@@ -143,7 +143,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
             guard let fetchController = fetchController else {
                 throw Errors.noFetchControllerFound
             }
-            try fetchController.performFetch(nodeCreator: nodeCreator, appContext: appContext)
+            try fetchController.performFetch(appContext: appContext)
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }

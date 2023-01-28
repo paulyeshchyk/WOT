@@ -51,27 +51,25 @@ public class DecodingDepthLevel: NSObject, RawRepresentable {
 
     public required init?(rawValue: Int) {
         self.rawValue = rawValue
-        maxLevel = 1
+        maxLevel = nil
         super.init()
     }
 
-    public required init?(rawValue: Int, maxLevel: Int) {
+    public required init?(rawValue: Int, maxLevel: Int?) {
         self.rawValue = rawValue
         self.maxLevel = maxLevel
         super.init()
     }
 
     public var rawValue: Int
-    public var maxLevel: Int = 1
+    public var maxLevel: Int?
 
     override public var description: String {
-        return "[\(type(of: self))] rawValue: \(rawValue), maxLevel: \(maxLevel)"
+        return "[\(type(of: self))] rawValue: \(rawValue), maxLevel: \(maxLevel ?? -1)"
     }
 
-    public static func initial(maxLevel: Int) -> DecodingDepthLevel? {
-        let result = DecodingDepthLevel(rawValue: 0, maxLevel: 1)
-        result?.maxLevel = maxLevel
-        return result
+    public static func initial(maxLevel: Int? = nil) -> DecodingDepthLevel? {
+        DecodingDepthLevel(rawValue: 0, maxLevel: maxLevel)
     }
 
     public typealias RawValue = Int
@@ -83,7 +81,10 @@ public class DecodingDepthLevel: NSObject, RawRepresentable {
     // MARK: Public
 
     public func maxReached() -> Bool {
-        rawValue >= maxLevel
+        guard let maxLevel = maxLevel else {
+            return false
+        }
+        return rawValue > maxLevel
     }
 }
 

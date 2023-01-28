@@ -40,13 +40,9 @@ public class UOWDecodeAndLinkMaps: UOWDecodeAndLinkMapsProtocol {
     public var socket: JointSocketProtocol?
     public var decodingDepthLevel: DecodingDepthLevel?
 
-    public init() {
-        //
-    }
+    public init() {}
 
-    deinit {
-        //
-    }
+    deinit {}
 }
 
 // MARK: - UOWDecodeAndLinkMaps + CustomStringConvertible, CustomDebugStringConvertible
@@ -98,7 +94,7 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
                 guard let modelClass = self.modelClass else {
                     throw Errors.noModelClassProvided
                 }
-                self.appContext?.logInspector?.log(.uow(name: "mapAndLink", message: "start \(self.debugDescription)"), sender: self)
+                self.appContext?.logInspector?.log(.uow("moParseSet", message: "start \(self.debugDescription)"), sender: self)
                 guard let appContext = self.appContext else {
                     throw Errors.noAppContextProvided
                 }
@@ -118,11 +114,11 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
                 }
 
                 try appContext.uowManager.run(sequence: sequence) { _, error in
-                    self.appContext?.logInspector?.log(.uow(name: "mapAndLink", message: "finish \(self.debugDescription)"), sender: self)
+                    self.appContext?.logInspector?.log(.uow("moParseSet", message: "finish \(self.debugDescription)"), sender: self)
                     exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
                 }
             } catch {
-                self.appContext?.logInspector?.log(.flow(name: "mapAndLink", message: "finish \(self.debugDescription)"), sender: self)
+                self.appContext?.logInspector?.log(.uow("moParseSet", message: "finish \(self.debugDescription)"), sender: self)
                 exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
             }
         }

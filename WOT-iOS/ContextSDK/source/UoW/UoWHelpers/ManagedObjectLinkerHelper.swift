@@ -34,7 +34,7 @@ class ManagedObjectLinkerHelper: CustomStringConvertible, CustomDebugStringConve
 
     func run(_ fetchResult: FetchResultProtocol?) {
         let fetchResultDescription = "fetchResult: \(String(describing: fetchResult, orValue: "<null>"))"
-        appContext.logInspector?.log(.uow(name: "moLink", message: "start \(debugDescription) \(fetchResultDescription)"), sender: self)
+        appContext.logInspector?.log(.uow("moLink", message: "start \(debugDescription) \(fetchResultDescription)"), sender: self)
         do {
             guard let fetchResult = fetchResult else {
                 throw Errors.fetchResultIsNotPresented
@@ -46,9 +46,9 @@ class ManagedObjectLinkerHelper: CustomStringConvertible, CustomDebugStringConve
             linker.completion = completion
 
             try linker.run()
-            appContext.logInspector?.log(.uow(name: "moLink", message: "finish \(debugDescription) \(fetchResultDescription)"), sender: self)
+            appContext.logInspector?.log(.uow("moLink", message: "finish \(debugDescription) \(fetchResultDescription)"), sender: self)
         } catch {
-            appContext.logInspector?.log(.uow(name: "moLink", message: "finish \(debugDescription) \(fetchResultDescription)"), sender: self)
+            appContext.logInspector?.log(.uow("moLink", message: "finish \(debugDescription) \(fetchResultDescription)"), sender: self)
             completion?(fetchResult, error)
         }
     }

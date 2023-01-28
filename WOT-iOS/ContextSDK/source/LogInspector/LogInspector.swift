@@ -44,14 +44,11 @@ public class LogInspector: NSObject, LogInspectorProtocol {
 }
 
 extension LogEventType {
+
     func print(event: LogEventProtocol, sender: Any?, inOutputs: [LOGOutputProtocol]?) {
         let name = event.name
-        let message: String
-        if let sender = sender {
-            message = "\(event.message); sender: <\(type(of: sender))>"
-        } else {
-            message = "\(event.message); sender: <unknown>"
-        }
+        let message = "\(event.message); sender: <\(String(describing: sender, orValue: "<null>"))>"
+
         switch self {
         case .error: inOutputs?.forEach { $0.error(message, context: name) }
         case .info: inOutputs?.forEach { $0.info(message, context: name) }

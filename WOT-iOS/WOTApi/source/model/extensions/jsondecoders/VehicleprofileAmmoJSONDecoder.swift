@@ -24,7 +24,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
         // MARK: - do check decodingDepth
 
-        if decodingDepthLevel?.nextDepthLevel?.maxReached() ?? false {
+        if decodingDepthLevel?.maxReached() ?? false {
             appContext.logInspector?.log(.warning(error: VehicleprofileAmmoJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
             return
         }
@@ -52,7 +52,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
+            uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
@@ -80,7 +80,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
+            uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
             try appContext.uowManager.run(uow, listenerCompletion: { _ in })
         } else {
