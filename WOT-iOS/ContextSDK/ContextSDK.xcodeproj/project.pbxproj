@@ -107,6 +107,7 @@
 		DADD69BC29759D5D00EFC36D /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69B029759D5D00EFC36D /* URLRequestBuilder.swift */; };
 		DADD69BD29759D5D00EFC36D /* HttpDataReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69B129759D5D00EFC36D /* HttpDataReceiver.swift */; };
 		DADD69BF2975A82700EFC36D /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69BE2975A82700EFC36D /* Request.swift */; };
+		DAEB6F92298530DE009A6C63 /* UOWResultProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB6F91298530DD009A6C63 /* UOWResultProtocol.swift */; };
 		DAED2043297E88620019EFBA /* UOWManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAED2042297E88610019EFBA /* UOWManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -224,6 +225,7 @@
 		DADD69B029759D5D00EFC36D /* URLRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
 		DADD69B129759D5D00EFC36D /* HttpDataReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiver.swift; sourceTree = "<group>"; };
 		DADD69BE2975A82700EFC36D /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		DAEB6F91298530DD009A6C63 /* UOWResultProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UOWResultProtocol.swift; sourceTree = "<group>"; };
 		DAED2042297E88610019EFBA /* UOWManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UOWManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -689,6 +691,7 @@
 			isa = PBXGroup;
 			children = (
 				DA802005298523A500033D85 /* UOWManagerProtocol.swift */,
+				DAEB6F91298530DD009A6C63 /* UOWResultProtocol.swift */,
 				DAED2042297E88610019EFBA /* UOWManager.swift */,
 				DA802007298523E100033D85 /* UOWProtocol.swift */,
 				DA8020032985231C00033D85 /* UOWRunnable.swift */,
@@ -879,6 +882,7 @@
 				DA08567729548E2000273762 /* String+MD5.swift in Sources */,
 				DACDB0D8295DBB66005BBA72 /* LogInspector.swift in Sources */,
 				DAA56E8A2978361A0092DA17 /* ResponseConfigurationProtocol.swift in Sources */,
+				DAEB6F92298530DE009A6C63 /* UOWResultProtocol.swift in Sources */,
 				DACDB107295EDD42005BBA72 /* FetchRequestPredicateComposerProtocol.swift in Sources */,
 				DA288F6A2965A76900973561 /* String+Unescape.swift in Sources */,
 				DA56E2B5296C0EC4001D9DD4 /* String+Describing.swift in Sources */,

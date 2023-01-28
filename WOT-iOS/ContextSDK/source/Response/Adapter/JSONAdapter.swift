@@ -91,7 +91,7 @@ public extension JSONAdapter {
         uow.modelClass = modelClass
         uow.socket = socket
         uow.decodingDepthLevel = request.decodingDepthLevel
-        try? appContext.uowManager.run(uow) { result in
+        try? appContext.uowManager.run(unit: uow) { result in
             self.completion?(request, (result as? UOWResultProtocol)?.error)
         }
     }

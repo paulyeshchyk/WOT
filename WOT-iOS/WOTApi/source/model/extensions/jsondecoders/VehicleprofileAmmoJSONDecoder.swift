@@ -54,7 +54,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noPenetration), sender: self)
         }
@@ -82,7 +82,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
         }

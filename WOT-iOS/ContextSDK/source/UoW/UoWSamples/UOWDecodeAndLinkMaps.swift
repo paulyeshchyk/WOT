@@ -68,20 +68,6 @@ extension UOWDecodeAndLinkMaps: CustomStringConvertible, CustomDebugStringConver
     }
 }
 
-// MARK: - UOWDecodeAndLinkMapsResult
-
-struct UOWDecodeAndLinkMapsResult: UOWResultProtocol {
-    public let fetchResult: Any?
-    public let error: Error?
-
-    // MARK: Lifecycle
-
-    public init(fetchResult: Any?, error: Error?) {
-        self.fetchResult = fetchResult
-        self.error = error
-    }
-}
-
 // MARK: - UOWDecodeAndLinkMaps + UOWRunnable
 
 extension UOWDecodeAndLinkMaps: UOWRunnable {
@@ -111,19 +97,19 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
                     return uow
                 }
 
-                try appContext.uowManager.run(sequence: sequence) { _, error in
+                appContext.uowManager.run(units: sequence) { error in
                     self.appContext?.logInspector?.log(.uow("moParseSet", message: "finish \(self.debugDescription)"), sender: self)
-                    exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
+                    exit(exitToPassThrough, UOWResult.init(fetchResult: nil, error: error))
                 }
             } catch {
                 self.appContext?.logInspector?.log(.uow("moParseSet", message: "finish \(self.debugDescription)"), sender: self)
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
+                exit(exitToPassThrough, UOWResult.init(fetchResult: nil, error: error))
             }
         }
     }
 }
 
-// MARK: - UOWDecodeAndLinkMaps.Errors
+// MARK: - %t + UOWDecodeAndLinkMaps.Errors
 
 extension UOWDecodeAndLinkMaps {
     enum Errors: Error {

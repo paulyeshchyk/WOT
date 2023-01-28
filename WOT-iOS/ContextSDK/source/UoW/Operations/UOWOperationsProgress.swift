@@ -10,7 +10,7 @@
 class UOWOperationsProgress {
 
     var onValueChanged: ((Double) -> Void)?
-    private let backgroundQueue = DispatchQueue.init(label: "progressQueue")
+    private let backgroundQueue = DispatchQueue(label: "UOWOperationsProgressQueue")
     private var toBeDoneCount: Int = 0
     private var doneCount: Int = 0
 

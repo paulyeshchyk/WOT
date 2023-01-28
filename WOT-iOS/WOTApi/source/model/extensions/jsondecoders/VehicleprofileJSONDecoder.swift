@@ -61,7 +61,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noAmmoList(tank_id)), sender: self)
         }
@@ -86,7 +86,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noArmor(tank_id)), sender: self)
         }
@@ -112,7 +112,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noModule(tank_id)), sender: self)
         }
@@ -139,7 +139,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noEngine(tank_id)), sender: self)
         }
@@ -167,7 +167,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noGun(tank_id)), sender: self)
         }
@@ -194,7 +194,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noSuspension(tank_id)), sender: self)
         }
@@ -221,7 +221,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noTurret(tank_id)), sender: self)
         }
@@ -248,7 +248,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noTurret(tank_id)), sender: self)
         }

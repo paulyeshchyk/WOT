@@ -5,14 +5,6 @@
 //  Created by Paul on 28.01.23.
 //
 
-// MARK: - UOWResultProtocol
-
-public protocol UOWResultProtocol {
-    var fetchResult: Any? { get }
-    var error: Error? { get }
-    init(fetchResult: Any?, error: Error?)
-}
-
 // MARK: - UOWRunnable
 
 protocol UOWRunnable {

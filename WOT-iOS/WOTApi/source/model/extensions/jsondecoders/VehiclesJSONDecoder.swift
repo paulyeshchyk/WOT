@@ -65,7 +65,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     uow.socket = socket
                     uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-                    try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+                    try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
 
                 } else {
                     appContext.logInspector?.log(.warning(error: VehiclesJSONDecoderErrors.moduleTreeNotFound(tank_id)), sender: self)
@@ -95,7 +95,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
 
         } else {
             appContext.logInspector?.log(.warning(error: VehiclesJSONDecoderErrors.profileNotFound(tank_id)), sender: self)

@@ -50,7 +50,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileArmorListJSONDecoderErrors.turretNotFound), sender: self)
         }
@@ -76,7 +76,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileArmorListJSONDecoderErrors.hullNotFound), sender: self)
         }

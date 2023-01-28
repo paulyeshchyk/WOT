@@ -5,11 +5,9 @@
 //  Created by Paul on 28.01.23.
 //
 
-public typealias ListenerCompletionType = ((Any) -> Void)
+public typealias ListenerCompletionType = ((UOWResultProtocol) -> Void)
 
-/// returns count of successfully executed runs
-/// and errors set
-public typealias SequenceCompletionType = ((Int, Error?) -> Void)
+public typealias SequenceCompletionType = ((Error?) -> Void)
 
 // MARK: - UOWManagerContainerProtocol
 
@@ -29,7 +27,7 @@ public protocol UOWManagerProtocol {
         & RequestRegistratorContainerProtocol
         & UOWManagerContainerProtocol
 
-    func run(_ uow: UOWProtocol, listenerCompletion: @escaping(ListenerCompletionType)) throws
+    func run(unit uow: UOWProtocol, listenerCompletion: @escaping(ListenerCompletionType))
 
-    func run(sequence: [UOWProtocol], listenerCompletion: @escaping(SequenceCompletionType)) throws
+    func run(units: [UOWProtocol], listenerCompletion: @escaping(SequenceCompletionType))
 }

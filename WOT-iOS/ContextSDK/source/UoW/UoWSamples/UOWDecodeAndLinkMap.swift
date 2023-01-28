@@ -88,7 +88,7 @@ extension UOWDecodeAndLinkMap: UOWRunnable {
                 managedObjectLinkerHelper.completion = { fetchResult, error in
                     if let error = error { appContext.logInspector?.log(.error(error), sender: self) }
                     self.appContext?.logInspector?.log(.uow("moParse", message: "finish \(self.debugDescription)"), sender: self)
-                    exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: fetchResult, error: error))
+                    exit(exitToPassThrough, UOWResult.init(fetchResult: fetchResult, error: error))
                 }
 
                 let mappingCoordinatorDecodeHelper = ManagedObjectDecodeHelper(appContext: appContext, decodingDepthLevel: self.decodingDepthLevel)
@@ -109,7 +109,7 @@ extension UOWDecodeAndLinkMap: UOWRunnable {
                 datastoreFetchHelper.run()
             } catch {
                 self.appContext?.logInspector?.log(.uow("moParse", message: "finish \(self.debugDescription)"), sender: self)
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
+                exit(exitToPassThrough, UOWResult.init(fetchResult: nil, error: error))
             }
         }
     }
