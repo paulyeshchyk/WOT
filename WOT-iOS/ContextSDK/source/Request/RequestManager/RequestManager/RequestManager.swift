@@ -22,7 +22,7 @@ open class RequestManager: NSObject {
 
     private let uuid = UUID()
     private let appContext: Context
-    private let workingQueue = DispatchQueue(label: "RequestManagerQueue", qos: .userInitiated)
+    private let workingQueue = DispatchQueue(label: "RequestManagerQueue", qos: .utility)
 
     private let grouppedListenerList: RequestGrouppedListenerList
     private let grouppedRequestList: RequestGrouppedRequestList
@@ -134,24 +134,30 @@ extension RequestManager: ResponseManagerListener {
 extension RequestManager: RequestManagerProtocol {
 
     public func startRequest(_ request: RequestProtocol, listener: RequestManagerListenerProtocol?) throws {
-        //
-        if request.decodingDepthLevel?.maxReached() ?? false {
-            throw Errors.maxLevelReached(request.decodingDepthLevel?.rawValue ?? -1)
+        workingQueue.async {
+            do {
+                //
+                if request.decodingDepthLevel?.maxReached() ?? false {
+                    throw Errors.maxLevelReached(request.decodingDepthLevel?.rawValue ?? -1)
+                }
+                //
+                try self.grouppedRequestList.addRequest(request, forGroupId: request.MD5.hashValue)
+
+                self.addRequest(request)
+
+                request.addListener(self)
+
+                if let listener = listener {
+                    try self.grouppedListenerList.addListener(listener, forRequest: request)
+                } else {
+                    self.appContext.logInspector?.log(.warning(error: Errors.requestManagerListenerIsNil), sender: self)
+                }
+
+                try request.start()
+            } catch {
+                self.appContext.logInspector?.log(.error(error), sender: self)
+            }
         }
-        //
-        try grouppedRequestList.addRequest(request, forGroupId: request.MD5.hashValue)
-
-        addRequest(request)
-
-        request.addListener(self)
-
-        if let listener = listener {
-            try grouppedListenerList.addListener(listener, forRequest: request)
-        } else {
-            appContext.logInspector?.log(.warning(error: Errors.requestManagerListenerIsNil), sender: self)
-        }
-
-        try request.start()
     }
 
     public func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
