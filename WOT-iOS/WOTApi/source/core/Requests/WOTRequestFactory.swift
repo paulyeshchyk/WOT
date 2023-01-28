@@ -66,7 +66,7 @@ public class WOTWEBRequestFactory: NSObject {
 
         guard let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration,
                                                                              responseConfiguration: httpJSONResponseConfiguration,
-                                                                             decodingDepthLevel: DecodingDepthLevel.initial(maxLevel: 12))
+                                                                             decodingDepthLevel: DecodingDepthLevel.initial())
         else {
             throw HttpRequestFactoryError.objectNotDefined
         }
