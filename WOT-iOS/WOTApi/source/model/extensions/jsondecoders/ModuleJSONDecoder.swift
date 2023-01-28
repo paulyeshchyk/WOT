@@ -140,7 +140,7 @@ public class ModuleDecoder {
         httpRequestConfiguration.modelFieldKeyPaths = pin.modelClass.fieldsKeypaths()
         httpRequestConfiguration.composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
 
-        let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
+        let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel)
         try appContext.requestManager?.startRequest(request!, listener: self)
     }
 }
