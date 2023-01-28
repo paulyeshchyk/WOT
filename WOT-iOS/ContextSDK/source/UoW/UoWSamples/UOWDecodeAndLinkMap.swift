@@ -8,13 +8,13 @@
 // MARK: - UOWDecodeAndLinkMapProtocol
 
 public protocol UOWDecodeAndLinkMapProtocol: UOWProtocol {
+
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
         & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & UOWManagerContainerProtocol
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     var appContext: Context? { get set }
     var map: JSONMapProtocol? { get set }

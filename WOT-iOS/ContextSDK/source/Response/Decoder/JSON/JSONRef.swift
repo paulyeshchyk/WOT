@@ -9,7 +9,6 @@
 
 @objc
 public protocol JSONRefProtocol {
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     var jsonCollection: JSONCollectionProtocol { get }
     var modelClass: ModelClassType { get }
@@ -18,7 +17,6 @@ public protocol JSONRefProtocol {
 // MARK: - JSONRef
 
 public class JSONRef: JSONRefProtocol, CustomStringConvertible {
-    public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     public var jsonCollection: JSONCollectionProtocol
     public var modelClass: ModelClassType

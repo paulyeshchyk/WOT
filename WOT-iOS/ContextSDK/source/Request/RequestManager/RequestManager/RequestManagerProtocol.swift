@@ -10,8 +10,6 @@
 @objc
 public protocol RequestManagerProtocol {
 
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
-
     func startRequest(_ request: RequestProtocol, listener: RequestManagerListenerProtocol?) throws
 
     func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol)

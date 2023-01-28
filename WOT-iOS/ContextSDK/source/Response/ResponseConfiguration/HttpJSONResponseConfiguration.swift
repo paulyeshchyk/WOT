@@ -10,8 +10,6 @@
 @objc
 public class HttpJSONResponseConfiguration: NSObject, ResponseConfigurationProtocol {
 
-    public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
-
     public let modelClass: ModelClassType
     public var socket: JointSocketProtocol?
     public var extractor: ManagedObjectExtractable?

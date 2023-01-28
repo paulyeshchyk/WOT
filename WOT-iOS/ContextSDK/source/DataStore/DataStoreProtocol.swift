@@ -30,10 +30,8 @@ public enum PerformMode: Int {
 @objc
 public protocol DataStoreProtocol {
     //
-    @available(*, deprecated)
     @objc func workingContext() -> ManagedObjectContextProtocol
 
-    @available(*, deprecated)
     @objc func newPrivateContext() -> ManagedObjectContextProtocol
 
     @available(*, deprecated, message: "NSPredicate to be used; see developer.apple.com/documentation/coredata/nsmanagedobjectcontext (Concurrency)")

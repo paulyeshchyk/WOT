@@ -35,7 +35,6 @@ extension NSManagedObject: ManagedObjectProtocol {
 // MARK: - ManagedRef
 
 private class ManagedRef: ManagedRefProtocol, CustomStringConvertible {
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     var description: String {
         return "[\(type(of: self))] modelClass: \(String(describing: modelClass))"
@@ -61,7 +60,7 @@ private enum ManagedRefError: Error, CustomStringConvertible {
 
     var description: String {
         switch self {
-        case .classIsNotConforming(let anyclass): return "Class: \(anyclass) is not conforming \(type(of: (PrimaryKeypathProtocol & FetchableProtocol).Type.self))"
+        case .classIsNotConforming(let anyclass): return "Class: \(anyclass) is not conforming \(type(of: ModelClassType.self))"
         }
     }
 }

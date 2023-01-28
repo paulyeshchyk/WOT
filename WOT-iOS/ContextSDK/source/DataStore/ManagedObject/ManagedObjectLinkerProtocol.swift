@@ -35,7 +35,6 @@ public protocol JointSocketProtocol {
 // MARK: - JointPinProtocol
 
 public protocol JointPinProtocol {
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     var modelClass: ModelClassType { get }
     var identifier: JSONValueType? { get }

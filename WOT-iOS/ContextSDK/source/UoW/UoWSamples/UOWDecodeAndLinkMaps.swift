@@ -16,8 +16,6 @@ public protocol UOWDecodeAndLinkMapsProtocol: UOWProtocol {
         & RequestRegistratorContainerProtocol
         & UOWManagerContainerProtocol
 
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
-
     var appContext: Context? { get set }
     var maps: [JSONMapProtocol?]? { get set }
     var modelClass: ModelClassType? { get set }

@@ -9,8 +9,7 @@
 
 @objc
 public protocol RequestConfigurationProtocol {
-    //
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
+
     var modelClass: ModelClassType { get }
     var modelFieldKeyPaths: [String]? { get set }
 

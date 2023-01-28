@@ -18,8 +18,6 @@ public protocol ResponseAdapterProtocol {
         & DecoderManagerContainerProtocol
         & UOWManagerContainerProtocol
 
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
-
     typealias OnComplete = (RequestProtocol, Error?) -> Void
 
     var responseClass: AnyClass { get }
