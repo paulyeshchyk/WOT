@@ -47,14 +47,13 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathPenetration)
             let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noPenetration), sender: self)
         }
@@ -75,14 +74,13 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef, identifier: composition.objectIdentifier, keypath: keypathDamage)
             let jsonMap = try JSONMap(data: jsonCustom, predicate: composition.contextPredicate)
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            try appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
         }
