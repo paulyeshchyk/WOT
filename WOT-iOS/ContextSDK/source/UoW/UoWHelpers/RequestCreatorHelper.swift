@@ -10,9 +10,6 @@
 class RequestCreatorHeper {
     typealias Context = LogInspectorContainerProtocol
         & RequestRegistratorContainerProtocol
-        & DataStoreContainerProtocol
-        & DecoderManagerContainerProtocol
-        & UOWManagerContainerProtocol
 
     var modelClass: ModelClassType?
     var modelFieldKeyPaths: [String]?
