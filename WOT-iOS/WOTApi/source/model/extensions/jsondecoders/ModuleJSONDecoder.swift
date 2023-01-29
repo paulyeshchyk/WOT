@@ -36,11 +36,11 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
             throw ModuleJSONDecoderErrors.noParentsFound
         }
 
-        guard let module_id = element?[#keyPath(Module.module_id)] else {
+        guard let module_id = element[#keyPath(Module.module_id)] else {
             throw ModuleJSONDecoderErrors.moduleIdNotDefined
         }
 
-        let type = element?[#keyPath(Module.type)]
+        let type = element[#keyPath(Module.type)]
 
         #warning("move out of Decoder")
         let moduleDecoder = ModuleDecoder(appContext: appContext)

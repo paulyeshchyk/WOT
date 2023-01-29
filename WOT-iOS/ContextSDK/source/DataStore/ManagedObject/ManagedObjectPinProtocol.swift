@@ -21,6 +21,7 @@ public protocol ManagedObjectPlugProtocol {
 // MARK: - NSSet + ManagedObjectPlugProtocol
 
 extension NSSet: ManagedObjectPlugProtocol {
+    //
     public func plug(pin: ManagedObjectPinProtocol?, intoSocket: JointSocketProtocol?) {
         compactMap { $0 as? ManagedObjectPlugProtocol }
             .forEach {

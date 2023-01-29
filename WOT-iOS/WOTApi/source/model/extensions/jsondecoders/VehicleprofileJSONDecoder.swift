@@ -39,12 +39,12 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         parentJSonRefs.append(contentsOf: map.contextPredicate.jsonRefs)
         parentJSonRefs.append(jsonRef)
 
-        let tank_id = element?[#keyPath(Vehicleprofile.tank_id)] as? NSDecimalNumber
+        let tank_id = element[#keyPath(Vehicleprofile.tank_id)] as? NSDecimalNumber
 
         // MARK: - AmmoList
 
         let ammoKeypath = #keyPath(Vehicleprofile.ammo)
-        if let jsonArray = element?[ammoKeypath] as? [JSON] {
+        if let jsonArray = element[ammoKeypath] as? [JSON] {
             let foreignSelectKey = #keyPath(VehicleprofileAmmoList.vehicleprofile)
             let modelClass = VehicleprofileAmmoList.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
@@ -68,7 +68,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         // MARK: - Armor
 
         let armorKeypath = #keyPath(Vehicleprofile.armor)
-        if let jsonElement = element?[armorKeypath] as? JSON {
+        if let jsonElement = element[armorKeypath] as? JSON {
             let foreignSelectKey = #keyPath(VehicleprofileModule.vehicleprofile)
             let modelClass = VehicleprofileArmorList.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
@@ -92,7 +92,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         // MARK: - Module
 
         let modulesKeypath = #keyPath(Vehicleprofile.modules)
-        if let jsonElement = element?[modulesKeypath] as? JSON {
+        if let jsonElement = element[modulesKeypath] as? JSON {
             let foreignSelectKey = #keyPath(VehicleprofileModule.vehicleprofile)
             let modelClass = VehicleprofileModule.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
@@ -117,7 +117,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         // MARK: - Engine
 
         let engineKeypath = #keyPath(Vehicleprofile.engine)
-        if let jsonElement = element?[engineKeypath] as? JSON {
+        if let jsonElement = element[engineKeypath] as? JSON {
             let keypath = VehicleprofileEngine.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileEngine.self
@@ -143,7 +143,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         // MARK: - Gun
 
         let gunKeypath = #keyPath(Vehicleprofile.gun)
-        if let jsonElement = element?[gunKeypath] as? JSON {
+        if let jsonElement = element[gunKeypath] as? JSON {
             let modelClass = VehicleprofileGun.self
             let keypath = VehicleprofileGun.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
@@ -170,7 +170,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         // MARK: - Suspension
 
         let suspensionKeypath = #keyPath(Vehicleprofile.suspension)
-        if let jsonElement = element?[suspensionKeypath] as? JSON {
+        if let jsonElement = element[suspensionKeypath] as? JSON {
             let keypath = VehicleprofileSuspension.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileSuspension.self
@@ -196,7 +196,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         // MARK: - Turret
 
         let turretKeypath = #keyPath(Vehicleprofile.turret)
-        if let jsonElement = element?[turretKeypath] as? JSON {
+        if let jsonElement = element[turretKeypath] as? JSON {
             let keypath = VehicleprofileTurret.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileTurret.self
@@ -222,7 +222,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         // MARK: - Radio
 
         let radioKeypath = #keyPath(Vehicleprofile.radio)
-        if let jsonElement = element?[radioKeypath] as? JSON {
+        if let jsonElement = element[radioKeypath] as? JSON {
             let keypath = VehicleprofileRadio.primaryKeyPath(forType: .internal)
             let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileRadio.self

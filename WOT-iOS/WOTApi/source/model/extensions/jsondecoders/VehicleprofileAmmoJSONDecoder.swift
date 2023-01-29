@@ -19,8 +19,8 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
     func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
         //
-        let ammoJSON = try map.data(ofType: JSON.self)
-        try managedObject?.decode(decoderContainer: ammoJSON)
+        let element = try map.data(ofType: JSON.self)
+        try managedObject?.decode(decoderContainer: element)
 
         // MARK: - do check decodingDepth
 
@@ -34,7 +34,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
         // MARK: - Penetration
 
         let keypathPenetration = #keyPath(VehicleprofileAmmo.penetration)
-        if let jsonCustom = ammoJSON?[keypathPenetration] {
+        if let jsonCustom = element[keypathPenetration] {
             let foreignPrimarySelectKey = #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo)
             let foreignSecondarySelectKey = #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo)
             let modelClass = VehicleprofileAmmoPenetration.self
@@ -61,7 +61,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
         // MARK: - Damage
 
         let keypathDamage = #keyPath(VehicleprofileAmmo.damage)
-        if let jsonCustom = ammoJSON?[keypathDamage] {
+        if let jsonCustom = element[keypathDamage] {
             let foreignPrimarySelectKey = #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo)
             let foreignSecondarySelectKey = #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo)
             let modelClass = VehicleprofileAmmoDamage.self

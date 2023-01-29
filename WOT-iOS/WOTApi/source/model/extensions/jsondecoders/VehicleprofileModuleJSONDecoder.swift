@@ -31,7 +31,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
 
         // MARK: - relation mapping
 
-        if let gun_id = element?[#keyPath(VehicleprofileModule.gun_id)] {
+        if let gun_id = element[#keyPath(VehicleprofileModule.gun_id)] {
             //
             let managedRef = try managedObject?.managedRef()
             let modelClass = VehicleprofileGun.self
@@ -55,7 +55,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             }
         }
 
-        if let radio_id = element?[#keyPath(VehicleprofileModule.radio_id)] {
+        if let radio_id = element[#keyPath(VehicleprofileModule.radio_id)] {
             //
             let managedRef = try managedObject?.managedRef()
             let modelClass = VehicleprofileRadio.self
@@ -79,7 +79,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             }
         }
 
-        if let engine_id = element?[#keyPath(VehicleprofileModule.engine_id)] {
+        if let engine_id = element[#keyPath(VehicleprofileModule.engine_id)] {
             //
             let managedRef = try managedObject?.managedRef()
             let modelClass = VehicleprofileEngine.self
@@ -103,7 +103,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             }
         }
 
-        if let suspension_id = element?[#keyPath(VehicleprofileModule.suspension_id)] {
+        if let suspension_id = element[#keyPath(VehicleprofileModule.suspension_id)] {
             //
             let managedRef = try managedObject?.managedRef()
             let modelClass = VehicleprofileSuspension.self
@@ -127,7 +127,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             }
         }
 
-        if let turret_id = element?[#keyPath(VehicleprofileModule.turret_id)] {
+        if let turret_id = element[#keyPath(VehicleprofileModule.turret_id)] {
             //
             let modelClass = VehicleprofileTurret.self
             let managedRef = try managedObject?.managedRef()

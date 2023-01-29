@@ -32,11 +32,11 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
         // MARK: - relation mapping
 
         let jsonRef = try JSONRef(data: element, modelClass: Vehicles.self)
-        let tank_id = element?[#keyPath(Vehicles.tank_id)] as? NSDecimalNumber
+        let tank_id = element[#keyPath(Vehicles.tank_id)] as? NSDecimalNumber
 
         // MARK: - ModulesTree
 
-        if let modulesTreeJSON = element?[#keyPath(Vehicles.modules_tree)] as? JSON {
+        if let modulesTreeJSON = element[#keyPath(Vehicles.modules_tree)] as? JSON {
             var parentJSONRefs = jsonMap.contextPredicate.jsonRefs
             parentJSONRefs.append(jsonRef)
 
@@ -77,7 +77,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
         // MARK: - DefaultProfile
 
         let defaultProfileKeypath = #keyPath(Vehicles.default_profile)
-        if let jsonElement = element?[defaultProfileKeypath] as? JSON {
+        if let jsonElement = element[defaultProfileKeypath] as? JSON {
             let foreignSelectKey = #keyPath(Vehicleprofile.vehicles)
             let modelClass = Vehicleprofile.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: jsonMap, foreignSelectKey: foreignSelectKey, jsonRefs: [])

@@ -32,7 +32,7 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
 
         //
         let keypath = #keyPath(VehicleprofileAmmo.type)
-        try profilesJSON?.forEach { jsonElement in
+        try profilesJSON.forEach { jsonElement in
             let foreignSelectKey = #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList)
             let ammoType = jsonElement[keypath]
             let modelClass = VehicleprofileAmmo.self

@@ -28,12 +28,12 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
         // MARK: - relation mapping
 
         //
-        let armorListJSON = try map.data(ofType: JSON.self)
+        let element = try map.data(ofType: JSON.self)
 
         // MARK: - turret
 
         let keypathturret = #keyPath(VehicleprofileArmorList.turret)
-        if let jsonElement = armorListJSON?[keypathturret] as? JSON {
+        if let jsonElement = element[keypathturret] as? JSON {
             let foreignSelectKey = #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret)
             let modelClass = VehicleprofileArmor.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: [])
@@ -57,7 +57,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
         // MARK: - hull
 
         let keypathhull = #keyPath(VehicleprofileArmorList.hull)
-        if let jsonElement = armorListJSON?[keypathhull] as? JSON {
+        if let jsonElement = element[keypathhull] as? JSON {
             let foreignSelectKey = #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull)
             let modelClass = VehicleprofileArmor.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: [])

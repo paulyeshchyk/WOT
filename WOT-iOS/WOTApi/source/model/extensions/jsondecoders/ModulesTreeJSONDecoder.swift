@@ -19,8 +19,8 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
     func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
         //
-        let moduleTreeJSON = try map.data(ofType: JSON.self)
-        try managedObject?.decode(decoderContainer: moduleTreeJSON)
+        let element = try map.data(ofType: JSON.self)
+        try managedObject?.decode(decoderContainer: element)
 
         // MARK: - do check decodingDepth
 
@@ -34,7 +34,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         // MARK: - NextTanks
 
         let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
-        if let nextTanks = moduleTreeJSON?[nextTanksKeypath] as? [JSONValueType] {
+        if let nextTanks = element[nextTanksKeypath] as? [JSONValueType] {
             for nextTank in nextTanks {
                 fetchNextTank(tank_id: nextTank, decodingDepthLevel: decodingDepthLevel)
             }
@@ -43,7 +43,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         // MARK: - NextModules
 
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
-        if let nextModules = moduleTreeJSON?[nextModulesKeypath] as? [JSONValueType] {
+        if let nextModules = element[nextModulesKeypath] as? [JSONValueType] {
             for nextModuleID in nextModules {
                 fetchNextModule(nextModuleID: nextModuleID, map: map, decodingDepthLevel: decodingDepthLevel)
             }
@@ -52,8 +52,8 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         // MARK: - CurrentModule
 
         let currentModuleKeypath = #keyPath(ModulesTree.module_id)
-        if let identifier = moduleTreeJSON?[currentModuleKeypath] {
-            fetchCurrentModule(identifier: identifier, map: map, moduleTreeJSON: moduleTreeJSON, decodingDepthLevel: decodingDepthLevel)
+        if let identifier = element[currentModuleKeypath] {
+            fetchCurrentModule(identifier: identifier, map: map, moduleTreeJSON: element, decodingDepthLevel: decodingDepthLevel)
         }
     }
 
@@ -119,10 +119,11 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
             let modelClass = Vehicles.self
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
             let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextTanksKeypath)
             let extractor = NextVehicleExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+
+            let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
             let composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
             let contextPredicate = try composer.buildRequestPredicateComposition()
 

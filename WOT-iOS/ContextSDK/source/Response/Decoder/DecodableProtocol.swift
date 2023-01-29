@@ -114,7 +114,7 @@ public protocol JSONCollectionProtocol {
 
 extension JSONCollectionProtocol {
 
-    public func data<T>(ofType _: T.Type) throws -> T? {
+    public func data<T>(ofType _: T.Type) throws -> T {
         let dataToReturn = data()
         guard let resultToCheck = dataToReturn else {
             throw JSONCollectionDataError.dataIsNil

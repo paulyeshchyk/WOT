@@ -14,7 +14,7 @@ public protocol JSONMapProtocol {
 }
 
 extension JSONMapProtocol {
-    public func data<T>(ofType _: T.Type) throws -> T? {
+    public func data<T>(ofType _: T.Type) throws -> T {
         try jsonCollection.data(ofType: T.self)
     }
 }
@@ -36,17 +36,14 @@ public class JSONMap: JSONMapProtocol, CustomStringConvertible, CustomDebugStrin
 
     // MARK: Lifecycle
 
-    public init(jsonCollection: JSONCollectionProtocol?, predicate contextPredicate: ContextPredicateProtocol) throws {
-        guard let jsonCollection = jsonCollection else {
-            throw Errors.jsonIsNil
-        }
+    public init(data jsonCollection: JSONCollectionProtocol, predicate contextPredicate: ContextPredicateProtocol) throws {
         self.jsonCollection = jsonCollection
         self.contextPredicate = contextPredicate
     }
 
     public convenience init(data: Any, predicate contextPredicate: ContextPredicateProtocol) throws {
         let collection = JSONCollection(data: data)
-        try self.init(jsonCollection: collection, predicate: contextPredicate)
+        try self.init(data: collection, predicate: contextPredicate)
     }
 
     deinit {
