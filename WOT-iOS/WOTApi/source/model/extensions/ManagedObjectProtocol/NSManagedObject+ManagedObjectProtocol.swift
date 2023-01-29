@@ -13,7 +13,12 @@ import CoreData
 extension NSManagedObject: ManagedObjectProtocol {
     //
     public var entityName: String { return entity.name ?? "<unknown>" }
-    public var fetchStatus: FetchStatus { isInserted ? .inserted : .fetched }
+    public var fetchStatus: FetchStatus {
+        isInserted ?
+            .inserted :
+            .fetched
+    }
+
     public var context: ManagedObjectContextProtocol? { managedObjectContext }
     public func managedRef() throws -> ManagedRefProtocol {
         return try ManagedRef(modelClass: type(of: self), managedObjectID: objectID)
@@ -30,7 +35,6 @@ extension NSManagedObject: ManagedObjectProtocol {
 // MARK: - ManagedRef
 
 private class ManagedRef: ManagedRefProtocol, CustomStringConvertible {
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     var description: String {
         return "[\(type(of: self))] modelClass: \(String(describing: modelClass))"
@@ -56,7 +60,7 @@ private enum ManagedRefError: Error, CustomStringConvertible {
 
     var description: String {
         switch self {
-        case .classIsNotConforming(let anyclass): return "Class: \(anyclass) is not conforming \(type(of: (PrimaryKeypathProtocol & FetchableProtocol).Type.self))"
+        case .classIsNotConforming(let anyclass): return "Class: \(anyclass) is not conforming \(type(of: ModelClassType.self))"
         }
     }
 }

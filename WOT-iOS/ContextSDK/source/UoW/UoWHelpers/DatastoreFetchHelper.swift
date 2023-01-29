@@ -7,10 +7,30 @@
 
 // MARK: - DatastoreFetchHelper
 
-class DatastoreFetchHelper {
+class DatastoreFetchHelper: CustomStringConvertible, CustomDebugStringConvertible {
 
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
+
+    var description: String {
+        "[\(type(of: self))] \(debugDescription)"
+    }
+
+    var debugDescription: String {
+        let modelClassDescription: String?
+        if let modelClass = modelClass {
+            modelClassDescription = "modelClass: \(type(of: modelClass))"
+        } else {
+            modelClassDescription = nil
+        }
+        let predicateDescription: String?
+        if let predicate = nspredicate {
+            predicateDescription = "predicate: \(String(describing: predicate))"
+        } else {
+            predicateDescription = nil
+        }
+        return [modelClassDescription, predicateDescription].compactMap { $0 }.joined(separator: ", ")
+    }
 
     private let appContext: Context
     var nspredicate: NSPredicate?
@@ -27,13 +47,16 @@ class DatastoreFetchHelper {
 
     func run() {
         guard let modelClass = modelClass else {
+            appContext.logInspector?.log(.uow("moFetch", message: "finish \(debugDescription)"), sender: self)
             completion?(nil, Errors.modelClassIsNotDefined)
             return
         }
+        appContext.logInspector?.log(.uow("moFetch", message: "start \(debugDescription)"), sender: self)
 
         appContext.dataStore?.fetch(modelClass: modelClass,
                                     nspredicate: nspredicate,
                                     completion: { fetchResult, error in
+                                        self.appContext.logInspector?.log(.uow("moFetch", message: "finish \(self.debugDescription)"), sender: self)
                                         self.completion?(fetchResult, error)
                                     })
     }

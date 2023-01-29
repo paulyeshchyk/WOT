@@ -25,8 +25,9 @@ public enum LogEventType: Int, CustomStringConvertible {
     case mapping
     case remoteFetch
     case flow
+    case uow
 
-    public static var allValues: [LogEventType] { [.error, .lifeCycle, .http, .json, .info, .performance, .logic, .mapping, .sqlite, .remoteFetch, .flow, .custom] }
+    public static var allValues: [LogEventType] { [.error, .lifeCycle, .http, .json, .info, .performance, .logic, .mapping, .sqlite, .remoteFetch, .flow, .uow, .custom] }
 
     public var description: String {
         switch self {
@@ -44,6 +45,7 @@ public enum LogEventType: Int, CustomStringConvertible {
         case .mapping: return "mapping"
         case .remoteFetch: return "web"
         case .flow: return "flow"
+        case .uow: return "uow"
         }
     }
 }

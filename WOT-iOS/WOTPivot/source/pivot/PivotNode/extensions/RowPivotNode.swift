@@ -8,7 +8,7 @@
 
 public class RowPivotNode: PivotNode {
     override public var stickyType: PivotStickyType {
-        return PivotStickyType.horizontal
+        return PivotStickyType.horizontal()
     }
 
     override public var cellType: PivotCellType {

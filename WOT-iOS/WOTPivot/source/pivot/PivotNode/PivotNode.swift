@@ -19,7 +19,7 @@ public class PivotNode: Node, PivotNodeProtocol {
     public var imageURL: NSURL?
     public var relativeRect: NSValue?
 
-    public var stickyType: PivotStickyType { return .float }
+    public var stickyType: PivotStickyType { return .float() }
     public var cellType: PivotCellType { return .data }
     public var fullPredicate: NSPredicate? {
         guard let parentPredicate = (parent as? PivotNodeProtocol)?.fullPredicate else {

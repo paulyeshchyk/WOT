@@ -15,26 +15,26 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
     }
 
     public var width: Int {
-        return self.nodeConnectorIndex.width
+        return nodeConnectorIndex.width
     }
 
-    lazy var nodeConnectorIndex: TreeConnectorNodeIndexProtocol = TreeConnectorNodeIndex()
-    var fetchController: NodeFetchControllerProtocol
-    var listener: NodeDataModelListener
-    var nodeCreator: NodeCreatorProtocol
+    private let nodeConnectorIndex: TreeConnectorNodeIndexProtocol = TreeConnectorNodeIndex()
+    weak var fetchController: NodeFetchControllerProtocol?
+    weak var listener: NodeDataModelListener?
+    weak var nodeCreator: NodeCreatorProtocol?
 
     // MARK: Lifecycle
 
-    public required init(fetchController fetch: NodeFetchControllerProtocol, listener list: NodeDataModelListener, enumerator _: NodeEnumeratorProtocol, nodeCreator nc: NodeCreatorProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: Context) {
+    public required init(fetchController fetch: NodeFetchControllerProtocol, listener list: NodeDataModelListener, nodeCreator nc: NodeCreatorProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: Context) {
         fetchController = fetch
         listener = list
         nodeCreator = nc
         super.init(nodeIndex: ni, appContext: appContext)
-        fetchController.setFetchListener(self)
+        fetchController?.setFetchListener(self)
     }
 
     deinit {
-        fetchController.setFetchListener(nil)
+        fetchController?.setFetchListener(nil)
     }
 
     public required init(enumerator _: NodeEnumeratorProtocol) {
@@ -60,8 +60,12 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
         reindexNodeConnectors()
 
         do {
-            try fetchController.performFetch(nodeCreator: nodeCreator, appContext: appContext)
+            guard let fetchController = fetchController else {
+                throw Errors.noFetchControllerDefined
+            }
+            try fetchController.performFetch(appContext: appContext)
         } catch let error {
+            appContext.logInspector?.log(.error(error), sender: self)
             fetchFailed(by: self.fetchController, withError: error)
         }
     }
@@ -99,15 +103,23 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
     // MARK: Fileprivate
 
     fileprivate func failPivot(_ error: Error) {
-        listener.didFinishLoadModel(error: error)
+        listener?.didFinishLoadModel(error: error)
     }
 
     fileprivate func makeTree(_ fetchController: NodeFetchControllerProtocol, nodeCreator: NodeCreatorProtocol?) {
         fetchController.fetchedNodes(byPredicates: [], nodeCreator: nodeCreator, filteredCompletion: { _, fetchedNodes in
             let data = fetchedNodes?.compactMap { $0 as? Node } ?? []
             self.add(nodes: data)
-            self.listener.didFinishLoadModel(error: nil)
+            self.listener?.didFinishLoadModel(error: nil)
         })
+    }
+}
+
+// MARK: - %t + TreeDataModel.Errors
+
+extension TreeDataModel {
+    enum Errors: Error {
+        case noFetchControllerDefined
     }
 }
 
@@ -127,7 +139,7 @@ extension TreeDataModel: NodeFetchControllerListenerProtocol {
         makeTree(fetchController, nodeCreator: nodeCreator)
     }
 
-    public func fetchFailed(by _: NodeFetchControllerProtocol, withError: Error) {
+    public func fetchFailed(by _: NodeFetchControllerProtocol?, withError: Error) {
         failPivot(withError)
     }
 }

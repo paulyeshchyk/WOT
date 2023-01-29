@@ -39,8 +39,6 @@ open class CoreDataStore: DataStore {
         return coordinator
     }()
 
-    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(persistentStoreCoordinator: self.persistentStoreCoordinator)
-
     private lazy var managedObjectModel: NSManagedObjectModel? = {
         guard let modelURL = self.modelURL else {
             return nil
@@ -48,18 +46,18 @@ open class CoreDataStore: DataStore {
         return NSManagedObjectModel(contentsOf: modelURL)
     }()
 
-    // MARK: Public
+    private lazy var masterContext: NSManagedObjectContext = CoreDataStore.masterContext(persistentStoreCoordinator: persistentStoreCoordinator)
 
-    private lazy var privateContext: ManagedObjectContextProtocol = CoreDataStore.privateQueueConcurrencyContext(persistentStoreCoordinator: persistentStoreCoordinator)
+    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(parentContext: masterContext)
 
     @objc
     override public func newPrivateContext() -> ManagedObjectContextProtocol {
-        privateContext
+        CoreDataStore.privateQueueConcurrencyContext(parentContext: mainContext)
     }
 
     @objc
     override public func workingContext() -> ManagedObjectContextProtocol {
-        return mainContext
+        mainContext
     }
 
     override public func fetchResultController(fetchRequest: AnyObject, managedObjectContext: ManagedObjectContextProtocol) throws -> AnyObject {
@@ -77,6 +75,9 @@ open class CoreDataStore: DataStore {
         guard let request = request as? NSFetchRequest<NSFetchRequestResult> else {
             throw CoreDataStoreError.requestIsNotNSFetchRequest
         }
+        guard let mainContext = workingContext() as? NSManagedObjectContext else {
+            throw CoreDataStoreError.workingContextIsNotNSManagedObjectContext
+        }
         return NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
     }
 
@@ -87,19 +88,31 @@ open class CoreDataStore: DataStore {
 
 extension CoreDataStore {
     //
-    private static func mainQueueConcurrencyContext(persistentStoreCoordinator: NSPersistentStoreCoordinator?) -> NSManagedObjectContext {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+    private static func masterContext(persistentStoreCoordinator: NSPersistentStoreCoordinator) -> NSManagedObjectContext {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.name = "Main <\(UUID().MD5)>"
         managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
         managedObjectContext.undoManager = nil
+        // managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return managedObjectContext
     }
 
-    private static func privateQueueConcurrencyContext(persistentStoreCoordinator: NSPersistentStoreCoordinator?) -> NSManagedObjectContext {
+    //
+    private static func mainQueueConcurrencyContext(parentContext: NSManagedObjectContext) -> NSManagedObjectContext {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        managedObjectContext.name = "Main <\(UUID().MD5)>"
+        managedObjectContext.parent = parentContext
+        managedObjectContext.undoManager = nil
+        // managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        return managedObjectContext
+    }
+
+    private static func privateQueueConcurrencyContext(parentContext: NSManagedObjectContext) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.name = "Private <\(UUID().MD5)>"
-        managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
+        managedObjectContext.parent = parentContext
         managedObjectContext.undoManager = nil
+        // managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return managedObjectContext
     }
 }
@@ -162,12 +175,14 @@ private enum CoreDataStoreError: Error, CustomStringConvertible {
     case contextNotSaved
     case contextIsNotNSManagedObjectContext
     case requestIsNotNSFetchRequest
+    case workingContextIsNotNSManagedObjectContext
 
     var description: String {
         switch self {
         case .contextNotSaved: return "\(type(of: self)): Context is not saved"
         case .contextIsNotNSManagedObjectContext: return "context is notNSManagedObjectContext"
         case .requestIsNotNSFetchRequest: return "request is not NSFetchRequest"
+        case .workingContextIsNotNSManagedObjectContext: return "Working context is not NSManagedObjectContext"
         }
     }
 }

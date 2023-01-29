@@ -10,7 +10,7 @@
 
 public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible {
 
-    public weak var delegate: HttpDataReceiverDelegateProtocol?
+    public var completion: ((Data?, Error?) -> Void)?
 
     public var MD5: String { uuid.MD5 }
     public var description: String { "\(type(of: self)): \(String(describing: request))" }
@@ -52,7 +52,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         urlDataTask = nil
         if result == true {
             state = .canceled
-            delegate?.didCancel(urlRequest: request, receiver: self, error: nil)
+            completion?(nil, nil)
         }
         return result
     }
@@ -62,28 +62,27 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         urlDataTask = nil
 
         guard let url = request.url else {
-            delegate?.didEnd(urlRequest: request, receiver: self, data: nil, error: Errors.urlNotDefined)
+            completion?(nil, Errors.urlNotDefined)
             return
         }
         urlDataTask = createDataTask(url: url) {
             self.state = .finished
         }
-        delegate?.didStart(urlRequest: request, receiver: self)
         urlDataTask?.resume()
     }
 
     // MARK: Private
 
-    private func createDataTask(url: URL, completion: @escaping () -> Void) -> URLSessionDataTask {
+    private func createDataTask(url: URL, completion cmpl: @escaping () -> Void) -> URLSessionDataTask {
         state = .started
         return URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
 
-            completion()
+            cmpl()
 
             guard let self = self else { return }
 
             DispatchQueue.main.async {
-                self.delegate?.didEnd(urlRequest: self.request, receiver: self, data: data, error: error)
+                self.completion?(data, error)
             }
         }
     }

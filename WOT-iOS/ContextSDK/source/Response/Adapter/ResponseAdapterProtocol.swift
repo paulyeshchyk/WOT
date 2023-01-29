@@ -14,11 +14,8 @@ public protocol ResponseAdapterProtocol {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
         & DecoderManagerContainerProtocol
         & UOWManagerContainerProtocol
-
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     typealias OnComplete = (RequestProtocol, Error?) -> Void
 

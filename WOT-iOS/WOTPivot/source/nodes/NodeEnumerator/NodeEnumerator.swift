@@ -8,8 +8,6 @@
 
 @objc
 public class NodeEnumerator: NSObject, NodeEnumeratorProtocol {
-    @objc
-    public static let sharedInstance = NodeEnumerator()
 
     // MARK: Public
 

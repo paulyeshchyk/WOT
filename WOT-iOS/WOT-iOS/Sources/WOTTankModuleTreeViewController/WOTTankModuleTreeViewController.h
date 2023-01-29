@@ -23,7 +23,6 @@ typedef void(^WOTConfigurationCompletionDoneBlock) (id configuration);
 
 @property (nonatomic, copy) WOTConfigurationCompletionCancelBlock cancelBlock;
 @property (nonatomic, copy) WOTConfigurationCompletionDoneBlock doneBlock;
-@property (nonatomic, strong) WOTTankListSettingsDatasource *settingsDatasource;
 
 @end
 

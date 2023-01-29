@@ -17,7 +17,7 @@ class VehicleprofileAmmoPenetrationJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, decodingDepthLevel _: DecodingDepthLevel?) throws {
         //
         let array = try map.data(ofType: [Double].self)
         let ammoPenetration = try MinAvgMax(array)
@@ -26,16 +26,19 @@ class VehicleprofileAmmoPenetrationJSONDecoder: JSONDecoderProtocol {
     }
 }
 
-// MARK: - VehicleprofileAmmoPenetrationError
+// MARK: - %t + VehicleprofileAmmoPenetrationJSONDecoder.VehicleprofileAmmoPenetrationJSONDecoderErrors
 
-private enum VehicleprofileAmmoPenetrationError: Error, CustomStringConvertible {
-    case arrayIsExpected(Any)
-    case arrayIsNotContainingThreeElements
+extension VehicleprofileAmmoPenetrationJSONDecoder {
 
-    var description: String {
-        switch self {
-        case .arrayIsExpected(let object): return "[\(type(of: self))]: Array is expected, but \(type(of: object))"
-        case .arrayIsNotContainingThreeElements: return "[\(type(of: self))]: Array is not containing 3 elements"
+    enum VehicleprofileAmmoPenetrationJSONDecoderErrors: Error, CustomStringConvertible {
+        case arrayIsExpected(Any)
+        case arrayIsNotContainingThreeElements
+
+        var description: String {
+            switch self {
+            case .arrayIsExpected(let object): return "[\(type(of: self))]: Array is expected, but \(type(of: object))"
+            case .arrayIsNotContainingThreeElements: return "[\(type(of: self))]: Array is not containing 3 elements"
+            }
         }
     }
 }

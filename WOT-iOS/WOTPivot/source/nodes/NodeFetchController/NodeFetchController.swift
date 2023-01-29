@@ -31,11 +31,11 @@ public extension NodeFetchController {
 
 open class NodeFetchController: NSObject {
 
-    public var listener: NodeFetchControllerListenerProtocol?
-    public var fetchRequestContainer: FetchRequestContainerProtocol
+    public weak var listener: NodeFetchControllerListenerProtocol?
+    public weak var fetchRequestContainer: FetchRequestContainerProtocol?
 
-    private var fetchResultController: NodeFetchedResultController?
-    private let appContext: Context
+    private weak var fetchResultController: NodeFetchedResultController?
+    private weak var appContext: Context?
 
     // MARK: Lifecycle
 
@@ -52,12 +52,12 @@ open class NodeFetchController: NSObject {
 
     public func initFetchController(appContext: Context, block: @escaping (NodeFetchedResultController?, Error?) -> Void) throws {
         //
-        appContext.dataStore?.perform { [weak self] managedObjectContext in
-            guard let fetchRequest = self?.fetchRequestContainer.fetchRequest else {
-                block(nil, NodeFetchControllerError.requestNotFound)
-                return
-            }
+        try appContext.dataStore?.perform(mode: .read) { [weak self] managedObjectContext in
             do {
+                guard let fetchRequestContainer = self?.fetchRequestContainer else {
+                    throw NodeFetchControllerError.fetchContainerIsNil
+                }
+                let fetchRequest = fetchRequestContainer.fetchRequest
                 let result = try appContext.dataStore?.fetchResultController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext) as? NodeFetchedResultController
                 block(result, nil)
             } catch {
@@ -73,12 +73,14 @@ enum NodeFetchControllerError: Error, CustomStringConvertible {
     case contextIsNotDefined
     case requestNotFound
     case noFetchResultControllerCreated
+    case fetchContainerIsNil
 
     var description: String {
         switch self {
         case .contextIsNotDefined: return "Context not defined"
         case .requestNotFound: return "Request not found"
         case .noFetchResultControllerCreated: return "no FetchResultController created"
+        case .fetchContainerIsNil: return "Fetch container is nil"
         }
     }
 }
@@ -100,9 +102,10 @@ extension NodeFetchController: NSFetchedResultsControllerDelegate {
 // MARK: - NodeFetchController + NodeFetchControllerProtocol
 
 extension NodeFetchController: NodeFetchControllerProtocol {
-    open func performFetch(nodeCreator: NodeCreatorProtocol?, appContext: Context) throws {
+    //
+    open func performFetch(appContext: Context) throws {
         if let fetch = fetchResultController {
-            try performFetch(with: fetch, nodeCreator: nodeCreator)
+            try performFetch(with: fetch)
         } else {
             try initFetchController(appContext: appContext) { [weak self] fetchResultController, error in
 
@@ -111,19 +114,19 @@ extension NodeFetchController: NodeFetchControllerProtocol {
                 self?.fetchResultController?.delegate = self
 
                 if let err = error {
-                    self?.appContext.logInspector?.log(.error(err), sender: self)
+                    self?.appContext?.logInspector?.log(.error(err), sender: self)
                 } else {
                     do {
-                        try self?.performFetch(with: fetchResultController, nodeCreator: nodeCreator)
+                        try self?.performFetch(with: fetchResultController)
                     } catch {
-                        self?.appContext.logInspector?.log(.error(error), sender: self)
+                        self?.appContext?.logInspector?.log(.error(error), sender: self)
                     }
                 }
             }
         }
     }
 
-    private func performFetch(with: NodeFetchedResultController?, nodeCreator _: NodeCreatorProtocol?) throws {
+    private func performFetch(with: NodeFetchedResultController?) throws {
         guard let fetchResultController = with else {
             throw NodeFetchControllerError.noFetchResultControllerCreated
         }

@@ -9,11 +9,11 @@
 open class LinkedRemoteAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
-    private let jsonRef: JSONRefProtocol
+    private let jsonRef: JSONRefProtocol?
 
     // MARK: Lifecycle
 
-    public init(pin: JointPinProtocol, jsonRef: JSONRefProtocol) {
+    public init(pin: JointPinProtocol, jsonRef: JSONRefProtocol?) {
         self.pin = pin
         self.jsonRef = jsonRef
     }

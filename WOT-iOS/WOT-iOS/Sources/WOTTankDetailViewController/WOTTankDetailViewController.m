@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     WOTTankDetailViewModeGrid = 2
 };
 
-@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate, RequestManagerListenerProtocol>
+@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIToolbar *bottomBar;
 @property (nonatomic, weak) IBOutlet UIToolbar *topBar;
@@ -55,7 +55,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 @property (nonatomic, strong)WOTTankMetricOptions* metricOptions;
 @property (nonatomic, strong)Vehicles *vehicle;
 @property (nonatomic, strong)NSMutableSet *runningRequestIDs;
-@property (nonatomic, strong) id<RequestManagerProtocol> requestManager;
 
 @end
 
@@ -70,11 +69,9 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
-    [self.requestManager cancelRequestsWithGroupId:requestId reason: reason];
     
     [self.runningRequestIDs enumerateObjectsUsingBlock:^(id requestID, BOOL *stop) {
         
-        [self.requestManager cancelRequestsWithGroupId:requestID reason: reason];
     }];
     
     [self.runningRequestIDs removeAllObjects];
@@ -267,13 +264,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         self.vehicle =  [self.fetchedResultController.fetchedObjects lastObject];
         
         
-        /*
-         * Default Profile
-         */
-        [WOTWEBRequestFactory fetchProfileDataWithProfileTankId: [tankId integerValue]
-                                                 requestManager: self.appContext.requestManager
-                                                       listener: self
-                                                          error: &error];
+        NSAssert(NO, @"to be implemented");
     }
 }
 
@@ -319,12 +310,12 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 }
 
 - (void)refetchTankID:(NSInteger)tankID groupId:(id)groupId{
+    [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId:tankID
+                                                 appContext:self.appContext
+                                                 completion:^(id<UOWResultProtocol> _Nonnull result) {
 
-    NSError *error = nil;
-    [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: tankID
-                                                 appContext: self.appContext
-                                                   listener: self
-                                                      error: &error];
+        [self updateUINeedReset: YES];
+    }];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -460,19 +451,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 - (NSString *)MD5 {
     return [MD5 MD5From:@"WOTTankDetailViewController"];
-}
-
-- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest error:(NSError * _Nullable)error {
-    [self updateUINeedReset: YES];
-    [requestManager removeListener:self];
-}
-
-- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<RequestProtocol> _Nonnull)didStartRequest {
-    //
-}
-
-- (void)requestManager:(id<RequestManagerProtocol>)requestManager didCancelRequest:(id<RequestProtocol>)didCancelRequest reason:(id<RequestCancelReasonProtocol>)reason {
-    [requestManager removeListener:self];
 }
 
 @end

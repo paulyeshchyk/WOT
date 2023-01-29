@@ -7,10 +7,18 @@
 
 // MARK: - ManagedObjectLinkerHelper
 
-class ManagedObjectLinkerHelper {
+class ManagedObjectLinkerHelper: CustomStringConvertible, CustomDebugStringConvertible {
 
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
+
+    var description: String {
+        "[\(type(of: self))] \(debugDescription)"
+    }
+
+    var debugDescription: String {
+        "\(String(describing: socket, orValue: "<null>"))"
+    }
 
     let appContext: Context
     var socket: JointSocketProtocol?
@@ -24,20 +32,23 @@ class ManagedObjectLinkerHelper {
 
     // MARK: Internal
 
-    func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
-        guard let fetchResult = fetchResult, error == nil else {
-            completion?(fetchResult, error ?? Errors.fetchResultIsNotPresented)
-            return
-        }
-
-        let linker = ManagedObjectLinker(appContext: appContext)
-        linker.socket = socket
-        linker.fetchResult = fetchResult
-        linker.completion = completion
-
+    func run(_ fetchResult: FetchResultProtocol?) {
+        let fetchResultDescription = "fetchResult: \(String(describing: fetchResult, orValue: "<null>"))"
+        appContext.logInspector?.log(.uow("moLink", message: "start \(debugDescription) \(fetchResultDescription)"), sender: self)
         do {
+            guard let fetchResult = fetchResult else {
+                throw Errors.fetchResultIsNotPresented
+            }
+
+            let linker = ManagedObjectLinker(appContext: appContext)
+            linker.socket = socket
+            linker.fetchResult = fetchResult
+            linker.completion = completion
+
             try linker.run()
+            appContext.logInspector?.log(.uow("moLink", message: "finish \(debugDescription) \(fetchResultDescription)"), sender: self)
         } catch {
+            appContext.logInspector?.log(.uow("moLink", message: "finish \(debugDescription) \(fetchResultDescription)"), sender: self)
             completion?(fetchResult, error)
         }
     }

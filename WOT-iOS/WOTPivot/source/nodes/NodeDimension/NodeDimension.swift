@@ -15,8 +15,8 @@ typealias TNodesSizesType = [AnyHashable: TNodeSize]
 
 public class NodeDimension: NSObject, NodeDimensionProtocol {
 
-    public var fetchController: NodeFetchControllerProtocol?
-    public var enumerator: NodeEnumeratorProtocol?
+    public weak var fetchController: NodeFetchControllerProtocol?
+    public weak var enumerator: NodeEnumeratorProtocol?
 
     public var shouldDisplayEmptyColumns: Bool {
         return false

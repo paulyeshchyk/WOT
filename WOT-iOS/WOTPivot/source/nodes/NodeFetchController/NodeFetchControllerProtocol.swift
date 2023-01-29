@@ -16,9 +16,8 @@ public protocol NodeFetchControllerProtocol {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
 
-    func performFetch(nodeCreator: NodeCreatorProtocol?, appContext: Context) throws
+    func performFetch(appContext: Context) throws
     func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: NodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion)
     func fetchedObjects() -> [AnyObject]?
     func setFetchListener(_ listener: NodeFetchControllerListenerProtocol?)
@@ -29,5 +28,5 @@ public protocol NodeFetchControllerProtocol {
 @objc
 public protocol NodeFetchControllerListenerProtocol {
     func fetchPerformed(by: NodeFetchControllerProtocol)
-    func fetchFailed(by: NodeFetchControllerProtocol, withError: Error)
+    func fetchFailed(by: NodeFetchControllerProtocol?, withError: Error)
 }

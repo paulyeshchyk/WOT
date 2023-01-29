@@ -46,24 +46,45 @@ private enum DecodableProtocolError: Error, CustomStringConvertible {
 // MARK: - DecodingDepthLevel
 
 @objc
+
 public class DecodingDepthLevel: NSObject, RawRepresentable {
+
     public required init?(rawValue: Int) {
         self.rawValue = rawValue
+        maxLevel = nil
+        super.init()
+    }
+
+    public required init?(rawValue: Int, maxLevel: Int?) {
+        self.rawValue = rawValue
+        self.maxLevel = maxLevel
         super.init()
     }
 
     public var rawValue: Int
+    public var maxLevel: Int?
 
-    public static let initial: DecodingDepthLevel? = DecodingDepthLevel(rawValue: 0)
+    override public var description: String {
+        return "[\(type(of: self))] rawValue: \(rawValue), maxLevel: \(maxLevel ?? -1)"
+    }
+
+    public static func initial(maxLevel: Int? = nil) -> DecodingDepthLevel? {
+        DecodingDepthLevel(rawValue: 0, maxLevel: maxLevel)
+    }
 
     public typealias RawValue = Int
 
-    public var next: DecodingDepthLevel? { DecodingDepthLevel(rawValue: rawValue + 1) }
+    public var nextDepthLevel: DecodingDepthLevel? {
+        DecodingDepthLevel(rawValue: rawValue + 1, maxLevel: maxLevel)
+    }
 
     // MARK: Public
 
     public func maxReached() -> Bool {
-        rawValue < 2// (Int.max - 1)
+        guard let maxLevel = maxLevel else {
+            return false
+        }
+        return rawValue > maxLevel
     }
 }
 
@@ -74,7 +95,6 @@ public protocol JSONDecoderProtocol: AnyObject {
 
     #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
-        & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
@@ -82,7 +102,7 @@ public protocol JSONDecoderProtocol: AnyObject {
 
     var managedObject: ManagedAndDecodableObjectType? { get set }
     init(appContext: Context)
-    func decode(using: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws
+    func decode(using: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws
 }
 
 // MARK: - JSONCollectionProtocol

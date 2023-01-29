@@ -11,6 +11,7 @@ import WOTPivot
 // MARK: - PivotViewController
 
 open class PivotViewController: UIViewController, ContextControllerProtocol {
+
     @IBOutlet open var collectionView: UICollectionView?
 
     override open var prefersStatusBarHidden: Bool { false }
@@ -27,23 +28,38 @@ open class PivotViewController: UIViewController, ContextControllerProtocol {
             }
             flowLayout?.itemLayoutStickyType = { [weak self] (indexPath) in
                 let node = self?.model.node(atIndexPath: indexPath) as? PivotNodeProtocol
-                return node?.stickyType ?? .float
+                return node?.stickyType ?? .float()
             }
         }
     }
 
-    public var appContext: ContextProtocol?
+    public weak var appContext: ContextProtocol?
 
     lazy var refreshControl: WOTPivotRefreshControl = WOTPivotRefreshControl(target: self, action: #selector(WOTTankPivotViewController.refresh(_:)))
 
-    lazy var model: PivotDataModelProtocol = pivotModel()
-
     var hasOpenedPopover: Bool = false
+
+    override public init(nibName: String?, bundle: Bundle?) {
+        super.init(nibName: nibName, bundle: bundle)
+
+        #warning("remove this")
+        appContext = UIApplication.shared.delegate as? ContextProtocol
+    }
+
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        //
+    }
 
     // MARK: Open
 
+    private lazy var model: PivotDataModelProtocol = self.pivotModel()
     open func pivotModel() -> PivotDataModelProtocol {
-        return PivotDataModel(enumerator: NodeEnumerator.sharedInstance)
+        fatalError("has not been overriden")
     }
 
     open func cell(forDataNode _: PivotNodeProtocol, at _: IndexPath) -> UICollectionViewCell {
@@ -88,6 +104,10 @@ open class PivotViewController: UIViewController, ContextControllerProtocol {
         navigationController?.navigationBar.setDarkStyle()
 
         registerCells()
+        loadModel()
+    }
+
+    open func loadModel() {
         model.loadModel()
     }
 
@@ -133,20 +153,21 @@ extension PivotViewController: UICollectionViewDelegate {
             return
         }
 
-        let fetchedObject = pivotNode.data1 as? NSManagedObject
+        let tankId = pivotNode.data1 as? NSDecimalNumber
         switch pivotNode.cellType {
-        case .data: openTankDetail(data: fetchedObject)
+        case .data: openTankDetail(tankId: tankId)
         case .dataGroup: openPopover()
         default: break
         }
     }
 
-    private func openTankDetail(data: NSManagedObject?) {
-        guard let vehicle = data as? Vehicles else {
+    private func openTankDetail(tankId: NSDecimalNumber?) {
+        guard let tankId = tankId else {
+            appContext?.logInspector?.log(.error(Errors.vehicleIsNotDefined), sender: self)
             return
         }
         let config = WOTTankModuleTreeViewController(nibName: String(describing: WOTTankModuleTreeViewController.self), bundle: nil)
-        config.tank_Id = vehicle.tank_id
+        config.tank_Id = tankId
         config.cancelBlock = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
@@ -154,6 +175,14 @@ extension PivotViewController: UICollectionViewDelegate {
             self?.navigationController?.popViewController(animated: true)
         }
         navigationController?.pushViewController(config, animated: true)
+    }
+}
+
+// MARK: - %t + PivotViewController.Errors
+
+extension PivotViewController {
+    enum Errors: Error {
+        case vehicleIsNotDefined
     }
 }
 
@@ -168,8 +197,8 @@ class WOTTankPivotViewController: PivotViewController {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
-        & DataStoreContainerProtocol
+        & DecoderManagerContainerProtocol
+        & UOWManagerContainerProtocol
 
     static var registeredCells: [UICollectionViewCell.Type] = {
         return [WOTTankPivotDataCollectionViewCell.self,
@@ -182,7 +211,29 @@ class WOTTankPivotViewController: PivotViewController {
     var cancelBlock: WOTTankPivotCompletionCancelBlock?
     var doneBlock: WOTTankPivotCompletionDoneBlock?
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
-    var settingsDatasource = WOTTankListSettingsDatasource()
+    private let settingsDatasource = WOTTankListSettingsDatasource()
+
+    private lazy var fetchRequest: WOTTankPivotFetchRequest = {
+        let result = WOTTankPivotFetchRequest()
+        result.settingsDatasource = settingsDatasource
+        return result
+    }()
+
+    private lazy var fetchController: NodeFetchControllerProtocol = {
+        guard let appDelegate = UIApplication.shared.delegate as? Context else {
+            fatalError("appDelegate is not WOTAppDelegateProtocol")
+        }
+        return NodeFetchController(fetchRequestContainer: fetchRequest, appContext: appDelegate)
+    }()
+
+    private lazy var model: PivotDataModelProtocol = {
+        guard let appDelegate = UIApplication.shared.delegate as? Context else {
+            fatalError("appDelegate is not WOTAppDelegateProtocol")
+        }
+
+        return WOTTankPivotModel(modelListener: self, fetchController: self.fetchController, appContext: appDelegate)
+
+    }()
 
     // MARK: Public
 
@@ -212,13 +263,14 @@ class WOTTankPivotViewController: PivotViewController {
         return result
     }
 
+    deinit {
+        //
+    }
+
     // MARK: Internal
 
     override func pivotModel() -> PivotDataModelProtocol {
-        guard let appDelegate = UIApplication.shared.delegate as? Context else {
-            fatalError("appDelegate is not WOTAppDelegateProtocol")
-        }
-        return WOTTankPivotModel(modelListener: self, settingsDatasource: settingsDatasource, appContext: appDelegate)
+        model
     }
 
     override func viewDidLoad() {
@@ -236,7 +288,7 @@ class WOTTankPivotViewController: PivotViewController {
 
     @objc
     func refresh(_: UIRefreshControl) {
-        model.loadModel()
+        loadModel()
     }
 
     override func cell(forDataNode node: PivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {

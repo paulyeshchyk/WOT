@@ -14,10 +14,11 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
     public let appContext: Context
     public var nodeIndex: NodeIndexProtocol
     public lazy var rootNodes: [NodeProtocol] = { return [] }()
-    public var enumerator: NodeEnumeratorProtocol?
+
+    let enumerator = NodeEnumerator()
 
     public var endpointsCount: Int {
-        return enumerator?.endpoints(array: rootNodes).count ?? 0
+        return enumerator.endpoints(array: rootNodes).count
     }
 
     private var comparator: NodeComparator = { (_, _) in return true }

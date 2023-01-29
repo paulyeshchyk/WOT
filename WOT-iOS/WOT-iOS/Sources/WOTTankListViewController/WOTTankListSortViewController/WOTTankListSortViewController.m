@@ -231,15 +231,14 @@
         [self.navigationController popViewControllerAnimated:YES];
     };
     vc.applyBlock = ^(){
-        [[self dataStore] stashWithBlock:^(id<ManagedObjectContextProtocol> _Nullable context, NSError * _Nullable error) {
+        NSError *error = nil;
+        [[self dataStore] performWithMode:PerformModeReadwrite error:&error block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
             if (self.commitBlock) {
                 self.commitBlock();
             }
             
             [self.navigationController popViewControllerAnimated:YES];
-
         }];
-
     };
 
     [self.navigationController pushViewController:vc animated:YES];

@@ -41,10 +41,10 @@ class WOTTankTreeFetchController: NodeFetchController {
     }
 
     private func vehicleModules(_ vehicle: AnyObject) -> Set<ModulesTree>? {
-        guard let vehicles = vehicle as? Vehicles else {
+        guard let vehicle = vehicle as? Vehicles else {
             return nil
         }
-        return vehicles.modules_tree as? Set<ModulesTree>
+        return vehicle.modules_tree as? Set<ModulesTree>
     }
 
     private func transform(tank: AnyObject, nodeCreator: NodeCreatorProtocol?) -> [NodeProtocol] {

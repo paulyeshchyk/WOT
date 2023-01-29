@@ -12,5 +12,5 @@ import ContextSDK
 public protocol TreeDataModelProtocol: NodeDataModelProtocol {
     var levels: Int { get }
     var width: Int { get }
-    init(fetchController: NodeFetchControllerProtocol, listener: NodeDataModelListener, enumerator: NodeEnumeratorProtocol, nodeCreator: NodeCreatorProtocol, nodeIndex: NodeIndexProtocol.Type, appContext: Context)
+    init(fetchController: NodeFetchControllerProtocol, listener: NodeDataModelListener, nodeCreator: NodeCreatorProtocol, nodeIndex: NodeIndexProtocol.Type, appContext: Context)
 }

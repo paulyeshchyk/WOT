@@ -125,7 +125,7 @@ class ManagedObjectContext: ManagedObjectContextProtocol {
         nil
     }
 
-    func execute(appContext _: Context?, with _: @escaping (ManagedObjectContextProtocol) -> Void) {
+    func execute(appContext _: Context?, with _: @escaping ManagedObjectContextProtocol.ObjectContextCompletion) {
         // with()
     }
 

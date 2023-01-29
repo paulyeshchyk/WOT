@@ -15,19 +15,11 @@ public protocol HttpDataReceiverProtocol: MD5Protocol {
     typealias Context = LogInspectorContainerProtocol
         & HostConfigurationContainerProtocol
 
-    var delegate: HttpDataReceiverDelegateProtocol? { get set }
+    var completion: ((Data?, Error?) -> Void)? { get set }
 
     init(appContext: Context, request: URLRequest)
     func start()
 
     @discardableResult
     func cancel() -> Bool
-}
-
-// MARK: - HttpDataReceiverDelegateProtocol
-
-public protocol HttpDataReceiverDelegateProtocol: AnyObject {
-    func didStart(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol)
-    func didEnd(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol, data: Data?, error: Error?)
-    func didCancel(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol, error: Error?)
 }

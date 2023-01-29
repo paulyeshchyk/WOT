@@ -17,18 +17,26 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, forDepthLevel _: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
         //
         let moduleTreeJSON = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: moduleTreeJSON)
-        //
+
+        // MARK: - do check decodingDepth
+
+        if decodingDepthLevel?.maxReached() ?? false {
+            appContext.logInspector?.log(.warning(error: ModulesTreeJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
+            return
+        }
+
+        // MARK: - relation mapping
 
         // MARK: - NextTanks
 
         let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
         if let nextTanks = moduleTreeJSON?[nextTanksKeypath] as? [JSONValueType] {
             for nextTank in nextTanks {
-                fetchNextTank(tank_id: nextTank)
+                fetchNextTank(tank_id: nextTank, decodingDepthLevel: decodingDepthLevel)
             }
         }
 
@@ -37,7 +45,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
         if let nextModules = moduleTreeJSON?[nextModulesKeypath] as? [JSONValueType] {
             for nextModuleID in nextModules {
-                fetchNextModule(nextModuleID: nextModuleID, map: map)
+                fetchNextModule(nextModuleID: nextModuleID, map: map, decodingDepthLevel: decodingDepthLevel)
             }
         }
 
@@ -45,85 +53,90 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
         let currentModuleKeypath = #keyPath(ModulesTree.module_id)
         if let identifier = moduleTreeJSON?[currentModuleKeypath] {
-            fetchCurrentModule(identifier: identifier, map: map, moduleTreeJSON: moduleTreeJSON)
+            fetchCurrentModule(identifier: identifier, map: map, moduleTreeJSON: moduleTreeJSON, decodingDepthLevel: decodingDepthLevel)
         }
     }
 
-    private func fetchCurrentModule(identifier: JSONValueType?, map: JSONMapProtocol, moduleTreeJSON: JSON?) {
+    private func fetchCurrentModule(identifier: JSONValueType?, map: JSONMapProtocol, moduleTreeJSON: JSON?, decodingDepthLevel: DecodingDepthLevel?) {
         do {
-            let managedRef = try managedObject?.managedRef()
+            let managedRef: ManagedRefProtocol? = try managedObject?.managedRef()
+            let modelClass: ModelClassType = Module.self
+            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
+            let socket: JointSocketProtocol = JointSocket(managedRef: managedRef!, identifier: nil, keypath: #keyPath(ModulesTree.currentModule))
+            let extractor: ManagedObjectExtractable? = CurrentModuleExtractor()
 
-            let modelClass = Module.self
+            let pin: JointPinProtocol = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
+            let jsonRef: JSONRefProtocol = try JSONRef(data: moduleTreeJSON, modelClass: ModulesTree.self)
+            let composer: FetchRequestPredicateComposerProtocol? = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
 
-            let jsonRef = try JSONRef(data: moduleTreeJSON, modelClass: ModulesTree.self)
-            let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
-
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: #keyPath(ModulesTree.currentModule))
-            httpJSONResponseConfiguration.extractor = CurrentModuleExtractor()
-
-            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            httpRequestConfiguration.composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
-
-            #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext.requestManager?.startRequest(request!, listener: nil)
+            let uow = UOWRemote(appContext: appContext)
+            uow.modelClass = modelClass
+            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.socket = socket
+            uow.extractor = extractor
+            uow.composer = composer
+            uow.nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+            appContext.uowManager.run(unit: uow) { _ in
+                //
+            }
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 
-    private func fetchNextModule(nextModuleID: JSONValueType?, map: JSONMapProtocol) {
+    private func fetchNextModule(nextModuleID: JSONValueType?, map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) {
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
         do {
             let managedRef = try managedObject?.managedRef()
-
             let modelClass = Module.self
-
+            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
+            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextModulesKeypath)
+            let extractor = NextModuleExtractor()
+            let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
+            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextModulesKeypath)
-            httpJSONResponseConfiguration.extractor = NextModuleExtractor()
-
-            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            httpRequestConfiguration.composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
-
-            #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext.requestManager?.startRequest(request!, listener: nil)
+            let uow = UOWRemote(appContext: appContext)
+            uow.modelClass = modelClass
+            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.socket = socket
+            uow.extractor = extractor
+            uow.composer = composer
+            uow.nextDepthLevel = nextDepthLevel
+            appContext.uowManager.run(unit: uow) { _ in
+                //
+            }
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 
-    private func fetchNextTank(tank_id: JSONValueType?) {
+    private func fetchNextTank(tank_id: JSONValueType?, decodingDepthLevel: DecodingDepthLevel?) {
         let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
         do {
             let managedRef = try managedObject?.managedRef()
-
             let modelClass = Vehicles.self
-            // parents was not used for next portion of tanks
+            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
+            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextTanksKeypath)
+            let extractor = NextVehicleExtractor()
+            let composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
+            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextTanksKeypath)
-            httpJSONResponseConfiguration.extractor = NextVehicleExtractor()
-
-            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            httpRequestConfiguration.composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
-
-            #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration)
-            try appContext.requestManager?.startRequest(request!, listener: nil)
+            let uow = UOWRemote(appContext: appContext)
+            uow.modelClass = modelClass
+            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.socket = socket
+            uow.extractor = extractor
+            uow.composer = composer
+            uow.nextDepthLevel = nextDepthLevel
+            appContext.uowManager.run(unit: uow) { _ in
+                //
+            }
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }
     }
-
 }
 
 extension ModulesTreeJSONDecoder {
@@ -141,5 +154,20 @@ extension ModulesTreeJSONDecoder {
     private class CurrentModuleExtractor: ManagedObjectExtractable {
         public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         public var jsonKeyPath: KeypathType? { nil }
+    }
+}
+
+// MARK: - %t + ModulesTreeJSONDecoder.ModulesTreeJSONDecoderErrors
+
+extension ModulesTreeJSONDecoder {
+
+    enum ModulesTreeJSONDecoderErrors: Error, CustomStringConvertible {
+        case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+
+        public var description: String {
+            switch self {
+            case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
+            }
+        }
     }
 }

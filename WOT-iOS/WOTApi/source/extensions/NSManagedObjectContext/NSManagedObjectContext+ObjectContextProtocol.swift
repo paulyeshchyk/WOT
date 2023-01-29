@@ -15,7 +15,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 
     // MARK: - ManagedObjectContextLookupProtocol
 
-    public func execute(appContext: ManagedObjectContextProtocol.Context, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
+    public func execute(appContext: ManagedObjectContextProtocol.Context, with block: @escaping ManagedObjectContextProtocol.ContextCompletion) {
         let uuid = UUID()
         let executionStartTime = Date()
         appContext.logInspector?.log(.sqlite(message: LogMessages.perform_start(uuid, self).description), sender: self)
@@ -52,27 +52,18 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return hasChanges
     }
 
-    public func save(appContext: ManagedObjectContextSaveProtocol.Context, completion block: @escaping ThrowableCompletion) {
-        guard hasChanges else {
-            perform { block(nil) }
-            return
-        }
-
-        guard concurrencyType == .privateQueueConcurrencyType else {
-            perform {
-                block(NSManagedObjectContextError.isNotPrivateQueueConcurrencyType)
-            }
+    public func save(appContext: ManagedObjectContextSaveProtocol.Context, completion block: @escaping ThrowableContextCompletion) {
+        guard hasTheChanges() else {
+            perform { block(self, nil) }
             return
         }
 
         let executionStartTime = Date()
         appContext.logInspector?.log(.sqlite(message: LogMessages.perform4Save_start(self).description), sender: self)
 
-        perform {
-            self._save(appContext: appContext) { error in
-                appContext.logInspector?.log(.sqlite(message: LogMessages.perform4Save_done(executionStartTime, self).description), sender: self)
-                block(error)
-            }
+        _save(appContext: appContext) { error in
+            appContext.logInspector?.log(.sqlite(message: LogMessages.perform4Save_done(executionStartTime, self).description), sender: self)
+            block(self, error)
         }
     }
 
@@ -83,12 +74,13 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
             try save()
             appContext.logInspector?.log(.sqlite(message: LogMessages.save_done(executionStartTime, self).description), sender: self)
 
-            if let parent = parent {
-                parent.save(appContext: appContext, completion: block)
-            } else {
-                block(nil)
+            parent?.performAndWait {
+                parent?.save(appContext: appContext, completion: { _, _ in })
             }
+            block(nil)
         } catch {
+            block(error)
+            appContext.logInspector?.log(.error(error), sender: self)
             appContext.logInspector?.log(.sqlite(message: LogMessages.save_fail(executionStartTime, self).description), sender: self)
         }
     }

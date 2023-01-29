@@ -17,13 +17,21 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using jsonMap: JSONMapProtocol, forDepthLevel: DecodingDepthLevel?) throws {
+    func decode(using jsonMap: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
         //
         let element = try jsonMap.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
-        let jsonRef = try JSONRef(data: element, modelClass: Vehicles.self)
-        //
 
+        // MARK: - do check decodingDepth
+
+        if decodingDepthLevel?.maxReached() ?? false {
+            appContext.logInspector?.log(.warning(error: VehiclesJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
+            return
+        }
+
+        // MARK: - relation mapping
+
+        let jsonRef = try JSONRef(data: element, modelClass: Vehicles.self)
         let tank_id = element?[#keyPath(Vehicles.tank_id)] as? NSDecimalNumber
 
         // MARK: - ModulesTree
@@ -47,25 +55,23 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
 
                     let socket = JointSocket(managedRef: managedRef!, identifier: module_id, keypath: keypath)
                     let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-                    let decodingDepthLevel = forDepthLevel?.next
 
                     #warning("move out of Decoder")
 
-                    let uow = UOWDecodeAndLinkMaps()
-                    uow.appContext = appContext
+                    let uow = UOWDecodeAndLinkMaps(appContext: appContext)
                     uow.maps = [jsonMap]
                     uow.modelClass = modelClass
                     uow.socket = socket
-                    uow.decodingDepthLevel = decodingDepthLevel
+                    uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-                    try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+                    appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
 
                 } else {
-                    appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
+                    appContext.logInspector?.log(.warning(error: VehiclesJSONDecoderErrors.moduleTreeNotFound(tank_id)), sender: self)
                 }
             }
         } else {
-            appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehiclesJSONDecoderErrors.moduleTreeNotFound(tank_id)), sender: self)
         }
 
         // MARK: - DefaultProfile
@@ -80,19 +86,17 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
 
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
-            let decodingDepthLevel = forDepthLevel?.next
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
+            uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
 
         } else {
-            appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehiclesJSONDecoderErrors.profileNotFound(tank_id)), sender: self)
         }
     }
 }
@@ -115,24 +119,29 @@ extension VehiclesJSONDecoder {
     }
 }
 
-// MARK: - VehiclesJSONMappingError
+// MARK: - %t + VehiclesJSONDecoder.VehiclesJSONDecoderErrors
 
-private enum VehiclesJSONMappingError: Error, CustomStringConvertible {
-    case notAJSON
-    case passedInvalidModuleTreeJSON(NSDecimalNumber?)
-    case passedInvalidSubModuleJSON
-    case passedInvalidModuleId
-    case profileNotFound(NSDecimalNumber?)
-    case moduleTreeNotFound(NSDecimalNumber?)
+extension VehiclesJSONDecoder {
 
-    public var description: String {
-        switch self {
-        case .notAJSON: return "[\(type(of: self))]: Not a JSON"
-        case .passedInvalidModuleTreeJSON(let profileID): return "[\(type(of: self))]: Passed invalid module tree json for \(profileID ?? -1)"
-        case .passedInvalidSubModuleJSON: return "[\(type(of: self))]: Passed invalid submodule json"
-        case .passedInvalidModuleId: return "[\(type(of: self))]: Passed invalid module id"
-        case .profileNotFound(let id): return "[\(type(of: self))]: Profile is not defined in json for \(id ?? -1)"
-        case .moduleTreeNotFound(let id): return "[\(type(of: self))]: Module tree is not defined in json for \(id ?? -1)"
+    enum VehiclesJSONDecoderErrors: Error, CustomStringConvertible {
+        case notAJSON
+        case passedInvalidModuleTreeJSON(NSDecimalNumber?)
+        case passedInvalidSubModuleJSON
+        case passedInvalidModuleId
+        case profileNotFound(NSDecimalNumber?)
+        case moduleTreeNotFound(NSDecimalNumber?)
+        case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+
+        public var description: String {
+            switch self {
+            case .notAJSON: return "[\(type(of: self))]: Not a JSON"
+            case .passedInvalidModuleTreeJSON(let profileID): return "[\(type(of: self))]: Passed invalid module tree json for \(profileID ?? -1)"
+            case .passedInvalidSubModuleJSON: return "[\(type(of: self))]: Passed invalid submodule json"
+            case .passedInvalidModuleId: return "[\(type(of: self))]: Passed invalid module id"
+            case .profileNotFound(let id): return "[\(type(of: self))]: Profile is not defined in json for \(id ?? -1)"
+            case .moduleTreeNotFound(let id): return "[\(type(of: self))]: Module tree is not defined in json for \(id ?? -1)"
+            case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
+            }
         }
     }
 }

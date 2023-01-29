@@ -31,11 +31,10 @@ open class Request: RequestProtocol, CustomStringConvertible {
         arguments?.contextPredicate
     }
 
-    public var responseConfiguration: ResponseConfigurationProtocol?
-
     public var arguments: RequestArgumentsProtocol?
 
     public var MD5: String { uuid.MD5 }
+    public var completion: ((Data?, Error?) -> Void)?
 
     // MARK: to be moved out from interface
 
@@ -51,7 +50,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
     public required init(appContext: RequestProtocol.Context) {
         self.appContext = appContext
         self.appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
-        decodingDepthLevel = DecodingDepthLevel.initial
+        decodingDepthLevel = DecodingDepthLevel.initial(maxLevel: 1)
     }
 
     deinit {
