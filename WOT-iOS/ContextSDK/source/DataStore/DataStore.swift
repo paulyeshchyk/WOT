@@ -48,12 +48,12 @@ extension DataStore: DataStoreProtocol {
     }
 
     open func perform(mode: PerformMode, block: @escaping ManagedObjectContextProtocol.ContextCompletion) throws {
-        let contextForMode: ManagedObjectContextProtocol
+        let moContext: ManagedObjectContextProtocol
         switch mode {
-        case .read: contextForMode = workingContext()
-        case .readwrite: contextForMode = newPrivateContext()
+        case .read: moContext = workingContext()
+        case .readwrite: moContext = newPrivateContext()
         }
-        perform(managedObjectContext: contextForMode, block: block)
+        perform(managedObjectContext: moContext, block: block)
     }
 
     private func perform(managedObjectContext: ManagedObjectContextProtocol, block: @escaping ManagedObjectContextProtocol.ContextCompletion) {
@@ -61,9 +61,7 @@ extension DataStore: DataStoreProtocol {
     }
 
     public func stash(managedObjectContext: ManagedObjectContextProtocol, completion: @escaping ThrowableContextCompletion) {
-        managedObjectContext.save(appContext: appContext) { error in
-            completion(managedObjectContext, error)
-        }
+        managedObjectContext.save(appContext: appContext, completion: completion)
     }
 
     public func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, completion: @escaping FetchResultCompletion) {
@@ -73,14 +71,14 @@ extension DataStore: DataStoreProtocol {
                 throw DataStoreError.notManagedObjectType(modelClass)
             }
 
-            try perform(mode: .readwrite, block: { [weak self] privateManagedObjectContext in
+            try perform(mode: .readwrite, block: { moContext in
 
-                guard let managedObject = privateManagedObjectContext.findOrCreateObject(appContext: self?.appContext, modelClass: modelClass, predicate: nspredicate) else {
+                guard let managedObject = moContext.findOrCreateObject(appContext: self.appContext, modelClass: modelClass, predicate: nspredicate) else {
                     completion(nil, DataStoreError.objectNotCreated(modelClass))
                     return
                 }
                 let fetchStatus = managedObject.fetchStatus
-                self?.stash(managedObjectContext: privateManagedObjectContext) { context, error in
+                self.stash(managedObjectContext: moContext) { context, error in
                     do {
                         let fetchResult = try managedObject.fetchResult(context: context, fetchStatus: fetchStatus)
                         completion(fetchResult, error)
@@ -88,7 +86,6 @@ extension DataStore: DataStoreProtocol {
                         completion(nil, error)
                     }
                 }
-
             })
         } catch {
             completion(nil, error)

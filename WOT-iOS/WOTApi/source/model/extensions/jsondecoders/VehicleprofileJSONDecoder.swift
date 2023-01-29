@@ -54,14 +54,13 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: ammoKeypath)
             let jsonMap = try JSONMap(data: jsonArray, predicate: composition.contextPredicate)
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noAmmoList(tank_id)), sender: self)
         }
@@ -79,14 +78,13 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: armorKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noArmor(tank_id)), sender: self)
         }
@@ -105,14 +103,13 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noModule(tank_id)), sender: self)
         }
@@ -132,14 +129,13 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: engineKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noEngine(tank_id)), sender: self)
         }
@@ -160,14 +156,13 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: gunKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noGun(tank_id)), sender: self)
         }
@@ -187,14 +182,13 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: suspensionKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noSuspension(tank_id)), sender: self)
         }
@@ -214,14 +208,13 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: turretKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noTurret(tank_id)), sender: self)
         }
@@ -241,14 +234,13 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: radioKeypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noTurret(tank_id)), sender: self)
         }

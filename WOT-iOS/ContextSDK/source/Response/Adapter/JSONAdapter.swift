@@ -85,14 +85,13 @@ public extension JSONAdapter {
 
         let maps = extractor.getJSONMaps(json: json, modelClass: modelClass, jsonRefs: request.contextPredicate?.jsonRefs)
 
-        let uow = UOWDecodeAndLinkMaps()
-        uow.appContext = appContext
+        let uow = UOWDecodeAndLinkMaps(appContext: appContext)
         uow.maps = maps
         uow.modelClass = modelClass
         uow.socket = socket
         uow.decodingDepthLevel = request.decodingDepthLevel
-        try? appContext.uowManager.run(uow) { result in
-            self.completion?(request, (result as? UOWResultProtocol)?.error)
+        appContext.uowManager.run(unit: uow) { result in
+            self.completion?(request, result.error)
         }
     }
 }

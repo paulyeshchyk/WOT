@@ -77,10 +77,10 @@ extension JSONRefProtocol {
 public class ModuleDecoder {
 
     typealias Context = LogInspectorContainerProtocol
-        & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
+        & UOWManagerContainerProtocol
 
     let appContext: Context
     public var modelClass: PrimaryKeypathProtocol.Type?
@@ -131,34 +131,21 @@ public class ModuleDecoder {
         guard let parentHostPin = parentHostPin else {
             return
         }
+        let modelClass = pin.modelClass
+        let modelFieldKeyPaths = modelClass.fieldsKeypaths()
+        let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
+        let nextDepthLevel = decodingDepthLevel
 
-        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: pin.modelClass)
-        httpJSONResponseConfiguration.socket = socket
-        httpJSONResponseConfiguration.extractor = extractor
-
-        let httpRequestConfiguration = HttpRequestConfiguration(modelClass: pin.modelClass)
-        httpRequestConfiguration.modelFieldKeyPaths = pin.modelClass.fieldsKeypaths()
-        httpRequestConfiguration.composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
-
-        let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel)
-        try appContext.requestManager?.startRequest(request!, listener: self)
-    }
-}
-
-// MARK: - ModuleDecoder + RequestManagerListenerProtocol
-
-extension ModuleDecoder: RequestManagerListenerProtocol {
-    public var MD5: String {
-        "ModuleDecoder"
-    }
-
-    public func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error _: Error?) {
-        requestManager.removeListener(self)
-    }
-
-    public func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {}
-    public func requestManager(_ requestManager: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
-        requestManager.removeListener(self)
+        let uow = UOWRemote(appContext: appContext)
+        uow.modelClass = modelClass
+        uow.modelFieldKeyPaths = modelFieldKeyPaths
+        uow.socket = socket
+        uow.extractor = extractor
+        uow.composer = composer
+        uow.nextDepthLevel = nextDepthLevel
+        appContext.uowManager.run(unit: uow) { _ in
+            //
+        }
     }
 }
 

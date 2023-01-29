@@ -1,37 +1,9 @@
 //
-//  HttpJSONResponseConfiguration.swift
+//  HttpRequestConfiguration.swift
 //  ContextSDK
 //
-//  Created by Paul on 18.01.23.
+//  Created by Paul on 29.01.23.
 //
-
-// MARK: - HttpJSONResponseConfiguration
-
-@objc
-public class HttpJSONResponseConfiguration: NSObject, ResponseConfigurationProtocol {
-
-    public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
-
-    public let modelClass: ModelClassType
-    public var socket: JointSocketProtocol?
-    public var extractor: ManagedObjectExtractable?
-
-    public required init(modelClass: ModelClassType) {
-        self.modelClass = modelClass
-        super.init()
-    }
-
-    public func handleData(_ data: Data?, fromRequest request: RequestProtocol, forService modelService: RequestModelServiceProtocol, inAppContext appContext: Context, completion: WorkWithDataCompletion?) {
-        //
-        let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext, modelClass: modelClass)
-        dataAdapter.request = request
-        dataAdapter.socket = socket
-        dataAdapter.extractor = extractor
-        dataAdapter.completion = completion
-
-        dataAdapter.decode(data: data, fromRequest: request)
-    }
-}
 
 // MARK: - HttpRequestConfiguration
 

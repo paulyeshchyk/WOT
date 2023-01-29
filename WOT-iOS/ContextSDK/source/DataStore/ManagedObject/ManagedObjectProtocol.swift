@@ -22,7 +22,6 @@ public typealias ManagedAndDecodableObjectType = (DecodableProtocol & ManagedObj
 
 @objc
 public protocol ManagedRefProtocol {
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     var modelClass: ModelClassType { get }
     var managedObjectID: AnyObject { get }

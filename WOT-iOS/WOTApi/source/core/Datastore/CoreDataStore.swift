@@ -46,8 +46,6 @@ open class CoreDataStore: DataStore {
         return NSManagedObjectModel(contentsOf: modelURL)
     }()
 
-    // MARK: Public
-
     private lazy var masterContext: NSManagedObjectContext = CoreDataStore.masterContext(persistentStoreCoordinator: persistentStoreCoordinator)
 
     private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(parentContext: masterContext)

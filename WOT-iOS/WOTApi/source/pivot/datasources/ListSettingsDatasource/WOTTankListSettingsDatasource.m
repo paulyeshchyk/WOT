@@ -207,7 +207,7 @@
         setting.type = WOTApiSettingType.key_type_sort;
         setting.orderBy = @(orderBy);
 
-        [context saveWithAppContext:appContext completion:^(NSError * _Nullable error) {
+        [context saveWithAppContext:appContext completion:^(id<ManagedObjectContextProtocol> _Nonnull moContext, NSError * _Nullable error) {
             if (callback) {
                 callback(setting);
             }
@@ -230,7 +230,7 @@
         setting.type = WOTApiSettingType.key_type_group;
         setting.orderBy = @(orderBy);
 
-        [context saveWithAppContext:appContext completion:^(NSError * _Nullable error) {
+        [context saveWithAppContext:appContext completion:^(id<ManagedObjectContextProtocol> _Nonnull moContext, NSError * _Nullable error) {
             if (callback) {
                 callback(setting);
             }
@@ -254,7 +254,7 @@
         setting.type = WOTApiSettingType.key_type_filter;
         setting.orderBy = @(0);
         setting.values = value;
-        [context saveWithAppContext:appContext completion:^(NSError * _Nullable error) {
+        [context saveWithAppContext:appContext completion:^(id<ManagedObjectContextProtocol> _Nonnull moContext, NSError * _Nullable error) {
             if (callback) {
                 callback(setting);
             }

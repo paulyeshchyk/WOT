@@ -6,7 +6,6 @@
 //
 
 public struct JointPin: JointPinProtocol {
-    public typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
     public let modelClass: ModelClassType
     public let identifier: JSONValueType?

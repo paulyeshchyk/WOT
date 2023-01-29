@@ -44,14 +44,13 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier)
             let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
 
-            let uow = UOWDecodeAndLinkMaps()
-            uow.appContext = appContext
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            try appContext.uowManager.run(uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
         }
     }
 }

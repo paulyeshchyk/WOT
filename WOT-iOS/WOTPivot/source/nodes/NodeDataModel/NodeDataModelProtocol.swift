@@ -18,7 +18,8 @@ public protocol NodeDataModelProtocol {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
+        & DecoderManagerContainerProtocol
+        & UOWManagerContainerProtocol
 
     var rootNodes: [NodeProtocol] { get }
     var endpointsCount: Int { get }

@@ -32,11 +32,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return object(with: objectID)
     }
 
-    public func findOrCreateObject(appContext: ManagedObjectContextProtocol.Context?, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
-        guard let appContext = appContext else {
-            return nil
-        }
-
+    public func findOrCreateObject(appContext: ManagedObjectContextProtocol.Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
         do {
             guard let foundObject = try lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
                 appContext.logInspector?.log(.sqlite(message: LogMessages.select_fail(predicate, self).description), sender: self)
@@ -56,9 +52,9 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return hasChanges
     }
 
-    public func save(appContext: ManagedObjectContextSaveProtocol.Context, completion block: @escaping ThrowableCompletion) {
-        guard hasChanges else {
-            perform { block(nil) }
+    public func save(appContext: ManagedObjectContextSaveProtocol.Context, completion block: @escaping ThrowableContextCompletion) {
+        guard hasTheChanges() else {
+            perform { block(self, nil) }
             return
         }
 
@@ -67,7 +63,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 
         _save(appContext: appContext) { error in
             appContext.logInspector?.log(.sqlite(message: LogMessages.perform4Save_done(executionStartTime, self).description), sender: self)
-            block(error)
+            block(self, error)
         }
     }
 
@@ -78,14 +74,8 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
             try save()
             appContext.logInspector?.log(.sqlite(message: LogMessages.save_done(executionStartTime, self).description), sender: self)
 
-            if let parent = parent {
-                parent.performAndWait {
-                    parent.save(appContext: appContext) { error in
-                        if error != nil {
-                            appContext.logInspector?.log(.error(error), sender: self)
-                        }
-                    }
-                }
+            parent?.performAndWait {
+                parent?.save(appContext: appContext, completion: { _, _ in })
             }
             block(nil)
         } catch {

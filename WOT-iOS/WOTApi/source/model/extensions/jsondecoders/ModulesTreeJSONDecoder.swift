@@ -59,24 +59,26 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
     private func fetchCurrentModule(identifier: JSONValueType?, map: JSONMapProtocol, moduleTreeJSON: JSON?, decodingDepthLevel: DecodingDepthLevel?) {
         do {
-            let managedRef = try managedObject?.managedRef()
+            let managedRef: ManagedRefProtocol? = try managedObject?.managedRef()
+            let modelClass: ModelClassType = Module.self
+            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
+            let socket: JointSocketProtocol = JointSocket(managedRef: managedRef!, identifier: nil, keypath: #keyPath(ModulesTree.currentModule))
+            let extractor: ManagedObjectExtractable? = CurrentModuleExtractor()
 
-            let modelClass = Module.self
+            let pin: JointPinProtocol = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
+            let jsonRef: JSONRefProtocol = try JSONRef(data: moduleTreeJSON, modelClass: ModulesTree.self)
+            let composer: FetchRequestPredicateComposerProtocol? = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
 
-            let jsonRef = try JSONRef(data: moduleTreeJSON, modelClass: ModulesTree.self)
-            let pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
-
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: #keyPath(ModulesTree.currentModule))
-            httpJSONResponseConfiguration.extractor = CurrentModuleExtractor()
-
-            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            httpRequestConfiguration.composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
-
-            #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
-            try appContext.requestManager?.startRequest(request!, listener: nil)
+            let uow = UOWRemote(appContext: appContext)
+            uow.modelClass = modelClass
+            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.socket = socket
+            uow.extractor = extractor
+            uow.composer = composer
+            uow.nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+            appContext.uowManager.run(unit: uow) { _ in
+                //
+            }
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }
@@ -86,22 +88,24 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
         do {
             let managedRef = try managedObject?.managedRef()
-
             let modelClass = Module.self
-
+            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
+            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextModulesKeypath)
+            let extractor = NextModuleExtractor()
+            let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
+            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextModulesKeypath)
-            httpJSONResponseConfiguration.extractor = NextModuleExtractor()
-
-            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            httpRequestConfiguration.composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
-
-            #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
-            try appContext.requestManager?.startRequest(request!, listener: nil)
+            let uow = UOWRemote(appContext: appContext)
+            uow.modelClass = modelClass
+            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.socket = socket
+            uow.extractor = extractor
+            uow.composer = composer
+            uow.nextDepthLevel = nextDepthLevel
+            appContext.uowManager.run(unit: uow) { _ in
+                //
+            }
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }
@@ -111,27 +115,28 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
         do {
             let managedRef = try managedObject?.managedRef()
-
             let modelClass = Vehicles.self
-            // parents was not used for next portion of tanks
+            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
+            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextTanksKeypath)
+            let extractor = NextVehicleExtractor()
+            let composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
+            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextTanksKeypath)
-            httpJSONResponseConfiguration.extractor = NextVehicleExtractor()
-
-            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            httpRequestConfiguration.composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
-
-            #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
-            try appContext.requestManager?.startRequest(request!, listener: nil)
+            let uow = UOWRemote(appContext: appContext)
+            uow.modelClass = modelClass
+            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.socket = socket
+            uow.extractor = extractor
+            uow.composer = composer
+            uow.nextDepthLevel = nextDepthLevel
+            appContext.uowManager.run(unit: uow) { _ in
+                //
+            }
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }
     }
-
 }
 
 extension ModulesTreeJSONDecoder {

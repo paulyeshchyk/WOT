@@ -16,9 +16,6 @@ typedef NSTimer*(^WOTSessionManagerInvalidateTimeCompletion)(NSTimeInterval inte
 + (id)currentAccessToken;
 + (NSString *)currentUserName;
 
-+ (void)switchUserWithRequestManager:(id<RequestManagerProtocol>) requestManager;
-+ (void)logoutWithRequestManager:(id<RequestManagerProtocol>) requestManager;
-+ (void)loginWithRequestManager:(id<RequestManagerProtocol>) requestManager;
 + (BOOL)sessionHasBeenExpired;
 
 + (WOTSessionManager *)sharedInstance;

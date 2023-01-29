@@ -197,8 +197,8 @@ class WOTTankPivotViewController: PivotViewController {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
-        & DataStoreContainerProtocol
+        & DecoderManagerContainerProtocol
+        & UOWManagerContainerProtocol
 
     static var registeredCells: [UICollectionViewCell.Type] = {
         return [WOTTankPivotDataCollectionViewCell.self,

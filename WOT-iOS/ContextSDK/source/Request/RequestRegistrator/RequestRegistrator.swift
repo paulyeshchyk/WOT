@@ -41,10 +41,9 @@ public extension RequestRegistrator {
         registeredModelClass[registrationID] = modelClass
     }
 
-    func createRequest(requestConfiguration: RequestConfigurationProtocol, responseConfiguration: ResponseConfigurationProtocol, decodingDepthLevel: DecodingDepthLevel?) throws -> RequestProtocol {
+    func createRequest(requestConfiguration: RequestConfigurationProtocol, decodingDepthLevel: DecodingDepthLevel?) throws -> RequestProtocol {
         //
         let request = try createRequest(forModelClass: requestConfiguration.modelClass)
-        request.responseConfiguration = responseConfiguration
         request.decodingDepthLevel = decodingDepthLevel
         request.arguments = try requestConfiguration.buildArguments(forRequest: request)
 

@@ -33,97 +33,117 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
 
         if let gun_id = element?[#keyPath(VehicleprofileModule.gun_id)] {
             //
-            let modelClass = VehicleprofileGun.self
             let managedRef = try managedObject?.managedRef()
-
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
-            httpJSONResponseConfiguration.extractor = VehicleprofileModule.GunExtractor()
-
+            let modelClass = VehicleprofileGun.self
+            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
-            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let socket = JointSocket(managedRef: managedRef!, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
+            let extractor = VehicleprofileModule.GunExtractor()
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
-            try appContext.requestManager?.startRequest(request!, listener: nil)
+            let uow = UOWRemote(appContext: appContext)
+            uow.modelClass = modelClass
+            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.socket = socket
+            uow.extractor = extractor
+            uow.composer = composer
+            uow.nextDepthLevel = nextDepthLevel
+            appContext.uowManager.run(unit: uow) { _ in
+                //
+            }
         }
 
         if let radio_id = element?[#keyPath(VehicleprofileModule.radio_id)] {
             //
-            let modelClass = VehicleprofileRadio.self
             let managedRef = try managedObject?.managedRef()
-
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
-            httpJSONResponseConfiguration.extractor = VehicleprofileModule.RadioExtractor()
-
+            let modelClass = VehicleprofileRadio.self
+            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
-            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let socket = JointSocket(managedRef: managedRef!, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let extractor = VehicleprofileModule.RadioExtractor()
+            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
-            try appContext.requestManager?.startRequest(request!, listener: nil)
+            let uow = UOWRemote(appContext: appContext)
+            uow.modelClass = modelClass
+            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.socket = socket
+            uow.extractor = extractor
+            uow.composer = composer
+            uow.nextDepthLevel = nextDepthLevel
+            appContext.uowManager.run(unit: uow) { _ in
+                //
+            }
         }
 
         if let engine_id = element?[#keyPath(VehicleprofileModule.engine_id)] {
             //
-            let modelClass = VehicleprofileEngine.self
             let managedRef = try managedObject?.managedRef()
-
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
-            httpJSONResponseConfiguration.extractor = VehicleprofileModule.EngineExtractor()
-
+            let modelClass = VehicleprofileEngine.self
+            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
-            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let socket = JointSocket(managedRef: managedRef!, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let extractor = VehicleprofileModule.EngineExtractor()
+            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
-            try appContext.requestManager?.startRequest(request!, listener: nil)
+            let uow = UOWRemote(appContext: appContext)
+            uow.modelClass = modelClass
+            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.socket = socket
+            uow.extractor = extractor
+            uow.composer = composer
+            uow.nextDepthLevel = nextDepthLevel
+            appContext.uowManager.run(unit: uow) { _ in
+                //
+            }
         }
 
         if let suspension_id = element?[#keyPath(VehicleprofileModule.suspension_id)] {
             //
-            let modelClass = VehicleprofileSuspension.self
             let managedRef = try managedObject?.managedRef()
-
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
-            httpJSONResponseConfiguration.extractor = VehicleprofileModule.SuspensionExtractor()
-
+            let modelClass = VehicleprofileSuspension.self
+            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
-            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let socket = JointSocket(managedRef: managedRef!, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let extractor = VehicleprofileModule.SuspensionExtractor()
+            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
-            try appContext.requestManager?.startRequest(request!, listener: nil)
+            let uow = UOWRemote(appContext: appContext)
+            uow.modelClass = modelClass
+            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.socket = socket
+            uow.extractor = extractor
+            uow.composer = composer
+            uow.nextDepthLevel = nextDepthLevel
+            appContext.uowManager.run(unit: uow) { _ in
+                //
+            }
         }
 
         if let turret_id = element?[#keyPath(VehicleprofileModule.turret_id)] {
             //
             let modelClass = VehicleprofileTurret.self
             let managedRef = try managedObject?.managedRef()
-
-            let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-            httpJSONResponseConfiguration.socket = JointSocket(managedRef: managedRef!, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
-            httpJSONResponseConfiguration.extractor = VehicleprofileModule.TurretExtractor()
-
+            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)
-            let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-            httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            httpRequestConfiguration.composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let socket = JointSocket(managedRef: managedRef!, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let extractor = VehicleprofileModule.TurretExtractor()
+            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            #warning("move out of Decoder")
-            let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration, responseConfiguration: httpJSONResponseConfiguration, decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
-            try appContext.requestManager?.startRequest(request!, listener: nil)
+            let uow = UOWRemote(appContext: appContext)
+            uow.modelClass = modelClass
+            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.socket = socket
+            uow.extractor = extractor
+            uow.composer = composer
+            uow.nextDepthLevel = nextDepthLevel
+            appContext.uowManager.run(unit: uow) { _ in
+                //
+            }
         }
     }
 }

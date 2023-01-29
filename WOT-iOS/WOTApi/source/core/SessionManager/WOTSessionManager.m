@@ -17,14 +17,6 @@
 
 @implementation WOTSessionManager
 
-+ (void)loginWithRequestManager:(id<RequestManagerProtocol>) requestManager {
-    
-}
-
-+ (void)switchUserWithRequestManager:(id<RequestManagerProtocol>) requestManager {
-    
-}
-
 + (id)currentAccessToken {
     return nil;
 //    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
@@ -50,12 +42,6 @@
 //    NSManagedObjectContext *context = [coreDataProvider mainContext];
 //    UserSession *session = (UserSession *)[context singleObjectForType:UserSession.class predicate:nil includeSubentities:NO];
 //    return [session.expires_at integerValue];
-}
-
-
-+ (void)logoutWithRequestManager:(id<RequestManagerProtocol>) requestManager {
-//    id<WOTRequestProtocol> request = [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
-//    [requestManager start:request with:[[WOTRequestArguments alloc] init] forGroupId:WGWebRequestGroups.logout jsonLink: NULL];
 }
 
 //+ (void)loginWithRequestManager:(id<RequestManagerProtocol>) requestManager {

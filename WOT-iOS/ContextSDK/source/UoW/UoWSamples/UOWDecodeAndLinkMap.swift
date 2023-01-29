@@ -8,15 +8,13 @@
 // MARK: - UOWDecodeAndLinkMapProtocol
 
 public protocol UOWDecodeAndLinkMapProtocol: UOWProtocol {
+
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
-        & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & UOWManagerContainerProtocol
-    typealias ModelClassType = (PrimaryKeypathProtocol & FetchableProtocol).Type
 
-    var appContext: Context? { get set }
     var map: JSONMapProtocol? { get set }
     var modelClass: ModelClassType? { get set }
     var socket: JointSocketProtocol? { get set }
@@ -53,13 +51,15 @@ public class UOWDecodeAndLinkMap: UOWDecodeAndLinkMapProtocol, CustomStringConve
         return [modelClassDescr, socketDescr].compactMap { $0 }.joined(separator: ", ")
     }
 
-    public var appContext: Context?
+    private let appContext: Context
     public var map: JSONMapProtocol?
     public var modelClass: ModelClassType?
     public var socket: JointSocketProtocol?
     public var decodingDepthLevel: DecodingDepthLevel?
 
-    public init() {}
+    public init(appContext: Context) {
+        self.appContext = appContext
+    }
 
     deinit {}
 }
@@ -70,46 +70,43 @@ extension UOWDecodeAndLinkMap: UOWRunnable {
 
     func runnableBlock() -> UOWRunnable.RunnableBlockType? {
         return { exitToPassThrough, exit in
-            self.appContext?.logInspector?.log(.uow("moParse", message: "start \(self.debugDescription)"), sender: self)
+            self.appContext.logInspector?.log(.uow("moParse", message: "start \(self.debugDescription)"), sender: self)
             do {
                 guard let modelClass = self.modelClass else {
-                    throw Errors.noAppContextProvided
+                    throw Errors.noModelClassProvided
                 }
 
-                guard let appContext = self.appContext else {
-                    throw Errors.noAppContextProvided
-                }
                 guard let element = self.map else {
                     throw Errors.noMapProvided
                 }
 
-                let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
+                let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: self.appContext)
                 managedObjectLinkerHelper.socket = self.socket
                 managedObjectLinkerHelper.completion = { fetchResult, error in
-                    if let error = error { appContext.logInspector?.log(.error(error), sender: self) }
-                    self.appContext?.logInspector?.log(.uow("moParse", message: "finish \(self.debugDescription)"), sender: self)
-                    exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: fetchResult, error: error))
+                    if let error = error { self.appContext.logInspector?.log(.error(error), sender: self) }
+                    self.appContext.logInspector?.log(.uow("moParse", message: "finish \(self.debugDescription)"), sender: self)
+                    exit(exitToPassThrough, UOWResult.init(fetchResult: fetchResult, error: error))
                 }
 
-                let mappingCoordinatorDecodeHelper = ManagedObjectDecodeHelper(appContext: appContext, decodingDepthLevel: self.decodingDepthLevel)
+                let mappingCoordinatorDecodeHelper = ManagedObjectDecodeHelper(appContext: self.appContext, decodingDepthLevel: self.decodingDepthLevel)
                 mappingCoordinatorDecodeHelper.jsonMap = element
                 mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
-                    if let error = error { appContext.logInspector?.log(.error(error), sender: self) }
+                    if let error = error { self.appContext.logInspector?.log(.error(error), sender: self) }
                     managedObjectLinkerHelper.run(fetchResult)
                 }
 
-                let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
+                let datastoreFetchHelper = DatastoreFetchHelper(appContext: self.appContext)
                 datastoreFetchHelper.modelClass = modelClass
                 datastoreFetchHelper.nspredicate = element.contextPredicate.nspredicate(operator: .and)
                 datastoreFetchHelper.completion = { fetchResult, error in
-                    if let error = error { appContext.logInspector?.log(.error(error), sender: self) }
+                    if let error = error { self.appContext.logInspector?.log(.error(error), sender: self) }
                     mappingCoordinatorDecodeHelper.run(fetchResult)
                 }
 
                 datastoreFetchHelper.run()
             } catch {
-                self.appContext?.logInspector?.log(.uow("moParse", message: "finish \(self.debugDescription)"), sender: self)
-                exit(exitToPassThrough, UOWDecodeAndLinkMapsResult.init(fetchResult: nil, error: error))
+                self.appContext.logInspector?.log(.uow("moParse", message: "finish \(self.debugDescription)"), sender: self)
+                exit(exitToPassThrough, UOWResult.init(fetchResult: nil, error: error))
             }
         }
     }
@@ -120,7 +117,6 @@ extension UOWDecodeAndLinkMap: UOWRunnable {
 extension UOWDecodeAndLinkMap {
     enum Errors: Error {
         case noMapProvided
-        case noAppContextProvided
         case noModelClassProvided
     }
 }
