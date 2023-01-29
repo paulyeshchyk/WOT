@@ -18,7 +18,6 @@ public protocol NodeDataModelProtocol {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
         & DecoderManagerContainerProtocol
         & UOWManagerContainerProtocol
 

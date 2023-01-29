@@ -77,7 +77,6 @@ extension JSONRefProtocol {
 public class ModuleDecoder {
 
     typealias Context = LogInspectorContainerProtocol
-        & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
@@ -147,23 +146,6 @@ public class ModuleDecoder {
         appContext.uowManager.run(unit: uow) { _ in
             //
         }
-    }
-}
-
-// MARK: - ModuleDecoder + RequestManagerListenerProtocol
-
-extension ModuleDecoder: RequestManagerListenerProtocol {
-    public var MD5: String {
-        "ModuleDecoder"
-    }
-
-    public func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error _: Error?) {
-        requestManager.removeListener(self)
-    }
-
-    public func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {}
-    public func requestManager(_ requestManager: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
-        requestManager.removeListener(self)
     }
 }
 

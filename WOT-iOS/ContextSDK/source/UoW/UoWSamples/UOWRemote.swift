@@ -12,7 +12,6 @@ public protocol UOWRemoteProtocol: UOWProtocol {
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
         & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
         & UOWManagerContainerProtocol
 
     var modelClass: ModelClassType? { get set }
@@ -67,14 +66,14 @@ extension UOWRemote: UOWRunnable {
             self.extToPathThrough = exitToPassThrough
             self.ext = exit
 
-            self.appContext.logInspector?.log(.uow("moParse", message: "start \(self.debugDescription)"), sender: self)
+            self.appContext.logInspector?.log(.uow("remote", message: "start \(self.debugDescription)"), sender: self)
 
             let responseAdapterHelper = ResponseAdapterHelper(appContext: self.appContext)
             responseAdapterHelper.modelClass = self.modelClass
             responseAdapterHelper.socket = self.socket
             responseAdapterHelper.extractor = self.extractor
             responseAdapterHelper.completion = { fetchResult in
-                self.appContext.logInspector?.log(.uow("moParse", message: "finish \(self.debugDescription)"), sender: self)
+                self.appContext.logInspector?.log(.uow("remote", message: "finish \(self.debugDescription)"), sender: self)
                 exit(exitToPassThrough, fetchResult)
             }
 

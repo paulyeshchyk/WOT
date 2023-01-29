@@ -11,7 +11,6 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
 
     #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
-        & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol

@@ -15,7 +15,6 @@ public class WOTWEBRequestFactory: NSObject {
     public typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
         & DecoderManagerContainerProtocol
         & UOWManagerContainerProtocol
 

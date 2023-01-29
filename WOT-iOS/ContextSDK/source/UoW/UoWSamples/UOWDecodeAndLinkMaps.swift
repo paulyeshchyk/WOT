@@ -12,7 +12,6 @@ public protocol UOWDecodeAndLinkMapsProtocol: UOWProtocol {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
-        & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & UOWManagerContainerProtocol
 

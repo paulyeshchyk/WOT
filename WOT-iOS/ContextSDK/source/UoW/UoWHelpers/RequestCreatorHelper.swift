@@ -9,7 +9,6 @@
 
 class RequestCreatorHeper {
     typealias Context = LogInspectorContainerProtocol
-        & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol

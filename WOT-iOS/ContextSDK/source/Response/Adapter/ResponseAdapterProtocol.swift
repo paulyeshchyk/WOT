@@ -14,7 +14,6 @@ public protocol ResponseAdapterProtocol {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
         & DecoderManagerContainerProtocol
         & UOWManagerContainerProtocol
 

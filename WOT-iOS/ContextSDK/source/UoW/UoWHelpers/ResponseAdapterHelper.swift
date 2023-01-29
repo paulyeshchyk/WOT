@@ -9,7 +9,6 @@
 
 class ResponseAdapterHelper {
     typealias Context = LogInspectorContainerProtocol
-        & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol

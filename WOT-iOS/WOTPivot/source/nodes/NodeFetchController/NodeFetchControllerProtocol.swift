@@ -16,7 +16,6 @@ public protocol NodeFetchControllerProtocol {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
 
     func performFetch(appContext: Context) throws
     func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: NodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion)

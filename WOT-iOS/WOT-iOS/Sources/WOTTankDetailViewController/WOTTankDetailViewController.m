@@ -55,7 +55,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 @property (nonatomic, strong)WOTTankMetricOptions* metricOptions;
 @property (nonatomic, strong)Vehicles *vehicle;
 @property (nonatomic, strong)NSMutableSet *runningRequestIDs;
-@property (nonatomic, strong) id<RequestManagerProtocol> requestManager;
 
 @end
 
@@ -70,11 +69,9 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
-    [self.requestManager cancelRequestsWithGroupId:requestId reason: reason];
     
     [self.runningRequestIDs enumerateObjectsUsingBlock:^(id requestID, BOOL *stop) {
         
-        [self.requestManager cancelRequestsWithGroupId:requestID reason: reason];
     }];
     
     [self.runningRequestIDs removeAllObjects];

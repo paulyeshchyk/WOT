@@ -41,14 +41,7 @@
 }
 
 - (void)dealloc {
-    [[self requestManager] removeListener: self];
-
     self.model = nil;
-}
-
-- (id<RequestManagerProtocol>) requestManager {
-    id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-    return ((id<ContextProtocol>) delegate).requestManager;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -261,12 +254,10 @@
 @end
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<NodeCreatorProtocol>
-@property (nonatomic, weak) id<RequestManagerProtocol> requestManager;
 @end
 
 @implementation WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)
 @dynamic collapseToGroups;
-@dynamic requestManager;
 @dynamic useEmptyNode;
 
 - (id<NodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {

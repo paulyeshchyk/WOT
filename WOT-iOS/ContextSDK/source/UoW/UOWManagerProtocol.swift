@@ -23,7 +23,6 @@ public protocol UOWManagerProtocol {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
-        & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & UOWManagerContainerProtocol
 

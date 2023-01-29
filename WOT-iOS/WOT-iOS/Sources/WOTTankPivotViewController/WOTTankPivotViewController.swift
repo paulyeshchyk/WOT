@@ -197,7 +197,6 @@ class WOTTankPivotViewController: PivotViewController {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
-        & RequestManagerContainerProtocol
         & DecoderManagerContainerProtocol
         & UOWManagerContainerProtocol
 

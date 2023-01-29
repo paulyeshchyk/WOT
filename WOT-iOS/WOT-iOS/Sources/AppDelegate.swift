@@ -19,8 +19,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public lazy var logInspector: LogInspectorProtocol? = LogInspector(priorities: logPriorities, output: [logOutput])
     public lazy var hostConfiguration: HostConfigurationProtocol? = WOTHostConfiguration()
     public lazy var requestRegistrator: RequestRegistratorProtocol? = WOTRequestRegistrator(appContext: self)
-    public lazy var requestManager: RequestManagerProtocol? = RequestManager(appContext: self)
-    public lazy var responseManager: ResponseManagerProtocol? = WOTResponseManager(appContext: self)
     public lazy var dataStore: DataStoreProtocol? = WOTDataStore(appContext: self)
     public lazy var decoderManager: DecoderManagerProtocol? = WOTDecoderManager()
     public var requestListener: RequestListenerProtocol?

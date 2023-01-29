@@ -7,7 +7,6 @@
 
 class RequestRunnerHelper {
     typealias Context = LogInspectorContainerProtocol
-        & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
