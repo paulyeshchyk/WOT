@@ -18,6 +18,15 @@
 
 @end
 
+@interface WOTTankPivotFixedCollectionViewCell()
+
+@property (nonatomic, weak) IBOutlet UILabel *label;
+@property (nonatomic, weak) IBOutlet UIView *backView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *bottomConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *rightConstraint;
+
+@end
+
 @implementation WOTTankPivotFixedCollectionViewCell
 
 - (void)awakeFromNib {
