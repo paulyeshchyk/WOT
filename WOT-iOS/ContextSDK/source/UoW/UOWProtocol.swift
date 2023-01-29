@@ -10,6 +10,7 @@
 @objc
 public enum UOWType: Int {
     case decodeAndLink
+    case remote
 }
 
 // MARK: - UOWProtocol

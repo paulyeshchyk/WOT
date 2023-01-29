@@ -21,7 +21,7 @@
 #import "NSBundle+LanguageBundle.h"
 
 
-@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, RequestListenerProtocol, RequestManagerListenerProtocol, NodeDataModelListener, MD5Protocol>
+@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NodeDataModelListener, MD5Protocol>
 
 @property (nonatomic, strong) TreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
@@ -153,8 +153,11 @@
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
                                                  appContext: appContext
-                                                   listener: self
-                                                      error: &error];
+                                                 completion:^(id<UOWResultProtocol> _Nonnull result) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self reloadModel];
+        });
+    }];
   }
 
 #pragma mark - UICollectionViewDataSource
@@ -234,41 +237,6 @@
         }
     }
     return result;
-}
-
-#pragma mark - RequestListener
-
-- (void)request:(id<RequestProtocol>)request finishedLoadData:(NSData *)data error:(NSError *)error {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self reloadModel];
-    });
-    [[self requestManager] removeListener: self];
-}
-
-- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(NSURLRequest * _Nonnull)urlRequest {
-    
-}
-
-- (void)request:(id<RequestProtocol> _Nonnull)request canceledWith:(NSError * _Nullable)error {
-    
-}
-
-#pragma mark - RequestManagerListener
-
-- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest error:(NSError * _Nullable)error{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self reloadModel];
-    });
-    [requestManager removeListener: self];
-}
-
-
-- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<RequestProtocol> _Nonnull)didStartRequest {
-    //
-}
-
-- (void)requestManager:(id<RequestManagerProtocol>)requestManager didCancelRequest:(id<RequestProtocol>)didCancelRequest reason:(id<RequestCancelReasonProtocol>)reason {
-    [requestManager removeListener: self];
 }
 
 #pragma mark -

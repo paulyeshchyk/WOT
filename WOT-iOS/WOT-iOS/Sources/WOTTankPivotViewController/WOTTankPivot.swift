@@ -104,7 +104,7 @@ class WOTTankPivotMetadatasource: PivotMetaDatasourceProtocol {
 
 // MARK: - WOTTankPivotModel
 
-class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
+class WOTTankPivotModel: PivotDataModel {
 
     var MD5: String { uuid.MD5 }
 
@@ -142,7 +142,7 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
     }
 
     deinit {
-        appContext.requestManager?.removeListener(self)
+        //
     }
 
     // MARK: Internal
@@ -151,28 +151,13 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
         super.loadModel()
 
         do {
-            try WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext, listener: self)
+            try WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext) { _ in
+                DispatchQueue.main.async {
+                    super.loadModel()
+                }
+            }
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }
-    }
-
-    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error: Error?) {
-        if error != nil {
-            appContext.logInspector?.log(.error(error), sender: self)
-        }
-        requestManager.removeListener(self)
-
-        DispatchQueue.main.async {
-            super.loadModel()
-        }
-    }
-
-    func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {
-        //
-    }
-
-    func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
-        //
     }
 }

@@ -198,7 +198,8 @@ class WOTTankPivotViewController: PivotViewController {
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
-        & DataStoreContainerProtocol
+        & DecoderManagerContainerProtocol
+        & UOWManagerContainerProtocol
 
     static var registeredCells: [UICollectionViewCell.Type] = {
         return [WOTTankPivotDataCollectionViewCell.self,

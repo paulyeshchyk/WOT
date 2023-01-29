@@ -16,6 +16,8 @@ public class WOTWEBRequestFactory: NSObject {
         & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & RequestManagerContainerProtocol
+        & DecoderManagerContainerProtocol
+        & UOWManagerContainerProtocol
 
     private enum HttpRequestFactoryError: Error, CustomStringConvertible {
         case objectNotDefined
@@ -29,63 +31,39 @@ public class WOTWEBRequestFactory: NSObject {
 
     // MARK: Public
 
-    public static func fetchVehiclePivotData(appContext: Context, listener: RequestManagerListenerProtocol) throws {
+    public static func fetchVehiclePivotData(appContext: Context, completion: @escaping ListenerCompletionType) throws {
         //
         let modelClass = Vehicles.self
+        let modelFieldKeyPaths = modelClass.dataFieldsKeypaths()// modelClass.dataFieldsKeypaths()// modelClass.fieldsKeypaths()
 
-        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-        httpJSONResponseConfiguration.socket = nil
-        httpJSONResponseConfiguration.extractor = VehiclesPivotManagedObjectExtractor()
-
-        let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-        httpRequestConfiguration.modelFieldKeyPaths = modelClass.dataFieldsKeypaths()// modelClass.fieldsKeypaths()
-        httpRequestConfiguration.composer = nil
-
-        guard let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration,
-                                                                             responseConfiguration: httpJSONResponseConfiguration,
-                                                                             decodingDepthLevel: DecodingDepthLevel.initial(maxLevel: 0))
-        else {
-            throw HttpRequestFactoryError.objectNotDefined
+        let uow = UOWRemote(appContext: appContext)
+        uow.modelClass = modelClass
+        uow.modelFieldKeyPaths = modelFieldKeyPaths
+        uow.socket = nil
+        uow.extractor = VehiclesPivotManagedObjectExtractor()
+        uow.composer = nil
+        uow.nextDepthLevel = DecodingDepthLevel.initial(maxLevel: 0)
+        appContext.uowManager.run(unit: uow) { result in
+            completion(result)
         }
-
-        try appContext.requestManager?.startRequest(request, listener: listener)
     }
 
     @objc
-    public static func fetchVehicleTreeData(vehicleId: Int, appContext: Context, listener: RequestManagerListenerProtocol) throws {
+    public static func fetchVehicleTreeData(vehicleId: Int, appContext: Context, completion: @escaping ListenerCompletionType) {
         //
         let modelClass = Vehicles.self
+        let modelFieldKeyPaths = modelClass.fieldsKeypaths()
 
-        let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-        httpJSONResponseConfiguration.socket = nil
-        httpJSONResponseConfiguration.extractor = VehiclesTreeManagedObjectExtractor()
-
-        let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-        httpRequestConfiguration.modelFieldKeyPaths = modelClass.fieldsKeypaths()
-        httpRequestConfiguration.composer = VehicleTreeRuleBuilder(modelClass: modelClass, vehicleId: vehicleId)
-
-        guard let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration,
-                                                                             responseConfiguration: httpJSONResponseConfiguration,
-                                                                             decodingDepthLevel: DecodingDepthLevel.initial())
-        else {
-            throw HttpRequestFactoryError.objectNotDefined
+        let uow = UOWRemote(appContext: appContext)
+        uow.modelClass = modelClass
+        uow.modelFieldKeyPaths = modelFieldKeyPaths
+        uow.socket = nil
+        uow.extractor = VehiclesTreeManagedObjectExtractor()
+        uow.composer = VehicleTreeRuleBuilder(modelClass: modelClass, vehicleId: vehicleId)
+        uow.nextDepthLevel = DecodingDepthLevel.initial()
+        appContext.uowManager.run(unit: uow) { result in
+            completion(result)
         }
-        try appContext.requestManager?.startRequest(request, listener: listener)
-    }
-
-    @objc
-    public static func fetchProfileData(profileTankId _: Int, requestManager _: RequestManagerProtocol, listener _: RequestManagerListenerProtocol) throws {
-//        let request: WOTRequestProtocol = try requestManager.createRequest(forRequestId: WebRequestType.tankProfile.rawValue)
-//        let groupId = "\(WGWebRequestGroups.vehicle_profile):\(profileTankId)"
-//
-//        let args = WOTRequestArguments()
-//        args.setValues([profileTankId], forKey: WOTApiFields.tank_id)
-//        args.setValues([Vehicleprofile.fieldsKeypaths()], forKey: WGWebQueryArgs.fields)
-
-//        fatalError("not implemented")
-//        appContext.logInspector?.logEvent(EventFlowStart(request), sender: self)
-//        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: nil)
-//        requestManager.addListener(listener, forRequest: request)
     }
 }
 
