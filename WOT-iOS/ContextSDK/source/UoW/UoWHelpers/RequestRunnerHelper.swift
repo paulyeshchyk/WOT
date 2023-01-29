@@ -7,10 +7,6 @@
 
 class RequestRunnerHelper {
     typealias Context = LogInspectorContainerProtocol
-        & RequestRegistratorContainerProtocol
-        & DataStoreContainerProtocol
-        & DecoderManagerContainerProtocol
-        & UOWManagerContainerProtocol
 
     var completion: ((RequestProtocol?, Data?, Error?) -> Void)?
     private let appContext: Context
