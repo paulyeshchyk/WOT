@@ -35,7 +35,19 @@ public class UOWRemote: UOWRemoteProtocol, CustomStringConvertible, CustomDebugS
     }
 
     public var debugDescription: String {
-        ""
+        let modelClassDescr: String?
+        if let modelClass = modelClass {
+            modelClassDescr = "modelClass: \(type(of: modelClass))"
+        } else {
+            modelClassDescr = nil
+        }
+        let modelFieldKeyPathsDescr: String?
+        if let modelFieldKeyPaths = modelFieldKeyPaths {
+            modelFieldKeyPathsDescr = "fields: \(String(describing: modelFieldKeyPaths))"
+        } else {
+            modelFieldKeyPathsDescr = nil
+        }
+        return [modelClassDescr, modelFieldKeyPathsDescr].compactMap { $0 }.joined(separator: ", ")
     }
 
     public var modelClass: ModelClassType?
@@ -44,9 +56,6 @@ public class UOWRemote: UOWRemoteProtocol, CustomStringConvertible, CustomDebugS
     public var composer: FetchRequestPredicateComposerProtocol?
     public var nextDepthLevel: DecodingDepthLevel?
     public var modelFieldKeyPaths: [String]?
-
-    private var extToPathThrough: ListenerCompletionType = { _ in }
-    private var ext: (@escaping ListenerCompletionType, UOWResultProtocol) -> Void = { _, _ in }
 
     private let appContext: Context
     public init(appContext: Context) {
@@ -62,9 +71,6 @@ extension UOWRemote: UOWRunnable {
 
     func runnableBlock() -> UOWRunnable.RunnableBlockType? {
         return { exitToPassThrough, exit in
-
-            self.extToPathThrough = exitToPassThrough
-            self.ext = exit
 
             self.appContext.logInspector?.log(.uow("remote", message: "start \(self.debugDescription)"), sender: self)
 
