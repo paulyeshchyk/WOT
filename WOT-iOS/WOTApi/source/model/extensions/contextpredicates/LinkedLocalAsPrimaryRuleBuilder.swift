@@ -18,10 +18,10 @@ open class LinkedLocalAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtoco
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let lookupPredicate = ContextPredicate(jsonRefs: [])
         lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .internal, andObject: pin.identifier)
 
-        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return lookupPredicate
     }
 }

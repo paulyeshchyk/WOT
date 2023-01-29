@@ -18,7 +18,7 @@ open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: FetchRequestPredicateCom
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         var parentJSONRefs = [JSONRefProtocol]()
         if let parentJson = pin.contextPredicate?.jsonRefs {
             parentJSONRefs.append(contentsOf: parentJson)
@@ -28,6 +28,6 @@ open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: FetchRequestPredicateCom
         lookupPredicate[.primary] = pin.contextPredicate?[.primary]
         lookupPredicate[.secondary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
 
-        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return lookupPredicate
     }
 }

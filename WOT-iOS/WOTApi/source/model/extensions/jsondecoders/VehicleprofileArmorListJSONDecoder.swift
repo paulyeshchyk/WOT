@@ -37,11 +37,11 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             let foreignSelectKey = #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret)
             let modelClass = VehicleprofileArmor.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: [])
-            let composition = try composer.buildRequestPredicateComposition()
+            let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: keypathturret)
-            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
+            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: keypathturret)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
 
             let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
@@ -61,12 +61,12 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
             let foreignSelectKey = #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull)
             let modelClass = VehicleprofileArmor.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: [])
-            let composition = try composer.buildRequestPredicateComposition()
+            let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: keypathhull)
+            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: keypathhull)
 
-            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
 
             let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]

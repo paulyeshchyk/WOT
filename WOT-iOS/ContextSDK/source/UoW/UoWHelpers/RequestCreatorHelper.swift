@@ -13,7 +13,7 @@ class RequestCreatorHeper {
 
     var modelClass: ModelClassType?
     var modelFieldKeyPaths: [String]?
-    var composer: FetchRequestPredicateComposerProtocol?
+    var contextPredicate: ContextPredicateProtocol?
     var nextDepthLevel: DecodingDepthLevel?
     var completion: ((RequestProtocol?, Error?) -> Void)?
 
@@ -30,9 +30,10 @@ class RequestCreatorHeper {
             guard let modelFieldKeyPaths = modelFieldKeyPaths else {
                 throw RequestCreatorHeperErrors.modelFieldKeyPathsAreNotDefined
             }
+
             let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
             httpRequestConfiguration.modelFieldKeyPaths = modelFieldKeyPaths
-            httpRequestConfiguration.composer = composer
+            httpRequestConfiguration.contextPredicate = contextPredicate
 
             guard let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration,
                                                                                  decodingDepthLevel: nextDepthLevel)

@@ -14,11 +14,12 @@ public class VehiclesModuleTreeBuilder: FetchRequestPredicateComposerProtocol {
         self.jsonRefs = jsonRefs
     }
 
-    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let lookupPredicate = ContextPredicate(jsonRefs: jsonRefs)
         lookupPredicate[.primary] = jsonMap.contextPredicate[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
-        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+
+        return lookupPredicate
     }
 }

@@ -11,7 +11,7 @@
 public class HttpRequestConfiguration: NSObject, RequestConfigurationProtocol {
 
     public let modelClass: ModelClassType
-    public var composer: FetchRequestPredicateComposerProtocol?
+    public var contextPredicate: ContextPredicateProtocol?
     public var modelFieldKeyPaths: [String]?
 
     public required init(modelClass: ModelClassType) {
@@ -20,8 +20,6 @@ public class HttpRequestConfiguration: NSObject, RequestConfigurationProtocol {
     }
 
     public func buildArguments(forRequest request: RequestProtocol?) throws -> RequestArgumentsProtocol {
-        let composition = try composer?.buildRequestPredicateComposition()
-        let contextPredicate = composition?.contextPredicate
         //
         let argumentsBuilder = HttpRequestArgumentsBuilder()
         argumentsBuilder.contextPredicate = contextPredicate

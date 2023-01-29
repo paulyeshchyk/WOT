@@ -39,15 +39,16 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
             let socket = JointSocket(managedRef: managedRef!, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
             let extractor = VehicleprofileModule.GunExtractor()
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let contextPredicate = try? composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
             uow.modelFieldKeyPaths = modelFieldKeyPaths
             uow.socket = socket
             uow.extractor = extractor
-            uow.composer = composer
+            uow.contextPredicate = contextPredicate
             uow.nextDepthLevel = nextDepthLevel
             appContext.uowManager.run(unit: uow) { _ in
                 //
@@ -61,16 +62,17 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
             let socket = JointSocket(managedRef: managedRef!, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let extractor = VehicleprofileModule.RadioExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let contextPredicate = try? composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
             uow.modelFieldKeyPaths = modelFieldKeyPaths
             uow.socket = socket
             uow.extractor = extractor
-            uow.composer = composer
+            uow.contextPredicate = contextPredicate
             uow.nextDepthLevel = nextDepthLevel
             appContext.uowManager.run(unit: uow) { _ in
                 //
@@ -84,16 +86,17 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
             let socket = JointSocket(managedRef: managedRef!, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let extractor = VehicleprofileModule.EngineExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let contextPredicate = try? composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
             uow.modelFieldKeyPaths = modelFieldKeyPaths
             uow.socket = socket
             uow.extractor = extractor
-            uow.composer = composer
+            uow.contextPredicate = contextPredicate
             uow.nextDepthLevel = nextDepthLevel
             appContext.uowManager.run(unit: uow) { _ in
                 //
@@ -107,16 +110,17 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
             let socket = JointSocket(managedRef: managedRef!, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let extractor = VehicleprofileModule.SuspensionExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let contextPredicate = try? composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
             uow.modelFieldKeyPaths = modelFieldKeyPaths
             uow.socket = socket
             uow.extractor = extractor
-            uow.composer = composer
+            uow.contextPredicate = contextPredicate
             uow.nextDepthLevel = nextDepthLevel
             appContext.uowManager.run(unit: uow) { _ in
                 //
@@ -130,16 +134,17 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
             let pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)
             let socket = JointSocket(managedRef: managedRef!, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
             let extractor = VehicleprofileModule.TurretExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let contextPredicate = try? composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
             uow.modelFieldKeyPaths = modelFieldKeyPaths
             uow.socket = socket
             uow.extractor = extractor
-            uow.composer = composer
+            uow.contextPredicate = contextPredicate
             uow.nextDepthLevel = nextDepthLevel
             appContext.uowManager.run(unit: uow) { _ in
                 //

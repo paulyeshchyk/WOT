@@ -20,7 +20,7 @@ open class LinkedRemoteAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtoc
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         var parentJsonRefs = [JSONRefProtocol]()
         if let parentJSONRef = pin.contextPredicate?.jsonRefs {
             parentJsonRefs.append(contentsOf: parentJSONRef)
@@ -29,6 +29,6 @@ open class LinkedRemoteAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtoc
         let lookupPredicate = ContextPredicate(jsonRefs: parentJsonRefs)
         lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
 
-        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return lookupPredicate
     }
 }

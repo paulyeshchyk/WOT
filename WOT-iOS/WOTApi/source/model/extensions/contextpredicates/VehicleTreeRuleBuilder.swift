@@ -15,9 +15,10 @@ public class VehicleTreeRuleBuilder: FetchRequestPredicateComposerProtocol {
         self.vehicleId = vehicleId
     }
 
-    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let contextPredicate = ContextPredicate()
         contextPredicate[.primary] = modelClass.primaryKey(forType: .internal, andObject: vehicleId)
-        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: contextPredicate)
+
+        return contextPredicate
     }
 }

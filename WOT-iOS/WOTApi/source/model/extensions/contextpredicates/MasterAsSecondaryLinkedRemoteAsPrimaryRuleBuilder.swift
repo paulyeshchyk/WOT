@@ -18,11 +18,11 @@ open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: FetchRequestPredic
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
         lookupPredicate[.secondary] = pin.contextPredicate?[.primary]
 
-        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return lookupPredicate
     }
 }

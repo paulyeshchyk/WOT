@@ -18,10 +18,10 @@ open class RootTagRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .internal, andObject: pin.identifier)
 
-        return FetchRequestPredicateComposition(objectIdentifier: pin.identifier, requestPredicate: lookupPredicate)
+        return lookupPredicate
     }
 }

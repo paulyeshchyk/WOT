@@ -9,13 +9,5 @@
 
 @objc
 public protocol FetchRequestPredicateComposerProtocol: AnyObject {
-    func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol
-}
-
-// MARK: - FetchRequestPredicateCompositionProtocol
-
-@objc
-public protocol FetchRequestPredicateCompositionProtocol: AnyObject {
-    var objectIdentifier: Any? { get }
-    var contextPredicate: ContextPredicateProtocol { get }
+    func buildRequestPredicateComposition() throws -> ContextPredicateProtocol
 }

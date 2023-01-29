@@ -22,10 +22,15 @@ open class ForeignAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let lookupPredicate = ContextPredicate(jsonRefs: jsonRefs)
         lookupPredicate[.primary] = jsonMap.contextPredicate[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
-
-        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        /*
+         defaultProfile: vehicles.tank_id == 1073
+         vehicleprofile.ammolist, vehicleprofile.armorlist, vehicleprofile.module: vehicleprofile.vehicles.tank_id == 1073
+         vehicleprofileArmorlist.armor: vehicleprofileArmorListTurret.vehicleprofile.vehicles.tank_id == 1073
+         vehicleprofileArmorlist.armor: vehicleprofileArmorListHull.vehicleprofile.vehicles.tank_id == 1073
+          */
+        return lookupPredicate
     }
 }

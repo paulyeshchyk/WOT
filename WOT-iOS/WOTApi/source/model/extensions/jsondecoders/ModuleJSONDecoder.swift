@@ -136,12 +136,14 @@ public class ModuleDecoder {
         let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(pin: pin, parentHostPin: parentHostPin)
         let nextDepthLevel = decodingDepthLevel
 
+        let contextPredicate = try composer.buildRequestPredicateComposition()
+
         let uow = UOWRemote(appContext: appContext)
         uow.modelClass = modelClass
         uow.modelFieldKeyPaths = modelFieldKeyPaths
         uow.socket = socket
         uow.extractor = extractor
-        uow.composer = composer
+        uow.contextPredicate = contextPredicate
         uow.nextDepthLevel = nextDepthLevel
         appContext.uowManager.run(unit: uow) { _ in
             //

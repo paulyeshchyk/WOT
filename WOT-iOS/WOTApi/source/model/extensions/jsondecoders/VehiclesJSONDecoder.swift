@@ -41,20 +41,20 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             parentJSONRefs.append(jsonRef)
 
             let composer = VehiclesModuleTreeBuilder(jsonMap: jsonMap, jsonRefs: parentJSONRefs)
-            let contextPredicate = try composer.buildRequestPredicateComposition().contextPredicate
+            let contextPredicate = try composer.buildRequestPredicateComposition()
 
             for key in modulesTreeJSON.keys {
                 if let jsonElement = modulesTreeJSON[key] as? JSON {
                     let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
 
                     let composer = VehiclesModuleBuilder(requestPredicate: contextPredicate, module_id: module_id)
-                    let composition = try composer.buildRequestPredicateComposition()
+                    let contextPredicate = try composer.buildRequestPredicateComposition()
                     let keypath = #keyPath(ModulesTree.next_modules)
                     let modelClass = ModulesTree.self
                     let managedRef = try managedObject?.managedRef()
 
                     let socket = JointSocket(managedRef: managedRef!, identifier: module_id, keypath: keypath)
-                    let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
+                    let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
 
                     #warning("move out of Decoder")
 
@@ -81,11 +81,11 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             let foreignSelectKey = #keyPath(Vehicleprofile.vehicles)
             let modelClass = Vehicleprofile.self
             let composer = ForeignAsPrimaryRuleBuilder(jsonMap: jsonMap, foreignSelectKey: foreignSelectKey, jsonRefs: [])
-            let composition = try composer.buildRequestPredicateComposition()
+            let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
-            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
+            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: defaultProfileKeypath)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
 
             let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]

@@ -20,13 +20,13 @@ public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: FetchRequestPredicat
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let pinModelClass = pin.modelClass
         let parentHostPinModelClass = parentHostPin.modelClass
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = pinModelClass.primaryKey(forType: .external, andObject: pin.identifier)
         lookupPredicate[.secondary] = parentHostPinModelClass.primaryKey(forType: .internal, andObject: parentHostPin.identifier)
 
-        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return lookupPredicate
     }
 }

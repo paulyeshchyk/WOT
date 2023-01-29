@@ -15,10 +15,11 @@ public class VehiclesModuleBuilder: FetchRequestPredicateComposerProtocol {
         self.module_id = module_id
     }
 
-    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let lookupPredicate = ContextPredicate(jsonRefs: requestPredicate.jsonRefs)
         lookupPredicate[.primary] = ModulesTree.primaryKey(forType: .internal, andObject: module_id)
         lookupPredicate[.secondary] = requestPredicate[.primary]
-        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+
+        return lookupPredicate
     }
 }

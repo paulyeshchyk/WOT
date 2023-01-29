@@ -38,11 +38,11 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileAmmo.self
             let pin = JointPin(modelClass: modelClass, identifier: ammoType, contextPredicate: map.contextPredicate)
             let composer = VehicleprofileAmmoListAmmoRequestPredicateComposer(pin: pin, foreignSelectKey: foreignSelectKey)
-            let composition = try composer.buildRequestPredicateComposition()
+            let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef!, identifier: composition.objectIdentifier)
-            let jsonMap = try JSONMap(data: jsonElement, predicate: composition.contextPredicate)
+            let socket = JointSocket(managedRef: managedRef!, identifier: nil/* ammoType */)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
 
             let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]

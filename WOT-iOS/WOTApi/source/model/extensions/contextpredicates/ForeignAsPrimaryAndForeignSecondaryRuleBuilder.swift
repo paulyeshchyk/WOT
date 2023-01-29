@@ -22,11 +22,11 @@ public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: FetchRequestPredica
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> FetchRequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = jsonMap.contextPredicate[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
         lookupPredicate[.secondary] = jsonMap.contextPredicate[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)
 
-        return FetchRequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return lookupPredicate
     }
 }
