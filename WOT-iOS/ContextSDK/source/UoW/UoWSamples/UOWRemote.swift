@@ -11,8 +11,8 @@ public protocol UOWRemoteProtocol: UOWProtocol {
     typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & DecoderManagerContainerProtocol
-        & RequestManagerContainerProtocol
         & RequestRegistratorContainerProtocol
+        & RequestManagerContainerProtocol
         & UOWManagerContainerProtocol
 
     var modelClass: ModelClassType? { get set }
@@ -57,24 +57,6 @@ public class UOWRemote: UOWRemoteProtocol, CustomStringConvertible, CustomDebugS
     deinit {}
 }
 
-// MARK: - UOWRemote + RequestManagerListenerProtocol
-
-extension UOWRemote: RequestManagerListenerProtocol {
-    public func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error: Error?) {
-        requestManager.removeListener(self)
-        ext(extToPathThrough, UOWResult.init(fetchResult: nil, error: error))
-    }
-
-    public func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {
-        //
-    }
-
-    public func requestManager(_ requestManager: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
-        requestManager.removeListener(self)
-        ext(extToPathThrough, UOWResult.init(fetchResult: nil, error: nil))
-    }
-}
-
 // MARK: - UOWRemote + UOWRunnable
 
 extension UOWRemote: UOWRunnable {
@@ -86,33 +68,33 @@ extension UOWRemote: UOWRunnable {
             self.ext = exit
 
             self.appContext.logInspector?.log(.uow("moParse", message: "start \(self.debugDescription)"), sender: self)
-            do {
-                guard let modelClass = self.modelClass else {
-                    throw UOWRemoteErrors.modelIsNotDefined
-                }
-                guard let modelFieldKeyPaths = self.modelFieldKeyPaths else {
-                    throw UOWRemoteErrors.modelFieldKeyPathsAreNotDefined
-                }
-                let httpJSONResponseConfiguration = HttpJSONResponseConfiguration(modelClass: modelClass)
-                httpJSONResponseConfiguration.socket = self.socket
-                httpJSONResponseConfiguration.extractor = self.extractor
 
-                let httpRequestConfiguration = HttpRequestConfiguration(modelClass: modelClass)
-                httpRequestConfiguration.modelFieldKeyPaths = modelFieldKeyPaths
-                httpRequestConfiguration.composer = self.composer
-
-                guard let request = try self.appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration,
-                                                                                          responseConfiguration: httpJSONResponseConfiguration,
-                                                                                          decodingDepthLevel: self.nextDepthLevel)
-                else {
-                    throw UOWRemoteErrors.requestIsNotCreated
-                }
-                try self.appContext.requestManager?.startRequest(request, listener: self)
-
-            } catch {
+            let responseAdapterHelper = ResponseAdapterHelper(appContext: self.appContext)
+            responseAdapterHelper.modelClass = self.modelClass
+            responseAdapterHelper.socket = self.socket
+            responseAdapterHelper.extractor = self.extractor
+            responseAdapterHelper.completion = { fetchResult in
                 self.appContext.logInspector?.log(.uow("moParse", message: "finish \(self.debugDescription)"), sender: self)
-                exit(exitToPassThrough, UOWResult.init(fetchResult: nil, error: error))
+                exit(exitToPassThrough, fetchResult)
             }
+
+            let requestRunnerHelper = RequestRunnerHelper(appContext: self.appContext)
+            requestRunnerHelper.completion = { request, data, error in
+                if let error = error { self.appContext.logInspector?.log(.error(error), sender: self) }
+                responseAdapterHelper.run(request, data: data)
+            }
+
+            let requestCreatorHelper = RequestCreatorHeper(appContext: self.appContext)
+            requestCreatorHelper.modelClass = self.modelClass
+            requestCreatorHelper.modelFieldKeyPaths = self.modelFieldKeyPaths
+            requestCreatorHelper.composer = self.composer
+            requestCreatorHelper.nextDepthLevel = self.nextDepthLevel
+            requestCreatorHelper.completion = { request, error in
+                if let error = error { self.appContext.logInspector?.log(.error(error), sender: self) }
+                requestRunnerHelper.run(request)
+            }
+
+            requestCreatorHelper.run()
         }
     }
 }
@@ -122,6 +104,7 @@ extension UOWRemote: UOWRunnable {
 extension UOWRemote {
     enum UOWRemoteErrors: Error {
         case modelIsNotDefined
+        case modelServiceNotDefined
         case extractorIsNotDefined
         case modelFieldKeyPathsAreNotDefined
         case requestIsNotCreated

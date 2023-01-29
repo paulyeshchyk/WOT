@@ -32,20 +32,8 @@ open class ResponseManager: ResponseManagerProtocol {
         self.appContext = appContext
     }
 
-    public func startWorkingOn(_ request: RequestProtocol, withData data: Data?) {
-        do {
-            guard let modelService = request as? RequestModelServiceProtocol else {
-                throw Errors.modelNotFound(request)
-            }
-
-            listeners.responseManager(self, didStartRequest: request)
-
-            request.responseConfiguration?.handleData(data, fromRequest: request, forService: modelService, inAppContext: appContext, completion: { request, error in
-                self.listeners.responseManager(self, didParseDataForRequest: request, error: error)
-            })
-        } catch {
-            listeners.responseManager(self, didParseDataForRequest: request, error: error)
-        }
+    public func startWorkingOn(_ request: RequestProtocol, withData _: Data?) {
+        listeners.responseManager(self, didStartRequest: request)
     }
 }
 

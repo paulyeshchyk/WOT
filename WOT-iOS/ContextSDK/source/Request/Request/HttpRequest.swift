@@ -29,7 +29,6 @@ open class HttpRequest: Request, HttpRequestProtocol {
     // MARK: Lifecycle
 
     deinit {
-        httpDataReceiver?.delegate = nil
         httpDataReceiver?.cancel()
     }
 
@@ -49,31 +48,10 @@ open class HttpRequest: Request, HttpRequestProtocol {
         let urlRequest = try urlBuilder.build()
 
         httpDataReceiver = HttpDataReceiver(appContext: appContext, request: urlRequest)
-        httpDataReceiver?.delegate = self
+        httpDataReceiver?.completion = { [weak self] data, error in
+            self?.completion?(data, error)
+        }
         httpDataReceiver?.start()
-    }
-}
-
-// MARK: - HttpRequest + HttpDataReceiverDelegateProtocol
-
-extension HttpRequest: HttpDataReceiverDelegateProtocol {
-    public func didCancel(urlRequest _: URLRequest, receiver _: HttpDataReceiverProtocol, error: Error?) {
-        for listener in listeners {
-            listener.request(self, canceledWith: error)
-        }
-    }
-
-    public func didStart(urlRequest: URLRequest, receiver _: HttpDataReceiverProtocol) {
-        for listener in listeners {
-            listener.request(self, startedWith: urlRequest)
-        }
-    }
-
-    public func didEnd(urlRequest _: URLRequest, receiver _: HttpDataReceiverProtocol, data: Data?, error: Error?) {
-        for listener in listeners {
-            listener.request(self, finishedLoadData: data, error: error)
-        }
-        httpDataReceiver?.delegate = nil
     }
 }
 

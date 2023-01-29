@@ -72,7 +72,10 @@
 		DAA56E7E2976EC3B0092DA17 /* ResponseManagerListenerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E7D2976EC3B0092DA17 /* ResponseManagerListenerList.swift */; };
 		DAA56E8A2978361A0092DA17 /* ResponseConfigurationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E89297836190092DA17 /* ResponseConfigurationProtocol.swift */; };
 		DAA56E8D297836490092DA17 /* RequestConfigurationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E8C297836490092DA17 /* RequestConfigurationProtocol.swift */; };
-		DAA56E8F297836740092DA17 /* HttpJSONResponseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA56E8E297836740092DA17 /* HttpJSONResponseConfiguration.swift */; };
+		DABEECBF2986656300B3E7B3 /* HttpRequestConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABEECBE2986656300B3E7B3 /* HttpRequestConfiguration.swift */; };
+		DABEECC1298665CE00B3E7B3 /* RequestCreatorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABEECC0298665CE00B3E7B3 /* RequestCreatorHelper.swift */; };
+		DABEECC3298666F600B3E7B3 /* RequestRunnerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABEECC2298666F600B3E7B3 /* RequestRunnerHelper.swift */; };
+		DABEECC5298669B100B3E7B3 /* ResponseAdapterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABEECC4298669B100B3E7B3 /* ResponseAdapterHelper.swift */; };
 		DAC55BC32974F047008166BE /* ManagedObjectDecodeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC55BC22974F047008166BE /* ManagedObjectDecodeHelper.swift */; };
 		DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */; };
 		DACDB0D8295DBB66005BBA72 /* LogInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D6295DBB66005BBA72 /* LogInspector.swift */; };
@@ -191,7 +194,10 @@
 		DAA56E7D2976EC3B0092DA17 /* ResponseManagerListenerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseManagerListenerList.swift; sourceTree = "<group>"; };
 		DAA56E89297836190092DA17 /* ResponseConfigurationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseConfigurationProtocol.swift; sourceTree = "<group>"; };
 		DAA56E8C297836490092DA17 /* RequestConfigurationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestConfigurationProtocol.swift; sourceTree = "<group>"; };
-		DAA56E8E297836740092DA17 /* HttpJSONResponseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpJSONResponseConfiguration.swift; sourceTree = "<group>"; };
+		DABEECBE2986656300B3E7B3 /* HttpRequestConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRequestConfiguration.swift; sourceTree = "<group>"; };
+		DABEECC0298665CE00B3E7B3 /* RequestCreatorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCreatorHelper.swift; sourceTree = "<group>"; };
+		DABEECC2298666F600B3E7B3 /* RequestRunnerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRunnerHelper.swift; sourceTree = "<group>"; };
+		DABEECC4298669B100B3E7B3 /* ResponseAdapterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAdapterHelper.swift; sourceTree = "<group>"; };
 		DAC55BC22974F047008166BE /* ManagedObjectDecodeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectDecodeHelper.swift; sourceTree = "<group>"; };
 		DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogWrapper.swift; sourceTree = "<group>"; };
 		DACDB0D6295DBB66005BBA72 /* LogInspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInspector.swift; sourceTree = "<group>"; };
@@ -546,7 +552,6 @@
 			isa = PBXGroup;
 			children = (
 				DAA56E89297836190092DA17 /* ResponseConfigurationProtocol.swift */,
-				DAA56E8E297836740092DA17 /* HttpJSONResponseConfiguration.swift */,
 			);
 			path = ResponseConfiguration;
 			sourceTree = "<group>";
@@ -555,6 +560,14 @@
 			isa = PBXGroup;
 			children = (
 				DAA56E8C297836490092DA17 /* RequestConfigurationProtocol.swift */,
+			);
+			path = RequestConfiguration;
+			sourceTree = "<group>";
+		};
+		DABEECBD2986654A00B3E7B3 /* RequestConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				DABEECBE2986656300B3E7B3 /* HttpRequestConfiguration.swift */,
 			);
 			path = RequestConfiguration;
 			sourceTree = "<group>";
@@ -651,6 +664,7 @@
 		DADD69C82975AFB100EFC36D /* Response */ = {
 			isa = PBXGroup;
 			children = (
+				DABEECBD2986654A00B3E7B3 /* RequestConfiguration */,
 				DAA56E88297835EF0092DA17 /* ResponseConfiguration */,
 				DAA56E7A2976E3790092DA17 /* ResponseManager.swift */,
 				DAA56E7C2976EC240092DA17 /* lists */,
@@ -708,6 +722,9 @@
 		DAED2044297E8DBA0019EFBA /* UoWHelpers */ = {
 			isa = PBXGroup;
 			children = (
+				DABEECC0298665CE00B3E7B3 /* RequestCreatorHelper.swift */,
+				DABEECC2298666F600B3E7B3 /* RequestRunnerHelper.swift */,
+				DABEECC4298669B100B3E7B3 /* ResponseAdapterHelper.swift */,
 				DAC55BC22974F047008166BE /* ManagedObjectDecodeHelper.swift */,
 				DADD696F2974F0D000EFC36D /* DatastoreFetchHelper.swift */,
 				DADD69712974F10600EFC36D /* ManagedObjectLinkerHelper.swift */,
@@ -868,6 +885,7 @@
 				DACDB0F3295EDC96005BBA72 /* RequestManagerProtocol.swift in Sources */,
 				DACDB0F9295EDC96005BBA72 /* HttpServiceProtocol.swift in Sources */,
 				DADD69BC29759D5D00EFC36D /* URLRequestBuilder.swift in Sources */,
+				DABEECC3298666F600B3E7B3 /* RequestRunnerHelper.swift in Sources */,
 				DADD69BF2975A82700EFC36D /* Request.swift in Sources */,
 				DA32CEB129641C48007726AD /* ManagedObjectExtractable.swift in Sources */,
 				DA802006298523A500033D85 /* UOWManagerProtocol.swift in Sources */,
@@ -910,9 +928,11 @@
 				DA0E806B2950920C00B44CC6 /* PrimaryKeypathProtocol.swift in Sources */,
 				DA83A5D6297EBC5D00DD7E44 /* UOWDecodeAndLinkMaps.swift in Sources */,
 				DACDB0FB295EDC96005BBA72 /* MD5Protocol.swift in Sources */,
+				DABEECC1298665CE00B3E7B3 /* RequestCreatorHelper.swift in Sources */,
 				DACDB102295EDC96005BBA72 /* ManagedObjectContextProtocol.swift in Sources */,
 				DA80200C2985252B00033D85 /* UOWOperationsProgress.swift in Sources */,
 				DADD69B329759D5D00EFC36D /* RequestManager.swift in Sources */,
+				DABEECBF2986656300B3E7B3 /* HttpRequestConfiguration.swift in Sources */,
 				DA8020042985231C00033D85 /* UOWRunnable.swift in Sources */,
 				DACDB105295EDCB9005BBA72 /* HttpRequestArgumentsBuilderProtocol.swift in Sources */,
 				DACDB100295EDC96005BBA72 /* ResponseAdapterProtocol.swift in Sources */,
@@ -922,6 +942,7 @@
 				DA81E4F02952FDD800C60F31 /* JSONAdapter.swift in Sources */,
 				DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */,
 				DA801FF729851CDF00033D85 /* Dictionary+URLString.swift in Sources */,
+				DABEECC5298669B100B3E7B3 /* ResponseAdapterHelper.swift in Sources */,
 				DADD6999297563BD00EFC36D /* DecoderManager.swift in Sources */,
 				DA2C28F12959F0DD00D18A6E /* DataStore.swift in Sources */,
 				DACDB0F2295EDC96005BBA72 /* RequestModelServiceProtocol.swift in Sources */,
@@ -930,7 +951,6 @@
 				DA0E80532950688500B44CC6 /* NSDictionary+Append.swift in Sources */,
 				DA801FFC29851DC100033D85 /* JSONValue.swift in Sources */,
 				DA801FF929851D1C00033D85 /* Dictionary+DebugOutput.swift in Sources */,
-				DAA56E8F297836740092DA17 /* HttpJSONResponseConfiguration.swift in Sources */,
 				DA0E806429508C4700B44CC6 /* RequestProtocol.swift in Sources */,
 				DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */,
 				DACDB110295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift in Sources */,

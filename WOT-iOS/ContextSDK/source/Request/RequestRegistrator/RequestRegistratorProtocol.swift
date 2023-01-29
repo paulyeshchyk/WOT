@@ -18,7 +18,7 @@ public protocol RequestRegistratorContainerProtocol {
 @objc
 public protocol RequestRegistratorProtocol {
 
-    func createRequest(requestConfiguration: RequestConfigurationProtocol, responseConfiguration: ResponseConfigurationProtocol, decodingDepthLevel: DecodingDepthLevel?) throws -> RequestProtocol
+    func createRequest(requestConfiguration: RequestConfigurationProtocol, decodingDepthLevel: DecodingDepthLevel?) throws -> RequestProtocol
 
     func registerServiceClass(_ serviceClass: RequestModelServiceProtocol.Type) throws
 }

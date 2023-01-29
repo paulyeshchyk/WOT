@@ -21,7 +21,8 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     var contextPredicate: ContextPredicateProtocol? { get }
     var arguments: RequestArgumentsProtocol? { get set }
     var decodingDepthLevel: DecodingDepthLevel? { get set }
-    var responseConfiguration: ResponseConfigurationProtocol? { get set }
+
+    var completion: ((Data?, Error?) -> Void)? { get set }
 
     // MARK: to be moved out from protocol
 
