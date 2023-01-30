@@ -72,6 +72,7 @@
 
 
 --rules organizeDeclarations
+--lifecycle
 --beforemarks typealias, let, var, actor, class, enum, struct
 --markcategories true
 --organizetypes typealias, let, var, actor, enum, struct

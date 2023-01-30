@@ -133,10 +133,12 @@ public class ModuleDecoder {
         }
         let modelClass = pin.modelClass
         let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-        let composer = Module_Composer(pin: pin, parentPin: parentHostPin)
-        let nextDepthLevel = decodingDepthLevel
 
-        let contextPredicate = try composer.buildRequestPredicateComposition()
+        let composerInput = ComposerInput()
+        composerInput.pin = pin
+        composerInput.parentPin = parentHostPin
+        let composer = Module_Composer()
+        let contextPredicate = try composer.build(composerInput)
 
         let uow = UOWRemote(appContext: appContext)
         uow.modelClass = modelClass
@@ -144,7 +146,7 @@ public class ModuleDecoder {
         uow.socket = socket
         uow.extractor = extractor
         uow.contextPredicate = contextPredicate
-        uow.nextDepthLevel = nextDepthLevel
+        uow.nextDepthLevel = decodingDepthLevel
         appContext.uowManager.run(unit: uow) { _ in
             //
         }

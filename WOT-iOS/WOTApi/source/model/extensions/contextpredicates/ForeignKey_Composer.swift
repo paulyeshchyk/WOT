@@ -6,6 +6,8 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - ForeignKey_Composer
+
 /** Creates predicate
 
  vehicle defaultprofile: vehicles.tank_id == 4657
@@ -21,26 +23,38 @@
  armorlist hull:         vehicleprofileArmorListHull.vehicleprofile.vehicles.tank_id == 4657
 
  */
-open class ForeignKey_Composer: FetchRequestPredicateComposerProtocol {
+open class ForeignKey_Composer: CustomStringConvertible, ComposerProtocol {
 
-    private var parentKey: String
-    private let parentJsonRefs: [JSONRefProtocol]
-    private let contextPredicate: ContextPredicateProtocol
-
-    // MARK: Lifecycle
-
-    public init(contextPredicate: ContextPredicateProtocol, parentKey: String, parentJsonRefs: [JSONRefProtocol]) {
-        self.parentKey = parentKey
-        self.parentJsonRefs = parentJsonRefs
-        self.contextPredicate = contextPredicate
+    public var description: String {
+        "[\(type(of: self))]"
     }
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
+    public func build(_ composerInput: ComposerInputProtocol) throws -> ContextPredicateProtocol {
+        guard let parentKey = composerInput.parentKey else {
+            throw ForeignKey_ComposerError.parentKeyNotFound
+        }
+        guard let parentJsonRefs = composerInput.parentJSONRefs else {
+            throw ForeignKey_ComposerError.parentJSonRefsNotFound
+        }
+        guard let contextPredicate = composerInput.contextPredicate else {
+            throw ForeignKey_ComposerError.contextPredicateNotFound
+        }
+
         let lookupPredicate = ContextPredicate(jsonRefs: parentJsonRefs)
         lookupPredicate[.primary] = contextPredicate[.primary]?.foreignKey(byInsertingComponent: parentKey)
 
         return lookupPredicate
+    }
+}
+
+// MARK: - %t + ForeignKey_Composer.ForeignKey_ComposerError
+
+extension ForeignKey_Composer {
+    enum ForeignKey_ComposerError: Error {
+        case parentKeyNotFound
+        case contextPredicateNotFound
+        case parentJSonRefsNotFound
     }
 }

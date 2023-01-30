@@ -6,6 +6,8 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - PrimaryKey_Composer
+
 /** Creates predicate
 
  treeview:                  tank_id == 1073
@@ -23,22 +25,29 @@
  vehicleProfile radio:      tag == "A-220_1"
 
  */
-open class PrimaryKey_Composer: FetchRequestPredicateComposerProtocol {
+open class PrimaryKey_Composer: CustomStringConvertible, ComposerProtocol {
 
-    private let pin: JointPinProtocol
-
-    // MARK: Lifecycle
-
-    public init(pin: JointPinProtocol) {
-        self.pin = pin
+    public var description: String {
+        "[\(type(of: self))]"
     }
 
     // MARK: Public
 
-    public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
+    public func build(_ composerInput: ComposerInputProtocol) throws -> ContextPredicateProtocol {
+        guard let pin = composerInput.pin else {
+            throw PrimaryKey_ComposerError.pinNotFound
+        }
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .internal, andObject: pin.identifier)
 
         return lookupPredicate
+    }
+}
+
+// MARK: - %t + PrimaryKey_Composer.PrimaryKey_ComposerError
+
+extension PrimaryKey_Composer {
+    enum PrimaryKey_ComposerError: Error {
+        case pinNotFound
     }
 }

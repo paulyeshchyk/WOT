@@ -36,12 +36,14 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
             let modelClass = VehicleprofileGun.self
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
             let socket = JointSocket(managedRef: managedRef!, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
             let extractor = VehicleprofileModule.GunExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = VehicleprofileModule_Composer(pin: pin)
-            let contextPredicate = try? composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
+            let composer = VehicleprofileModule_Composer()
+            let contextPredicate = try? composer.build(composerInput)
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
@@ -60,12 +62,14 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
             let modelClass = VehicleprofileRadio.self
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
             let socket = JointSocket(managedRef: managedRef!, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
             let extractor = VehicleprofileModule.RadioExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = VehicleprofileModule_Composer(pin: pin)
-            let contextPredicate = try? composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
+            let composer = VehicleprofileModule_Composer()
+            let contextPredicate = try? composer.build(composerInput)
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
@@ -84,12 +88,14 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
             let modelClass = VehicleprofileEngine.self
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
             let socket = JointSocket(managedRef: managedRef!, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
             let extractor = VehicleprofileModule.EngineExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = VehicleprofileModule_Composer(pin: pin)
-            let contextPredicate = try? composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
+            let composer = VehicleprofileModule_Composer()
+            let contextPredicate = try? composer.build(composerInput)
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
@@ -108,12 +114,14 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
             let modelClass = VehicleprofileSuspension.self
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
             let socket = JointSocket(managedRef: managedRef!, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
             let extractor = VehicleprofileModule.SuspensionExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = VehicleprofileModule_Composer(pin: pin)
-            let contextPredicate = try? composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
+            let composer = VehicleprofileModule_Composer()
+            let contextPredicate = try? composer.build(composerInput)
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
@@ -132,12 +140,14 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let modelClass = VehicleprofileTurret.self
             let managedRef = try managedObject?.managedRef()
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)
             let socket = JointSocket(managedRef: managedRef!, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
             let extractor = VehicleprofileModule.TurretExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = VehicleprofileModule_Composer(pin: pin)
-            let contextPredicate = try? composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)
+            let composer = VehicleprofileModule_Composer()
+            let contextPredicate = try? composer.build(composerInput)
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass

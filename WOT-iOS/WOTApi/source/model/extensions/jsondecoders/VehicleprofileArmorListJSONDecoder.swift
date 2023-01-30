@@ -36,8 +36,14 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
         if let jsonElement = element[keypathturret] as? JSON {
             let foreignSelectKey = #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret)
             let modelClass = VehicleprofileArmor.self
-            let composer = ForeignKey_Composer(contextPredicate: map.contextPredicate, parentKey: foreignSelectKey, parentJsonRefs: [])
-            let contextPredicate = try composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.contextPredicate = map.contextPredicate
+            composerInput.parentKey = foreignSelectKey
+            composerInput.parentJSONRefs = []
+            let composer = ForeignKey_Composer()
+            let contextPredicate = try composer.build(composerInput)
+
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: keypathturret)
@@ -60,8 +66,14 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
         if let jsonElement = element[keypathhull] as? JSON {
             let foreignSelectKey = #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull)
             let modelClass = VehicleprofileArmor.self
-            let composer = ForeignKey_Composer(contextPredicate: map.contextPredicate, parentKey: foreignSelectKey, parentJsonRefs: [])
-            let contextPredicate = try composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.contextPredicate = map.contextPredicate
+            composerInput.parentKey = foreignSelectKey
+            composerInput.parentJSONRefs = []
+            let composer = ForeignKey_Composer()
+            let contextPredicate = try composer.build(composerInput)
+
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: keypathhull)

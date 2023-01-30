@@ -52,9 +52,11 @@ public class WOTWEBRequestFactory: NSObject {
         //
         let modelClass = Vehicles.self
         let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-        let pin = JointPin(modelClass: modelClass, identifier: vehicleId, contextPredicate: nil)
-        let composer = PrimaryKey_Composer(pin: pin)
-        let contextPredicate = try? composer.buildRequestPredicateComposition()
+
+        let composerInput = ComposerInput()
+        composerInput.pin = JointPin(modelClass: modelClass, identifier: vehicleId, contextPredicate: nil)
+        let composer = PrimaryKey_Composer()
+        let contextPredicate = try? composer.build(composerInput)
 
         let uow = UOWRemote(appContext: appContext)
         uow.modelClass = modelClass

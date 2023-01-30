@@ -187,8 +187,13 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
     }
 
     func fetch_element(modelClass: ModelClassType, parentKey: String, jsonData: Any, parentContextPredicate: ContextPredicateProtocol, socket: JointSocketProtocol, parentJSonRefs: [JSONRefProtocol], decodingDepthLevel: DecodingDepthLevel?) throws {
-        let composer = ForeignKey_Composer(contextPredicate: parentContextPredicate, parentKey: parentKey, parentJsonRefs: parentJSonRefs)
-        let contextPredicate = try composer.buildRequestPredicateComposition()
+        let composerInput = ComposerInput()
+        composerInput.contextPredicate = parentContextPredicate
+        composerInput.parentKey = parentKey
+        composerInput.parentJSONRefs = parentJSonRefs
+        let composer = ForeignKey_Composer()
+        let contextPredicate = try composer.build(composerInput)
+
         let jsonMap = try JSONMap(data: jsonData, predicate: contextPredicate)
 
         let uow = UOWDecodeAndLinkMaps(appContext: appContext)
@@ -201,8 +206,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
     }
 
     private func fetch_module(pin: JointPinProtocol, jsonData: JSON, socket: JointSocketProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
-        let composer = PrimaryKey_Composer(pin: pin)
-        let contextPredicate = try composer.buildRequestPredicateComposition()
+        let composerInput = ComposerInput()
+        composerInput.pin = pin
+        let composer = PrimaryKey_Composer()
+        let contextPredicate = try composer.build(composerInput)
+
         let jsonMap = try JSONMap(data: jsonData, predicate: contextPredicate)
 
         let uow = UOWDecodeAndLinkMaps(appContext: appContext)

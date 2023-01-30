@@ -40,16 +40,21 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             var parentJSONRefs = map.contextPredicate.jsonRefs
             parentJSONRefs.append(jsonRef)
 
-            let composer = VehiclesModuleTree_Composer(parentContextPredicate: map.contextPredicate, parentJSONRefs: parentJSONRefs)
-            let parentContextPredicate = try composer.buildRequestPredicateComposition()
+            let composerInput = ComposerInput()
+            composerInput.parentJSONRefs = parentJSONRefs
+            composerInput.parentContextPredicate = map.contextPredicate
+            let composer = VehiclesModuleTree_Composer()
+            let parentContextPredicate = try composer.build(composerInput)
 
             for key in modulesTreeJSON.keys {
                 if let jsonElement = modulesTreeJSON[key] as? JSON {
                     let modelClass = ModulesTree.self
                     let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
-                    let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: parentContextPredicate)
-                    let composer = ModulesTreeModule_Composer(pin: pin)
-                    let contextPredicate = try composer.buildRequestPredicateComposition()
+
+                    let composerInput = ComposerInput()
+                    composerInput.pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: parentContextPredicate)
+                    let composer = ModulesTreeModule_Composer()
+                    let contextPredicate = try composer.build(composerInput)
 
                     let keypath = #keyPath(ModulesTree.next_modules)
                     let managedRef = try managedObject?.managedRef()
@@ -79,8 +84,13 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
         if let jsonElement = element[defaultProfileKeypath] as? JSON {
             let foreignSelectKey = #keyPath(Vehicleprofile.vehicles)
             let modelClass = Vehicleprofile.self
-            let composer = ForeignKey_Composer(contextPredicate: map.contextPredicate, parentKey: foreignSelectKey, parentJsonRefs: [])
-            let contextPredicate = try composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.contextPredicate = map.contextPredicate
+            composerInput.parentKey = foreignSelectKey
+            composerInput.parentJSONRefs = []
+            let composer = ForeignKey_Composer()
+            let contextPredicate = try composer.build(composerInput)
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: defaultProfileKeypath)

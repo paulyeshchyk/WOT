@@ -65,9 +65,10 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let socket: JointSocketProtocol = JointSocket(managedRef: managedRef!, identifier: nil, keypath: #keyPath(ModulesTree.currentModule))
             let extractor: ManagedObjectExtractable? = CurrentModuleExtractor()
 
-            let pin: JointPinProtocol = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
-            let composer = ModulesTreeModule_Composer(pin: pin)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
+            let composer = ModulesTreeModule_Composer()
+            let contextPredicate = try composer.build(composerInput)
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
@@ -92,12 +93,14 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let managedRef = try managedObject?.managedRef()
             let modelClass = Module.self
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
             let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextModulesKeypath)
             let extractor = NextModuleExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = ModulesTreeModule_Composer(pin: pin)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
+            let composer = ModulesTreeModule_Composer()
+            let contextPredicate = try composer.build(composerInput)
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
@@ -124,9 +127,10 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let extractor = NextVehicleExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
-            let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
-            let composer = PrimaryKey_Composer(pin: pin)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
+            let composer = PrimaryKey_Composer()
+            let contextPredicate = try composer.build(composerInput)
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass

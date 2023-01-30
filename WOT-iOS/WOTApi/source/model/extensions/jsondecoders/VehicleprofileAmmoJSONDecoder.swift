@@ -35,11 +35,13 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
         let keypathPenetration = #keyPath(VehicleprofileAmmo.penetration)
         if let jsonCustom = element[keypathPenetration] {
-            let foreignPrimarySelectKey = #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo)
             let modelClass = VehicleprofileAmmoPenetration.self
-            let pin = JointPin(modelClass: modelClass, identifier: nil, contextPredicate: map.contextPredicate)
-            let composer = VehicleprofileAmmo_Composer(pin: pin, parentKey: foreignPrimarySelectKey)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: nil, contextPredicate: map.contextPredicate)
+            composerInput.parentKey = #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo)
+            let composer = VehicleprofileAmmo_Composer()
+            let contextPredicate = try composer.build(composerInput)
 
             guard let managedRef = try managedObject?.managedRef() else {
                 throw VehicleprofileAmmoError.invalidManagedRef
@@ -63,11 +65,13 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
         let keypathDamage = #keyPath(VehicleprofileAmmo.damage)
         if let jsonCustom = element[keypathDamage] {
-            let foreignPrimarySelectKey = #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo)
             let modelClass = VehicleprofileAmmoDamage.self
-            let pin = JointPin(modelClass: modelClass, identifier: nil, contextPredicate: map.contextPredicate)
-            let composer = VehicleprofileAmmo_Composer(pin: pin, parentKey: foreignPrimarySelectKey)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: nil, contextPredicate: map.contextPredicate)
+            composerInput.parentKey = #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo)
+            let composer = VehicleprofileAmmo_Composer()
+            let contextPredicate = try composer.build(composerInput)
 
             guard let managedRef = try managedObject?.managedRef() else {
                 throw VehicleprofileAmmoError.invalidManagedRef

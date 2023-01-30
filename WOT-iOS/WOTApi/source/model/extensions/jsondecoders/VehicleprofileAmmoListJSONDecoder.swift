@@ -33,12 +33,15 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
         //
         let keypath = #keyPath(VehicleprofileAmmo.type)
         try profilesJSON.forEach { jsonElement in
-            let foreignSelectKey = #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList)
             let ammoType = jsonElement[keypath]
             let modelClass = VehicleprofileAmmo.self
-            let pin = JointPin(modelClass: modelClass, identifier: ammoType, contextPredicate: map.contextPredicate)
-            let composer = VehicleprofileAmmoList_Composer(pin: pin, parentKey: foreignSelectKey)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
+
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: ammoType, contextPredicate: map.contextPredicate)
+            composerInput.parentKey = #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList)
+            let composer = VehicleprofileAmmoList_Composer()
+            let contextPredicate = try composer.build(composerInput)
+
             let managedRef = try managedObject?.managedRef()
 
             let socket = JointSocket(managedRef: managedRef!, identifier: nil/* ammoType */)
