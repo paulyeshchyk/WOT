@@ -1,6 +1,6 @@
 //
-//  MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift
-//  WOTData
+//  ModulesTreeModule_Composer.swift
+//  WOTApi
 //
 //  Created by Pavel Yeshchyk on 5/8/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
@@ -8,12 +8,14 @@
 
 /** Creates predicate
 
- modulesTree module:     default_profile.vehicles.tank_id == 1073 AND module_id == 1332
+ modulesTree currentModule: default_profile.vehicles.tank_id == 1073 AND module_id == 1076
 
- modulesTree nextModule: default_profile.vehicles.tank_id == 1073 and module_id == 1330
+ modulesTree module:        default_profile.vehicles.tank_id == 1073 AND module_id == 1332
+
+ modulesTree nextModule:    default_profile.vehicles.tank_id == 1073 and module_id == 1330
 
  */
-open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: FetchRequestPredicateComposerProtocol {
+open class ModulesTreeModule_Composer: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
 

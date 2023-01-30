@@ -53,7 +53,7 @@ public class WOTWEBRequestFactory: NSObject {
         let modelClass = Vehicles.self
         let modelFieldKeyPaths = modelClass.fieldsKeypaths()
         let pin = JointPin(modelClass: modelClass, identifier: vehicleId, contextPredicate: nil)
-        let composer = RootTagRuleBuilder(pin: pin)
+        let composer = PrimaryKey_Composer(pin: pin)
         let contextPredicate = try? composer.buildRequestPredicateComposition()
 
         let uow = UOWRemote(appContext: appContext)

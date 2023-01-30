@@ -1,6 +1,6 @@
 //
-//  VehicleprofileAmmoListAmmoRequestPredicateComposer.swift
-//  ContextSDK
+//  VehicleprofileAmmoList_Composer.swift
+//  WOTApi
 //
 //  Created by Paul on 30.12.22.
 //
@@ -13,23 +13,23 @@
  vehicleProfileAmmoList ammoPenetration: vehicleprofileAmmoList.vehicleprofile.vehicles.tank_id == 1073 AND type == "HIGH_EXPLOSIVE"
 
  */
-public class VehicleprofileAmmoListAmmoRequestPredicateComposer: FetchRequestPredicateComposerProtocol {
+public class VehicleprofileAmmoList_Composer: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
-    private var foreignSelectKey: String
+    private var parentKey: String
 
     // MARK: Lifecycle
 
-    public init(pin: JointPinProtocol, foreignSelectKey: String) {
+    public init(pin: JointPinProtocol, parentKey: String) {
         self.pin = pin
-        self.foreignSelectKey = foreignSelectKey
+        self.parentKey = parentKey
     }
 
     // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let lookupPredicate = ContextPredicate()
-        lookupPredicate[.primary] = pin.contextPredicate?[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
+        lookupPredicate[.primary] = pin.contextPredicate?[.primary]?.foreignKey(byInsertingComponent: parentKey)
         lookupPredicate[.secondary] = pin.modelClass.primaryKey(forType: .internal, andObject: pin.identifier)
 
         return lookupPredicate

@@ -1,6 +1,6 @@
 //
-//  MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift
-//  WOTData
+//  Module_Composer.swift
+//  WOTApi
 //
 //  Created by Pavel Yeshchyk on 5/7/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
@@ -19,16 +19,16 @@
  module turret:  tank_id == 1073 AND turret_id == 1075
 
  */
-public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
+public class Module_Composer: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
-    private let parentHostPin: JointPinProtocol
+    private let parentPin: JointPinProtocol
 
     // MARK: Lifecycle
 
-    public init(pin: JointPinProtocol, parentHostPin: JointPinProtocol) {
+    public init(pin: JointPinProtocol, parentPin: JointPinProtocol) {
         self.pin = pin
-        self.parentHostPin = parentHostPin
+        self.parentPin = parentPin
     }
 
     // MARK: Public
@@ -36,7 +36,7 @@ public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: FetchRequestPredicat
     public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
-        lookupPredicate[.secondary] = parentHostPin.modelClass.primaryKey(forType: .internal, andObject: parentHostPin.identifier)
+        lookupPredicate[.secondary] = parentPin.modelClass.primaryKey(forType: .internal, andObject: parentPin.identifier)
 
         return lookupPredicate
     }

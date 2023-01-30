@@ -29,6 +29,11 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
             return
         }
 
+        guard let managedRef = try managedObject?.managedRef() else {
+            appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noManagedRef), sender: self)
+            return
+        }
+
         // MARK: - relation mapping
 
         let jsonRef = try JSONRef(data: element, modelClass: Vehicleprofile.self)
@@ -45,22 +50,16 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
         let ammoKeypath = #keyPath(Vehicleprofile.ammo)
         if let jsonArray = element[ammoKeypath] as? [JSON] {
-            let foreignSelectKey = #keyPath(VehicleprofileAmmoList.vehicleprofile)
             let modelClass = VehicleprofileAmmoList.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
-            let managedRef = try managedObject?.managedRef()
-
-            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: ammoKeypath)
-            let jsonMap = try JSONMap(data: jsonArray, predicate: contextPredicate)
-
-            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
-            uow.maps = [jsonMap]
-            uow.modelClass = modelClass
-            uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
-
-            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+            let foreignSelectKey = #keyPath(VehicleprofileAmmoList.vehicleprofile)
+            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: ammoKeypath)
+            try fetch_element(modelClass: modelClass,
+                              parentKey: foreignSelectKey,
+                              jsonData: jsonArray,
+                              parentContextPredicate: map.contextPredicate,
+                              socket: socket,
+                              parentJSonRefs: parentJSonRefs,
+                              decodingDepthLevel: decodingDepthLevel)
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noAmmoList(tank_id)), sender: self)
         }
@@ -69,22 +68,16 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
         let armorKeypath = #keyPath(Vehicleprofile.armor)
         if let jsonElement = element[armorKeypath] as? JSON {
-            let foreignSelectKey = #keyPath(VehicleprofileModule.vehicleprofile)
             let modelClass = VehicleprofileArmorList.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
-            let managedRef = try managedObject?.managedRef()
-
-            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: armorKeypath)
-            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
-
-            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
-            uow.maps = [jsonMap]
-            uow.modelClass = modelClass
-            uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
-
-            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+            let foreignSelectKey = #keyPath(VehicleprofileModule.vehicleprofile)
+            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: armorKeypath)
+            try fetch_element(modelClass: modelClass,
+                              parentKey: foreignSelectKey,
+                              jsonData: jsonElement,
+                              parentContextPredicate: map.contextPredicate,
+                              socket: socket,
+                              parentJSonRefs: parentJSonRefs,
+                              decodingDepthLevel: decodingDepthLevel)
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noArmor(tank_id)), sender: self)
         }
@@ -93,23 +86,16 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
         let modulesKeypath = #keyPath(Vehicleprofile.modules)
         if let jsonElement = element[modulesKeypath] as? JSON {
-            let foreignSelectKey = #keyPath(VehicleprofileModule.vehicleprofile)
             let modelClass = VehicleprofileModule.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
-            let managedRef = try managedObject?.managedRef()
-
-            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: modulesKeypath)
-
-            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
-
-            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
-            uow.maps = [jsonMap]
-            uow.modelClass = modelClass
-            uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
-
-            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+            let foreignSelectKey = #keyPath(VehicleprofileModule.vehicleprofile)
+            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: modulesKeypath)
+            try fetch_element(modelClass: modelClass,
+                              parentKey: foreignSelectKey,
+                              jsonData: jsonElement,
+                              parentContextPredicate: map.contextPredicate,
+                              socket: socket,
+                              parentJSonRefs: parentJSonRefs,
+                              decodingDepthLevel: decodingDepthLevel)
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noModule(tank_id)), sender: self)
         }
@@ -118,24 +104,15 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
         let engineKeypath = #keyPath(Vehicleprofile.engine)
         if let jsonElement = element[engineKeypath] as? JSON {
-            let keypath = VehicleprofileEngine.primaryKeyPath(forType: .internal)
-            let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileEngine.self
+            let idkeypath = VehicleprofileEngine.primaryKeyPath(forType: .internal)
+            let drivenObjectID = jsonElement[idkeypath]
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
-            let composer = RootTagRuleBuilder(pin: pin)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
-            let managedRef = try managedObject?.managedRef()
-
-            let socket = JointSocket(managedRef: managedRef!, identifier: drivenObjectID, keypath: engineKeypath)
-            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
-
-            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
-            uow.maps = [jsonMap]
-            uow.modelClass = modelClass
-            uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
-
-            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+            let socket = JointSocket(managedRef: managedRef, identifier: pin.identifier, keypath: engineKeypath)
+            try fetch_module(pin: pin,
+                             jsonData: jsonElement,
+                             socket: socket,
+                             decodingDepthLevel: decodingDepthLevel)
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noEngine(tank_id)), sender: self)
         }
@@ -145,24 +122,14 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         let gunKeypath = #keyPath(Vehicleprofile.gun)
         if let jsonElement = element[gunKeypath] as? JSON {
             let modelClass = VehicleprofileGun.self
-            let keypath = VehicleprofileGun.primaryKeyPath(forType: .internal)
-            let drivenObjectID = jsonElement[keypath]
+            let idkeypath = VehicleprofileGun.primaryKeyPath(forType: .internal)
+            let drivenObjectID = jsonElement[idkeypath]
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
-            let composer = RootTagRuleBuilder(pin: pin)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
-            let managedRef = try managedObject?.managedRef()
-
-            #warning("managedRef!")
-            let socket = JointSocket(managedRef: managedRef!, identifier: drivenObjectID, keypath: gunKeypath)
-            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
-
-            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
-            uow.maps = [jsonMap]
-            uow.modelClass = modelClass
-            uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
-
-            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+            let socket = JointSocket(managedRef: managedRef, identifier: pin.identifier, keypath: gunKeypath)
+            try fetch_module(pin: pin,
+                             jsonData: jsonElement,
+                             socket: socket,
+                             decodingDepthLevel: decodingDepthLevel)
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noGun(tank_id)), sender: self)
         }
@@ -171,24 +138,15 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
         let suspensionKeypath = #keyPath(Vehicleprofile.suspension)
         if let jsonElement = element[suspensionKeypath] as? JSON {
-            let keypath = VehicleprofileSuspension.primaryKeyPath(forType: .internal)
-            let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileSuspension.self
+            let idkeypath = VehicleprofileSuspension.primaryKeyPath(forType: .internal)
+            let drivenObjectID = jsonElement[idkeypath]
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
-            let composer = RootTagRuleBuilder(pin: pin)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
-            let managedRef = try managedObject?.managedRef()
-
-            let socket = JointSocket(managedRef: managedRef!, identifier: drivenObjectID, keypath: suspensionKeypath)
-            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
-
-            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
-            uow.maps = [jsonMap]
-            uow.modelClass = modelClass
-            uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
-
-            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+            let socket = JointSocket(managedRef: managedRef, identifier: pin.identifier, keypath: suspensionKeypath)
+            try fetch_module(pin: pin,
+                             jsonData: jsonElement,
+                             socket: socket,
+                             decodingDepthLevel: decodingDepthLevel)
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noSuspension(tank_id)), sender: self)
         }
@@ -197,24 +155,15 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
         let turretKeypath = #keyPath(Vehicleprofile.turret)
         if let jsonElement = element[turretKeypath] as? JSON {
-            let keypath = VehicleprofileTurret.primaryKeyPath(forType: .internal)
-            let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileTurret.self
+            let idkeypath = VehicleprofileTurret.primaryKeyPath(forType: .internal)
+            let drivenObjectID = jsonElement[idkeypath]
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
-            let composer = RootTagRuleBuilder(pin: pin)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
-            let managedRef = try managedObject?.managedRef()
-
-            let socket = JointSocket(managedRef: managedRef!, identifier: drivenObjectID, keypath: turretKeypath)
-            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
-
-            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
-            uow.maps = [jsonMap]
-            uow.modelClass = modelClass
-            uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
-
-            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+            let socket = JointSocket(managedRef: managedRef, identifier: pin.identifier, keypath: turretKeypath)
+            try fetch_module(pin: pin,
+                             jsonData: jsonElement,
+                             socket: socket,
+                             decodingDepthLevel: decodingDepthLevel)
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noTurret(tank_id)), sender: self)
         }
@@ -223,27 +172,46 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
         let radioKeypath = #keyPath(Vehicleprofile.radio)
         if let jsonElement = element[radioKeypath] as? JSON {
-            let keypath = VehicleprofileRadio.primaryKeyPath(forType: .internal)
-            let drivenObjectID = jsonElement[keypath]
             let modelClass = VehicleprofileRadio.self
+            let idkeypath = VehicleprofileRadio.primaryKeyPath(forType: .internal)
+            let drivenObjectID = jsonElement[idkeypath]
             let pin = JointPin(modelClass: modelClass, identifier: drivenObjectID, contextPredicate: nil)
-            let composer = RootTagRuleBuilder(pin: pin)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
-            let managedRef = try managedObject?.managedRef()
-
-            let socket = JointSocket(managedRef: managedRef!, identifier: drivenObjectID, keypath: radioKeypath)
-            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
-
-            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
-            uow.maps = [jsonMap]
-            uow.modelClass = modelClass
-            uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel
-
-            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+            let socket = JointSocket(managedRef: managedRef, identifier: pin.identifier, keypath: radioKeypath)
+            try fetch_module(pin: pin,
+                             jsonData: jsonElement,
+                             socket: socket,
+                             decodingDepthLevel: decodingDepthLevel)
         } else {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.noTurret(tank_id)), sender: self)
         }
+    }
+
+    func fetch_element(modelClass: ModelClassType, parentKey: String, jsonData: Any, parentContextPredicate: ContextPredicateProtocol, socket: JointSocketProtocol, parentJSonRefs: [JSONRefProtocol], decodingDepthLevel: DecodingDepthLevel?) throws {
+        let composer = ForeignKey_Composer(contextPredicate: parentContextPredicate, parentKey: parentKey, parentJsonRefs: parentJSonRefs)
+        let contextPredicate = try composer.buildRequestPredicateComposition()
+        let jsonMap = try JSONMap(data: jsonData, predicate: contextPredicate)
+
+        let uow = UOWDecodeAndLinkMaps(appContext: appContext)
+        uow.maps = [jsonMap]
+        uow.modelClass = modelClass
+        uow.socket = socket
+        uow.decodingDepthLevel = decodingDepthLevel
+
+        appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+    }
+
+    private func fetch_module(pin: JointPinProtocol, jsonData: JSON, socket: JointSocketProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
+        let composer = PrimaryKey_Composer(pin: pin)
+        let contextPredicate = try composer.buildRequestPredicateComposition()
+        let jsonMap = try JSONMap(data: jsonData, predicate: contextPredicate)
+
+        let uow = UOWDecodeAndLinkMaps(appContext: appContext)
+        uow.maps = [jsonMap]
+        uow.modelClass = pin.modelClass
+        uow.socket = socket
+        uow.decodingDepthLevel = decodingDepthLevel
+
+        appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
     }
 }
 
@@ -304,6 +272,7 @@ extension VehicleprofileJSONDecoder {
         case noTurret(NSDecimalNumber?)
         case noRadio(NSDecimalNumber?)
         case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+        case noManagedRef
 
         public var description: String {
             switch self {
@@ -316,6 +285,7 @@ extension VehicleprofileJSONDecoder {
             case .noTurret(let profile): return "[\(type(of: self))]: No turret in profile with id: \(profile ?? -1)"
             case .noRadio(let profile): return "[\(type(of: self))]: No radio in profile with id: \(profile ?? -1)"
             case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
+            case .noManagedRef: return "[\(type(of: self))]: No managed ref"
             }
         }
     }

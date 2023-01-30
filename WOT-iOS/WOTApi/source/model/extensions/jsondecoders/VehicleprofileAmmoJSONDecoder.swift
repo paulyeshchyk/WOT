@@ -38,7 +38,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let foreignPrimarySelectKey = #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo)
             let modelClass = VehicleprofileAmmoPenetration.self
             let pin = JointPin(modelClass: modelClass, identifier: nil, contextPredicate: map.contextPredicate)
-            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(pin: pin, foreignPrimarySelectKey: foreignPrimarySelectKey)
+            let composer = VehicleprofileAmmo_Composer(pin: pin, parentKey: foreignPrimarySelectKey)
             let contextPredicate = try composer.buildRequestPredicateComposition()
 
             guard let managedRef = try managedObject?.managedRef() else {
@@ -66,7 +66,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             let foreignPrimarySelectKey = #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo)
             let modelClass = VehicleprofileAmmoDamage.self
             let pin = JointPin(modelClass: modelClass, identifier: nil, contextPredicate: map.contextPredicate)
-            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(pin: pin, foreignPrimarySelectKey: foreignPrimarySelectKey)
+            let composer = VehicleprofileAmmo_Composer(pin: pin, parentKey: foreignPrimarySelectKey)
             let contextPredicate = try composer.buildRequestPredicateComposition()
 
             guard let managedRef = try managedObject?.managedRef() else {

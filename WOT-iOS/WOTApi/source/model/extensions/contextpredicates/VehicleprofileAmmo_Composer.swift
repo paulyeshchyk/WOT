@@ -1,6 +1,6 @@
 //
-//  ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift
-//  WOTData
+//  VehicleprofileAmmo_Composer.swift
+//  WOTApi
 //
 //  Created by Pavel Yeshchyk on 5/8/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
@@ -13,24 +13,24 @@
  vehicleprofileammo penetration: vehicleprofileAmmo.vehicleprofileAmmoList.vehicleprofile.vehicles.tank_id == 1073 AND vehicleprofileAmmo.type == "ARMOR_PIERCING_CR"
 
  */
-public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: FetchRequestPredicateComposerProtocol {
+public class VehicleprofileAmmo_Composer: FetchRequestPredicateComposerProtocol {
 
     private var pin: JointPinProtocol
-    private var foreignPrimarySelectKey: String
+    private var parentKey: String
 
     // MARK: Lifecycle
 
-    public init(pin: JointPinProtocol, foreignPrimarySelectKey: String) {
+    public init(pin: JointPinProtocol, parentKey: String) {
         self.pin = pin
-        self.foreignPrimarySelectKey = foreignPrimarySelectKey
+        self.parentKey = parentKey
     }
 
     // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let lookupPredicate = ContextPredicate()
-        lookupPredicate[.primary] = pin.contextPredicate?[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
-        lookupPredicate[.secondary] = pin.contextPredicate?[.secondary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
+        lookupPredicate[.primary] = pin.contextPredicate?[.primary]?.foreignKey(byInsertingComponent: parentKey)
+        lookupPredicate[.secondary] = pin.contextPredicate?[.secondary]?.foreignKey(byInsertingComponent: parentKey)
 
         return lookupPredicate
     }

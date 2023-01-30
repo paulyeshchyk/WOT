@@ -1,6 +1,6 @@
 //
-//  ForeignKeyRuleBuilder.swift
-//  WOTData
+//  ForeignKey_Composer.swift
+//  WOTApi
 //
 //  Created by Pavel Yeshchyk on 5/7/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
@@ -21,25 +21,25 @@
  armorlist hull:         vehicleprofileArmorListHull.vehicleprofile.vehicles.tank_id == 4657
 
  */
-open class ForeignAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
+open class ForeignKey_Composer: FetchRequestPredicateComposerProtocol {
 
-    private var foreignSelectKey: String
-    private let jsonRefs: [JSONRefProtocol]
+    private var parentKey: String
+    private let parentJsonRefs: [JSONRefProtocol]
     private let contextPredicate: ContextPredicateProtocol
 
     // MARK: Lifecycle
 
-    public init(contextPredicate: ContextPredicateProtocol, foreignSelectKey: String, jsonRefs: [JSONRefProtocol]) {
-        self.foreignSelectKey = foreignSelectKey
-        self.jsonRefs = jsonRefs
+    public init(contextPredicate: ContextPredicateProtocol, parentKey: String, parentJsonRefs: [JSONRefProtocol]) {
+        self.parentKey = parentKey
+        self.parentJsonRefs = parentJsonRefs
         self.contextPredicate = contextPredicate
     }
 
     // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
-        let lookupPredicate = ContextPredicate(jsonRefs: jsonRefs)
-        lookupPredicate[.primary] = contextPredicate[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
+        let lookupPredicate = ContextPredicate(jsonRefs: parentJsonRefs)
+        lookupPredicate[.primary] = contextPredicate[.primary]?.foreignKey(byInsertingComponent: parentKey)
 
         return lookupPredicate
     }

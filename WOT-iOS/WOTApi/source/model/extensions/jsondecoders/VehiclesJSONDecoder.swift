@@ -17,9 +17,9 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using jsonMap: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
+    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
         //
-        let element = try jsonMap.data(ofType: JSON.self)
+        let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
 
         // MARK: - do check decodingDepth
@@ -37,10 +37,10 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
         // MARK: - ModulesTree
 
         if let modulesTreeJSON = element[#keyPath(Vehicles.modules_tree)] as? JSON {
-            var parentJSONRefs = jsonMap.contextPredicate.jsonRefs
+            var parentJSONRefs = map.contextPredicate.jsonRefs
             parentJSONRefs.append(jsonRef)
 
-            let composer = VehiclesModuleTreeBuilder(contextPredicate: jsonMap.contextPredicate, jsonRefs: parentJSONRefs)
+            let composer = VehiclesModuleTree_Composer(parentContextPredicate: map.contextPredicate, parentJSONRefs: parentJSONRefs)
             let parentContextPredicate = try composer.buildRequestPredicateComposition()
 
             for key in modulesTreeJSON.keys {
@@ -48,7 +48,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     let modelClass = ModulesTree.self
                     let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
                     let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: parentContextPredicate)
-                    let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
+                    let composer = ModulesTreeModule_Composer(pin: pin)
                     let contextPredicate = try composer.buildRequestPredicateComposition()
 
                     let keypath = #keyPath(ModulesTree.next_modules)
@@ -56,8 +56,6 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
 
                     let socket = JointSocket(managedRef: managedRef!, identifier: module_id, keypath: keypath)
                     let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
-
-                    #warning("move out of Decoder")
 
                     let uow = UOWDecodeAndLinkMaps(appContext: appContext)
                     uow.maps = [jsonMap]
@@ -81,7 +79,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
         if let jsonElement = element[defaultProfileKeypath] as? JSON {
             let foreignSelectKey = #keyPath(Vehicleprofile.vehicles)
             let modelClass = Vehicleprofile.self
-            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: jsonMap.contextPredicate, foreignSelectKey: foreignSelectKey, jsonRefs: [])
+            let composer = ForeignKey_Composer(contextPredicate: map.contextPredicate, parentKey: foreignSelectKey, parentJsonRefs: [])
             let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 

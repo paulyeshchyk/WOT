@@ -36,14 +36,14 @@ public class JSONMap: JSONMapProtocol, CustomStringConvertible, CustomDebugStrin
 
     // MARK: Lifecycle
 
-    public init(data jsonCollection: JSONCollectionProtocol, predicate contextPredicate: ContextPredicateProtocol) throws {
+    public init(data jsonCollection: JSONCollectionProtocol, contextPredicate: ContextPredicateProtocol) throws {
         self.jsonCollection = jsonCollection
         self.contextPredicate = contextPredicate
     }
 
     public convenience init(data: Any, predicate contextPredicate: ContextPredicateProtocol) throws {
         let collection = JSONCollection(data: data)
-        try self.init(data: collection, predicate: contextPredicate)
+        try self.init(data: collection, contextPredicate: contextPredicate)
     }
 
     deinit {

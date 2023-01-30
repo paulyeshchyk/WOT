@@ -1,6 +1,6 @@
 //
-//  RootTagToIDRuleBuilder.swift
-//  WOTData
+//  PrimaryKey_Composer.swift
+//  WOTApi
 //
 //  Created by Pavel Yeshchyk on 5/7/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
@@ -23,7 +23,7 @@
  vehicleProfile radio:      tag == "A-220_1"
 
  */
-open class RootTagRuleBuilder: FetchRequestPredicateComposerProtocol {
+open class PrimaryKey_Composer: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
 

@@ -37,7 +37,7 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
             let ammoType = jsonElement[keypath]
             let modelClass = VehicleprofileAmmo.self
             let pin = JointPin(modelClass: modelClass, identifier: ammoType, contextPredicate: map.contextPredicate)
-            let composer = VehicleprofileAmmoListAmmoRequestPredicateComposer(pin: pin, foreignSelectKey: foreignSelectKey)
+            let composer = VehicleprofileAmmoList_Composer(pin: pin, parentKey: foreignSelectKey)
             let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 

@@ -40,7 +40,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
             let extractor = VehicleprofileModule.GunExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let composer = VehicleprofileModule_Composer(pin: pin)
             let contextPredicate = try? composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)
@@ -64,7 +64,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
             let extractor = VehicleprofileModule.RadioExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let composer = VehicleprofileModule_Composer(pin: pin)
             let contextPredicate = try? composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)
@@ -88,7 +88,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
             let extractor = VehicleprofileModule.EngineExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let composer = VehicleprofileModule_Composer(pin: pin)
             let contextPredicate = try? composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)
@@ -112,7 +112,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
             let extractor = VehicleprofileModule.SuspensionExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let composer = VehicleprofileModule_Composer(pin: pin)
             let contextPredicate = try? composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)
@@ -136,7 +136,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
             let extractor = VehicleprofileModule.TurretExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
+            let composer = VehicleprofileModule_Composer(pin: pin)
             let contextPredicate = try? composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)

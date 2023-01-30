@@ -57,7 +57,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         }
     }
 
-    private func fetchCurrentModule(identifier: JSONValueType?, map: JSONMapProtocol, moduleTreeJSON: JSON?, decodingDepthLevel: DecodingDepthLevel?) {
+    private func fetchCurrentModule(identifier: JSONValueType?, map: JSONMapProtocol, moduleTreeJSON _: JSON?, decodingDepthLevel: DecodingDepthLevel?) {
         do {
             let managedRef: ManagedRefProtocol? = try managedObject?.managedRef()
             let modelClass: ModelClassType = Module.self
@@ -66,8 +66,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let extractor: ManagedObjectExtractable? = CurrentModuleExtractor()
 
             let pin: JointPinProtocol = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
-            let jsonRef: JSONRefProtocol = try JSONRef(data: moduleTreeJSON, modelClass: ModulesTree.self)
-            let composer = LinkedRemoteAsPrimaryRuleBuilder(pin: pin, jsonRef: jsonRef)
+            let composer = ModulesTreeModule_Composer(pin: pin)
             let contextPredicate = try composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)
@@ -77,8 +76,10 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             uow.extractor = extractor
             uow.contextPredicate = contextPredicate
             uow.nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            appContext.uowManager.run(unit: uow) { _ in
-                //
+            appContext.uowManager.run(unit: uow) { result in
+                if let error = result.error {
+                    self.appContext.logInspector?.log(.error(error), sender: self)
+                }
             }
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
@@ -95,7 +96,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextModulesKeypath)
             let extractor = NextModuleExtractor()
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-            let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
+            let composer = ModulesTreeModule_Composer(pin: pin)
             let contextPredicate = try composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)
@@ -124,7 +125,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
             let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
-            let composer = RootTagRuleBuilder(pin: pin)
+            let composer = PrimaryKey_Composer(pin: pin)
             let contextPredicate = try composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)

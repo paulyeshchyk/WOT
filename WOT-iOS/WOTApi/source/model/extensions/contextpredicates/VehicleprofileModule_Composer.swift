@@ -1,6 +1,6 @@
 //
-//  MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift
-//  WOTData
+//  VehicleprofileModule_Composer.swift
+//  WOTApi
 //
 //  Created by Pavel Yeshchyk on 5/8/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
@@ -19,7 +19,7 @@
  vehicleProfileModule turret:     vehicleprofile.vehicles.tank_id == 1073 AND turret_id == 1075
 
  */
-open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
+open class VehicleprofileModule_Composer: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
 

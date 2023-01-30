@@ -12,15 +12,10 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
     public var jsonRefs: [JSONRefProtocol] = []
 
     override public var description: String {
-        let objects = expressions()
-        guard !objects.isEmpty else {
-            return "empty case"
-        }
-        var result = [String]()
-        objects.forEach {
-            result.append("key:`\($0.description)`")
-        }
-        return result.joined(separator: ";")
+        var resultString: [String] = []
+        resultString.append("expressions: \(expressions())")
+        resultString.append("jsonRefs: \(String(describing: jsonRefs))")
+        return resultString.joined(separator: "; ")
     }
 
     private var _expressions: [ContextExpressionType: Set<ContextExpression>] = .init()
