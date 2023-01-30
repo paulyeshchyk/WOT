@@ -6,6 +6,11 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+/** Creates predicate
+
+ modulesTree currentModule: module_id == 567
+
+ */
 open class LinkedRemoteAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol

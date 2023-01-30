@@ -36,7 +36,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
         if let jsonElement = element[keypathturret] as? JSON {
             let foreignSelectKey = #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret)
             let modelClass = VehicleprofileArmor.self
-            let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: [])
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, jsonRefs: [])
             let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 
@@ -60,7 +60,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
         if let jsonElement = element[keypathhull] as? JSON {
             let foreignSelectKey = #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull)
             let modelClass = VehicleprofileArmor.self
-            let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: [])
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, jsonRefs: [])
             let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 

@@ -6,6 +6,13 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+/** Creates predicate
+
+ modulesTree module:     default_profile.vehicles.tank_id == 1073 AND module_id == 1332
+
+ modulesTree nextModule: default_profile.vehicles.tank_id == 1073 and module_id == 1330
+
+ */
 open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol

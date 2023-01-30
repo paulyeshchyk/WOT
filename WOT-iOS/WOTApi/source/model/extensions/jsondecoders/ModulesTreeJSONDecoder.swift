@@ -124,7 +124,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
             let pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
-            let composer = LinkedLocalAsPrimaryRuleBuilder(pin: pin)
+            let composer = RootTagRuleBuilder(pin: pin)
             let contextPredicate = try composer.buildRequestPredicateComposition()
 
             let uow = UOWRemote(appContext: appContext)

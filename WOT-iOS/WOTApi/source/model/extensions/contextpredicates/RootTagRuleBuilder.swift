@@ -6,6 +6,23 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+/** Creates predicate
+
+ treeview:                  tank_id == 1073
+
+ modulesTree nextTank:      tank_id == 2353
+
+ vehicleProfile engine:     tag == "_Type_102S"
+
+ vehicleProfile gun:        tag == "_85mm_S-53"
+
+ vehicleProfile suspension: tag == "Chassis_Ch04_T34_1"
+
+ vehicleProfile turret:     tag == "Turret_1_Ch04_T34_1"
+
+ vehicleProfile radio:      tag == "A-220_1"
+
+ */
 open class RootTagRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol

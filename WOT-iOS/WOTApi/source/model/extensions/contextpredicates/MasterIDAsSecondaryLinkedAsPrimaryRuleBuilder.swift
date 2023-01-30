@@ -6,6 +6,19 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+/** Creates predicate
+
+ module gun:     tank_id == 1073 AND gun_id == 820
+
+ module chassis: tank_id == 1073 AND suspension_id == 1330
+
+ module radio:   tank_id == 1073 AND radio_id == 567
+
+ module engine:  tank_id == 1073 AND engine_id == 1589
+
+ module turret:  tank_id == 1073 AND turret_id == 1075
+
+ */
 public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
@@ -21,11 +34,9 @@ public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: FetchRequestPredicat
     // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
-        let pinModelClass = pin.modelClass
-        let parentHostPinModelClass = parentHostPin.modelClass
         let lookupPredicate = ContextPredicate()
-        lookupPredicate[.primary] = pinModelClass.primaryKey(forType: .external, andObject: pin.identifier)
-        lookupPredicate[.secondary] = parentHostPinModelClass.primaryKey(forType: .internal, andObject: parentHostPin.identifier)
+        lookupPredicate[.primary] = pin.modelClass.primaryKey(forType: .external, andObject: pin.identifier)
+        lookupPredicate[.secondary] = parentHostPin.modelClass.primaryKey(forType: .internal, andObject: parentHostPin.identifier)
 
         return lookupPredicate
     }

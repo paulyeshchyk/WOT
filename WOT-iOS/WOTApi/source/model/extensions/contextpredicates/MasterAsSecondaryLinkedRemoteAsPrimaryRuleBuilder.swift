@@ -6,6 +6,19 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+/** Creates predicate
+
+ vehicleProfileModule gun:        vehicleprofile.vehicles.tank_id == 1073 AND gun_id == 820
+
+ vehicleProfileModule radio:      vehicleprofile.vehicles.tank_id == 1073 AND radio_id == 823
+
+ vehicleProfileModule engine:     vehicleprofile.vehicles.tank_id == 1073 AND engine_id == 1589
+
+ vehicleProfileModule suspension: vehicleprofile.vehicles.tank_id == 1073 AND suspension_id == 1074
+
+ vehicleProfileModule turret:     vehicleprofile.vehicles.tank_id == 1073 AND turret_id == 1075
+
+ */
 open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol

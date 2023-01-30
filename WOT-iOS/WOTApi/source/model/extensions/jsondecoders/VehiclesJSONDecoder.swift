@@ -40,17 +40,18 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             var parentJSONRefs = jsonMap.contextPredicate.jsonRefs
             parentJSONRefs.append(jsonRef)
 
-            let composer = VehiclesModuleTreeBuilder(jsonMap: jsonMap, jsonRefs: parentJSONRefs)
-            let contextPredicate = try composer.buildRequestPredicateComposition()
+            let composer = VehiclesModuleTreeBuilder(contextPredicate: jsonMap.contextPredicate, jsonRefs: parentJSONRefs)
+            let parentContextPredicate = try composer.buildRequestPredicateComposition()
 
             for key in modulesTreeJSON.keys {
                 if let jsonElement = modulesTreeJSON[key] as? JSON {
-                    let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
-
-                    let composer = VehiclesModuleBuilder(requestPredicate: contextPredicate, module_id: module_id)
-                    let contextPredicate = try composer.buildRequestPredicateComposition()
-                    let keypath = #keyPath(ModulesTree.next_modules)
                     let modelClass = ModulesTree.self
+                    let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
+                    let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: parentContextPredicate)
+                    let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pin: pin)
+                    let contextPredicate = try composer.buildRequestPredicateComposition()
+
+                    let keypath = #keyPath(ModulesTree.next_modules)
                     let managedRef = try managedObject?.managedRef()
 
                     let socket = JointSocket(managedRef: managedRef!, identifier: module_id, keypath: keypath)
@@ -80,7 +81,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
         if let jsonElement = element[defaultProfileKeypath] as? JSON {
             let foreignSelectKey = #keyPath(Vehicleprofile.vehicles)
             let modelClass = Vehicleprofile.self
-            let composer = ForeignAsPrimaryRuleBuilder(jsonMap: jsonMap, foreignSelectKey: foreignSelectKey, jsonRefs: [])
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: jsonMap.contextPredicate, foreignSelectKey: foreignSelectKey, jsonRefs: [])
             let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 

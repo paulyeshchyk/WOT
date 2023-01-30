@@ -36,10 +36,11 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
         let keypathPenetration = #keyPath(VehicleprofileAmmo.penetration)
         if let jsonCustom = element[keypathPenetration] {
             let foreignPrimarySelectKey = #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo)
-            let foreignSecondarySelectKey = #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo)
             let modelClass = VehicleprofileAmmoPenetration.self
-            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(jsonMap: map, foreignPrimarySelectKey: foreignPrimarySelectKey, foreignSecondarySelectKey: foreignSecondarySelectKey)
+            let pin = JointPin(modelClass: modelClass, identifier: nil, contextPredicate: map.contextPredicate)
+            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(pin: pin, foreignPrimarySelectKey: foreignPrimarySelectKey)
             let contextPredicate = try composer.buildRequestPredicateComposition()
+
             guard let managedRef = try managedObject?.managedRef() else {
                 throw VehicleprofileAmmoError.invalidManagedRef
             }
@@ -63,9 +64,9 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
         let keypathDamage = #keyPath(VehicleprofileAmmo.damage)
         if let jsonCustom = element[keypathDamage] {
             let foreignPrimarySelectKey = #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo)
-            let foreignSecondarySelectKey = #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo)
             let modelClass = VehicleprofileAmmoDamage.self
-            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(jsonMap: map, foreignPrimarySelectKey: foreignPrimarySelectKey, foreignSecondarySelectKey: foreignSecondarySelectKey)
+            let pin = JointPin(modelClass: modelClass, identifier: nil, contextPredicate: map.contextPredicate)
+            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(pin: pin, foreignPrimarySelectKey: foreignPrimarySelectKey)
             let contextPredicate = try composer.buildRequestPredicateComposition()
 
             guard let managedRef = try managedObject?.managedRef() else {

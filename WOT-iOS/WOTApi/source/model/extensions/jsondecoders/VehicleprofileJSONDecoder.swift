@@ -47,7 +47,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         if let jsonArray = element[ammoKeypath] as? [JSON] {
             let foreignSelectKey = #keyPath(VehicleprofileAmmoList.vehicleprofile)
             let modelClass = VehicleprofileAmmoList.self
-            let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
             let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 
@@ -71,7 +71,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         if let jsonElement = element[armorKeypath] as? JSON {
             let foreignSelectKey = #keyPath(VehicleprofileModule.vehicleprofile)
             let modelClass = VehicleprofileArmorList.self
-            let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
             let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 
@@ -95,7 +95,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
         if let jsonElement = element[modulesKeypath] as? JSON {
             let foreignSelectKey = #keyPath(VehicleprofileModule.vehicleprofile)
             let modelClass = VehicleprofileModule.self
-            let composer = ForeignAsPrimaryRuleBuilder(jsonMap: map, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
+            let composer = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: foreignSelectKey, jsonRefs: parentJSonRefs)
             let contextPredicate = try composer.buildRequestPredicateComposition()
             let managedRef = try managedObject?.managedRef()
 

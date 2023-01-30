@@ -6,26 +6,31 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+/** Creates predicate
+
+ vehicleprofileammo damage:      vehicleprofileAmmo.vehicleprofileAmmoList.vehicleprofile.vehicles.tank_id == 1073 AND vehicleprofileAmmo.type == "HIGH_EXPLOSIVE"
+
+ vehicleprofileammo penetration: vehicleprofileAmmo.vehicleprofileAmmoList.vehicleprofile.vehicles.tank_id == 1073 AND vehicleprofileAmmo.type == "ARMOR_PIERCING_CR"
+
+ */
 public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: FetchRequestPredicateComposerProtocol {
 
-    private var jsonMap: JSONMapProtocol
+    private var pin: JointPinProtocol
     private var foreignPrimarySelectKey: String
-    private var foreignSecondarySelectKey: String
 
     // MARK: Lifecycle
 
-    public init(jsonMap: JSONMapProtocol, foreignPrimarySelectKey: String, foreignSecondarySelectKey: String) {
-        self.jsonMap = jsonMap
+    public init(pin: JointPinProtocol, foreignPrimarySelectKey: String) {
+        self.pin = pin
         self.foreignPrimarySelectKey = foreignPrimarySelectKey
-        self.foreignSecondarySelectKey = foreignSecondarySelectKey
     }
 
     // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> ContextPredicateProtocol {
         let lookupPredicate = ContextPredicate()
-        lookupPredicate[.primary] = jsonMap.contextPredicate[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
-        lookupPredicate[.secondary] = jsonMap.contextPredicate[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)
+        lookupPredicate[.primary] = pin.contextPredicate?[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
+        lookupPredicate[.secondary] = pin.contextPredicate?[.secondary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
 
         return lookupPredicate
     }

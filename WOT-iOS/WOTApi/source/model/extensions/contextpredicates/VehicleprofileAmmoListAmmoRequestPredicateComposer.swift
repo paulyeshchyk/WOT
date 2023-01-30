@@ -6,6 +6,13 @@
 //
 //
 
+/** Creates predicate
+
+ vehicleProfileAmmoList ammoDamage:      vehicleprofileAmmoList.vehicleprofile.vehicles.tank_id == 1073 AND type == "ARMOR_PIERCING"
+
+ vehicleProfileAmmoList ammoPenetration: vehicleprofileAmmoList.vehicleprofile.vehicles.tank_id == 1073 AND type == "HIGH_EXPLOSIVE"
+
+ */
 public class VehicleprofileAmmoListAmmoRequestPredicateComposer: FetchRequestPredicateComposerProtocol {
 
     private let pin: JointPinProtocol
