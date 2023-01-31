@@ -42,12 +42,12 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
 
             let composerInput = ComposerInput()
             composerInput.parentJSONRefs = parentJSONRefs
-            composerInput.parentContextPredicate = map.contextPredicate
+            composerInput.contextPredicate = map.contextPredicate
             let composer = VehiclesModuleTree_Composer()
             let parentContextPredicate = try composer.build(composerInput)
 
-            for key in modulesTreeJSON.keys {
-                if let jsonElement = modulesTreeJSON[key] as? JSON {
+            Array(modulesTreeJSON.values).compactMap { $0 as? JSON }.forEach { jsonElement in
+                do {
                     let modelClass = ModulesTree.self
                     let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
 
@@ -69,9 +69,8 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                     uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
 
                     appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
-
-                } else {
-                    appContext.logInspector?.log(.warning(error: VehiclesJSONDecoderErrors.moduleTreeNotFound(tank_id)), sender: self)
+                } catch {
+                    appContext.logInspector?.log(.error(error), sender: self)
                 }
             }
         } else {

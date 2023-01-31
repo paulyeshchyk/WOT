@@ -19,15 +19,15 @@ public class VehiclesModuleTree_Composer: CustomStringConvertible, ComposerProto
     }
 
     public func build(_ composerInput: ComposerInputProtocol) throws -> ContextPredicateProtocol {
-        guard let parentContextPredicate = composerInput.parentContextPredicate else {
-            throw VehiclesModuleTree_ComposerError.parentContextPredicateNotFound
+        guard let contextPredicate = composerInput.contextPredicate else {
+            throw VehiclesModuleTree_ComposerError.contextPredicateNotFound
         }
         guard let parentJSONRefs = composerInput.parentJSONRefs else {
             throw VehiclesModuleTree_ComposerError.parentJSONRefsNotFound
         }
 
         let lookupPredicate = ContextPredicate(jsonRefs: parentJSONRefs)
-        lookupPredicate[.primary] = parentContextPredicate[.primary]?
+        lookupPredicate[.primary] = contextPredicate[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
 
@@ -39,7 +39,7 @@ public class VehiclesModuleTree_Composer: CustomStringConvertible, ComposerProto
 
 extension VehiclesModuleTree_Composer {
     enum VehiclesModuleTree_ComposerError: Error {
-        case parentContextPredicateNotFound
+        case contextPredicateNotFound
         case parentJSONRefsNotFound
     }
 }
