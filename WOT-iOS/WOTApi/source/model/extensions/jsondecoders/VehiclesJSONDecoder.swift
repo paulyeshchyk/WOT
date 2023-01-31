@@ -29,82 +29,118 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             return
         }
 
-        // MARK: - relation mapping
-
-        let jsonRef = try JSONRef(data: element, modelClass: Vehicles.self)
-        let tank_id = element[#keyPath(Vehicles.tank_id)] as? NSDecimalNumber
-
         // MARK: - ModulesTree
 
-        if let modulesTreeJSON = element[#keyPath(Vehicles.modules_tree)] as? JSON {
-            var parentJSONRefs = map.contextPredicate.jsonRefs
-            parentJSONRefs.append(jsonRef)
-
-            let composerInput = ComposerInput()
-            composerInput.parentJSONRefs = parentJSONRefs
-            composerInput.contextPredicate = map.contextPredicate
-            let composer = VehiclesModuleTree_Composer()
-            let parentContextPredicate = try composer.build(composerInput)
-
-            Array(modulesTreeJSON.values).compactMap { $0 as? JSON }.forEach { jsonElement in
-                do {
-                    let modelClass = ModulesTree.self
-                    let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
-
-                    let composerInput = ComposerInput()
-                    composerInput.pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: parentContextPredicate)
-                    let composer = ModulesTreeModule_Composer()
-                    let contextPredicate = try composer.build(composerInput)
-
-                    let keypath = #keyPath(ModulesTree.next_modules)
-                    let managedRef = try managedObject?.managedRef()
-
-                    let socket = JointSocket(managedRef: managedRef!, identifier: module_id, keypath: keypath)
-                    let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
-
-                    let uow = UOWDecodeAndLinkMaps(appContext: appContext)
-                    uow.maps = [jsonMap]
-                    uow.modelClass = modelClass
-                    uow.socket = socket
-                    uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
-
-                    appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
-                } catch {
-                    appContext.logInspector?.log(.error(error), sender: self)
-                }
-            }
-        } else {
-            appContext.logInspector?.log(.warning(error: VehiclesJSONDecoderErrors.moduleTreeNotFound(tank_id)), sender: self)
-        }
+        fetch_modulesTree(keypath: #keyPath(Vehicles.modules_tree),
+                          idkeypath: #keyPath(ModulesTree.module_id),
+                          nextLevelKeyPath: #keyPath(ModulesTree.next_modules),
+                          modelClass: ModulesTree.self,
+                          parentModelClass: Vehicles.self,
+                          element: element,
+                          contextPredicate: map.contextPredicate,
+                          decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
 
         // MARK: - DefaultProfile
 
-        let defaultProfileKeypath = #keyPath(Vehicles.default_profile)
-        if let jsonElement = element[defaultProfileKeypath] as? JSON {
-            let foreignSelectKey = #keyPath(Vehicleprofile.vehicles)
-            let modelClass = Vehicleprofile.self
+        fetch_defaultProfile(keypath: #keyPath(Vehicles.default_profile),
+                             parentKey: #keyPath(Vehicleprofile.vehicles),
+                             modelClass: Vehicleprofile.self,
+                             element: element,
+                             contextPredicate: map.contextPredicate,
+                             decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
+    }
+
+    private func fetch_modulesTree(keypath: AnyHashable, idkeypath: AnyHashable, nextLevelKeyPath: AnyHashable, modelClass: ModelClassType, parentModelClass: ModelClassType, element: JSON, contextPredicate: ContextPredicateProtocol, decodingDepthLevel: DecodingDepthLevel?) {
+        do {
+            guard let modulesTreeJSON = element[keypath] as? JSON else {
+                throw VehiclesJSONDecoderErrors.elementNotFound(keypath)
+            }
+            let jsonRef = try JSONRef(data: element, modelClass: parentModelClass)
+
+            Array(modulesTreeJSON.values).compactMap { $0 as? JSON }.forEach { jsonElement in
+                fetch_subModuleTree(keypath: nextLevelKeyPath,
+                                    idkeypath: idkeypath,
+                                    modelClass: modelClass,
+                                    jsonElement: jsonElement,
+                                    contextPredicate: contextPredicate,
+                                    jsonRef: jsonRef,
+                                    decodingDepthLevel: decodingDepthLevel)
+            }
+        } catch {
+            appContext.logInspector?.log(.error(error), sender: self)
+        }
+    }
+
+    private func fetch_subModuleTree(keypath: AnyHashable, idkeypath: AnyHashable, modelClass: ModelClassType, jsonElement: JSON, contextPredicate: ContextPredicateProtocol, jsonRef: JSONRefProtocol, decodingDepthLevel: DecodingDepthLevel?) {
+        do {
+            guard let module_id = jsonElement[idkeypath] else {
+                throw VehiclesJSONDecoderErrors.idNotFound(idkeypath)
+            }
+            guard let managedRef = try managedObject?.managedRef() else {
+                throw VehiclesJSONDecoderErrors.managedRefNotFound
+            }
+
+            var parentJSONRefs = contextPredicate.jsonRefs
+            parentJSONRefs.append(jsonRef)
+
+            let parentComposerInput = ComposerInput()
+            parentComposerInput.parentJSONRefs = parentJSONRefs
+            parentComposerInput.contextPredicate = contextPredicate
+            let parentComposer = VehiclesModuleTree_Composer()
+            let parentContextPredicate = try parentComposer.build(parentComposerInput)
 
             let composerInput = ComposerInput()
-            composerInput.contextPredicate = map.contextPredicate
-            composerInput.parentKey = foreignSelectKey
-            composerInput.parentJSONRefs = []
-            let composer = ForeignKey_Composer()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: parentContextPredicate)
+            let composer = ModulesTreeModule_Composer()
             let contextPredicate = try composer.build(composerInput)
-            let managedRef = try managedObject?.managedRef()
 
-            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: defaultProfileKeypath)
+            let socket = JointSocket(managedRef: managedRef, identifier: module_id, keypath: keypath)
             let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
 
             let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
+            uow.decodingDepthLevel = decodingDepthLevel
+
+            appContext.uowManager.run(unit: uow, listenerCompletion: { result in
+                if let error = result.error {
+                    self.appContext.logInspector?.log(.error(error), sender: self)
+                }
+            })
+        } catch {
+            appContext.logInspector?.log(.error(error), sender: self)
+        }
+    }
+
+    private func fetch_defaultProfile(keypath: AnyHashable, parentKey: String, modelClass: ModelClassType, element: JSON, contextPredicate: ContextPredicateProtocol, decodingDepthLevel: DecodingDepthLevel?) {
+        do {
+            guard let managedRef = try managedObject?.managedRef() else {
+                throw VehiclesJSONDecoderErrors.managedRefNotFound
+            }
+            guard let jsonElement = element[keypath] as? JSON else {
+                throw VehiclesJSONDecoderErrors.elementNotFound(keypath)
+            }
+            let composerInput = ComposerInput()
+            composerInput.contextPredicate = contextPredicate
+            composerInput.parentKey = parentKey
+            composerInput.parentJSONRefs = []
+            let composer = ForeignKey_Composer()
+            let contextPredicate = try composer.build(composerInput)
+
+            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: keypath)
+            let jsonMap = try JSONMap(data: jsonElement, predicate: contextPredicate)
+
+            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
+            uow.maps = [jsonMap]
+            uow.modelClass = modelClass
+            uow.socket = socket
+            uow.decodingDepthLevel = decodingDepthLevel
 
             appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
 
-        } else {
-            appContext.logInspector?.log(.warning(error: VehiclesJSONDecoderErrors.profileNotFound(tank_id)), sender: self)
+        } catch {
+            appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 }
@@ -136,17 +172,21 @@ extension VehiclesJSONDecoder {
         case passedInvalidModuleTreeJSON(NSDecimalNumber?)
         case passedInvalidSubModuleJSON
         case passedInvalidModuleId
-        case profileNotFound(NSDecimalNumber?)
+        case idNotFound(AnyHashable)
+        case managedRefNotFound
+        case elementNotFound(AnyHashable)
         case moduleTreeNotFound(NSDecimalNumber?)
         case maxDecodingDepthLevelReached(DecodingDepthLevel?)
 
         public var description: String {
             switch self {
+            case .managedRefNotFound: return "[\(type(of: self))]: ManagedRef not found"
             case .notAJSON: return "[\(type(of: self))]: Not a JSON"
             case .passedInvalidModuleTreeJSON(let profileID): return "[\(type(of: self))]: Passed invalid module tree json for \(profileID ?? -1)"
             case .passedInvalidSubModuleJSON: return "[\(type(of: self))]: Passed invalid submodule json"
             case .passedInvalidModuleId: return "[\(type(of: self))]: Passed invalid module id"
-            case .profileNotFound(let id): return "[\(type(of: self))]: Profile is not defined in json for \(id ?? -1)"
+            case .idNotFound(let keypath): return "[\(type(of: self))]: id not found for (\(keypath))"
+            case .elementNotFound(let keypath): return "[\(type(of: self))]: element not found for (\(keypath))"
             case .moduleTreeNotFound(let id): return "[\(type(of: self))]: Module tree is not defined in json for \(id ?? -1)"
             case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
             }

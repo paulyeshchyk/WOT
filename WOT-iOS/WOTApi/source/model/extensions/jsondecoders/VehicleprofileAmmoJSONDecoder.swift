@@ -33,62 +33,54 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
         // MARK: - Penetration
 
-        let keypathPenetration = #keyPath(VehicleprofileAmmo.penetration)
-        if let jsonCustom = element[keypathPenetration] {
-            let modelClass = VehicleprofileAmmoPenetration.self
-
-            let composerInput = ComposerInput()
-            composerInput.pin = JointPin(modelClass: modelClass, identifier: nil, contextPredicate: map.contextPredicate)
-            composerInput.parentKey = #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo)
-            let composer = VehicleprofileAmmo_Composer()
-            let contextPredicate = try composer.build(composerInput)
-
-            guard let managedRef = try managedObject?.managedRef() else {
-                throw VehicleprofileAmmoError.invalidManagedRef
-            }
-
-            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: keypathPenetration)
-            let jsonMap = try JSONMap(data: jsonCustom, predicate: contextPredicate)
-
-            let uow = UOWDecodeAndLinkMaps(appContext: appContext)
-            uow.maps = [jsonMap]
-            uow.modelClass = modelClass
-            uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
-
-            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
-        } else {
-            appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noPenetration), sender: self)
-        }
+        fetch_element(keypath: #keyPath(VehicleprofileAmmo.penetration),
+                      parentKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo),
+                      modelClass: VehicleprofileAmmoPenetration.self,
+                      element: element,
+                      contextPredicate: map.contextPredicate,
+                      decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
 
         // MARK: - Damage
 
-        let keypathDamage = #keyPath(VehicleprofileAmmo.damage)
-        if let jsonCustom = element[keypathDamage] {
-            let modelClass = VehicleprofileAmmoDamage.self
+        fetch_element(keypath: #keyPath(VehicleprofileAmmo.damage),
+                      parentKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo),
+                      modelClass: VehicleprofileAmmoDamage.self,
+                      element: element,
+                      contextPredicate: map.contextPredicate,
+                      decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
+    }
 
-            let composerInput = ComposerInput()
-            composerInput.pin = JointPin(modelClass: modelClass, identifier: nil, contextPredicate: map.contextPredicate)
-            composerInput.parentKey = #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo)
-            let composer = VehicleprofileAmmo_Composer()
-            let contextPredicate = try composer.build(composerInput)
-
+    private func fetch_element(keypath: AnyHashable, parentKey: String, modelClass: ModelClassType, element: JSON, contextPredicate: ContextPredicateProtocol, decodingDepthLevel: DecodingDepthLevel?) {
+        do {
+            guard let element = element[keypath] else {
+                throw VehicleprofileAmmoJSONDecoderErrors.elementNotFound(keypath)
+            }
             guard let managedRef = try managedObject?.managedRef() else {
                 throw VehicleprofileAmmoError.invalidManagedRef
             }
 
-            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: keypathDamage)
-            let jsonMap = try JSONMap(data: jsonCustom, predicate: contextPredicate)
+            let composerInput = ComposerInput()
+            composerInput.pin = JointPin(modelClass: modelClass, identifier: nil, contextPredicate: contextPredicate)
+            composerInput.parentKey = parentKey
+            let composer = VehicleprofileAmmo_Composer()
+            let contextPredicate = try composer.build(composerInput)
+
+            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: keypath)
+            let jsonMap = try JSONMap(data: element, predicate: contextPredicate)
 
             let uow = UOWDecodeAndLinkMaps(appContext: appContext)
             uow.maps = [jsonMap]
             uow.modelClass = modelClass
             uow.socket = socket
-            uow.decodingDepthLevel = decodingDepthLevel?.nextDepthLevel
+            uow.decodingDepthLevel = decodingDepthLevel
 
-            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
-        } else {
-            appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
+            appContext.uowManager.run(unit: uow, listenerCompletion: { result in
+                if let error = result.error {
+                    self.appContext.logInspector?.log(.error(error), sender: self)
+                }
+            })
+        } catch {
+            appContext.logInspector?.log(.warning(error: error), sender: self)
         }
     }
 }
@@ -99,10 +91,12 @@ extension VehicleprofileAmmoJSONDecoder {
 
     enum VehicleprofileAmmoJSONDecoderErrors: Error, CustomStringConvertible {
         case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+        case elementNotFound(AnyHashable)
 
         var description: String {
             switch self {
             case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
+            case .elementNotFound(let keypath): return "[\(type(of: self))]: Element not found for (\(keypath))"
             }
         }
     }

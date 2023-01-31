@@ -33,50 +33,55 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
         // MARK: - NextTanks
 
-        let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
-        if let nextTanks = element[nextTanksKeypath] as? [JSONValueType] {
-            for nextTank in nextTanks {
-                fetchNextTank(tank_id: nextTank, decodingDepthLevel: decodingDepthLevel)
-            }
-        }
+        fetch_nextTank(keypath: #keyPath(ModulesTree.next_tanks),
+                       modelClass: Vehicles.self,
+                       element: element,
+                       extractor: NextVehicleExtractor(),
+                       decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
 
         // MARK: - NextModules
 
-        let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
-        if let nextModules = element[nextModulesKeypath] as? [JSONValueType] {
-            for nextModuleID in nextModules {
-                fetchNextModule(nextModuleID: nextModuleID, map: map, decodingDepthLevel: decodingDepthLevel)
-            }
-        }
+        fetch_nextModule(keypath: #keyPath(ModulesTree.next_modules),
+                         modelClass: Module.self,
+                         element: element,
+                         contextPredicate: map.contextPredicate,
+                         extractor: NextModuleExtractor(),
+                         decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
 
         // MARK: - CurrentModule
 
-        let currentModuleKeypath = #keyPath(ModulesTree.module_id)
-        if let identifier = element[currentModuleKeypath] {
-            fetchCurrentModule(identifier: identifier, map: map, moduleTreeJSON: element, decodingDepthLevel: decodingDepthLevel)
-        }
+        fetch_currentModule(keypath: #keyPath(ModulesTree.currentModule),
+                            idkeypath: #keyPath(ModulesTree.module_id),
+                            modelClass: Module.self,
+                            element: element,
+                            contextPredicate: map.contextPredicate,
+                            extractor: CurrentModuleExtractor(),
+                            decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
     }
 
-    private func fetchCurrentModule(identifier: JSONValueType?, map: JSONMapProtocol, moduleTreeJSON _: JSON?, decodingDepthLevel: DecodingDepthLevel?) {
+    private func fetch_currentModule(keypath: AnyHashable, idkeypath: AnyHashable, modelClass: ModelClassType, element: JSON, contextPredicate: ContextPredicateProtocol, extractor: ManagedObjectExtractable?, decodingDepthLevel: DecodingDepthLevel?) {
         do {
-            let managedRef: ManagedRefProtocol? = try managedObject?.managedRef()
-            let modelClass: ModelClassType = Module.self
-            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let socket: JointSocketProtocol = JointSocket(managedRef: managedRef!, identifier: nil, keypath: #keyPath(ModulesTree.currentModule))
-            let extractor: ManagedObjectExtractable? = CurrentModuleExtractor()
+            guard let module_id = element[idkeypath] else {
+                throw ModulesTreeJSONDecoderErrors.idNotFound(idkeypath)
+            }
+            guard let managedRef = try managedObject?.managedRef() else {
+                throw ModulesTreeJSONDecoderErrors.managedRefNotFound
+            }
+            let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: keypath)
+            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: contextPredicate)
 
             let composerInput = ComposerInput()
-            composerInput.pin = JointPin(modelClass: modelClass, identifier: identifier, contextPredicate: map.contextPredicate)
+            composerInput.pin = pin
             let composer = ModulesTreeModule_Composer()
             let contextPredicate = try composer.build(composerInput)
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
-            uow.modelFieldKeyPaths = modelFieldKeyPaths
+            uow.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             uow.socket = socket
             uow.extractor = extractor
             uow.contextPredicate = contextPredicate
-            uow.nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+            uow.nextDepthLevel = decodingDepthLevel
             appContext.uowManager.run(unit: uow) { result in
                 if let error = result.error {
                     self.appContext.logInspector?.log(.error(error), sender: self)
@@ -87,60 +92,74 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         }
     }
 
-    private func fetchNextModule(nextModuleID: JSONValueType?, map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) {
-        let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
+    private func fetch_nextModule(keypath: AnyHashable, modelClass: ModelClassType, element: JSON, contextPredicate: ContextPredicateProtocol, extractor: ManagedObjectExtractable, decodingDepthLevel: DecodingDepthLevel?) {
         do {
-            let managedRef = try managedObject?.managedRef()
-            let modelClass = Module.self
-            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextModulesKeypath)
-            let extractor = NextModuleExtractor()
-            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+            guard let managedRef = try managedObject?.managedRef() else {
+                throw ModulesTreeJSONDecoderErrors.managedRefNotFound
+            }
 
-            let composerInput = ComposerInput()
-            composerInput.pin = JointPin(modelClass: modelClass, identifier: nextModuleID, contextPredicate: map.contextPredicate)
-            let composer = ModulesTreeModule_Composer()
-            let contextPredicate = try composer.build(composerInput)
+            guard let nextModules = element[keypath] as? [JSONValueType] else {
+                throw ModulesTreeJSONDecoderErrors.elementNotFound(keypath)
+            }
+            for module_id in nextModules {
+                let modelFieldKeyPaths = modelClass.fieldsKeypaths()
+                let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: keypath)
 
-            let uow = UOWRemote(appContext: appContext)
-            uow.modelClass = modelClass
-            uow.modelFieldKeyPaths = modelFieldKeyPaths
-            uow.socket = socket
-            uow.extractor = extractor
-            uow.contextPredicate = contextPredicate
-            uow.nextDepthLevel = nextDepthLevel
-            appContext.uowManager.run(unit: uow) { _ in
-                //
+                let composerInput = ComposerInput()
+                composerInput.pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: contextPredicate)
+                let composer = ModulesTreeModule_Composer()
+                let contextPredicate = try composer.build(composerInput)
+
+                let uow = UOWRemote(appContext: appContext)
+                uow.modelClass = modelClass
+                uow.modelFieldKeyPaths = modelFieldKeyPaths
+                uow.socket = socket
+                uow.extractor = extractor
+                uow.contextPredicate = contextPredicate
+                uow.nextDepthLevel = decodingDepthLevel
+                appContext.uowManager.run(unit: uow) { result in
+                    if let error = result.error {
+                        self.appContext.logInspector?.log(.error(error), sender: self)
+                    }
+                }
             }
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 
-    private func fetchNextTank(tank_id: JSONValueType?, decodingDepthLevel: DecodingDepthLevel?) {
-        let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
+    private func fetch_nextTank(keypath: AnyHashable, modelClass: ModelClassType, element: JSON, extractor: ManagedObjectExtractable, decodingDepthLevel: DecodingDepthLevel?) {
         do {
-            let managedRef = try managedObject?.managedRef()
-            let modelClass = Vehicles.self
-            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let socket = JointSocket(managedRef: managedRef!, identifier: nil, keypath: nextTanksKeypath)
-            let extractor = NextVehicleExtractor()
-            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+            guard let managedRef = try managedObject?.managedRef() else {
+                throw ModulesTreeJSONDecoderErrors.managedRefNotFound
+            }
 
-            let composerInput = ComposerInput()
-            composerInput.pin = JointPin(modelClass: Vehicles.self, identifier: tank_id, contextPredicate: nil)
-            let composer = PrimaryKey_Composer()
-            let contextPredicate = try composer.build(composerInput)
+            guard let nextTanks = element[keypath] as? [JSONValueType] else {
+                throw ModulesTreeJSONDecoderErrors.elementNotFound(keypath)
+            }
+            for module_id in nextTanks {
+                let modelFieldKeyPaths = modelClass.fieldsKeypaths()
+                let socket = JointSocket(managedRef: managedRef, identifier: nil, keypath: keypath)
+                let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
+                let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: nil)
 
-            let uow = UOWRemote(appContext: appContext)
-            uow.modelClass = modelClass
-            uow.modelFieldKeyPaths = modelFieldKeyPaths
-            uow.socket = socket
-            uow.extractor = extractor
-            uow.contextPredicate = contextPredicate
-            uow.nextDepthLevel = nextDepthLevel
-            appContext.uowManager.run(unit: uow) { _ in
-                //
+                let composerInput = ComposerInput()
+                composerInput.pin = pin
+                let composer = PrimaryKey_Composer()
+                let contextPredicate = try composer.build(composerInput)
+
+                let uow = UOWRemote(appContext: appContext)
+                uow.modelClass = modelClass
+                uow.modelFieldKeyPaths = modelFieldKeyPaths
+                uow.socket = socket
+                uow.extractor = extractor
+                uow.contextPredicate = contextPredicate
+                uow.nextDepthLevel = nextDepthLevel
+                appContext.uowManager.run(unit: uow) { result in
+                    if let error = result.error {
+                        self.appContext.logInspector?.log(.error(error), sender: self)
+                    }
+                }
             }
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
@@ -172,10 +191,16 @@ extension ModulesTreeJSONDecoder {
 
     enum ModulesTreeJSONDecoderErrors: Error, CustomStringConvertible {
         case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+        case idNotFound(AnyHashable)
+        case managedRefNotFound
+        case elementNotFound(AnyHashable)
 
         public var description: String {
             switch self {
             case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
+            case .idNotFound(let keypath): return "[\(type(of: self))]: id not found for (\(keypath))"
+            case .managedRefNotFound: return "[\(type(of: self))]: managedRef not found"
+            case .elementNotFound(let keypath): return "[\(type(of: self))]: element not found for (\(keypath))"
             }
         }
     }
