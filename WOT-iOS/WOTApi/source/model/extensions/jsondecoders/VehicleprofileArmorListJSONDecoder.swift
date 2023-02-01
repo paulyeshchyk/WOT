@@ -81,7 +81,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
                 }
             })
         } catch {
-            appContext.logInspector?.log(.error(error), sender: self)
+            appContext.logInspector?.log(.warning(error: error), sender: self)
         }
     }
 }

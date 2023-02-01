@@ -102,14 +102,13 @@ extension HttpDataReceiver {
 
         func expandedDescription(for request: URLRequest) -> String {
             switch self {
-            case .canceled: return "Cancel URL: \(String(describing: request.url, orValue: "unknown"))"
-            case .finished: return "Finished URL: \(String(describing: request.url, orValue: "unknown"))"
+            case .canceled: return "cancel load URL: \(String(describing: request.url, orValue: "unknown"))"
+            case .finished: return "finish load URL: \(String(describing: request.url, orValue: "unknown"))"
             case .notStarted: return "Not started URL: \(String(describing: request.url, orValue: "unknown"))"
-            case .started: return "Start URL: \(String(describing: request.url, orValue: "unknown"))"
+            case .started: return "start load URL: \(String(describing: request.url, orValue: "unknown"))"
             }
         }
     }
-
 }
 
 // MARK: - %t + HttpDataReceiver.Errors

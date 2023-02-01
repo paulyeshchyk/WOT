@@ -67,7 +67,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                                     decodingDepthLevel: decodingDepthLevel)
             }
         } catch {
-            appContext.logInspector?.log(.error(error), sender: self)
+            appContext.logInspector?.log(.warning(error: error), sender: self)
         }
     }
 
@@ -109,7 +109,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
                 }
             })
         } catch {
-            appContext.logInspector?.log(.error(error), sender: self)
+            appContext.logInspector?.log(.warning(error: error), sender: self)
         }
     }
 
@@ -137,10 +137,14 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            appContext.uowManager.run(unit: uow, listenerCompletion: { _ in })
+            appContext.uowManager.run(unit: uow, listenerCompletion: { result in
+                if let error = result.error {
+                    self.appContext.logInspector?.log(.error(error), sender: self)
+                }
+            })
 
         } catch {
-            appContext.logInspector?.log(.error(error), sender: self)
+            appContext.logInspector?.log(.warning(error: error), sender: self)
         }
     }
 }
