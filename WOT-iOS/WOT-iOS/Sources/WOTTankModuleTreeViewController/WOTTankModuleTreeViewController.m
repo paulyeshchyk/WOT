@@ -128,10 +128,6 @@
 }
 
 - (void)reloadModel {
-    //TODO: "To be checked"
-    if (![[NSThread currentThread] isMainThread]) {
-        NSAssert(NO, @"Thread should be main");
-    }
     dispatch_async(dispatch_get_main_queue(), ^{
         if ( [self isViewLoaded] ){
             [self.model loadModel];
