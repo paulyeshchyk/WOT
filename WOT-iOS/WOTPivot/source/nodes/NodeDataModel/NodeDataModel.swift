@@ -35,6 +35,7 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
 
     open func loadModel() {
         reindexNodes()
+        clearRootNodes()
     }
 
     open func clearRootNodes() {

@@ -45,13 +45,6 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 
-    // MARK: Open
-
-    override open func clearRootNodes() {
-        super.clearRootNodes()
-        reindexNodeConnectors()
-    }
-
     // MARK: Public
 
     override public func loadModel() {
@@ -60,10 +53,7 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
         reindexNodeConnectors()
 
         do {
-            guard let fetchController = fetchController else {
-                throw Errors.noFetchControllerDefined
-            }
-            try fetchController.performFetch(appContext: appContext)
+            try fetchController?.performFetch(appContext: appContext)
         } catch let error {
             appContext.logInspector?.log(.error(error), sender: self)
             fetchFailed(by: self.fetchController, withError: error)

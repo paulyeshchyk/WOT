@@ -264,7 +264,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         self.vehicle =  [self.fetchedResultController.fetchedObjects lastObject];
         
         
-        NSAssert(NO, @"to be implemented");
+        //NSAssert(NO, @"to be implemented");
     }
 }
 
