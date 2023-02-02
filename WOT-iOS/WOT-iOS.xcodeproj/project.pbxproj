@@ -40,6 +40,7 @@
 		DA39E262296075140099D877 /* WOTPivot.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E25A296075140099D877 /* WOTPivot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA39E267296089210099D877 /* WOTWebProxyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39E265296089210099D877 /* WOTWebProxyRequest.swift */; };
 		DA39E268296089210099D877 /* WOTRequestResponseDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39E266296089210099D877 /* WOTRequestResponseDataParser.swift */; };
+		DA6F0AB3298B9434002914A8 /* WOTTreeDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6F0AB2298B9434002914A8 /* WOTTreeDataModel.swift */; };
 		DA81E754295316E600C60F31 /* Activity Grid Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F5295316E600C60F31 /* Activity Grid Yellow.png */; };
 		DA81E755295316E600C60F31 /* Activity Grid Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F6295316E600C60F31 /* Activity Grid Yellow@2x.png */; };
 		DA81E756295316E600C60F31 /* Activity Grid Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F7295316E600C60F31 /* Activity Grid Yellow@3x.png */; };
@@ -301,6 +302,7 @@
 		DA39E25A296075140099D877 /* WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA39E265296089210099D877 /* WOTWebProxyRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebProxyRequest.swift; sourceTree = "<group>"; };
 		DA39E266296089210099D877 /* WOTRequestResponseDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTRequestResponseDataParser.swift; sourceTree = "<group>"; };
+		DA6F0AB2298B9434002914A8 /* WOTTreeDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTreeDataModel.swift; sourceTree = "<group>"; };
 		DA81E6F5295316E600C60F31 /* Activity Grid Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow.png"; sourceTree = "<group>"; };
 		DA81E6F6295316E600C60F31 /* Activity Grid Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow@2x.png"; sourceTree = "<group>"; };
 		DA81E6F7295316E600C60F31 /* Activity Grid Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow@3x.png"; sourceTree = "<group>"; };
@@ -930,6 +932,7 @@
 		DA81E9422954497C00C60F31 /* WOTTankModuleTreeViewController */ = {
 			isa = PBXGroup;
 			children = (
+				DA6F0AB2298B9434002914A8 /* WOTTreeDataModel.swift */,
 				DA81E9432954497D00C60F31 /* WOTTankModuleTreeViewController.h */,
 				DA81E9442954497D00C60F31 /* WOTTankModuleTreeViewController.m */,
 				DA81E9452954497D00C60F31 /* WOTTankModuleTreeViewController.xib */,
@@ -1850,6 +1853,7 @@
 				DAA56E442976703B0092DA17 /* RomanNumber.m in Sources */,
 				DA81EA442954497E00C60F31 /* WOTTankDetailProgressTableViewCell.m in Sources */,
 				DA81EA462954497E00C60F31 /* WOTTankDetailCollectionViewCell.m in Sources */,
+				DA6F0AB3298B9434002914A8 /* WOTTreeDataModel.swift in Sources */,
 				DAA56E422976703B0092DA17 /* UIBarButtonItem+EventBlock.m in Sources */,
 				DA81EA212954497E00C60F31 /* WOTPivotConstructorViewController.swift in Sources */,
 				DA81E9F62954497E00C60F31 /* WOTTankConfigurationModuleMapping+Factory.m in Sources */,

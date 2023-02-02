@@ -19,9 +19,9 @@ public class UOWManager: UOWManagerProtocol {
     public func run(unit uow: UOWProtocol, listenerCompletion: @escaping(ListenerCompletionType)) {
         //
         let oq = UOWOperationQueue(qualityOfService: .utility)
-        oq.add(unit: uow) { obj in
+        oq.add(unit: uow) { result in
             self.workingQueue.async {
-                listenerCompletion(obj)
+                listenerCompletion(result)
             }
         }
     }

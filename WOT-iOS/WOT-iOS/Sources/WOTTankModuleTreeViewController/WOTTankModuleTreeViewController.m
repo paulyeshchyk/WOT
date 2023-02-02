@@ -23,7 +23,7 @@
 
 @interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NodeDataModelListener, MD5Protocol>
 
-@property (nonatomic, strong) TreeDataModel *model;
+@property (nonatomic, strong) WOTTreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
 @property (nonatomic, strong) UIImageView *connectorsImageView;
@@ -55,11 +55,11 @@
         
         self.fetchController = [[WOTTankTreeFetchController alloc] initWithObjCFetchRequestContainer:self
                                                                                           appContext:appDelegate];
-        self.model = [[TreeDataModel alloc] initWithFetchController: self.fetchController
-                                                           listener: self
-                                                        nodeCreator: self
-                                                          nodeIndex: NodeIndex.self
-                                                         appContext: appDelegate];
+        self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController
+                                                              listener: self
+                                                           nodeCreator: self
+                                                             nodeIndex: NodeIndex.self
+                                                            appContext: appDelegate];
     }
     return self;
 }
@@ -124,30 +124,28 @@
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankTreeConnectorCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeConnectorCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class])];
 
-//    [self reloadModel];
+    [self reloadData];
 }
 
 - (void)reloadModel {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ( [self isViewLoaded] ){
-            [self.model loadModel];
-        }
-    });
+    if ( [self isViewLoaded] ){
+        [self.model loadModel];
+    }
+}
+
+- (void)reloadData {
+    if ([self isViewLoaded] && _tank_Id != nil) {
+        
+        [self reloadModel];
+        
+        [self.model fetchVehicleDataWithVehicleId:_tank_Id.intValue];
+    }
 }
 
 - (void)setTank_Id:(NSNumber *)value {
-
     _tank_Id = [value copy];
-    id<ContextProtocol> appContext = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-    NSError *error = nil;
-    [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
-                                                 appContext: appContext
-                                                 completion:^(id<UOWResultProtocol> _Nonnull result) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self reloadModel];
-        });
-    }];
-  }
+    [self reloadData];
+}
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
