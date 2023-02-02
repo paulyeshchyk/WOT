@@ -10,6 +10,8 @@
 class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
     private let appContext: Context
+    var jsonMap: JSONMapProtocol?
+    var decodingDepthLevel: DecodingDepthLevel?
 
     required init(appContext: Context) {
         self.appContext = appContext
@@ -17,7 +19,10 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
+    func decode() throws {
+        guard let map = jsonMap else {
+            throw ModulesTreeJSONDecoderErrors.jsonMapNotDefined
+        }
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
@@ -172,6 +177,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
 extension ModulesTreeJSONDecoder {
 
     enum ModulesTreeJSONDecoderErrors: Error, CustomStringConvertible {
+        case jsonMapNotDefined
         case maxDecodingDepthLevelReached(DecodingDepthLevel?)
         case idNotFound(AnyHashable)
         case managedRefNotFound
@@ -179,6 +185,7 @@ extension ModulesTreeJSONDecoder {
 
         public var description: String {
             switch self {
+            case .jsonMapNotDefined: return "[\(type(of: self))]: JSONMap is not defined"
             case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
             case .idNotFound(let keypath): return "[\(type(of: self))]: id not found for (\(keypath))"
             case .managedRefNotFound: return "[\(type(of: self))]: managedRef not found"

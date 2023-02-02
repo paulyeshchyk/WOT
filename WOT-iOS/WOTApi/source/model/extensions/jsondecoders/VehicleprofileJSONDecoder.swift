@@ -10,6 +10,8 @@
 class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
     private let appContext: Context
+    var jsonMap: JSONMapProtocol?
+    var decodingDepthLevel: DecodingDepthLevel?
 
     required init(appContext: Context) {
         self.appContext = appContext
@@ -17,7 +19,10 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
+    func decode() throws {
+        guard let map = jsonMap else {
+            throw VehicleprofileJSONDecoderErrors.jsonMapNotDefined
+        }
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
@@ -203,9 +208,11 @@ extension VehicleprofileJSONDecoder {
         case noManagedRef
         case elementNotFound(AnyHashable)
         case idNotFound(AnyHashable)
+        case jsonMapNotDefined
 
         public var description: String {
             switch self {
+            case .jsonMapNotDefined: return "[\(type(of: self))]: JSONMap is not defined"
             case .noAmmoList(let profile): return "[\(type(of: self))]: No ammo list in profile with id: \(profile ?? -1)"
             case .noArmor(let profile): return "[\(type(of: self))]: No armor in profile with id: \(profile ?? -1)"
             case .noModule(let profile): return "[\(type(of: self))]: No module in profile with id: \(profile ?? -1)"

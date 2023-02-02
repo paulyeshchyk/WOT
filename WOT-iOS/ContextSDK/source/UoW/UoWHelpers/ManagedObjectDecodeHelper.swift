@@ -65,8 +65,10 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
 
                     let decoder = decoderType.init(appContext: self.appContext)
                     decoder.managedObject = managedObject
+                    decoder.jsonMap = jsonMap
+                    decoder.decodingDepthLevel = self.decodingDepthLevel
 
-                    try decoder.decode(using: jsonMap, decodingDepthLevel: self.decodingDepthLevel)
+                    try decoder.decode()
 
                     self.appContext.dataStore?.stash(managedObjectContext: managedObjectContext, completion: { _, error in
                         self.appContext.logInspector?.log(.uow("moDecode", message: "finish \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)

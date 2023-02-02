@@ -101,8 +101,11 @@ public protocol JSONDecoderProtocol: AnyObject {
         & UOWManagerContainerProtocol
 
     var managedObject: ManagedAndDecodableObjectType? { get set }
+    var jsonMap: JSONMapProtocol? { get set }
+    var decodingDepthLevel: DecodingDepthLevel? { get set }
+
     init(appContext: Context)
-    func decode(using: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws
+    func decode() throws
 }
 
 // MARK: - JSONCollectionProtocol

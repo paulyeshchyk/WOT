@@ -10,6 +10,8 @@
 class ModuleJSONDecoder: JSONDecoderProtocol {
 
     private let appContext: Context
+    var jsonMap: JSONMapProtocol?
+    var decodingDepthLevel: DecodingDepthLevel?
 
     required init(appContext: Context) {
         self.appContext = appContext
@@ -17,7 +19,10 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
 
     weak var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
+    func decode() throws {
+        guard let map = jsonMap else {
+            throw ModuleJSONDecoderErrors.jsonMapNotDefined
+        }
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
@@ -149,6 +154,7 @@ extension JSONRefProtocol {
 extension ModuleJSONDecoder {
 
     enum ModuleJSONDecoderErrors: Error, CustomStringConvertible {
+        case jsonMapNotDefined
         case noParentsFound
         case moduleIdNotDefined
         case invalidManagedRef
@@ -157,6 +163,7 @@ extension ModuleJSONDecoder {
 
         public var description: String {
             switch self {
+            case .jsonMapNotDefined: return "[\(type(of: self))]: JSONMap is not defined"
             case .noParentsFound: return "[\(type(of: self))]: No parents found"
             case .moduleIdNotDefined: return "[\(type(of: self))]: module id is not defined"
             case .invalidManagedRef: return "[\(type(of: self))]: invalid managed ref"

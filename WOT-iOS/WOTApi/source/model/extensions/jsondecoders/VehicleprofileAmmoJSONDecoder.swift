@@ -10,6 +10,8 @@
 class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
     private let appContext: Context
+    var jsonMap: JSONMapProtocol?
+    var decodingDepthLevel: DecodingDepthLevel?
 
     required init(appContext: Context) {
         self.appContext = appContext
@@ -17,7 +19,10 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
+    func decode() throws {
+        guard let map = jsonMap else {
+            throw VehicleprofileAmmoJSONDecoderErrors.jsonMapNotDefined
+        }
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
@@ -92,9 +97,11 @@ extension VehicleprofileAmmoJSONDecoder {
     enum VehicleprofileAmmoJSONDecoderErrors: Error, CustomStringConvertible {
         case maxDecodingDepthLevelReached(DecodingDepthLevel?)
         case elementNotFound(AnyHashable)
+        case jsonMapNotDefined
 
         var description: String {
             switch self {
+            case .jsonMapNotDefined: return "[\(type(of: self))]: JSONMap is not defined"
             case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
             case .elementNotFound(let keypath): return "[\(type(of: self))]: Element not found for (\(keypath))"
             }
