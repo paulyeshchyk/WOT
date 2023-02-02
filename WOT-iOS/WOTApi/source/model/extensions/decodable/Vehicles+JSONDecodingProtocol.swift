@@ -30,12 +30,12 @@ extension Vehicles: DecodableProtocol {
 
     enum RelativeKeys: String, CodingKey, CaseIterable {
         case default_profile
-        case engines
-        case guns
-        case radios
+        // case engines
+        // case guns
+        // case radios
         case modules_tree
-        case suspensions
-        case turrets
+        // case suspensions
+        // case turrets
     }
 
     public func decodeWith(_ decoder: DecoderObjC) throws {

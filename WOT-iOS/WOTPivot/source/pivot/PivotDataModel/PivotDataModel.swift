@@ -121,7 +121,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     // MARK: Open
 
     override open func clearRootNodes() {
-        appContext.logInspector?.log(.flow(name: "pivot", message: "Clear root nodes"), sender: self)
+        appContext.logInspector?.log(.flow(name: "pivot", message: "clear root nodes"), sender: self)
 
         rootDataNode.removeChildren()
         rootRowsNode.removeChildren()
@@ -132,12 +132,12 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
 
     override open func reindexNodes() {
         super.reindexNodes()
-        appContext.logInspector?.log(.flow(name: "pivot", message: "Reindex nodes"), sender: self)
+        appContext.logInspector?.log(.flow(name: "pivot", message: "reindex nodes"), sender: self)
     }
 
     override open func loadModel() {
         // super.loadModel()
-        appContext.logInspector?.log(.flow(name: "pivot", message: "Start"), sender: self)
+        appContext.logInspector?.log(.flow(name: "pivot", message: "start"), sender: self)
 
         do {
             guard let fetchController = fetchController else {
@@ -179,7 +179,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     }
 
     public func clearMetadataItems() {
-        appContext.logInspector?.log(.flow(name: "pivot", message: "Clear metadata items"), sender: self)
+        appContext.logInspector?.log(.flow(name: "pivot", message: "clear metadata items"), sender: self)
 
         nodeIndex.reset()
         clearRootNodes()
@@ -225,10 +225,11 @@ extension PivotDataModel {
 // MARK: - PivotDataModel + DimensionLoadListenerProtocol
 
 extension PivotDataModel: DimensionLoadListenerProtocol {
+    //
     public func didLoad(dimension _: NodeDimensionProtocol) {
         reindexNodes()
         listener?.didFinishLoadModel(error: nil)
-        appContext.logInspector?.log(.flow(name: "pivot", message: "End"), sender: self)
+        appContext.logInspector?.log(.flow(name: "pivot", message: "finish"), sender: self)
     }
 }
 

@@ -114,10 +114,10 @@ public protocol JSONCollectionProtocol {
 
 extension JSONCollectionProtocol {
 
-    public func data<T>(ofType _: T.Type) throws -> T? {
+    public func data<T>(ofType _: T.Type) throws -> T {
         let dataToReturn = data()
         guard let resultToCheck = dataToReturn else {
-            return nil
+            throw JSONCollectionDataError.dataIsNil
         }
         guard let result = resultToCheck as? T else {
             throw JSONCollectionDataError.cantbereturnedasrequestedtype
@@ -130,6 +130,7 @@ extension JSONCollectionProtocol {
 
 private enum JSONCollectionDataError: Error {
     case incorrectTypeProvided
+    case dataIsNil
     case cantbereturnedasrequestedtype
     case cantbereturnedasrequestedtypebut(JSONCollectionType)
 }

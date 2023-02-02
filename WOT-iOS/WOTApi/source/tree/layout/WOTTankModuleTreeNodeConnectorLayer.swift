@@ -39,11 +39,11 @@ public class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNod
 
 public extension CGContext {
     func drawNodeConnector(frame: CGRect, node: NodeProtocol, model: NodeDataModelProtocol, layout: WOTTankConfigurationFlowCellLayoutProtocol) {
-        let parentCenter = frame.center()
+        let parentCenter = frame.centerHorizontalBottomVertical()
         node.children.forEach { (child) in
             if let childIndexPath = model.indexPath(forNode: child) {
                 let childFrame = layout.cellFrame(indexPath: childIndexPath)
-                let childCenter = childFrame.center()
+                let childCenter = childFrame.centerHorizontalTopVertical()
 
                 self.move(to: childCenter)
                 self.addLine(to: parentCenter)
@@ -59,10 +59,10 @@ public extension CGRect {
     }
 
     func centerHorizontalBottomVertical() -> CGPoint {
-        return CGPoint(x: midX, y: origin.y + size.height)
+        return CGPoint(x: midX, y: origin.y + size.height - 46)
     }
 
     func centerHorizontalTopVertical() -> CGPoint {
-        return CGPoint(x: midX, y: origin.y)
+        return CGPoint(x: midX, y: origin.y + 3)
     }
 }

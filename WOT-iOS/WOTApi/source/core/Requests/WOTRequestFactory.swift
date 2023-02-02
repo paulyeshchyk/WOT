@@ -40,7 +40,7 @@ public class WOTWEBRequestFactory: NSObject {
         uow.modelFieldKeyPaths = modelFieldKeyPaths
         uow.socket = nil
         uow.extractor = VehiclesPivotManagedObjectExtractor()
-        uow.composer = nil
+        uow.contextPredicate = nil
         uow.nextDepthLevel = DecodingDepthLevel.initial(maxLevel: 0)
         appContext.uowManager.run(unit: uow) { result in
             completion(result)
@@ -53,12 +53,17 @@ public class WOTWEBRequestFactory: NSObject {
         let modelClass = Vehicles.self
         let modelFieldKeyPaths = modelClass.fieldsKeypaths()
 
+        let composerInput = ComposerInput()
+        composerInput.pin = JointPin(modelClass: modelClass, identifier: vehicleId, contextPredicate: nil)
+        let composer = PrimaryKey_Composer()
+        let contextPredicate = try? composer.build(composerInput)
+
         let uow = UOWRemote(appContext: appContext)
         uow.modelClass = modelClass
         uow.modelFieldKeyPaths = modelFieldKeyPaths
         uow.socket = nil
         uow.extractor = VehiclesTreeManagedObjectExtractor()
-        uow.composer = VehicleTreeRuleBuilder(modelClass: modelClass, vehicleId: vehicleId)
+        uow.contextPredicate = contextPredicate
         uow.nextDepthLevel = DecodingDepthLevel.initial()
         appContext.uowManager.run(unit: uow) { result in
             completion(result)

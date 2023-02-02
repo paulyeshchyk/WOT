@@ -233,11 +233,13 @@
     vc.applyBlock = ^(){
         NSError *error = nil;
         [[self dataStore] performWithMode:PerformModeReadwrite error:&error block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
-            if (self.commitBlock) {
-                self.commitBlock();
-            }
-            
-            [self.navigationController popViewControllerAnimated:YES];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (self.commitBlock) {
+                    self.commitBlock();
+                }
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            });
         }];
     };
 

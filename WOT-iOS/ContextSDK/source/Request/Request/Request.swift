@@ -31,7 +31,11 @@ open class Request: RequestProtocol, CustomStringConvertible {
         arguments?.contextPredicate
     }
 
-    public var arguments: RequestArgumentsProtocol?
+    public var arguments: RequestArgumentsProtocol? {
+        didSet {
+            //
+        }
+    }
 
     public var MD5: String { uuid.MD5 }
     public var completion: ((Data?, Error?) -> Void)?

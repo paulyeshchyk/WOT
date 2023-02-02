@@ -29,121 +29,79 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             return
         }
 
-        // MARK: - relation mapping
+        fetch_module(keypath: #keyPath(VehicleprofileModule.gun_id),
+                     idKeypath: #keyPath(VehicleprofileModule.gun_id),
+                     modelClass: VehicleprofileGun.self,
+                     contextPredicate: map.contextPredicate,
+                     element: element,
+                     extractor: VehicleprofileModule.GunExtractor(),
+                     decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
 
-        if let gun_id = element?[#keyPath(VehicleprofileModule.gun_id)] {
-            //
-            let managedRef = try managedObject?.managedRef()
-            let modelClass = VehicleprofileGun.self
+        fetch_module(keypath: #keyPath(VehicleprofileModule.radio_id),
+                     idKeypath: #keyPath(VehicleprofileModule.radio_id),
+                     modelClass: VehicleprofileRadio.self,
+                     contextPredicate: map.contextPredicate,
+                     element: element,
+                     extractor: VehicleprofileModule.RadioExtractor(),
+                     decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
+
+        fetch_module(keypath: #keyPath(VehicleprofileModule.engine_id),
+                     idKeypath: #keyPath(VehicleprofileModule.engine_id),
+                     modelClass: VehicleprofileEngine.self,
+                     contextPredicate: map.contextPredicate,
+                     element: element,
+                     extractor: VehicleprofileModule.EngineExtractor(),
+                     decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
+
+        fetch_module(keypath: #keyPath(VehicleprofileModule.suspension_id),
+                     idKeypath: #keyPath(VehicleprofileModule.suspension_id),
+                     modelClass: VehicleprofileSuspension.self,
+                     contextPredicate: map.contextPredicate,
+                     element: element,
+                     extractor: VehicleprofileModule.SuspensionExtractor(),
+                     decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
+
+        fetch_module(keypath: #keyPath(VehicleprofileModule.turret_id),
+                     idKeypath: #keyPath(VehicleprofileModule.turret_id),
+                     modelClass: VehicleprofileTurret.self,
+                     contextPredicate: map.contextPredicate,
+                     element: element,
+                     extractor: VehicleprofileModule.TurretExtractor(),
+                     decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
+    }
+
+    private func fetch_module(keypath: AnyHashable, idKeypath: AnyHashable, modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol, element: JSON, extractor: ManagedObjectExtractable, decodingDepthLevel: DecodingDepthLevel?) {
+        do {
+            guard let managedRef = try managedObject?.managedRef() else {
+                throw VehicleprofileModuleJSONDecoderErrors.managedRefNotFound
+            }
+            guard let module_id = element[idKeypath] else {
+                throw VehicleprofileModuleJSONDecoderErrors.idNotFound(idKeypath)
+            }
+
+            let socket = JointSocket(managedRef: managedRef, identifier: module_id, keypath: keypath)
+            let pin = JointPin(modelClass: modelClass, identifier: module_id, contextPredicate: contextPredicate)
+
+            let composerInput = ComposerInput()
+            composerInput.pin = pin
+            let composer = VehicleprofileModule_Composer()
+            let contextPredicate = try? composer.build(composerInput)
             let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: modelClass, identifier: gun_id, contextPredicate: map.contextPredicate)
-            let socket = JointSocket(managedRef: managedRef!, identifier: gun_id, keypath: #keyPath(VehicleprofileModule.gun_id))
-            let extractor = VehicleprofileModule.GunExtractor()
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
-            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
 
             let uow = UOWRemote(appContext: appContext)
             uow.modelClass = modelClass
             uow.modelFieldKeyPaths = modelFieldKeyPaths
             uow.socket = socket
             uow.extractor = extractor
-            uow.composer = composer
-            uow.nextDepthLevel = nextDepthLevel
-            appContext.uowManager.run(unit: uow) { _ in
-                //
+            uow.contextPredicate = contextPredicate
+            uow.nextDepthLevel = decodingDepthLevel
+            appContext.uowManager.run(unit: uow) { result in
+                if let error = result.error {
+                    self.appContext.logInspector?.log(.error(error), sender: self)
+                }
             }
-        }
-
-        if let radio_id = element?[#keyPath(VehicleprofileModule.radio_id)] {
-            //
-            let managedRef = try managedObject?.managedRef()
-            let modelClass = VehicleprofileRadio.self
-            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: modelClass, identifier: radio_id, contextPredicate: map.contextPredicate)
-            let socket = JointSocket(managedRef: managedRef!, identifier: radio_id, keypath: #keyPath(VehicleprofileModule.radio_id))
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
-            let extractor = VehicleprofileModule.RadioExtractor()
-            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-
-            let uow = UOWRemote(appContext: appContext)
-            uow.modelClass = modelClass
-            uow.modelFieldKeyPaths = modelFieldKeyPaths
-            uow.socket = socket
-            uow.extractor = extractor
-            uow.composer = composer
-            uow.nextDepthLevel = nextDepthLevel
-            appContext.uowManager.run(unit: uow) { _ in
-                //
-            }
-        }
-
-        if let engine_id = element?[#keyPath(VehicleprofileModule.engine_id)] {
-            //
-            let managedRef = try managedObject?.managedRef()
-            let modelClass = VehicleprofileEngine.self
-            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: modelClass, identifier: engine_id, contextPredicate: map.contextPredicate)
-            let socket = JointSocket(managedRef: managedRef!, identifier: engine_id, keypath: #keyPath(VehicleprofileModule.engine_id))
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
-            let extractor = VehicleprofileModule.EngineExtractor()
-            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-
-            let uow = UOWRemote(appContext: appContext)
-            uow.modelClass = modelClass
-            uow.modelFieldKeyPaths = modelFieldKeyPaths
-            uow.socket = socket
-            uow.extractor = extractor
-            uow.composer = composer
-            uow.nextDepthLevel = nextDepthLevel
-            appContext.uowManager.run(unit: uow) { _ in
-                //
-            }
-        }
-
-        if let suspension_id = element?[#keyPath(VehicleprofileModule.suspension_id)] {
-            //
-            let managedRef = try managedObject?.managedRef()
-            let modelClass = VehicleprofileSuspension.self
-            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: modelClass, identifier: suspension_id, contextPredicate: map.contextPredicate)
-            let socket = JointSocket(managedRef: managedRef!, identifier: suspension_id, keypath: #keyPath(VehicleprofileModule.suspension_id))
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
-            let extractor = VehicleprofileModule.SuspensionExtractor()
-            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-
-            let uow = UOWRemote(appContext: appContext)
-            uow.modelClass = modelClass
-            uow.modelFieldKeyPaths = modelFieldKeyPaths
-            uow.socket = socket
-            uow.extractor = extractor
-            uow.composer = composer
-            uow.nextDepthLevel = nextDepthLevel
-            appContext.uowManager.run(unit: uow) { _ in
-                //
-            }
-        }
-
-        if let turret_id = element?[#keyPath(VehicleprofileModule.turret_id)] {
-            //
-            let modelClass = VehicleprofileTurret.self
-            let managedRef = try managedObject?.managedRef()
-            let modelFieldKeyPaths = modelClass.fieldsKeypaths()
-            let pin = JointPin(modelClass: modelClass, identifier: turret_id, contextPredicate: map.contextPredicate)
-            let socket = JointSocket(managedRef: managedRef!, identifier: turret_id, keypath: #keyPath(VehicleprofileModule.turret_id))
-            let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(pin: pin)
-            let extractor = VehicleprofileModule.TurretExtractor()
-            let nextDepthLevel = decodingDepthLevel?.nextDepthLevel
-
-            let uow = UOWRemote(appContext: appContext)
-            uow.modelClass = modelClass
-            uow.modelFieldKeyPaths = modelFieldKeyPaths
-            uow.socket = socket
-            uow.extractor = extractor
-            uow.composer = composer
-            uow.nextDepthLevel = nextDepthLevel
-            appContext.uowManager.run(unit: uow) { _ in
-                //
-            }
+        } catch {
+            appContext.logInspector?.log(.warning(error: error), sender: self)
         }
     }
 }
@@ -154,9 +112,13 @@ extension VehicleprofileModuleJSONDecoder {
 
     enum VehicleprofileModuleJSONDecoderErrors: Error, CustomStringConvertible {
         case maxDecodingDepthLevelReached(DecodingDepthLevel?)
+        case idNotFound(AnyHashable)
+        case managedRefNotFound
 
         public var description: String {
             switch self {
+            case .managedRefNotFound: return "[\(type(of: self))]: managedRef not found"
+            case .idNotFound(let keypath): return "[\(type(of: self))]: id not found for (\(keypath))"
             case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
             }
         }

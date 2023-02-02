@@ -58,7 +58,7 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
                     guard let modelClass = type(of: managedObject) as? PrimaryKeypathProtocol.Type else {
                         throw Errors.modelClassIsNotDefined
                     }
-
+                    #warning("crash is here")
                     guard let decoderType = self.appContext.decoderManager?.jsonDecoder(for: modelClass) else {
                         throw Errors.decoderIsNotDefined
                     }

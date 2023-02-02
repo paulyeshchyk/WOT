@@ -17,7 +17,7 @@ class ManagedObjectLinkerHelper: CustomStringConvertible, CustomDebugStringConve
     }
 
     var debugDescription: String {
-        "\(String(describing: socket, orValue: "<null>"))"
+        "Socket: \(String(describing: socket, orValue: "<null>"))"
     }
 
     let appContext: Context

@@ -80,7 +80,7 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
                 }
                 self.appContext.logInspector?.log(.uow("moParseSet", message: "start \(self.debugDescription)"), sender: self)
 
-                guard let elements = self.maps?.compactMap({ $0 }) else {
+                guard let elements = self.maps?.compactMap({ $0 }), !elements.isEmpty else {
                     throw Errors.noMapProvided
                 }
 
