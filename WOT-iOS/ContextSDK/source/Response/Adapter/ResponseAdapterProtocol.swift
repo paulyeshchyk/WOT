@@ -17,18 +17,18 @@ public protocol ResponseAdapterProtocol {
         & DecoderManagerContainerProtocol
         & UOWManagerContainerProtocol
 
-    typealias OnComplete = (RequestProtocol, Error?) -> Void
+    typealias OnComplete = (RequestProtocol?, Error?) -> Void
 
     var responseClass: AnyClass { get }
     var completion: ResponseAdapterProtocol.OnComplete? { get set }
-    var modelClass: ModelClassType { get }
+    var modelClass: ModelClassType? { get set }
     var request: RequestProtocol? { get set }
     var socket: JointSocketProtocol? { get set }
     var extractor: ManagedObjectExtractable? { get set }
 
-    init(appContext: Context, modelClass: ModelClassType)
+    init(appContext: Context)
 
-    func decode(data: Data?, fromRequest request: RequestProtocol)
+    func decode(data: Data?)
 }
 
 // MARK: - JSONAdapterProtocol

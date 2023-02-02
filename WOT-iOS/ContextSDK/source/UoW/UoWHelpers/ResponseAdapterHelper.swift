@@ -24,22 +24,13 @@ class ResponseAdapterHelper {
     }
 
     func run(_ request: RequestProtocol?, data: Data?) {
-        guard let request = request else {
-            completion?(UOWResult(fetchResult: nil, error: ResponseAdapterHelperErrors.requestIsNotDefined))
-            return
-        }
-
         guard let modelService = request as? RequestModelServiceProtocol else {
             completion?(UOWResult(fetchResult: nil, error: ResponseAdapterHelperErrors.modelServiceNotDefined))
             return
         }
 
-        guard let modelClass = modelClass else {
-            completion?(UOWResult(fetchResult: nil, error: ResponseAdapterHelperErrors.modelIsNotDefined))
-            return
-        }
-
-        let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext, modelClass: modelClass)
+        let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext)
+        dataAdapter.modelClass = modelClass
         dataAdapter.request = request
         dataAdapter.socket = socket
         dataAdapter.extractor = extractor
@@ -47,7 +38,7 @@ class ResponseAdapterHelper {
             self.completion?(UOWResult(fetchResult: nil, error: error))
         }
 
-        dataAdapter.decode(data: data, fromRequest: request)
+        dataAdapter.decode(data: data)
     }
 }
 
@@ -55,10 +46,8 @@ class ResponseAdapterHelper {
 
 extension ResponseAdapterHelper {
     enum ResponseAdapterHelperErrors: Error {
-        case modelIsNotDefined
         case modelServiceNotDefined
         case extractorIsNotDefined
         case modelFieldKeyPathsAreNotDefined
-        case requestIsNotDefined
     }
 }
