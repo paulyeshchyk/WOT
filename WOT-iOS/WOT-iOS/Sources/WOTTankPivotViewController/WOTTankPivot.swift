@@ -151,7 +151,10 @@ class WOTTankPivotModel: PivotDataModel {
         super.loadModel()
 
         do {
-            try WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext) { _ in
+            try WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext) { result in
+                if let error = result.error {
+                    self.appContext.logInspector?.log(.warning(error: error), sender: self)
+                }
                 DispatchQueue.main.async {
                     super.loadModel()
                 }

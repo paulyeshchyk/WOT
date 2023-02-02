@@ -29,13 +29,33 @@ class ResponseAdapterHelper {
             return
         }
 
+        let completionWrapper: ((UOWResultProtocol) -> Void) = { result in
+            if let completion = self.completion {
+                completion(result)
+            } else {
+                self.appContext.logInspector?.log(.warning("No completion defined for \(type(of: self))"), sender: self)
+            }
+        }
+
+        let uowDecodeAndLink = UOWDecodeAndLinkMaps(appContext: appContext)
+        uowDecodeAndLink.modelClass = modelClass
+        uowDecodeAndLink.socket = socket
+        uowDecodeAndLink.decodingDepthLevel = request?.decodingDepthLevel
+
+        let jsonExtractorHelper = JSONExtractorHelper()
+        jsonExtractorHelper.extractorType = extractorType
+        jsonExtractorHelper.modelClass = modelClass
+        jsonExtractorHelper.jsonRefs = request?.contextPredicate?.jsonRefs
+        jsonExtractorHelper.completion = { maps, error in
+            if let error = error { self.appContext.logInspector?.log(.warning(error: error), sender: self) }
+            uowDecodeAndLink.maps = maps
+            self.appContext.uowManager.run(unit: uowDecodeAndLink, listenerCompletion: completionWrapper)
+        }
+
         let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext)
-        dataAdapter.modelClass = modelClass
-        dataAdapter.request = request
-        dataAdapter.socket = socket
-        dataAdapter.extractorType = extractorType
-        dataAdapter.completion = { _, error in
-            self.completion?(UOWResult(fetchResult: nil, error: error))
+        dataAdapter.completion = { json, error in
+            if let error = error { self.appContext.logInspector?.log(.warning(error: error), sender: self) }
+            jsonExtractorHelper.run(json: json)
         }
 
         dataAdapter.decode(data: data)

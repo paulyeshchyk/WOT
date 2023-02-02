@@ -102,6 +102,7 @@
 		DADD69BC29759D5D00EFC36D /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69B029759D5D00EFC36D /* URLRequestBuilder.swift */; };
 		DADD69BD29759D5D00EFC36D /* HttpDataReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69B129759D5D00EFC36D /* HttpDataReceiver.swift */; };
 		DADD69BF2975A82700EFC36D /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD69BE2975A82700EFC36D /* Request.swift */; };
+		DAE3BB18298C052F00855CD0 /* JSONExtractorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE3BB17298C052F00855CD0 /* JSONExtractorHelper.swift */; };
 		DAEB6F92298530DE009A6C63 /* UOWResultProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB6F91298530DD009A6C63 /* UOWResultProtocol.swift */; };
 		DAED2043297E88620019EFBA /* UOWManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAED2042297E88610019EFBA /* UOWManager.swift */; };
 /* End PBXBuildFile section */
@@ -215,6 +216,7 @@
 		DADD69B029759D5D00EFC36D /* URLRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
 		DADD69B129759D5D00EFC36D /* HttpDataReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiver.swift; sourceTree = "<group>"; };
 		DADD69BE2975A82700EFC36D /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		DAE3BB17298C052F00855CD0 /* JSONExtractorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExtractorHelper.swift; sourceTree = "<group>"; };
 		DAEB6F91298530DD009A6C63 /* UOWResultProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UOWResultProtocol.swift; sourceTree = "<group>"; };
 		DAED2042297E88610019EFBA /* UOWManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UOWManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -657,6 +659,7 @@
 				DABEECC0298665CE00B3E7B3 /* RequestCreatorHelper.swift */,
 				DABEECC2298666F600B3E7B3 /* RequestRunnerHelper.swift */,
 				DABEECC4298669B100B3E7B3 /* ResponseAdapterHelper.swift */,
+				DAE3BB17298C052F00855CD0 /* JSONExtractorHelper.swift */,
 				DAC55BC22974F047008166BE /* ManagedObjectDecodeHelper.swift */,
 				DADD696F2974F0D000EFC36D /* DatastoreFetchHelper.swift */,
 				DADD69712974F10600EFC36D /* ManagedObjectLinkerHelper.swift */,
@@ -878,6 +881,7 @@
 				DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */,
 				DACDB110295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift in Sources */,
 				DA456E72296E9DE20065D8FF /* JointPin.swift in Sources */,
+				DAE3BB18298C052F00855CD0 /* JSONExtractorHelper.swift in Sources */,
 				DACDB0F7295EDC96005BBA72 /* FetchableProtocol.swift in Sources */,
 				DA0E807C2950A60300B44CC6 /* HttpRequestArgumentsBuilder.swift in Sources */,
 				DACDB0FF295EDC96005BBA72 /* DataStoreProtocol.swift in Sources */,

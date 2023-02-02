@@ -16,7 +16,14 @@ public protocol ManagedObjectExtractable {
 
 public extension ManagedObjectExtractable {
 
-    func getJSONMaps(json: JSON, modelClass: PrimaryKeypathProtocol.Type, jsonRefs: [JSONRefProtocol]?) -> [JSONMapProtocol] {
+    func getJSONMaps(json: JSON?, modelClass: PrimaryKeypathProtocol.Type?, jsonRefs: [JSONRefProtocol]?) throws -> [JSONMapProtocol] {
+        guard let json = json else {
+            throw JSONAdapterLinkerExtractionErrors.jsonIsNil
+        }
+        guard let modelClass = modelClass else {
+            throw JSONAdapterLinkerExtractionErrors.modelClassIsNotDefined
+        }
+
         var result = [JSONMapProtocol]()
         for key in json.keys {
             do {
@@ -62,9 +69,13 @@ public extension ManagedObjectExtractable {
 private enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
     case invalidJSONForKey(AnyHashable)
     case jsonWasNotExtracted(JSON)
+    case jsonIsNil
+    case modelClassIsNotDefined
 
     public var description: String {
         switch self {
+        case .jsonIsNil: return "\(type(of: self)): JSON is nil"
+        case .modelClassIsNotDefined: return "\(type(of: self)): ModelClass is not defined"
         case .invalidJSONForKey(let key): return "[\(type(of: self))]: Invalid json for key: \(key)"
         case .jsonWasNotExtracted(let json): return "[\(type(of: self))]: json was not extracted from: \(json)"
         }
