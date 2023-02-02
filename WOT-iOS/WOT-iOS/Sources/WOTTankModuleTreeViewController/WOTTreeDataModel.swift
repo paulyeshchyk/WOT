@@ -9,17 +9,4 @@
 import WOTPivot
 
 @objc
-class WOTTreeDataModel: TreeDataModel {
-    public typealias Context = LogInspectorContainerProtocol
-        & DataStoreContainerProtocol
-        & RequestRegistratorContainerProtocol
-        & DecoderManagerContainerProtocol
-        & UOWManagerContainerProtocol
-
-    @objc func fetchVehicleData(vehicleId: Int) {
-        WOTWEBRequestFactory.fetchVehicleTreeData(vehicleId: vehicleId, appContext: appContext) { _ in
-            // self.loadModel()
-        }
-    }
-
-}
+class WOTTreeDataModel: TreeDataModel {}

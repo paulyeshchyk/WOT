@@ -13,6 +13,9 @@ import UIKit
 
 open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatasourceProtocol {
 
+    public typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
+
     override open var nodes: [NodeProtocol] {
         return [rootFilterNode, rootColsNode, rootRowsNode, rootDataNode]
     }
@@ -77,24 +80,27 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     public weak var nodeCreator: NodeCreatorProtocol?
 
     @objc
+    public var appContext: Context?
+
+    @objc
     public var contentSize: CGSize {
         return dimension.contentSize
     }
 
-    private weak var listener: NodeDataModelListener?
+    private weak var modelListener: NodeDataModelListener?
     private weak var metadatasource: PivotMetaDatasourceProtocol?
 
     // MARK: Lifecycle
 
     @objc
-    public required init(fetchController: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator: NodeCreatorProtocol, metadatasource: PivotMetaDatasourceProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: Context) {
+    public required init(fetchController: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator: NodeCreatorProtocol, metadatasource: PivotMetaDatasourceProtocol, nodeIndexType: NodeIndexProtocol.Type) {
         shouldDisplayEmptyColumns = false
         self.fetchController = fetchController
-        listener = modelListener
+        self.modelListener = modelListener
         self.nodeCreator = nodeCreator
         self.metadatasource = metadatasource
 
-        super.init(nodeIndex: ni, appContext: appContext)
+        super.init(nodeIndexType: nodeIndexType)
 
         fetchController.setFetchListener(self)
 
@@ -109,7 +115,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    public required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: Context) {
+    public required init(nodeIndexType _: NodeIndexProtocol.Type) {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 
@@ -121,7 +127,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     // MARK: Open
 
     override open func clearRootNodes() {
-        appContext.logInspector?.log(.flow(name: "pivot", message: "clear root nodes"), sender: self)
+        appContext?.logInspector?.log(.flow(name: "pivot", message: "clear root nodes"), sender: self)
 
         rootDataNode.removeChildren()
         rootRowsNode.removeChildren()
@@ -132,20 +138,26 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
 
     override open func reindexNodes() {
         super.reindexNodes()
-        appContext.logInspector?.log(.flow(name: "pivot", message: "reindex nodes"), sender: self)
+        appContext?.logInspector?.log(.flow(name: "pivot", message: "reindex nodes"), sender: self)
     }
 
     override open func loadModel() {
         // super.loadModel()
-        appContext.logInspector?.log(.flow(name: "pivot", message: "start"), sender: self)
+        guard let context = appContext else {
+            assertionFailure("\(String(describing: Errors.contextNotFound))")
+            return
+        }
+
+        context.logInspector?.log(.flow(name: "pivot", message: "start"), sender: self)
 
         do {
             guard let fetchController = fetchController else {
                 throw Errors.noFetchControllerFound
             }
-            try fetchController.performFetch(appContext: appContext)
+
+            try fetchController.performFetch(appContext: context)
         } catch {
-            appContext.logInspector?.log(.error(error), sender: self)
+            context.logInspector?.log(.error(error), sender: self)
         }
     }
 
@@ -179,7 +191,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     }
 
     public func clearMetadataItems() {
-        appContext.logInspector?.log(.flow(name: "pivot", message: "clear metadata items"), sender: self)
+        appContext?.logInspector?.log(.flow(name: "pivot", message: "clear metadata items"), sender: self)
 
         nodeIndex.reset()
         clearRootNodes()
@@ -210,7 +222,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     }
 
     private func failPivot(_ error: Error) {
-        listener?.didFinishLoadModel(error: error)
+        modelListener?.didFinishLoadModel(error: error)
     }
 }
 
@@ -219,6 +231,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
 extension PivotDataModel {
     enum Errors: Error {
         case noFetchControllerFound
+        case contextNotFound
     }
 }
 
@@ -228,8 +241,8 @@ extension PivotDataModel: DimensionLoadListenerProtocol {
     //
     public func didLoad(dimension _: NodeDimensionProtocol) {
         reindexNodes()
-        listener?.didFinishLoadModel(error: nil)
-        appContext.logInspector?.log(.flow(name: "pivot", message: "finish"), sender: self)
+        modelListener?.didFinishLoadModel(error: nil)
+        appContext?.logInspector?.log(.flow(name: "pivot", message: "finish"), sender: self)
     }
 }
 

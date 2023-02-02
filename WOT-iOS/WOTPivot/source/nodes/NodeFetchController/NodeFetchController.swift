@@ -22,8 +22,8 @@ public protocol FetchRequestContainerProtocol {
 
 public extension NodeFetchController {
     @objc
-    convenience init(objCFetchRequestContainer: FetchRequestContainerProtocol, appContext: Context) {
-        self.init(fetchRequestContainer: objCFetchRequestContainer, appContext: appContext)
+    convenience init(objCFetchRequestContainer: FetchRequestContainerProtocol) {
+        self.init(fetchRequestContainer: objCFetchRequestContainer)
     }
 }
 
@@ -35,13 +35,11 @@ open class NodeFetchController: NSObject {
     public weak var fetchRequestContainer: FetchRequestContainerProtocol?
 
     private weak var fetchResultController: NodeFetchedResultController?
-    private weak var appContext: Context?
 
     // MARK: Lifecycle
 
-    public required init(fetchRequestContainer: FetchRequestContainerProtocol, appContext: Context) {
+    public required init(fetchRequestContainer: FetchRequestContainerProtocol) {
         self.fetchRequestContainer = fetchRequestContainer
-        self.appContext = appContext
     }
 
     deinit {
@@ -114,12 +112,12 @@ extension NodeFetchController: NodeFetchControllerProtocol {
                 self?.fetchResultController?.delegate = self
 
                 if let err = error {
-                    self?.appContext?.logInspector?.log(.error(err), sender: self)
+                    appContext.logInspector?.log(.error(err), sender: self)
                 } else {
                     do {
                         try self?.performFetch(with: fetchResultController)
                     } catch {
-                        self?.appContext?.logInspector?.log(.error(error), sender: self)
+                        appContext.logInspector?.log(.error(error), sender: self)
                     }
                 }
             }

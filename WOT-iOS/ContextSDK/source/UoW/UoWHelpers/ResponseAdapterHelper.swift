@@ -14,11 +14,12 @@ class ResponseAdapterHelper {
         & DecoderManagerContainerProtocol
         & UOWManagerContainerProtocol
 
-    private let appContext: Context
     var modelClass: ModelClassType?
     var socket: JointSocketProtocol?
     var extractorType: ManagedObjectExtractable.Type?
     var completion: ((UOWResultProtocol) -> Void)?
+
+    private let appContext: Context
     init(appContext: Context) {
         self.appContext = appContext
     }
