@@ -17,7 +17,7 @@ class ResponseAdapterHelper {
     private let appContext: Context
     var modelClass: ModelClassType?
     var socket: JointSocketProtocol?
-    var extractor: ManagedObjectExtractable?
+    var extractorType: ManagedObjectExtractable.Type?
     var completion: ((UOWResultProtocol) -> Void)?
     init(appContext: Context) {
         self.appContext = appContext
@@ -33,7 +33,7 @@ class ResponseAdapterHelper {
         dataAdapter.modelClass = modelClass
         dataAdapter.request = request
         dataAdapter.socket = socket
-        dataAdapter.extractor = extractor
+        dataAdapter.extractorType = extractorType
         dataAdapter.completion = { _, error in
             self.completion?(UOWResult(fetchResult: nil, error: error))
         }

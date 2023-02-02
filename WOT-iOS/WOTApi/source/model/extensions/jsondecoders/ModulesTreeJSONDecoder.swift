@@ -36,7 +36,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         fetch_nextTank(keypath: #keyPath(ModulesTree.next_tanks),
                        modelClass: Vehicles.self,
                        element: element,
-                       extractor: NextVehicleExtractor(),
+                       extractorType: ModulesTree.NextVehicleExtractor.self,
                        decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
 
         // MARK: - NextModules
@@ -45,7 +45,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
                          modelClass: Module.self,
                          element: element,
                          contextPredicate: map.contextPredicate,
-                         extractor: NextModuleExtractor(),
+                         extractorType: ModulesTree.NextModuleExtractor.self,
                          decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
 
         // MARK: - CurrentModule
@@ -55,11 +55,11 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
                             modelClass: Module.self,
                             element: element,
                             contextPredicate: map.contextPredicate,
-                            extractor: CurrentModuleExtractor(),
+                            extractorType: ModulesTree.CurrentModuleExtractor.self,
                             decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
     }
 
-    private func fetch_currentModule(keypath: AnyHashable, idkeypath: AnyHashable, modelClass: ModelClassType, element: JSON, contextPredicate: ContextPredicateProtocol, extractor: ManagedObjectExtractable?, decodingDepthLevel: DecodingDepthLevel?) {
+    private func fetch_currentModule(keypath: AnyHashable, idkeypath: AnyHashable, modelClass: ModelClassType, element: JSON, contextPredicate: ContextPredicateProtocol, extractorType: ManagedObjectExtractable.Type?, decodingDepthLevel: DecodingDepthLevel?) {
         do {
             guard let module_id = element[idkeypath] else {
                 throw ModulesTreeJSONDecoderErrors.idNotFound(idkeypath)
@@ -79,7 +79,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
             uow.modelClass = modelClass
             uow.modelFieldKeyPaths = modelClass.fieldsKeypaths()
             uow.socket = socket
-            uow.extractor = extractor
+            uow.extractorType = extractorType
             uow.contextPredicate = contextPredicate
             uow.nextDepthLevel = decodingDepthLevel
             appContext.uowManager.run(unit: uow) { result in
@@ -92,7 +92,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         }
     }
 
-    private func fetch_nextModule(keypath: AnyHashable, modelClass: ModelClassType, element: JSON, contextPredicate: ContextPredicateProtocol, extractor: ManagedObjectExtractable, decodingDepthLevel: DecodingDepthLevel?) {
+    private func fetch_nextModule(keypath: AnyHashable, modelClass: ModelClassType, element: JSON, contextPredicate: ContextPredicateProtocol, extractorType: ManagedObjectExtractable.Type?, decodingDepthLevel: DecodingDepthLevel?) {
         do {
             guard let managedRef = try managedObject?.managedRef() else {
                 throw ModulesTreeJSONDecoderErrors.managedRefNotFound
@@ -114,7 +114,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
                 uow.modelClass = modelClass
                 uow.modelFieldKeyPaths = modelFieldKeyPaths
                 uow.socket = socket
-                uow.extractor = extractor
+                uow.extractorType = extractorType
                 uow.contextPredicate = contextPredicate
                 uow.nextDepthLevel = decodingDepthLevel
                 appContext.uowManager.run(unit: uow) { result in
@@ -128,7 +128,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         }
     }
 
-    private func fetch_nextTank(keypath: AnyHashable, modelClass: ModelClassType, element: JSON, extractor: ManagedObjectExtractable, decodingDepthLevel: DecodingDepthLevel?) {
+    private func fetch_nextTank(keypath: AnyHashable, modelClass: ModelClassType, element: JSON, extractorType: ManagedObjectExtractable.Type?, decodingDepthLevel: DecodingDepthLevel?) {
         do {
             guard let managedRef = try managedObject?.managedRef() else {
                 throw ModulesTreeJSONDecoderErrors.managedRefNotFound
@@ -152,7 +152,7 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
                 uow.modelClass = modelClass
                 uow.modelFieldKeyPaths = modelFieldKeyPaths
                 uow.socket = socket
-                uow.extractor = extractor
+                uow.extractorType = extractorType
                 uow.contextPredicate = contextPredicate
                 uow.nextDepthLevel = nextDepthLevel
                 appContext.uowManager.run(unit: uow) { result in
@@ -164,24 +164,6 @@ class ModulesTreeJSONDecoder: JSONDecoderProtocol {
         } catch {
             appContext.logInspector?.log(.warning(error: error), sender: self)
         }
-    }
-}
-
-extension ModulesTreeJSONDecoder {
-
-    private class NextVehicleExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class NextModuleExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class CurrentModuleExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
     }
 }
 

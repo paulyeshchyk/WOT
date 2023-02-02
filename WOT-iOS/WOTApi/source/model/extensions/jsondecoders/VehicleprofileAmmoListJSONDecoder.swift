@@ -96,13 +96,3 @@ extension VehicleprofileAmmoListJSONDecoder {
         }
     }
 }
-
-// MARK: - VehicleprofileAmmoList.AmmoExtractor
-
-extension VehicleprofileAmmoList {
-
-    private class AmmoExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-}

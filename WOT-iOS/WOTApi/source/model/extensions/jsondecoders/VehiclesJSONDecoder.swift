@@ -149,24 +149,6 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
     }
 }
 
-extension VehiclesJSONDecoder {
-    private func modulesTreeMapping(modulesTreeJSON _: JSON?, jsonRef _: JSONRefProtocol, jsonMap _: JSONMapProtocol, appContext _: Context?) throws {}
-}
-
-extension VehiclesJSONDecoder {
-
-    public class DefaultProfileExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class ModulesTreeExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-
-    }
-}
-
 // MARK: - %t + VehiclesJSONDecoder.VehiclesJSONDecoderErrors
 
 extension VehiclesJSONDecoder {

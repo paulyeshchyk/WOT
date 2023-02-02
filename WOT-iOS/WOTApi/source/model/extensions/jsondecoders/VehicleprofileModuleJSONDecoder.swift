@@ -34,7 +34,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
                      modelClass: VehicleprofileGun.self,
                      contextPredicate: map.contextPredicate,
                      element: element,
-                     extractor: VehicleprofileModule.GunExtractor(),
+                     extractorType: VehicleprofileModule.GunExtractor.self,
                      decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
 
         fetch_module(keypath: #keyPath(VehicleprofileModule.radio_id),
@@ -42,7 +42,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
                      modelClass: VehicleprofileRadio.self,
                      contextPredicate: map.contextPredicate,
                      element: element,
-                     extractor: VehicleprofileModule.RadioExtractor(),
+                     extractorType: VehicleprofileModule.RadioExtractor.self,
                      decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
 
         fetch_module(keypath: #keyPath(VehicleprofileModule.engine_id),
@@ -50,7 +50,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
                      modelClass: VehicleprofileEngine.self,
                      contextPredicate: map.contextPredicate,
                      element: element,
-                     extractor: VehicleprofileModule.EngineExtractor(),
+                     extractorType: VehicleprofileModule.EngineExtractor.self,
                      decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
 
         fetch_module(keypath: #keyPath(VehicleprofileModule.suspension_id),
@@ -58,7 +58,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
                      modelClass: VehicleprofileSuspension.self,
                      contextPredicate: map.contextPredicate,
                      element: element,
-                     extractor: VehicleprofileModule.SuspensionExtractor(),
+                     extractorType: VehicleprofileModule.SuspensionExtractor.self,
                      decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
 
         fetch_module(keypath: #keyPath(VehicleprofileModule.turret_id),
@@ -66,11 +66,11 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
                      modelClass: VehicleprofileTurret.self,
                      contextPredicate: map.contextPredicate,
                      element: element,
-                     extractor: VehicleprofileModule.TurretExtractor(),
+                     extractorType: VehicleprofileModule.TurretExtractor.self,
                      decodingDepthLevel: decodingDepthLevel?.nextDepthLevel)
     }
 
-    private func fetch_module(keypath: AnyHashable, idKeypath: AnyHashable, modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol, element: JSON, extractor: ManagedObjectExtractable, decodingDepthLevel: DecodingDepthLevel?) {
+    private func fetch_module(keypath: AnyHashable, idKeypath: AnyHashable, modelClass: ModelClassType, contextPredicate: ContextPredicateProtocol, element: JSON, extractorType: ManagedObjectExtractable.Type?, decodingDepthLevel: DecodingDepthLevel?) {
         do {
             guard let managedRef = try managedObject?.managedRef() else {
                 throw VehicleprofileModuleJSONDecoderErrors.managedRefNotFound
@@ -92,7 +92,7 @@ class VehicleprofileModuleJSONDecoder: JSONDecoderProtocol {
             uow.modelClass = modelClass
             uow.modelFieldKeyPaths = modelFieldKeyPaths
             uow.socket = socket
-            uow.extractor = extractor
+            uow.extractorType = extractorType
             uow.contextPredicate = contextPredicate
             uow.nextDepthLevel = decodingDepthLevel
             appContext.uowManager.run(unit: uow) { result in
@@ -122,33 +122,5 @@ extension VehicleprofileModuleJSONDecoder {
             case .maxDecodingDepthLevelReached(let level): return "[\(type(of: self))]: Max decoding level reached \(level?.rawValue ?? -1)"
             }
         }
-    }
-}
-
-extension VehicleprofileModule {
-
-    class GunExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-        public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.gun) }
-    }
-
-    class RadioExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.radio) }
-    }
-
-    class EngineExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.engine) }
-    }
-
-    class SuspensionExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.suspension) }
-    }
-
-    class TurretExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { #keyPath(Vehicleprofile.turret) }
     }
 }

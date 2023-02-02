@@ -17,7 +17,7 @@ public protocol UOWRemoteProtocol: UOWProtocol {
     var modelClass: ModelClassType? { get set }
     var modelFieldKeyPaths: [String]? { get set }
     var socket: JointSocketProtocol? { get set }
-    var extractor: ManagedObjectExtractable? { get set }
+    var extractorType: ManagedObjectExtractable.Type? { get set }
     var contextPredicate: ContextPredicateProtocol? { get set }
     var nextDepthLevel: DecodingDepthLevel? { get set }
 
@@ -52,7 +52,7 @@ public class UOWRemote: UOWRemoteProtocol, CustomStringConvertible, CustomDebugS
 
     public var modelClass: ModelClassType?
     public var socket: JointSocketProtocol?
-    public var extractor: ManagedObjectExtractable?
+    public var extractorType: ManagedObjectExtractable.Type?
     public var contextPredicate: ContextPredicateProtocol?
     public var nextDepthLevel: DecodingDepthLevel?
     public var modelFieldKeyPaths: [String]?
@@ -77,7 +77,7 @@ extension UOWRemote: UOWRunnable {
             let responseAdapterHelper = ResponseAdapterHelper(appContext: self.appContext)
             responseAdapterHelper.modelClass = self.modelClass
             responseAdapterHelper.socket = self.socket
-            responseAdapterHelper.extractor = self.extractor
+            responseAdapterHelper.extractorType = self.extractorType
             responseAdapterHelper.completion = { fetchResult in
                 self.appContext.logInspector?.log(.uow("remote", message: "finish \(self.debugDescription)"), sender: self)
                 exit(exitToPassThrough, fetchResult)

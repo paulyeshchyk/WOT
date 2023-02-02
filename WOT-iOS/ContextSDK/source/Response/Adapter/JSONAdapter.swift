@@ -29,7 +29,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     public var modelClass: ModelClassType?
     public var socket: JointSocketProtocol?
     public weak var request: RequestProtocol?
-    public weak var extractor: ManagedObjectExtractable?
+    public var extractorType: ManagedObjectExtractable.Type?
 
     // MARK: Lifecycle
 
@@ -81,11 +81,11 @@ public extension JSONAdapter {
             completion?(request, Errors.modelClassIsNotDefined)
             return
         }
-        guard let extractor = extractor else {
+        guard let ExtractorType = extractorType else {
             completion?(request, Errors.extractorNotFound(request))
             return
         }
-
+        let extractor = ExtractorType.init()
         let maps = extractor.getJSONMaps(json: json, modelClass: modelClass, jsonRefs: request?.contextPredicate?.jsonRefs)
 
         let uow = UOWDecodeAndLinkMaps(appContext: appContext)

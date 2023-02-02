@@ -24,7 +24,7 @@ public protocol ResponseAdapterProtocol {
     var modelClass: ModelClassType? { get set }
     var request: RequestProtocol? { get set }
     var socket: JointSocketProtocol? { get set }
-    var extractor: ManagedObjectExtractable? { get set }
+    var extractorType: ManagedObjectExtractable.Type? { get set }
 
     init(appContext: Context)
 

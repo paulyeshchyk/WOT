@@ -102,19 +102,6 @@ extension VehicleprofileAmmoJSONDecoder {
     }
 }
 
-extension VehicleprofileAmmo {
-
-    private class DamageExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class PenetrationExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-}
-
 // MARK: - VehicleprofileAmmoError
 
 public enum VehicleprofileAmmoError: Error, CustomStringConvertible {

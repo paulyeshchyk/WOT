@@ -11,6 +11,7 @@
 public protocol ManagedObjectExtractable {
     var linkerPrimaryKeyType: PrimaryKeyType { get }
     var jsonKeyPath: KeypathType? { get }
+    init()
 }
 
 public extension ManagedObjectExtractable {

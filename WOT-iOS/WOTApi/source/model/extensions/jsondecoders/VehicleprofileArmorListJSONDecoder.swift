@@ -86,20 +86,7 @@ class VehicleprofileArmorListJSONDecoder: JSONDecoderProtocol {
     }
 }
 
-extension VehicleprofileArmorList {
-
-    private class HullExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class TurretExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-}
-
-// MARK: - VehicleprofileArmorListJSONDecoder.VehicleprofileArmorListJSONDecoderErrors
+// MARK: - %t + VehicleprofileArmorListJSONDecoder.VehicleprofileArmorListJSONDecoderErrors
 
 extension VehicleprofileArmorListJSONDecoder {
 
