@@ -14,7 +14,7 @@ class RequestCreatorHeper {
     var modelClass: ModelClassType?
     var modelFieldKeyPaths: [String]?
     var contextPredicate: ContextPredicateProtocol?
-    var nextDepthLevel: DecodingDepthLevel?
+    var decodingDepthLevel: DecodingDepthLevel?
     var completion: ((RequestProtocol?, Error?) -> Void)?
 
     private let appContext: Context
@@ -36,7 +36,7 @@ class RequestCreatorHeper {
             httpRequestConfiguration.contextPredicate = contextPredicate
 
             guard let request = try appContext.requestRegistrator?.createRequest(requestConfiguration: httpRequestConfiguration,
-                                                                                 decodingDepthLevel: nextDepthLevel)
+                                                                                 decodingDepthLevel: decodingDepthLevel)
             else {
                 throw RequestCreatorHeperErrors.requestIsNotCreated
             }

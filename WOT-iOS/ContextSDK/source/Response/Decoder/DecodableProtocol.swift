@@ -43,57 +43,11 @@ private enum DecodableProtocolError: Error, CustomStringConvertible {
     }
 }
 
-// MARK: - DecodingDepthLevel
-
-@objc
-
-public class DecodingDepthLevel: NSObject, RawRepresentable {
-
-    public required init?(rawValue: Int) {
-        self.rawValue = rawValue
-        maxLevel = nil
-        super.init()
-    }
-
-    public required init?(rawValue: Int, maxLevel: Int?) {
-        self.rawValue = rawValue
-        self.maxLevel = maxLevel
-        super.init()
-    }
-
-    public var rawValue: Int
-    public var maxLevel: Int?
-
-    override public var description: String {
-        return "[\(type(of: self))] rawValue: \(rawValue), maxLevel: \(maxLevel ?? -1)"
-    }
-
-    public static func initial(maxLevel: Int? = nil) -> DecodingDepthLevel? {
-        DecodingDepthLevel(rawValue: 0, maxLevel: maxLevel)
-    }
-
-    public typealias RawValue = Int
-
-    public var nextDepthLevel: DecodingDepthLevel? {
-        DecodingDepthLevel(rawValue: rawValue + 1, maxLevel: maxLevel)
-    }
-
-    // MARK: Public
-
-    public func maxReached() -> Bool {
-        guard let maxLevel = maxLevel else {
-            return false
-        }
-        return rawValue > maxLevel
-    }
-}
-
 // MARK: - JSONDecoderProtocol
 
 @objc
 public protocol JSONDecoderProtocol: AnyObject {
 
-    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
@@ -101,8 +55,11 @@ public protocol JSONDecoderProtocol: AnyObject {
         & UOWManagerContainerProtocol
 
     var managedObject: ManagedAndDecodableObjectType? { get set }
+    var jsonMap: JSONMapProtocol? { get set }
+    var decodingDepthLevel: DecodingDepthLevel? { get set }
+
     init(appContext: Context)
-    func decode(using: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws
+    func decode() throws
 }
 
 // MARK: - JSONCollectionProtocol

@@ -6,9 +6,13 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+import ContextSDK
+
 // MARK: - TreeDataModel
 
 open class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
+    public typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
 
     open var levels: Int {
         return nodeConnectorIndex.levels
@@ -23,13 +27,16 @@ open class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
     weak var listener: NodeDataModelListener?
     weak var nodeCreator: NodeCreatorProtocol?
 
+    @objc
+    public var appContext: Context?
+
     // MARK: Lifecycle
 
-    public required init(fetchController fetch: NodeFetchControllerProtocol, listener list: NodeDataModelListener, nodeCreator nc: NodeCreatorProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: Context) {
+    public required init(fetchController fetch: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator nc: NodeCreatorProtocol, nodeIndexType: NodeIndexProtocol.Type) {
         fetchController = fetch
-        listener = list
+        listener = modelListener
         nodeCreator = nc
-        super.init(nodeIndex: ni, appContext: appContext)
+        super.init(nodeIndexType: nodeIndexType)
         fetchController?.setFetchListener(self)
     }
 
@@ -37,7 +44,7 @@ open class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    public required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: Context) {
+    public required init(nodeIndexType _: NodeIndexProtocol.Type) {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 
@@ -50,12 +57,17 @@ open class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
     override open func loadModel() {
         super.loadModel()
 
+        guard let context = appContext else {
+            assertionFailure("\(String(describing: Errors.contextNotFound))")
+            return
+        }
+
         reindexNodeConnectors()
 
         do {
-            try fetchController?.performFetch(appContext: appContext)
+            try fetchController?.performFetch(appContext: context)
         } catch let error {
-            appContext.logInspector?.log(.error(error), sender: self)
+            context.logInspector?.log(.error(error), sender: self)
             fetchFailed(by: self.fetchController, withError: error)
         }
     }
@@ -110,6 +122,7 @@ open class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
 extension TreeDataModel {
     enum Errors: Error {
         case noFetchControllerDefined
+        case contextNotFound
     }
 }
 

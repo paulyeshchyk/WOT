@@ -10,6 +10,8 @@
 class VehicleprofileAmmoDamageJSONDecoder: JSONDecoderProtocol {
 
     private let appContext: Context
+    var jsonMap: JSONMapProtocol?
+    var decodingDepthLevel: DecodingDepthLevel?
 
     required init(appContext: Context) {
         self.appContext = appContext
@@ -17,7 +19,10 @@ class VehicleprofileAmmoDamageJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, decodingDepthLevel _: DecodingDepthLevel?) throws {
+    func decode() throws {
+        guard let map = jsonMap else {
+            throw VehicleprofileAmmoDamageJSONDecoderErrors.jsonMapNotDefined
+        }
         //
         let array = try map.data(ofType: [Double].self)
         let ammoDamage = try MinAvgMax(array)
@@ -32,9 +37,11 @@ extension VehicleprofileAmmoDamageJSONDecoder {
 
     enum VehicleprofileAmmoDamageJSONDecoderErrors: Error, CustomStringConvertible {
         case arrayIsNotContainingThreeElements
+        case jsonMapNotDefined
 
         var description: String {
             switch self {
+            case .jsonMapNotDefined: return "[\(type(of: self))]: JSONMap is not defined"
             case .arrayIsNotContainingThreeElements: return "[\(type(of: self))]: Dublicate"
             }
         }

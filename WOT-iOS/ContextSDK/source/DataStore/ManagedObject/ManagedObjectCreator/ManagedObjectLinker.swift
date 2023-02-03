@@ -30,7 +30,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
     open func run() throws {
         //
         guard let fetchResult = fetchResult else {
-            throw Errors.noFetchResult
+            throw ManagedObjectLinkerError.noFetchResult
         }
 
         try appContext.dataStore?.perform(mode: .readwrite, block: { managedObjectContext in
@@ -39,7 +39,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
                     if let pin = try fetchResult.managedObject(inManagedObjectContext: managedObjectContext) as? ManagedObjectPinProtocol {
                         let managedRef = socket.managedRef
                         guard let managedObject = try managedObjectContext.object(managedRef: managedRef) as? ManagedObjectPlugProtocol else {
-                            throw Errors.noManagedObjectFoundByManagedRef(managedRef)
+                            throw ManagedObjectLinkerError.noManagedObjectFoundByManagedRef(managedRef)
                         }
 
                         managedObject.plug(pin: pin, intoSocket: socket)
@@ -63,18 +63,16 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
     }
 }
 
-// MARK: - %t + ManagedObjectLinker.Errors
+// MARK: - %t + ManagedObjectLinker.ManagedObjectLinkerError
 
 extension ManagedObjectLinker {
 
-    private enum Errors: Error, CustomStringConvertible {
+    private enum ManagedObjectLinkerError: Error, CustomStringConvertible {
         case noFetchResult
         case noManagedObjectFoundByManagedRef(ManagedRefProtocol?)
-        case contextNotFound
 
         public var description: String {
             switch self {
-            case .contextNotFound: return "[\(type(of: self))] Context not found"
             case .noManagedObjectFoundByManagedRef(let ref): return "[\(type(of: self))] No managed object found for provided ref: \(String(describing: ref, orValue: "NULL"))"
             case .noFetchResult: return "[\(type(of: self))] No fetchResult found"
             }

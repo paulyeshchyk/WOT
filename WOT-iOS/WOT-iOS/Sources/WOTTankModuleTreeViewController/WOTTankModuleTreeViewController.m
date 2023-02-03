@@ -53,13 +53,14 @@
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
         
-        self.fetchController = [[WOTTankTreeFetchController alloc] initWithObjCFetchRequestContainer:self
-                                                                                          appContext:appDelegate];
+        self.fetchController = [[WOTTankTreeFetchController alloc] initWithObjCFetchRequestContainer:self];
+        
         self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController
-                                                              listener: self
+                                                         modelListener: self
                                                            nodeCreator: self
-                                                             nodeIndex: NodeIndex.self
-                                                            appContext: appDelegate];
+                                                         nodeIndexType: NodeIndex.self];
+        self.model.appContext = appDelegate;
+        
     }
     return self;
 }
@@ -138,7 +139,11 @@
         
         [self reloadModel];
         
-        [self.model fetchVehicleDataWithVehicleId:_tank_Id.intValue];
+        id<ContextProtocol> context = [UIApplication sharedApplication].delegate;
+        
+        [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId:_tank_Id.intValue appContext:context completion:^(id<UOWResultProtocol> _Nonnull) {
+           //
+        }];
     }
 }
 

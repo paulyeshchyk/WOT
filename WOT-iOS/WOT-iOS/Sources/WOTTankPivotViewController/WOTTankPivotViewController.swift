@@ -195,9 +195,9 @@ typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void
 class WOTTankPivotViewController: PivotViewController {
 
     typealias Context = LogInspectorContainerProtocol
-        & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & DecoderManagerContainerProtocol
+        & DataStoreContainerProtocol
         & UOWManagerContainerProtocol
 
     static var registeredCells: [UICollectionViewCell.Type] = {
@@ -220,19 +220,14 @@ class WOTTankPivotViewController: PivotViewController {
     }()
 
     private lazy var fetchController: NodeFetchControllerProtocol = {
-        guard let appDelegate = UIApplication.shared.delegate as? Context else {
-            fatalError("appDelegate is not WOTAppDelegateProtocol")
-        }
-        return NodeFetchController(fetchRequestContainer: fetchRequest, appContext: appDelegate)
+        let result = NodeFetchController(fetchRequestContainer: fetchRequest)
+        return result
     }()
 
     private lazy var model: PivotDataModelProtocol = {
-        guard let appDelegate = UIApplication.shared.delegate as? Context else {
-            fatalError("appDelegate is not WOTAppDelegateProtocol")
-        }
-
-        return WOTTankPivotModel(modelListener: self, fetchController: self.fetchController, appContext: appDelegate)
-
+        let result = WOTTankPivotModel(modelListener: self, fetchController: self.fetchController)
+        result.appContext = UIApplication.shared.delegate as? Context
+        return result
     }()
 
     // MARK: Public
@@ -278,6 +273,20 @@ class WOTTankPivotViewController: PivotViewController {
 
         let items = [UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(WOTTankPivotViewController.openConstructor(_:)))]
         navigationItem.setRightBarButtonItems(items, animated: false)
+
+        do {
+            guard let appContext = UIApplication.shared.delegate as? WOTTankPivotViewController.Context else {
+                throw WOTTankPivotViewControllerError.contextNotFound
+            }
+            try WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext) { result in
+                if let error = result.error {
+                    appContext.logInspector?.log(.warning(error: error), sender: self)
+                }
+                self.model.loadModel()
+            }
+        } catch {
+            appContext?.logInspector?.log(.error(error), sender: self)
+        }
     }
 
     @objc
@@ -308,6 +317,14 @@ class WOTTankPivotViewController: PivotViewController {
             return UICollectionViewCell()
         }
         return cell
+    }
+}
+
+// MARK: - %t + WOTTankPivotViewController.WOTTankPivotViewControllerError
+
+extension WOTTankPivotViewController {
+    enum WOTTankPivotViewControllerError: Error {
+        case contextNotFound
     }
 }
 

@@ -11,7 +11,6 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
 
     open var nodes: [NodeProtocol] { return [] }
 
-    public let appContext: Context
     public var nodeIndex: NodeIndexProtocol
     public lazy var rootNodes: [NodeProtocol] = { return [] }()
 
@@ -25,9 +24,8 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
 
     // MARK: Lifecycle
 
-    public required init(nodeIndex: NodeIndexProtocol.Type, appContext: Context) {
-        self.appContext = appContext
-        self.nodeIndex = nodeIndex.init()
+    public required init(nodeIndexType: NodeIndexProtocol.Type) {
+        nodeIndex = nodeIndexType.init()
         super.init()
     }
 

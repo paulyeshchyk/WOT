@@ -76,12 +76,12 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
         return { exitToPassThrough, exit in
             do {
                 guard let modelClass = self.modelClass else {
-                    throw Errors.noModelClassProvided
+                    throw UOWDecodeAndLinkMapsError.noModelClassProvided
                 }
                 self.appContext.logInspector?.log(.uow("moParseSet", message: "start \(self.debugDescription)"), sender: self)
 
                 guard let elements = self.maps?.compactMap({ $0 }), !elements.isEmpty else {
-                    throw Errors.noMapProvided
+                    throw UOWDecodeAndLinkMapsError.noMapProvided(modelClass)
                 }
 
                 let sequence = elements.map { element -> UOWDecodeAndLinkMap in
@@ -105,11 +105,18 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
     }
 }
 
-// MARK: - %t + UOWDecodeAndLinkMaps.Errors
+// MARK: - %t + UOWDecodeAndLinkMaps.UOWDecodeAndLinkMapsError
 
 extension UOWDecodeAndLinkMaps {
-    enum Errors: Error {
-        case noMapProvided
+    enum UOWDecodeAndLinkMapsError: Error, CustomStringConvertible {
+        case noMapProvided(ModelClassType)
         case noModelClassProvided
+
+        var description: String {
+            switch self {
+            case .noMapProvided(let modelClass): return "[\(type(of: self))]: no maps provided for \(type(of: modelClass))"
+            case .noModelClassProvided: return "[\(type(of: self))]: no model provided"
+            }
+        }
     }
 }

@@ -10,6 +10,8 @@
 class VehiclesJSONDecoder: JSONDecoderProtocol {
 
     private let appContext: Context
+    var jsonMap: JSONMapProtocol?
+    var decodingDepthLevel: DecodingDepthLevel?
 
     required init(appContext: Context) {
         self.appContext = appContext
@@ -17,14 +19,17 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
+    func decode() throws {
+        guard let map = jsonMap else {
+            throw VehiclesJSONDecoderErrors.jsonMapNotDefined
+        }
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
 
         // MARK: - do check decodingDepth
 
-        if decodingDepthLevel?.maxReached() ?? false {
+        if decodingDepthLevel?.isMaxLevelReached ?? false {
             appContext.logInspector?.log(.warning(error: VehiclesJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
             return
         }
@@ -149,29 +154,12 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
     }
 }
 
-extension VehiclesJSONDecoder {
-    private func modulesTreeMapping(modulesTreeJSON _: JSON?, jsonRef _: JSONRefProtocol, jsonMap _: JSONMapProtocol, appContext _: Context?) throws {}
-}
-
-extension VehiclesJSONDecoder {
-
-    public class DefaultProfileExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class ModulesTreeExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-
-    }
-}
-
 // MARK: - %t + VehiclesJSONDecoder.VehiclesJSONDecoderErrors
 
 extension VehiclesJSONDecoder {
 
     enum VehiclesJSONDecoderErrors: Error, CustomStringConvertible {
+        case jsonMapNotDefined
         case notAJSON
         case passedInvalidModuleTreeJSON(NSDecimalNumber?)
         case passedInvalidSubModuleJSON
@@ -184,6 +172,7 @@ extension VehiclesJSONDecoder {
 
         public var description: String {
             switch self {
+            case .jsonMapNotDefined: return "[\(type(of: self))]: JSONMap is not defined"
             case .managedRefNotFound: return "[\(type(of: self))]: ManagedRef not found"
             case .notAJSON: return "[\(type(of: self))]: Not a JSON"
             case .passedInvalidModuleTreeJSON(let profileID): return "[\(type(of: self))]: Passed invalid module tree json for \(profileID ?? -1)"

@@ -10,6 +10,8 @@
 class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
     private let appContext: Context
+    var jsonMap: JSONMapProtocol?
+    var decodingDepthLevel: DecodingDepthLevel?
 
     required init(appContext: Context) {
         self.appContext = appContext
@@ -17,14 +19,17 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
 
     var managedObject: ManagedAndDecodableObjectType?
 
-    func decode(using map: JSONMapProtocol, decodingDepthLevel: DecodingDepthLevel?) throws {
+    func decode() throws {
+        guard let map = jsonMap else {
+            throw VehicleprofileJSONDecoderErrors.jsonMapNotDefined
+        }
         //
         let element = try map.data(ofType: JSON.self)
         try managedObject?.decode(decoderContainer: element)
 
         // MARK: - do check decodingDepth
 
-        if decodingDepthLevel?.maxReached() ?? false {
+        if decodingDepthLevel?.isMaxLevelReached ?? false {
             appContext.logInspector?.log(.warning(error: VehicleprofileJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
             return
         }
@@ -186,50 +191,7 @@ class VehicleprofileJSONDecoder: JSONDecoderProtocol {
     }
 }
 
-extension Vehicleprofile {
-
-    private class ArmorListExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class EngineExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class GunExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    public class RadioExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class TurretManagedObjectCreator: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class AmmoListExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class SuspensionExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-
-    private class ModuleExtractor: ManagedObjectExtractable {
-        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        public var jsonKeyPath: KeypathType? { nil }
-    }
-}
-
-// MARK: - VehicleprofileJSONDecoder.VehicleprofileJSONDecoderErrors
+// MARK: - %t + VehicleprofileJSONDecoder.VehicleprofileJSONDecoderErrors
 
 extension VehicleprofileJSONDecoder {
 
@@ -246,9 +208,11 @@ extension VehicleprofileJSONDecoder {
         case noManagedRef
         case elementNotFound(AnyHashable)
         case idNotFound(AnyHashable)
+        case jsonMapNotDefined
 
         public var description: String {
             switch self {
+            case .jsonMapNotDefined: return "[\(type(of: self))]: JSONMap is not defined"
             case .noAmmoList(let profile): return "[\(type(of: self))]: No ammo list in profile with id: \(profile ?? -1)"
             case .noArmor(let profile): return "[\(type(of: self))]: No armor in profile with id: \(profile ?? -1)"
             case .noModule(let profile): return "[\(type(of: self))]: No module in profile with id: \(profile ?? -1)"

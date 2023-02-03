@@ -39,9 +39,9 @@ public class WOTWEBRequestFactory: NSObject {
         uow.modelClass = modelClass
         uow.modelFieldKeyPaths = modelFieldKeyPaths
         uow.socket = nil
-        uow.extractor = VehiclesPivotManagedObjectExtractor()
+        uow.extractorType = Vehicles.PivotViewManagedObjectExtractor.self
         uow.contextPredicate = nil
-        uow.nextDepthLevel = DecodingDepthLevel.initial(maxLevel: 0)
+        uow.decodingDepthLevel = DecodingDepthLevel.limited(by: .first)
         appContext.uowManager.run(unit: uow) { result in
             completion(result)
         }
@@ -62,36 +62,11 @@ public class WOTWEBRequestFactory: NSObject {
         uow.modelClass = modelClass
         uow.modelFieldKeyPaths = modelFieldKeyPaths
         uow.socket = nil
-        uow.extractor = VehiclesTreeManagedObjectExtractor()
+        uow.extractorType = Vehicles.TreeViewManagedObjectExtractor.self
         uow.contextPredicate = contextPredicate
-        uow.nextDepthLevel = DecodingDepthLevel.initial()
+        uow.decodingDepthLevel = DecodingDepthLevel.unlimited()
         appContext.uowManager.run(unit: uow) { result in
             completion(result)
-        }
-    }
-}
-
-extension WOTWEBRequestFactory {
-
-    private class VehiclesPivotManagedObjectExtractor: ManagedObjectExtractable {
-
-        public var linkerPrimaryKeyType: PrimaryKeyType {
-            return .internal
-        }
-
-        public var jsonKeyPath: KeypathType? {
-            nil
-        }
-    }
-
-    private class VehiclesTreeManagedObjectExtractor: ManagedObjectExtractable {
-
-        public var linkerPrimaryKeyType: PrimaryKeyType {
-            return .internal
-        }
-
-        public var jsonKeyPath: KeypathType? {
-            nil
         }
     }
 }
