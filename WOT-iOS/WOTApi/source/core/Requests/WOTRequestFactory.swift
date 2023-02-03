@@ -41,7 +41,7 @@ public class WOTWEBRequestFactory: NSObject {
         uow.socket = nil
         uow.extractorType = Vehicles.PivotViewManagedObjectExtractor.self
         uow.contextPredicate = nil
-        uow.nextDepthLevel = DecodingDepthLevel.initial(maxLevel: 0)
+        uow.decodingDepthLevel = DecodingDepthLevel.limited(by: .first)
         appContext.uowManager.run(unit: uow) { result in
             completion(result)
         }
@@ -64,7 +64,7 @@ public class WOTWEBRequestFactory: NSObject {
         uow.socket = nil
         uow.extractorType = Vehicles.TreeViewManagedObjectExtractor.self
         uow.contextPredicate = contextPredicate
-        uow.nextDepthLevel = DecodingDepthLevel.initial()
+        uow.decodingDepthLevel = DecodingDepthLevel.unlimited()
         appContext.uowManager.run(unit: uow) { result in
             completion(result)
         }

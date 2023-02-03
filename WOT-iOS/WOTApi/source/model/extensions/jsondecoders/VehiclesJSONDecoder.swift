@@ -29,7 +29,7 @@ class VehiclesJSONDecoder: JSONDecoderProtocol {
 
         // MARK: - do check decodingDepth
 
-        if decodingDepthLevel?.maxReached() ?? false {
+        if decodingDepthLevel?.isMaxLevelReached ?? false {
             appContext.logInspector?.log(.warning(error: VehiclesJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
             return
         }

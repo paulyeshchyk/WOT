@@ -57,7 +57,7 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
                     guard let modelClass = type(of: managedObject) as? PrimaryKeypathProtocol.Type else {
                         throw ManagedObjectDecodeHelperErrors.modelClassIsNotDefined
                     }
-                    #warning("crash is here")
+                    #warning("crash is here: malloc: Non-aligned pointer 0x600000dd7640 being freed (2); SIGABORT")
                     guard let decoderType = self.appContext.decoderManager?.jsonDecoder(for: modelClass) else {
                         throw ManagedObjectDecodeHelperErrors.decoderIsNotDefined
                     }

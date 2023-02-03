@@ -26,7 +26,7 @@ class VehicleprofileAmmoListJSONDecoder: JSONDecoderProtocol {
 
         // MARK: - do check decodingDepth
 
-        if decodingDepthLevel?.maxReached() ?? false {
+        if decodingDepthLevel?.isMaxLevelReached ?? false {
             appContext.logInspector?.log(.warning(error: VehicleprofileAmmoListJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
             return
         }

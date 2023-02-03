@@ -19,7 +19,7 @@ public protocol UOWRemoteProtocol: UOWProtocol {
     var socket: JointSocketProtocol? { get set }
     var extractorType: ManagedObjectExtractable.Type? { get set }
     var contextPredicate: ContextPredicateProtocol? { get set }
-    var nextDepthLevel: DecodingDepthLevel? { get set }
+    var decodingDepthLevel: DecodingDepthLevel? { get set }
 
 }
 
@@ -54,7 +54,7 @@ public class UOWRemote: UOWRemoteProtocol, CustomStringConvertible, CustomDebugS
     public var socket: JointSocketProtocol?
     public var extractorType: ManagedObjectExtractable.Type?
     public var contextPredicate: ContextPredicateProtocol?
-    public var nextDepthLevel: DecodingDepthLevel?
+    public var decodingDepthLevel: DecodingDepthLevel?
     public var modelFieldKeyPaths: [String]?
 
     private let appContext: Context
@@ -93,7 +93,7 @@ extension UOWRemote: UOWRunnable {
             requestCreatorHelper.modelClass = self.modelClass
             requestCreatorHelper.modelFieldKeyPaths = self.modelFieldKeyPaths
             requestCreatorHelper.contextPredicate = self.contextPredicate
-            requestCreatorHelper.nextDepthLevel = self.nextDepthLevel
+            requestCreatorHelper.decodingDepthLevel = self.decodingDepthLevel
             requestCreatorHelper.completion = { request, error in
                 if let error = error { self.appContext.logInspector?.log(.error(error), sender: self) }
                 requestRunnerHelper.run(request)

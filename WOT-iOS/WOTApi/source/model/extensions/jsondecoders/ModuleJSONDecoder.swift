@@ -29,7 +29,7 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
 
         // MARK: - do check decodingDepth
 
-        if decodingDepthLevel?.maxReached() ?? false {
+        if decodingDepthLevel?.isMaxLevelReached ?? false {
             appContext.logInspector?.log(.warning(error: ModuleJSONDecoderErrors.maxDecodingDepthLevelReached(decodingDepthLevel)), sender: self)
             return
         }
@@ -119,7 +119,7 @@ class ModuleJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.extractorType = extractorType
             uow.contextPredicate = contextPredicate
-            uow.nextDepthLevel = decodingDepthLevel
+            uow.decodingDepthLevel = decodingDepthLevel
             appContext.uowManager.run(unit: uow) { result in
                 if let error = result.error {
                     self.appContext.logInspector?.log(.error(error), sender: self)

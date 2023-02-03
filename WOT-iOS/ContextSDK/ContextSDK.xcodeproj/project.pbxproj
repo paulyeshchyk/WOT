@@ -38,6 +38,8 @@
 		DA456E70296E9D9F0065D8FF /* JointSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA456E6F296E9D9F0065D8FF /* JointSocket.swift */; };
 		DA456E72296E9DE20065D8FF /* JointPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA456E71296E9DE20065D8FF /* JointPin.swift */; };
 		DA56E2B5296C0EC4001D9DD4 /* String+Describing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56E2B4296C0EC4001D9DD4 /* String+Describing.swift */; };
+		DA7C805A298CFB3800C5D584 /* DecodingDepthLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C8059298CFB3800C5D584 /* DecodingDepthLevel.swift */; };
+		DA7C805C298CFB5D00C5D584 /* DecodingDepthLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C805B298CFB5D00C5D584 /* DecodingDepthLimit.swift */; };
 		DA801FEE2985193F00033D85 /* ConcurrentBlockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA801FED2985193F00033D85 /* ConcurrentBlockOperation.swift */; };
 		DA801FF02985197500033D85 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA801FEF2985197500033D85 /* AsyncOperation.swift */; };
 		DA801FF22985199E00033D85 /* AsyncBlockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA801FF12985199E00033D85 /* AsyncBlockOperation.swift */; };
@@ -152,6 +154,8 @@
 		DA456E6F296E9D9F0065D8FF /* JointSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JointSocket.swift; sourceTree = "<group>"; };
 		DA456E71296E9DE20065D8FF /* JointPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JointPin.swift; sourceTree = "<group>"; };
 		DA56E2B4296C0EC4001D9DD4 /* String+Describing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Describing.swift"; sourceTree = "<group>"; };
+		DA7C8059298CFB3800C5D584 /* DecodingDepthLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingDepthLevel.swift; sourceTree = "<group>"; };
+		DA7C805B298CFB5D00C5D584 /* DecodingDepthLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingDepthLimit.swift; sourceTree = "<group>"; };
 		DA801FED2985193F00033D85 /* ConcurrentBlockOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentBlockOperation.swift; sourceTree = "<group>"; };
 		DA801FEF2985197500033D85 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		DA801FF12985199E00033D85 /* AsyncBlockOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncBlockOperation.swift; sourceTree = "<group>"; };
@@ -405,6 +409,15 @@
 			path = ManagedObjectCreator;
 			sourceTree = "<group>";
 		};
+		DA7C8058298CFB2800C5D584 /* DecodingDepth */ = {
+			isa = PBXGroup;
+			children = (
+				DA7C8059298CFB3800C5D584 /* DecodingDepthLevel.swift */,
+				DA7C805B298CFB5D00C5D584 /* DecodingDepthLimit.swift */,
+			);
+			path = DecodingDepth;
+			sourceTree = "<group>";
+		};
 		DA801FF329851C5500033D85 /* Dictionary */ = {
 			isa = PBXGroup;
 			children = (
@@ -620,6 +633,7 @@
 		DADD69CB2975B80800EFC36D /* Decoder */ = {
 			isa = PBXGroup;
 			children = (
+				DA7C8058298CFB2800C5D584 /* DecodingDepth */,
 				DADD69CC2975B94400EFC36D /* JSON */,
 				DADD699D2975680200EFC36D /* DecoderManagerProtocol.swift */,
 				DACDB10B295EDE08005BBA72 /* DecodableProtocol.swift */,
@@ -834,6 +848,7 @@
 				DA08567729548E2000273762 /* String+MD5.swift in Sources */,
 				DACDB0D8295DBB66005BBA72 /* LogInspector.swift in Sources */,
 				DAEB6F92298530DE009A6C63 /* UOWResultProtocol.swift in Sources */,
+				DA7C805A298CFB3800C5D584 /* DecodingDepthLevel.swift in Sources */,
 				DA288F6A2965A76900973561 /* String+Unescape.swift in Sources */,
 				DA56E2B5296C0EC4001D9DD4 /* String+Describing.swift in Sources */,
 				DA801FEE2985193F00033D85 /* ConcurrentBlockOperation.swift in Sources */,
@@ -867,6 +882,7 @@
 				DA0E806529508C4700B44CC6 /* StartableProtocol.swift in Sources */,
 				DA2C28F42959F55D00D18A6E /* ManagedObjectLinker.swift in Sources */,
 				DA81E4F02952FDD800C60F31 /* JSONAdapter.swift in Sources */,
+				DA7C805C298CFB5D00C5D584 /* DecodingDepthLimit.swift in Sources */,
 				DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */,
 				DA801FF729851CDF00033D85 /* Dictionary+URLString.swift in Sources */,
 				DABEECC5298669B100B3E7B3 /* ResponseAdapterHelper.swift in Sources */,
