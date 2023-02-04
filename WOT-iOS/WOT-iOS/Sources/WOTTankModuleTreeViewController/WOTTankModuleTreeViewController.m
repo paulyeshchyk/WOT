@@ -29,7 +29,7 @@
 @property (nonatomic, strong) UIImageView *connectorsImageView;
 @property (nonatomic, strong) WOTTankListSettingsDatasource *settingsDatasource;
 @property (nonatomic, strong) WOTTankTreeFetchController *fetchController;
-
+@property (nonatomic, copy) NSString *uowMD5;
 @end
 
 @implementation WOTTankModuleTreeViewController
@@ -65,10 +65,31 @@
     return self;
 }
 
+- (void)uowCompletion:(NSNotification *)notification {
+    NSError *error = nil;
+    DependencyCollectionItemObjCWrapper *wrapper = [[DependencyCollectionItemObjCWrapper alloc] initWithDictionary: notification.userInfo
+                                                                                                             error: &error];
+    
+    
+    if (wrapper.completed) {
+        if ([wrapper.subject compare: self.uowMD5] == NSOrderedSame) {
+        
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.model loadModel];
+            });
+        }
+    }
+}
+
 - (void)viewDidLoad {
 
     [super viewDidLoad];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(uowCompletion:)
+                                                 name: @"UOWDeleted"
+                                               object: nil];
+
     __weak __typeof(self) weakSelf = self;
     UIBarButtonItem *reloadButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:[NSString localization:WOT_STRING_RELOAD] eventBlock:^(id sender) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -141,9 +162,7 @@
         
         id<ContextProtocol> context = [UIApplication sharedApplication].delegate;
         
-        [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId:_tank_Id.intValue appContext:context completion:^(id<UOWResultProtocol> _Nonnull) {
-           //
-        }];
+        self.uowMD5 = [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId:_tank_Id.intValue appContext:context];
     }
 }
 

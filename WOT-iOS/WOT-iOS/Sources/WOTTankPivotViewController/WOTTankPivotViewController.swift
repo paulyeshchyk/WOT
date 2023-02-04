@@ -268,24 +268,42 @@ class WOTTankPivotViewController: PivotViewController {
         model
     }
 
+    private var pivotTaskMD5: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(onPivotLoadCompleted), name: NSNotification.Name.UOWDeleted, object: nil)
 
         let items = [UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(WOTTankPivotViewController.openConstructor(_:)))]
         navigationItem.setRightBarButtonItems(items, animated: false)
 
+        fetchData()
+    }
+
+    func fetchData() {
         do {
             guard let appContext = UIApplication.shared.delegate as? WOTTankPivotViewController.Context else {
                 throw WOTTankPivotViewControllerError.contextNotFound
             }
-            try WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext) { result in
-                if let error = result.error {
-                    appContext.logInspector?.log(.warning(error: error), sender: self)
-                }
-                self.model.loadModel()
-            }
+
+            pivotTaskMD5 = WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext)
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
+        }
+    }
+
+    @objc
+    func onPivotLoadCompleted(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            return
+        }
+        let wrapper = try? DependencyCollectionItemObjCWrapper(dictionary: userInfo)
+        if wrapper?.completed ?? false {
+            if wrapper?.subject == pivotTaskMD5 {
+                DispatchQueue.main.async {
+                    self.model.loadModel()
+                }
+            }
         }
     }
 

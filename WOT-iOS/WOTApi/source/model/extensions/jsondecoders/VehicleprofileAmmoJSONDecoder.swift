@@ -10,8 +10,10 @@
 class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
 
     private let appContext: Context
+
     var jsonMap: JSONMapProtocol?
     var decodingDepthLevel: DecodingDepthLevel?
+    var inContextOfWork: UOWProtocol?
 
     required init(appContext: Context) {
         self.appContext = appContext
@@ -79,7 +81,7 @@ class VehicleprofileAmmoJSONDecoder: JSONDecoderProtocol {
             uow.socket = socket
             uow.decodingDepthLevel = decodingDepthLevel
 
-            appContext.uowManager.run(unit: uow, listenerCompletion: { result in
+            appContext.uowManager.run(unit: uow, inContextOfWork: inContextOfWork, listenerCompletion: { result in
                 if let error = result.error {
                     self.appContext.logInspector?.log(.error(error), sender: self)
                 }

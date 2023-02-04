@@ -57,6 +57,7 @@ public protocol JSONDecoderProtocol: AnyObject {
     var managedObject: ManagedAndDecodableObjectType? { get set }
     var jsonMap: JSONMapProtocol? { get set }
     var decodingDepthLevel: DecodingDepthLevel? { get set }
+    var inContextOfWork: UOWProtocol? { get set }
 
     init(appContext: Context)
     func decode() throws

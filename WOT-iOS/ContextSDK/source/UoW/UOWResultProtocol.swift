@@ -9,20 +9,22 @@
 
 @objc
 public protocol UOWResultProtocol {
+    var uow: UOWProtocol { get }
     var fetchResult: Any? { get }
     var error: Error? { get }
-    init(fetchResult: Any?, error: Error?)
 }
 
 // MARK: - UOWResult
 
 class UOWResult: UOWResultProtocol {
+    public let uow: UOWProtocol
     public let fetchResult: Any?
     public let error: Error?
 
     // MARK: Lifecycle
 
-    public required init(fetchResult: Any?, error: Error?) {
+    public required init(uow: UOWProtocol, fetchResult: Any?, error: Error?) {
+        self.uow = uow
         self.fetchResult = fetchResult
         self.error = error
     }

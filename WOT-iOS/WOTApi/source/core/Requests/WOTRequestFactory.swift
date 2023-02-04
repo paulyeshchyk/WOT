@@ -30,7 +30,7 @@ public class WOTWEBRequestFactory: NSObject {
 
     // MARK: Public
 
-    public static func fetchVehiclePivotData(appContext: Context, completion: @escaping ListenerCompletionType) throws {
+    public static func fetchVehiclePivotData(appContext: Context) -> String {
         //
         let modelClass = Vehicles.self
         let modelFieldKeyPaths = modelClass.dataFieldsKeypaths()// modelClass.dataFieldsKeypaths()// modelClass.fieldsKeypaths()
@@ -42,14 +42,19 @@ public class WOTWEBRequestFactory: NSObject {
         uow.extractorType = Vehicles.PivotViewManagedObjectExtractor.self
         uow.contextPredicate = nil
         uow.decodingDepthLevel = DecodingDepthLevel.limited(by: .first)
-        appContext.uowManager.run(unit: uow) { result in
-            completion(result)
+        appContext.uowManager.run(unit: uow, inContextOfWork: nil) { result in
+            if let error = result.error {
+                appContext.logInspector?.log(.warning(error: error), sender: self)
+            }
         }
+        return uow.MD5
     }
 
     @objc
-    public static func fetchVehicleTreeData(vehicleId: Int, appContext: Context, completion: @escaping ListenerCompletionType) {
+    @discardableResult
+    public static func fetchVehicleTreeData(vehicleId: Int, appContext: Context) -> String {
         //
+
         let modelClass = Vehicles.self
         let modelFieldKeyPaths = modelClass.fieldsKeypaths()
 
@@ -65,8 +70,11 @@ public class WOTWEBRequestFactory: NSObject {
         uow.extractorType = Vehicles.TreeViewManagedObjectExtractor.self
         uow.contextPredicate = contextPredicate
         uow.decodingDepthLevel = DecodingDepthLevel.unlimited()
-        appContext.uowManager.run(unit: uow) { result in
-            completion(result)
+        appContext.uowManager.run(unit: uow, inContextOfWork: nil) { result in
+            if let error = result.error {
+                appContext.logInspector?.log(.warning(error: error), sender: self)
+            }
         }
+        return uow.MD5
     }
 }

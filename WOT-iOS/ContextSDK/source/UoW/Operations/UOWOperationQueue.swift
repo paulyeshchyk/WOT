@@ -32,6 +32,9 @@ class UOWOperationQueue: OperationQueue, UOWOperationQueueProtocol {
         super.addBarrierBlock(barrier)
     }
 
+    var onAdd: (([UOWProtocol]) -> Void)?
+    var onRemove: ((UOWProtocol) -> Void)?
+
     required convenience init(qualityOfService: QualityOfService) {
         self.init()
         self.qualityOfService = qualityOfService
@@ -43,7 +46,10 @@ class UOWOperationQueue: OperationQueue, UOWOperationQueueProtocol {
         var completed: Bool = false
 
         let set = sequence.compactMap {
-            return try? ($0 as? UOWRunnable)?.blockOperation { _ in
+            return try? ($0 as? UOWRunnable)?.blockOperation { result in
+
+                self.onRemove?(result.uow)
+
                 progress.increaseDone(by: 1) { isInProgress in
                     if completed {
                         assertionFailure("should not be here")
@@ -57,6 +63,8 @@ class UOWOperationQueue: OperationQueue, UOWOperationQueueProtocol {
             }
         }
 
+        onAdd?(sequence)
+
         progress.increaseTobeDone(by: (set.count))
         super.addOperations(set, waitUntilFinished: false)
     }
@@ -67,13 +75,14 @@ class UOWOperationQueue: OperationQueue, UOWOperationQueueProtocol {
             guard let runnable = uow as? UOWRunnable else {
                 throw UOWOperationQueueErrors.uowIsNotRunnable
             }
-
+            onAdd?([uow])
             let op = try runnable.blockOperation { obj in
+                self.onRemove?(obj.uow)
                 completion(obj)
             }
             super.addOperation(op)
         } catch {
-            completion(UOWResult(fetchResult: nil, error: error))
+            completion(UOWResult(uow: uow, fetchResult: nil, error: error))
         }
     }
 }
