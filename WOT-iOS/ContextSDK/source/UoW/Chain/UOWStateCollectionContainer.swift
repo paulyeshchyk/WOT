@@ -36,24 +36,25 @@ class UOWStateCollectionContainer<T: UOWStateSubject> {
         deletionEvents.eraseToAnyPublisher()
     }
 
-    var additionEventsPublisher: AnyPublisher<(T, T?), Never> {
+    var additionEventsPublisher: AnyPublisher<UOWRelation<T>, Never> {
         additionEvents.eraseToAnyPublisher()
     }
 
     private var dependencyCollection: DependencyCollectionType = [:]
     private let lock = NSRecursiveLock()
-    private let additionEvents = PassthroughSubject<(T, T?), Never>()
+    private let additionEvents = PassthroughSubject<UOWRelation<T>, Never>()
     private let deletionEvents = PassthroughSubject<UOWState<T>, Never>()
 
     func addAndNotify(_ subject: T, parent: T?) {
-        add(subject, parent: parent) { subject, parent in
-            self.additionEvents.send((subject, parent))
+        let relation = UOWRelation(subject: subject, parent: parent)
+        add(relation) { relation in
+            self.additionEvents.send(relation)
         }
     }
 
     func removeAndNotify(_ subject: T) {
-        remove(subject) { subject, completed in
-            self.deletionEvents.send(UOWState(subject: subject, completed: completed))
+        remove(subject) { state in
+            self.deletionEvents.send(state)
         }
     }
 
@@ -62,31 +63,35 @@ class UOWStateCollectionContainer<T: UOWStateSubject> {
         return dependencyCollection
     }
 
-    private func add(_ subject: T, parent: T?, competion: ((T, T?) -> Void)?) {
+    private func add(_ uowRelation: UOWRelation<T>, competion: ((UOWRelation<T>) -> Void)?) {
         lock.lock()
 
-        if !dependencyCollection.keys.contains(subject), parent == nil {
-            dependencyCollection[subject] = [subject]
+        if !dependencyCollection.keys.contains(uowRelation.subject), uowRelation.parent == nil {
+            dependencyCollection[uowRelation.subject] = [uowRelation.subject]
         }
-        if let parent = parent {
-            dependencyCollection[parent, default: [parent]].append(subject)
+        if let parent = uowRelation.parent {
+            dependencyCollection[parent, default: [parent]].append(uowRelation.subject)
         }
         lock.unlock()
-        competion?(subject, parent)
+        competion?(uowRelation)
     }
 
-    private func remove(_ subject: T, completion: ((T, Bool) -> Void)?) {
+    private func remove(_ subject: T, completion: ((UOWState<T>) -> Void)?) {
         lock.lock()
 
         if hasChildren(subject) {
             remove(subject, fromParent: subject)
-            completion?(subject, false)
+            let state = UOWState(subject: subject, completed: false)
+            completion?(state)
         } else {
             remove(subject)
-            completion?(subject, true)
+
+            let state = UOWState(subject: subject, completed: true)
+            completion?(state)
 
             removeEmptyNodes().forEach {
-                completion?($0, true)
+                let state = UOWState(subject: $0, completed: true)
+                completion?(state)
             }
         }
 
@@ -106,7 +111,7 @@ class UOWStateCollectionContainer<T: UOWStateSubject> {
     }
 
     private func remove(_ subject: T) {
-        nodeListContaining(subject: subject).forEach { parent in
+        dependenciesContaining(subject: subject).forEach { parent in
             remove(subject, fromParent: parent)
         }
     }
@@ -127,7 +132,7 @@ class UOWStateCollectionContainer<T: UOWStateSubject> {
         return keysToRemove + nextIteration
     }
 
-    private func nodeListContaining(subject: T) -> [T] {
+    private func dependenciesContaining(subject: T) -> [T] {
         return dependencyCollection.keys.filter { key in
             key != subject && (dependencyCollection[key]?.contains(subject) ?? false)
         }
