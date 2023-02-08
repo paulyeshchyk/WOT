@@ -10,8 +10,10 @@
 class VehicleprofileAmmoPenetrationJSONDecoder: JSONDecoderProtocol {
 
     private let appContext: Context
+
     var jsonMap: JSONMapProtocol?
     var decodingDepthLevel: DecodingDepthLevel?
+    var inContextOfWork: UOWProtocol?
 
     required init(appContext: Context) {
         self.appContext = appContext

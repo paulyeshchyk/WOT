@@ -93,13 +93,13 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
                     return uow
                 }
 
-                self.appContext.uowManager.run(units: sequence) { error in
+                self.appContext.uowManager.run(units: sequence, inContextOfWork: self) { error in
                     self.appContext.logInspector?.log(.uow("moParseSet", message: "finish \(self.debugDescription)"), sender: self)
-                    exit(exitToPassThrough, UOWResult.init(fetchResult: nil, error: error))
+                    exit(exitToPassThrough, UOWResult(uow: self, fetchResult: nil, error: error))
                 }
             } catch {
                 self.appContext.logInspector?.log(.uow("moParseSet", message: "finish \(self.debugDescription)"), sender: self)
-                exit(exitToPassThrough, UOWResult.init(fetchResult: nil, error: error))
+                exit(exitToPassThrough, UOWResult(uow: self, fetchResult: nil, error: error))
             }
         }
     }

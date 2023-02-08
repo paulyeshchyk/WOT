@@ -78,15 +78,16 @@ extension UOWRemote: UOWRunnable {
             responseAdapterHelper.modelClass = self.modelClass
             responseAdapterHelper.socket = self.socket
             responseAdapterHelper.extractorType = self.extractorType
-            responseAdapterHelper.completion = { fetchResult in
+            responseAdapterHelper.completion = { error in
                 self.appContext.logInspector?.log(.uow("remote", message: "finish \(self.debugDescription)"), sender: self)
+                let fetchResult = UOWResult(uow: self, fetchResult: nil, error: error)
                 exit(exitToPassThrough, fetchResult)
             }
 
             let requestRunnerHelper = RequestRunnerHelper(appContext: self.appContext)
             requestRunnerHelper.completion = { request, data, error in
                 if let error = error { self.appContext.logInspector?.log(.error(error), sender: self) }
-                responseAdapterHelper.run(request, data: data)
+                responseAdapterHelper.run(request, inContextOfWork: self, data: data)
             }
 
             let requestCreatorHelper = RequestCreatorHeper(appContext: self.appContext)

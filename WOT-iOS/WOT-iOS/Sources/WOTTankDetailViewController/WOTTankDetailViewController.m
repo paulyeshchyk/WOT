@@ -310,12 +310,10 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 }
 
 - (void)refetchTankID:(NSInteger)tankID groupId:(id)groupId{
-    [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId:tankID
-                                                 appContext:self.appContext
-                                                 completion:^(id<UOWResultProtocol> _Nonnull result) {
+    NSString *md5 = [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId:tankID appContext:self.appContext];
+    NSLog(@"MD5: %@",md5);
+    //[self updateUINeedReset: YES];
 
-        [self updateUINeedReset: YES];
-    }];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

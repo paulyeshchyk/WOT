@@ -26,6 +26,8 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var jsonMap: JSONMapProtocol?
+    var inContextOfWork: UOWProtocol?
+
     private var decodingDepthLevel: DecodingDepthLevel?
 
     // MARK: Lifecycle
@@ -63,6 +65,7 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
                     }
 
                     let decoder = decoderType.init(appContext: self.appContext)
+                    decoder.inContextOfWork = self.inContextOfWork
                     decoder.managedObject = managedObject
                     decoder.jsonMap = jsonMap
                     decoder.decodingDepthLevel = self.decodingDepthLevel

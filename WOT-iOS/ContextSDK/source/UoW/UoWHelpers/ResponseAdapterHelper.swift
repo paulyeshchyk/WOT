@@ -17,22 +17,22 @@ class ResponseAdapterHelper {
     var modelClass: ModelClassType?
     var socket: JointSocketProtocol?
     var extractorType: ManagedObjectExtractable.Type?
-    var completion: ((UOWResultProtocol) -> Void)?
+    var completion: ((Error?) -> Void)?
 
     private let appContext: Context
     init(appContext: Context) {
         self.appContext = appContext
     }
 
-    func run(_ request: RequestProtocol?, data: Data?) {
+    func run(_ request: RequestProtocol?, inContextOfWork: UOWProtocol?, data: Data?) {
         guard let modelService = request as? RequestModelServiceProtocol else {
-            completion?(UOWResult(fetchResult: nil, error: ResponseAdapterHelperErrors.modelServiceNotDefined))
+            completion?(ResponseAdapterHelperErrors.modelServiceNotDefined)
             return
         }
 
         let completionWrapper: ((UOWResultProtocol) -> Void) = { result in
             if let completion = self.completion {
-                completion(result)
+                completion(result.error)
             } else {
                 self.appContext.logInspector?.log(.warning("No completion defined for \(type(of: self))"), sender: self)
             }
@@ -50,7 +50,7 @@ class ResponseAdapterHelper {
         jsonExtractorHelper.completion = { maps, error in
             if let error = error { self.appContext.logInspector?.log(.warning(error: error), sender: self) }
             uowDecodeAndLink.maps = maps
-            self.appContext.uowManager.run(unit: uowDecodeAndLink, listenerCompletion: completionWrapper)
+            self.appContext.uowManager.run(unit: uowDecodeAndLink, inContextOfWork: inContextOfWork, listenerCompletion: completionWrapper)
         }
 
         let dataAdapter = type(of: modelService).dataAdapterClass().init(appContext: appContext)

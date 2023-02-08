@@ -13,6 +13,7 @@ class VehicleprofileRadioJSONDecoder: JSONDecoderProtocol {
 
     var jsonMap: JSONMapProtocol?
     var decodingDepthLevel: DecodingDepthLevel?
+    var inContextOfWork: UOWProtocol?
 
     required init(appContext: Context) {
         self.appContext = appContext
