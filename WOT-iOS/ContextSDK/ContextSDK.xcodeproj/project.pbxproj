@@ -40,9 +40,9 @@
 		DA56E2B5296C0EC4001D9DD4 /* String+Describing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56E2B4296C0EC4001D9DD4 /* String+Describing.swift */; };
 		DA7C805A298CFB3800C5D584 /* DecodingDepthLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C8059298CFB3800C5D584 /* DecodingDepthLevel.swift */; };
 		DA7C805C298CFB5D00C5D584 /* DecodingDepthLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C805B298CFB5D00C5D584 /* DecodingDepthLimit.swift */; };
-		DA7C805E298D12B700C5D584 /* DependencyCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C805D298D12B700C5D584 /* DependencyCollection.swift */; };
+		DA7C805E298D12B700C5D584 /* UOWStateCollectionContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C805D298D12B700C5D584 /* UOWStateCollectionContainer.swift */; };
 		DA7C8061298D4B9B00C5D584 /* DependencyCollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C8060298D4B9B00C5D584 /* DependencyCollectionTest.swift */; };
-		DA7C8064298EAAF600C5D584 /* DependencyCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C8063298EAAF600C5D584 /* DependencyCollectionItem.swift */; };
+		DA7C8064298EAAF600C5D584 /* UOWState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C8063298EAAF600C5D584 /* UOWState.swift */; };
 		DA801FEE2985193F00033D85 /* ConcurrentBlockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA801FED2985193F00033D85 /* ConcurrentBlockOperation.swift */; };
 		DA801FF02985197500033D85 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA801FEF2985197500033D85 /* AsyncOperation.swift */; };
 		DA801FF22985199E00033D85 /* AsyncBlockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA801FF12985199E00033D85 /* AsyncBlockOperation.swift */; };
@@ -159,9 +159,9 @@
 		DA56E2B4296C0EC4001D9DD4 /* String+Describing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Describing.swift"; sourceTree = "<group>"; };
 		DA7C8059298CFB3800C5D584 /* DecodingDepthLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingDepthLevel.swift; sourceTree = "<group>"; };
 		DA7C805B298CFB5D00C5D584 /* DecodingDepthLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingDepthLimit.swift; sourceTree = "<group>"; };
-		DA7C805D298D12B700C5D584 /* DependencyCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyCollection.swift; sourceTree = "<group>"; };
+		DA7C805D298D12B700C5D584 /* UOWStateCollectionContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UOWStateCollectionContainer.swift; sourceTree = "<group>"; };
 		DA7C8060298D4B9B00C5D584 /* DependencyCollectionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyCollectionTest.swift; sourceTree = "<group>"; };
-		DA7C8063298EAAF600C5D584 /* DependencyCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyCollectionItem.swift; sourceTree = "<group>"; };
+		DA7C8063298EAAF600C5D584 /* UOWState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UOWState.swift; sourceTree = "<group>"; };
 		DA801FED2985193F00033D85 /* ConcurrentBlockOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentBlockOperation.swift; sourceTree = "<group>"; };
 		DA801FEF2985197500033D85 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		DA801FF12985199E00033D85 /* AsyncBlockOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncBlockOperation.swift; sourceTree = "<group>"; };
@@ -436,8 +436,8 @@
 		DA7C8062298EAAD800C5D584 /* Chain */ = {
 			isa = PBXGroup;
 			children = (
-				DA7C805D298D12B700C5D584 /* DependencyCollection.swift */,
-				DA7C8063298EAAF600C5D584 /* DependencyCollectionItem.swift */,
+				DA7C805D298D12B700C5D584 /* UOWStateCollectionContainer.swift */,
+				DA7C8063298EAAF600C5D584 /* UOWState.swift */,
 			);
 			path = Chain;
 			sourceTree = "<group>";
@@ -859,7 +859,7 @@
 				DABEECC3298666F600B3E7B3 /* RequestRunnerHelper.swift in Sources */,
 				DADD69BF2975A82700EFC36D /* Request.swift in Sources */,
 				DA32CEB129641C48007726AD /* ManagedObjectExtractable.swift in Sources */,
-				DA7C805E298D12B700C5D584 /* DependencyCollection.swift in Sources */,
+				DA7C805E298D12B700C5D584 /* UOWStateCollectionContainer.swift in Sources */,
 				DA802006298523A500033D85 /* UOWManagerProtocol.swift in Sources */,
 				DA0E806129508C1F00B44CC6 /* RequestArguments.swift in Sources */,
 				DAA56E8D297836490092DA17 /* RequestConfigurationProtocol.swift in Sources */,
@@ -887,7 +887,7 @@
 				DAA56E5A2976B9770092DA17 /* MinAvgMax.swift in Sources */,
 				DA0432A529633B400092C891 /* ManagedObjectPinProtocol.swift in Sources */,
 				DACDB0FA295EDC96005BBA72 /* URLEncodedProtocol.swift in Sources */,
-				DA7C8064298EAAF600C5D584 /* DependencyCollectionItem.swift in Sources */,
+				DA7C8064298EAAF600C5D584 /* UOWState.swift in Sources */,
 				DA8020022985222500033D85 /* Array+Operation.swift in Sources */,
 				DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */,
 				DACDB10C295EDE08005BBA72 /* DecodableProtocol.swift in Sources */,

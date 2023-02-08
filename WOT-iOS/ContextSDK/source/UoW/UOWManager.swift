@@ -13,13 +13,13 @@ public class UOWManager: UOWManagerProtocol {
 
     private let workingQueue: DispatchQueue = DispatchQueue(label: "UOWManagerQueue", qos: .userInitiated)
     private let appContext: Context
-    private let taskDependencyCollection = DependencyCollection<String>()
+    private let stateCollectionContainer = UOWStateCollectionContainer<String>()
     private var cancellables = Set<AnyCancellable>()
 
     public init(appContext: Context) {
         self.appContext = appContext
 
-        taskDependencyCollection.deletionEventsPublisher
+        stateCollectionContainer.deletionEventsPublisher
             .receive(on: workingQueue)
             .sink { value in
                 let userInfo = try? value.serialized(type: [String: Any].self)
@@ -34,15 +34,15 @@ public class UOWManager: UOWManagerProtocol {
         let oq = UOWOperationQueue(qualityOfService: .utility)
         oq.onAdd = { uowset in
             uowset.forEach { uow in
-                self.taskDependencyCollection.addAndNotify(uow.MD5, parent: inContextOfWork?.MD5)
+                self.stateCollectionContainer.addAndNotify(uow.MD5, parent: inContextOfWork?.MD5)
             }
         }
         oq.onRemove = { uow in
-            self.taskDependencyCollection.removeAndNotify(uow.MD5)
+            self.stateCollectionContainer.removeAndNotify(uow.MD5)
         }
         oq.add(unit: uow) { result in
             self.workingQueue.async {
-                self.taskDependencyCollection.removeAndNotify(result.uow.MD5)
+                self.stateCollectionContainer.removeAndNotify(result.uow.MD5)
                 listenerCompletion(result)
             }
         }
@@ -54,11 +54,11 @@ public class UOWManager: UOWManagerProtocol {
         //
         sequenceOperationQueue.onAdd = { uowset in
             uowset.forEach { uow in
-                self.taskDependencyCollection.addAndNotify(uow.MD5, parent: inContextOfWork?.MD5)
+                self.stateCollectionContainer.addAndNotify(uow.MD5, parent: inContextOfWork?.MD5)
             }
         }
         sequenceOperationQueue.onRemove = { uow in
-            self.taskDependencyCollection.removeAndNotify(uow.MD5)
+            self.stateCollectionContainer.removeAndNotify(uow.MD5)
         }
 
         sequenceOperationQueue.add(units: units) {

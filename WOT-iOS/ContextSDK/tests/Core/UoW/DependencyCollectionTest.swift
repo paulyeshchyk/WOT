@@ -9,13 +9,13 @@ import Combine
 @testable import ContextSDK
 import XCTest
 
-class DependencyCollectionTest: XCTestCase {
+class UOWStateCollectionContainerTests: XCTestCase {
 
     func testAddInitial() {
         var cancellables = Set<AnyCancellable>()
         var cnt1Count: Int = 0
         var cnt2Count: Int = 0
-        let collection = DependencyCollection<String>()
+        let collection = UOWStateCollectionContainer<String>()
         collection.deletionEventsPublisher
             .sink { value in
                 switch value.subject {
@@ -49,7 +49,7 @@ class DependencyCollectionTest: XCTestCase {
     }
 
     func testAdd() {
-        let collection = DependencyCollection<String>()
+        let collection = UOWStateCollectionContainer<String>()
         collection.addAndNotify("A", parent: nil)
         collection.addAndNotify("B", parent: "A")
         collection.addAndNotify("C", parent: "A")

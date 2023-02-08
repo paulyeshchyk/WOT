@@ -1,5 +1,5 @@
 //
-//  DependencyCollection.swift
+//  UOWStateCollectionContainer.swift
 //  ContextSDK
 //
 //  Created by Paul on 3.02.23.
@@ -28,11 +28,11 @@ import Combine
  Mutability: Consider making the class properties more mutable by using value types like struct instead of class, making it thread-safe and easier to use.
  */
 
-class DependencyCollection<T: DependencyCollectionItemType> {
+class UOWStateCollectionContainer<T: UOWStateSubject> {
 
     typealias DependencyCollectionType = [T: [T]]
 
-    var deletionEventsPublisher: AnyPublisher<DependencyCollectionItem<T>, Never> {
+    var deletionEventsPublisher: AnyPublisher<UOWState<T>, Never> {
         deletionEvents.eraseToAnyPublisher()
     }
 
@@ -40,65 +40,61 @@ class DependencyCollection<T: DependencyCollectionItemType> {
         additionEvents.eraseToAnyPublisher()
     }
 
-    private var collection: DependencyCollectionType = [:]
+    private var dependencyCollection: DependencyCollectionType = [:]
     private let lock = NSRecursiveLock()
     private let additionEvents = PassthroughSubject<(T, T?), Never>()
-    private let deletionEvents = PassthroughSubject<DependencyCollectionItem<T>, Never>()
+    private let deletionEvents = PassthroughSubject<UOWState<T>, Never>()
 
     func addAndNotify(_ subject: T, parent: T?) {
-        lock.lock()
+        add(subject, parent: parent) { subject, parent in
+            self.additionEvents.send((subject, parent))
+        }
+    }
 
-        if !collection.keys.contains(subject), parent == nil {
-            collection[subject] = [subject]
+    func removeAndNotify(_ subject: T) {
+        remove(subject) { subject, completed in
+            self.deletionEvents.send(UOWState(subject: subject, completed: completed))
         }
-        if let parent = parent {
-            collection[parent, default: [parent]].append(subject)
-        }
-        additionEvents.send((subject, parent))
-        lock.unlock()
     }
 
     /// used for unit-tests only
     func getCollection() -> DependencyCollectionType {
-        return collection
+        return dependencyCollection
     }
 
-    func removeAndNotify(_ subject: T) {
+    private func add(_ subject: T, parent: T?, competion: ((T, T?) -> Void)?) {
+        lock.lock()
+
+        if !dependencyCollection.keys.contains(subject), parent == nil {
+            dependencyCollection[subject] = [subject]
+        }
+        if let parent = parent {
+            dependencyCollection[parent, default: [parent]].append(subject)
+        }
+        lock.unlock()
+        competion?(subject, parent)
+    }
+
+    private func remove(_ subject: T, completion: ((T, Bool) -> Void)?) {
         lock.lock()
 
         if hasChildren(subject) {
             remove(subject, fromParent: subject)
-            deletionEvents.send(DependencyCollectionItem(subject: subject, completed: false))
+            completion?(subject, false)
         } else {
             remove(subject)
-            deletionEvents.send(DependencyCollectionItem(subject: subject, completed: true))
+            completion?(subject, true)
 
             removeEmptyNodes().forEach {
-                deletionEvents.send(DependencyCollectionItem(subject: $0, completed: true))
+                completion?($0, true)
             }
         }
 
         lock.unlock()
     }
 
-    func remove(_ subject: T, fromParent: T) {
-        collection[fromParent]?.removeAll(where: { $0 == subject })
-    }
-
-    private func removeEmptyNodes() -> [T] {
-        let keysToRemove = collection.keys.compactMap { key in
-            return hasChildren(key) ? nil : key
-        }
-        if keysToRemove.isEmpty {
-            return []
-        }
-        keysToRemove.forEach {
-            remove($0)
-            collection.removeValue(forKey: $0)
-        }
-
-        let nextIteration = removeEmptyNodes()
-        return keysToRemove + nextIteration
+    private func remove(_ subject: T, fromParent: T) {
+        dependencyCollection[fromParent]?.removeAll(where: { $0 == subject })
     }
 
     private func hasChildren(_ subject: T) -> Bool {
@@ -106,7 +102,7 @@ class DependencyCollection<T: DependencyCollectionItemType> {
     }
 
     private func childrenCount(_ subject: T) -> Int {
-        return collection[subject]?.count ?? 0
+        return dependencyCollection[subject]?.count ?? 0
     }
 
     private func remove(_ subject: T) {
@@ -115,9 +111,25 @@ class DependencyCollection<T: DependencyCollectionItemType> {
         }
     }
 
+    private func removeEmptyNodes() -> [T] {
+        let keysToRemove = dependencyCollection.keys.compactMap { key in
+            return hasChildren(key) ? nil : key
+        }
+        if keysToRemove.isEmpty {
+            return []
+        }
+        keysToRemove.forEach {
+            remove($0)
+            dependencyCollection.removeValue(forKey: $0)
+        }
+
+        let nextIteration = removeEmptyNodes()
+        return keysToRemove + nextIteration
+    }
+
     private func nodeListContaining(subject: T) -> [T] {
-        return collection.keys.filter { key in
-            key != subject && (collection[key]?.contains(subject) ?? false)
+        return dependencyCollection.keys.filter { key in
+            key != subject && (dependencyCollection[key]?.contains(subject) ?? false)
         }
     }
 }
