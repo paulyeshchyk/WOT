@@ -11,26 +11,27 @@ typealias UOWStateSubject = Hashable & Equatable & Comparable
 
 struct UOWState<T: UOWStateSubject>: UOWStateSubject {
 
+    typealias State = Int
+
     let subject: T
-    let completed: Bool
+    let subordinatesInProgress: State
 
     // MARK: Lifecycle
 
-    init(subject: T, completed: Bool) {
+    init(subject: T, subordinatesInProgress: State) {
         self.subject = subject
-        self.completed = completed
+        self.subordinatesInProgress = subordinatesInProgress
     }
 
     // MARK: Internal
 
     static func == (lhs: UOWState, rhs: UOWState) -> Bool {
-        return lhs.subject == rhs.subject && lhs.completed == rhs.completed
+        return lhs.subject == rhs.subject && lhs.subordinatesInProgress == rhs.subordinatesInProgress
     }
 
     static func < (lhs: UOWState<T>, rhs: UOWState<T>) -> Bool {
         return lhs.subject < rhs.subject
     }
-
 }
 
 // MARK: - UOWState + Codable
@@ -51,13 +52,13 @@ extension UOWState: Codable where T == String {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         subject = try container.decode(T.self, forKey: .subject)
-        completed = try container.decode(Bool.self, forKey: .completed)
+        subordinatesInProgress = try container.decode(State.self, forKey: .completed)
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(subject, forKey: .subject)
-        try container.encode(completed, forKey: .completed)
+        try container.encode(subordinatesInProgress, forKey: .completed)
     }
 }
 
@@ -77,8 +78,8 @@ public class DependencyCollectionItemObjCWrapper: NSObject {
     private let structInstance: UOWState<String>
 
     @objc
-    public init(subject: String, completed: Bool) {
-        structInstance = UOWState<String>(subject: subject, completed: completed)
+    public init(subject: String, subordinatesInProgress: Int) {
+        structInstance = UOWState<String>(subject: subject, subordinatesInProgress: subordinatesInProgress)
     }
 
     @objc
@@ -94,7 +95,7 @@ public class DependencyCollectionItemObjCWrapper: NSObject {
 
     @objc
     public var completed: Bool {
-        return structInstance.completed
+        return (structInstance.subordinatesInProgress == 0)
     }
 
     private enum DependencyCollectionItemObjCWrapperError: Error {

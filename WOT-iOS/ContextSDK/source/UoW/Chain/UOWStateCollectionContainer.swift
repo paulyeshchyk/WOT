@@ -7,7 +7,7 @@
 
 import Combine
 
-// MARK: - DependencyCollection
+// MARK: - UOWStateCollectionContainer
 
 /**
 
@@ -32,66 +32,100 @@ class UOWStateCollectionContainer<T: UOWStateSubject> {
 
     typealias DependencyCollectionType = [T: [T]]
 
-    var deletionEventsPublisher: AnyPublisher<UOWState<T>, Never> {
-        deletionEvents.eraseToAnyPublisher()
+    var progressEventsPublisher: AnyPublisher<UOWState<T>, Never> {
+        progressEvents.eraseToAnyPublisher()
     }
 
     var additionEventsPublisher: AnyPublisher<UOWRelation<T>, Never> {
         additionEvents.eraseToAnyPublisher()
     }
 
+    private let collection = UOWStateCollection<T>()
     private var dependencyCollection: DependencyCollectionType = [:]
-    private let lock = NSRecursiveLock()
+
     private let additionEvents = PassthroughSubject<UOWRelation<T>, Never>()
-    private let deletionEvents = PassthroughSubject<UOWState<T>, Never>()
+    private let progressEvents = PassthroughSubject<UOWState<T>, Never>()
 
     func addAndNotify(_ subject: T, parent: T?) {
-        let relation = UOWRelation(subject: subject, parent: parent)
-        add(relation) { relation in
+        collection.add(subject, parent: parent) { subject, parent in
+            let relation = UOWRelation(subject: subject, parent: parent)
             self.additionEvents.send(relation)
         }
     }
 
     func removeAndNotify(_ subject: T) {
-        remove(subject) { state in
-            self.deletionEvents.send(state)
+        collection.remove(subject) { (subject, subordinatesInProgress) in
+            let state = UOWState(subject: subject, subordinatesInProgress: subordinatesInProgress)
+            self.progressEvents.send(state)
         }
     }
 
     /// used for unit-tests only
     func getCollection() -> DependencyCollectionType {
-        return dependencyCollection
+        return collection.dependencyCollection
     }
+}
 
-    private func add(_ uowRelation: UOWRelation<T>, competion: ((UOWRelation<T>) -> Void)?) {
+// MARK: - UOWStateCollection
+
+class UOWStateCollection<T: Hashable> {
+
+    var dependencyCollection: [T: [T]] = [:]
+    private let lock = NSRecursiveLock()
+
+    func addRelation(_ subject: T, parent: T?) {
         lock.lock()
-
-        if !dependencyCollection.keys.contains(uowRelation.subject), uowRelation.parent == nil {
-            dependencyCollection[uowRelation.subject] = [uowRelation.subject]
+        if !dependencyCollection.keys.contains(subject), parent == nil {
+            dependencyCollection[subject] = [subject]
         }
-        if let parent = uowRelation.parent {
-            dependencyCollection[parent, default: [parent]].append(uowRelation.subject)
+        if let parent = parent {
+            dependencyCollection[parent, default: [parent]].append(subject)
         }
         lock.unlock()
-        competion?(uowRelation)
     }
 
-    private func remove(_ subject: T, completion: ((UOWState<T>) -> Void)?) {
+    func add(_ subject: T, parent: T?, competion: ((_ subject: T, _ parent: T?) -> Void)?) {
+        //
+        addRelation(subject, parent: parent)
+
+        if let parent = parent {
+            let subordinates = subordinatesCount(subject: parent)
+        }
+
+        competion?(subject, parent)
+    }
+
+    private func dependenciesContaining(subject: T) -> [T] {
+        return dependencyCollection.keys.filter { key in
+            key != subject && (dependencyCollection[key]?.contains(subject) ?? false)
+        }
+    }
+
+    private func remove(_ subject: T) {
+        dependenciesContaining(subject: subject).forEach { parent in
+            remove(subject, fromParent: parent)
+        }
+    }
+
+    func remove(_ subject: T, completion: ((T, Int) -> Void)?) {
         lock.lock()
 
         if hasChildren(subject) {
+            //
+            let subordinates = subordinatesCount(subject: subject)
             remove(subject, fromParent: subject)
-            let state = UOWState(subject: subject, completed: false)
-            completion?(state)
+
+            completion?(subject, subordinates)
         } else {
+            //
             remove(subject)
 
-            let state = UOWState(subject: subject, completed: true)
-            completion?(state)
+            let subordinates = subordinatesCount(subject: subject)
+            completion?(subject, subordinates)
 
-            removeEmptyNodes().forEach {
-                let state = UOWState(subject: $0, completed: true)
-                completion?(state)
+            removeEmptyNodes {
+                let subordinates = self.subordinatesCount(subject: $0)
+                completion?($0, subordinates)
             }
         }
 
@@ -110,31 +144,39 @@ class UOWStateCollectionContainer<T: UOWStateSubject> {
         return dependencyCollection[subject]?.count ?? 0
     }
 
-    private func remove(_ subject: T) {
-        dependenciesContaining(subject: subject).forEach { parent in
-            remove(subject, fromParent: parent)
-        }
-    }
-
-    private func removeEmptyNodes() -> [T] {
+    private func removeEmptyNodes(completion: ((T) -> Void)?) {
         let keysToRemove = dependencyCollection.keys.compactMap { key in
             return hasChildren(key) ? nil : key
         }
         if keysToRemove.isEmpty {
-            return []
+            return
         }
         keysToRemove.forEach {
             remove($0)
             dependencyCollection.removeValue(forKey: $0)
+            completion?($0)
         }
 
-        let nextIteration = removeEmptyNodes()
-        return keysToRemove + nextIteration
+        // recursion
+        removeEmptyNodes(completion: completion)
     }
 
-    private func dependenciesContaining(subject: T) -> [T] {
-        return dependencyCollection.keys.filter { key in
-            key != subject && (dependencyCollection[key]?.contains(subject) ?? false)
+    private func subordinatesCount(subject: T) -> Int {
+        lock.lock()
+        let result = subordinates(subject: subject).count
+        lock.unlock()
+        return result
+    }
+
+    private func subordinates(subject: T) -> [T] {
+        var result: [T] = []
+        dependencyCollection[subject]?.forEach { subordinate in
+            result.append(subordinate)
+            if subordinate != subject {
+                let subordinates = subordinates(subject: subordinate)
+                result.append(contentsOf: subordinates)
+            }
         }
+        return result
     }
 }

@@ -272,7 +272,10 @@ class WOTTankPivotViewController: PivotViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(onPivotLoadCompleted), name: NSNotification.Name.UOWDeleted, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onPivotLoadCompleted),
+                                               name: NSNotification.Name.UOWProgress,
+                                               object: nil)
 
         let items = [UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(WOTTankPivotViewController.openConstructor(_:)))]
         navigationItem.setRightBarButtonItems(items, animated: false)

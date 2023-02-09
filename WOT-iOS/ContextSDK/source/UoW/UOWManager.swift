@@ -19,11 +19,11 @@ public class UOWManager: UOWManagerProtocol {
     public init(appContext: Context) {
         self.appContext = appContext
 
-        stateCollectionContainer.deletionEventsPublisher
+        stateCollectionContainer.progressEventsPublisher
             .receive(on: workingQueue)
             .sink { value in
                 let userInfo = try? value.serialized(type: [String: Any].self)
-                NotificationCenter.default.post(name: .UOWDeleted, object: nil, userInfo: userInfo)
+                NotificationCenter.default.post(name: .UOWProgress, object: nil, userInfo: userInfo)
             }
             .store(in: &cancellables)
     }
@@ -70,7 +70,7 @@ public class UOWManager: UOWManagerProtocol {
 }
 
 public extension NSNotification.Name {
-    static let UOWDeleted = NSNotification.Name("UOWDeleted")
+    static let UOWProgress = NSNotification.Name("UOWProgress")
 }
 
 // MARK: - UOWManager.Errors

@@ -65,7 +65,7 @@
     return self;
 }
 
-- (void)uowCompletion:(NSNotification *)notification {
+- (void)uowProgressNotification:(NSNotification *)notification {
     NSError *error = nil;
     DependencyCollectionItemObjCWrapper *wrapper = [[DependencyCollectionItemObjCWrapper alloc] initWithDictionary: notification.userInfo
                                                                                                              error: &error];
@@ -86,8 +86,8 @@
     [super viewDidLoad];
 
     [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(uowCompletion:)
-                                                 name: @"UOWDeleted"
+                                             selector: @selector(uowProgressNotification:)
+                                                 name: @"UOWProgress"
                                                object: nil];
 
     __weak __typeof(self) weakSelf = self;

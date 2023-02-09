@@ -16,20 +16,26 @@ class UOWStateCollectionContainerTests: XCTestCase {
         var cnt1Count: Int = 0
         var cnt2Count: Int = 0
         let collection = UOWStateCollectionContainer<String>()
-        collection.deletionEventsPublisher
+        collection.progressEventsPublisher
             .sink { value in
                 switch value.subject {
-                case "5": XCTAssert(value.completed == true)
-                case "4": XCTAssert(value.completed == true)
-                case "3": XCTAssert(value.completed == true)
+                case "5":
+                    cnt2Count -= 1
+                    cnt1Count -= 1
+                    XCTAssert(value.subordinatesInProgress == 0)
+                case "4":
+                    cnt2Count -= 1
+                    cnt1Count -= 1
+                    XCTAssert(value.subordinatesInProgress == 0)
+                case "3":
+                    cnt1Count -= 1
+                    XCTAssert(value.subordinatesInProgress == 0)
                 case "2":
-                    cnt2Count += 1
-                    let truth = cnt2Count == 2
-                    XCTAssert(value.completed == truth)
+                    cnt1Count -= 1
+                    XCTAssert(value.subordinatesInProgress == 1)
                 case "1":
-                    cnt1Count += 1
-                    let truth = cnt2Count == 2
-                    XCTAssert(value.completed == truth)
+                    print("? \(value.subordinatesInProgress)")
+                    XCTAssert(value.subordinatesInProgress == 2)
                 default: XCTAssert(false, "incorrect test")
                 }
             }
@@ -41,11 +47,11 @@ class UOWStateCollectionContainerTests: XCTestCase {
         collection.addAndNotify("4", parent: "2")
         collection.addAndNotify("5", parent: "2")
 
-        collection.removeAndNotify("1")
-        collection.removeAndNotify("3")
-        collection.removeAndNotify("2")
         collection.removeAndNotify("5")
         collection.removeAndNotify("4")
+        collection.removeAndNotify("3")
+        collection.removeAndNotify("2")
+        collection.removeAndNotify("1")
     }
 
     func testAdd() {
