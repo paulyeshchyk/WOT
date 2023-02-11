@@ -1,5 +1,5 @@
 //
-//  UOWProgress.swift
+//  UOWOperationSequenceProgress.swift
 //  ContextSDK
 //
 //  Created by Paul on 28.01.23.
@@ -7,10 +7,10 @@
 
 // MARK: - UOWProgress
 
-class UOWOperationsProgress {
+class UOWOperationSequenceProgress {
 
-    var onValueChanged: ((Double) -> Void)?
-    private let backgroundQueue = DispatchQueue(label: "UOWOperationsProgressQueue")
+    var onSequenceCompletion: (() -> Void)?
+    private let progressQueue = DispatchQueue(label: "UOWOperationsProgressQueue")
     private var toBeDoneCount: Int = 0
     private var doneCount: Int = 0
 
@@ -27,29 +27,24 @@ class UOWOperationsProgress {
     }
 
     func checkIsInProgress(completion: (Bool) -> Void) {
-        backgroundQueue.sync {
+        progressQueue.sync {
             let result = toBeDoneCount != doneCount
             completion(result)
         }
     }
 
     func increaseTobeDone(by: Int = 1) {
-        backgroundQueue.sync {
+        progressQueue.sync {
             toBeDoneCount += by
-            let result = getResult()
-            onValueChanged?(result)
         }
     }
 
-    func increaseDone(by: Int = 1, isInProgressCompletion: ((Bool) -> Void)? = nil) {
-        backgroundQueue.sync {
+    func increaseDone(by: Int = 1) {
+        progressQueue.sync {
             doneCount += by
-
-            let isInProgress = toBeDoneCount != doneCount
-            isInProgressCompletion?(isInProgress)
-
-            let result = getResult()
-            onValueChanged?(result)
+            if toBeDoneCount == doneCount {
+                onSequenceCompletion?()
+            }
         }
     }
 }

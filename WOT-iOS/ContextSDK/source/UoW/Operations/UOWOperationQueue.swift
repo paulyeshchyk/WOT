@@ -42,30 +42,21 @@ class UOWOperationQueue: OperationQueue, UOWOperationQueueProtocol {
 
     func add(units sequence: [UOWProtocol], completion: @escaping(() -> Void)) {
         //
-        let progress = UOWOperationsProgress()
-        var completed: Bool = false
+        let sequenceProgress = UOWOperationSequenceProgress()
+        sequenceProgress.onSequenceCompletion = completion
 
         let set = sequence.compactMap {
             return try? ($0 as? UOWRunnable)?.blockOperation { result in
 
                 self.onRemove?(result.uow)
 
-                progress.increaseDone(by: 1) { isInProgress in
-                    if completed {
-                        assertionFailure("should not be here")
-                    }
-
-                    if !isInProgress {
-                        completion()
-                        completed = true
-                    }
-                }
+                sequenceProgress.increaseDone(by: 1)
             }
         }
 
         onAdd?(sequence)
 
-        progress.increaseTobeDone(by: (set.count))
+        sequenceProgress.increaseTobeDone(by: (set.count))
         super.addOperations(set, waitUntilFinished: false)
     }
 
