@@ -28,11 +28,11 @@ import Combine
  Mutability: Consider making the class properties more mutable by using value types like struct instead of class, making it thread-safe and easier to use.
  */
 
-class UOWStateCollectionContainer<T: UOWStateSubject> {
+class UOWStateCollectionContainer<T: UOWStatusSubject> {
 
     typealias DependencyCollectionType = [T: [T]]
 
-    var progressEventsPublisher: AnyPublisher<UOWState<T>, Never> {
+    var progressEventsPublisher: AnyPublisher<UOWStatus<T>, Never> {
         progressEvents.eraseToAnyPublisher()
     }
 
@@ -44,7 +44,7 @@ class UOWStateCollectionContainer<T: UOWStateSubject> {
     private var dependencyCollection: DependencyCollectionType = [:]
 
     private let additionEvents = PassthroughSubject<UOWRelation<T>, Never>()
-    private let progressEvents = PassthroughSubject<UOWState<T>, Never>()
+    private let progressEvents = PassthroughSubject<UOWStatus<T>, Never>()
 
     func addAndNotify(_ subject: T, parent: T?) {
         collection.add(subject, parent: parent) { subject, parent in
@@ -54,8 +54,8 @@ class UOWStateCollectionContainer<T: UOWStateSubject> {
     }
 
     func removeAndNotify(_ subject: T) {
-        collection.remove(subject) { (subject, subordinatesInProgress) in
-            let state = UOWState(subject: subject, subordinatesInProgress: subordinatesInProgress)
+        collection.remove(subject) { (subject, stage) in
+            let state = UOWStatus(subject: subject, stage: stage)
             self.progressEvents.send(state)
         }
     }
@@ -107,25 +107,27 @@ class UOWStateCollection<T: Hashable> {
         }
     }
 
-    func remove(_ subject: T, completion: ((T, Int) -> Void)?) {
+    func remove(_ subject: T, completion: ((T, UOWStage) -> Void)?) {
         lock.lock()
 
         if hasChildren(subject) {
             //
-            let subordinates = subordinatesCount(subject: subject)
             remove(subject, fromParent: subject)
 
-            completion?(subject, subordinates)
+            let subordinates = subordinatesCount(subject: subject)
+            completion?(subject, .unlinkFromParent(subordinates))
         } else {
             //
             remove(subject)
 
-            let subordinates = subordinatesCount(subject: subject)
-            completion?(subject, subordinates)
+            let count = subordinatesCount(subject: subject)
+            completion?(subject, .unlink(count))
 
-            removeEmptyNodes {
-                let subordinates = self.subordinatesCount(subject: $0)
-                completion?($0, subordinates)
+            let skipCompletionFor: T? = (count == 0) ? subject : nil
+
+            removeEmptyNodes(skipCompletionFor: skipCompletionFor) { emptyNode in
+                let subordinates = self.subordinatesCount(subject: emptyNode)
+                completion?(emptyNode, .removeEmptyNode(subordinates))
             }
         }
 
@@ -144,7 +146,7 @@ class UOWStateCollection<T: Hashable> {
         return dependencyCollection[subject]?.count ?? 0
     }
 
-    private func removeEmptyNodes(completion: ((T) -> Void)?) {
+    private func removeEmptyNodes(skipCompletionFor: T?, completion: ((T) -> Void)?) {
         let keysToRemove = dependencyCollection.keys.compactMap { key in
             return hasChildren(key) ? nil : key
         }
@@ -154,11 +156,17 @@ class UOWStateCollection<T: Hashable> {
         keysToRemove.forEach {
             remove($0)
             dependencyCollection.removeValue(forKey: $0)
-            completion?($0)
+            if let skipCompletionFor = skipCompletionFor {
+                if skipCompletionFor != $0 {
+                    completion?($0)
+                }
+            } else {
+                completion?($0)
+            }
         }
 
         // recursion
-        removeEmptyNodes(completion: completion)
+        removeEmptyNodes(skipCompletionFor: skipCompletionFor, completion: completion)
     }
 
     private func subordinatesCount(subject: T) -> Int {

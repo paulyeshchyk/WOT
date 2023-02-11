@@ -67,7 +67,7 @@
 
 - (void)uowProgressNotification:(NSNotification *)notification {
     NSError *error = nil;
-    DependencyCollectionItemObjCWrapper *wrapper = [[DependencyCollectionItemObjCWrapper alloc] initWithDictionary: notification.userInfo
+    UOWStatusObjCWrapper *wrapper = [[UOWStatusObjCWrapper alloc] initWithDictionary: notification.userInfo
                                                                                                              error: &error];
     
     

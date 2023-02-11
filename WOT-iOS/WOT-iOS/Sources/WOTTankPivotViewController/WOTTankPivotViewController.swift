@@ -300,9 +300,9 @@ class WOTTankPivotViewController: PivotViewController {
         guard let userInfo = notification.userInfo as? [String: Any] else {
             return
         }
-        let wrapper = try? DependencyCollectionItemObjCWrapper(dictionary: userInfo)
-        if wrapper?.completed ?? false {
-            if wrapper?.subject == pivotTaskMD5 {
+        let wrapper = try? UOWStatusObjCWrapper(dictionary: userInfo)
+        if wrapper?.subject == pivotTaskMD5 {
+            if wrapper?.completed ?? false {
                 DispatchQueue.main.async {
                     self.model.loadModel()
                 }
