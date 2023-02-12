@@ -40,12 +40,14 @@ public class UOWManager: UOWManagerProtocol {
         oq.onRemove = { uow in
             self.stateCollectionContainer.removeAndNotify(uow.MD5)
         }
-        oq.add(unit: uow) { result in
+        oq.onUnitCompletion = { result in
             self.workingQueue.async {
                 self.stateCollectionContainer.removeAndNotify(result.uow.MD5)
                 listenerCompletion(result)
             }
         }
+        //
+        oq.add(unit: uow)
     }
 
     public func run(units: [UOWProtocol], inContextOfWork: UOWProtocol?, listenerCompletion: @escaping(SequenceCompletionType)) {
@@ -60,12 +62,13 @@ public class UOWManager: UOWManagerProtocol {
         sequenceOperationQueue.onRemove = { uow in
             self.stateCollectionContainer.removeAndNotify(uow.MD5)
         }
-
-        sequenceOperationQueue.add(units: units) {
+        sequenceOperationQueue.onSequenceCompletion = {
             self.workingQueue.async {
                 listenerCompletion(nil)
             }
         }
+        //
+        sequenceOperationQueue.add(units: units)
     }
 }
 
