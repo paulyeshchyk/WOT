@@ -37,14 +37,9 @@ public class UOWManager: UOWManagerProtocol {
                 self.stateCollectionContainer.addAndNotify(uow.MD5, parent: inContextOfWork?.MD5)
             }
         }
-        oq.onRemove = { uow in
-            self.stateCollectionContainer.removeAndNotify(uow.MD5)
-        }
         oq.onUnitCompletion = { result in
-            self.workingQueue.async {
-                self.stateCollectionContainer.removeAndNotify(result.uow.MD5)
-                listenerCompletion(result)
-            }
+            self.stateCollectionContainer.removeAndNotify(result.uow.MD5)
+            listenerCompletion(result)
         }
         //
         oq.add(unit: uow)
@@ -59,8 +54,8 @@ public class UOWManager: UOWManagerProtocol {
                 self.stateCollectionContainer.addAndNotify(uow.MD5, parent: inContextOfWork?.MD5)
             }
         }
-        sequenceOperationQueue.onRemove = { uow in
-            self.stateCollectionContainer.removeAndNotify(uow.MD5)
+        sequenceOperationQueue.onUnitCompletion = { result in
+            self.stateCollectionContainer.removeAndNotify(result.uow.MD5)
         }
         sequenceOperationQueue.onSequenceCompletion = {
             self.workingQueue.async {

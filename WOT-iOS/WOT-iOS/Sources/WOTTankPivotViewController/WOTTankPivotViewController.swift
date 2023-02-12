@@ -290,6 +290,7 @@ class WOTTankPivotViewController: PivotViewController {
             }
 
             pivotTaskMD5 = WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext)
+
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
         }

@@ -33,7 +33,6 @@ class UOWOperationQueue: OperationQueue, UOWOperationQueueProtocol {
     }
 
     var onAdd: (([UOWProtocol]) -> Void)?
-    var onRemove: ((UOWProtocol) -> Void)?
     var onSequenceCompletion: (() -> Void)?
     var onUnitCompletion: ((UOWResultProtocol) -> Void)?
 
@@ -50,7 +49,7 @@ class UOWOperationQueue: OperationQueue, UOWOperationQueueProtocol {
         let set = sequence.compactMap {
             return try? ($0 as? UOWRunnable)?.blockOperation { result in
 
-                self.onRemove?(result.uow)
+                self.onUnitCompletion?(result)
 
                 sequenceProgress.increaseDone(by: 1)
             }
@@ -70,12 +69,12 @@ class UOWOperationQueue: OperationQueue, UOWOperationQueueProtocol {
             }
             onAdd?([uow])
             let op = try runnable.blockOperation { obj in
-                self.onRemove?(obj.uow)
                 self.onUnitCompletion?(obj)
             }
             super.addOperation(op)
         } catch {
-            onUnitCompletion?(UOWResult(uow: uow, fetchResult: nil, error: error))
+            let result = UOWResult(uow: uow, fetchResult: nil, error: error)
+            onUnitCompletion?(result)
         }
     }
 }
