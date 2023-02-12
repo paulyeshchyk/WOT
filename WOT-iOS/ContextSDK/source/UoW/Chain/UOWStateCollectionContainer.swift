@@ -7,7 +7,7 @@
 
 import Combine
 
-// MARK: - DependencyCollection
+// MARK: - UOWStateCollectionContainer
 
 /**
 
@@ -28,108 +28,169 @@ import Combine
  Mutability: Consider making the class properties more mutable by using value types like struct instead of class, making it thread-safe and easier to use.
  */
 
-class UOWStateCollectionContainer<T: UOWStateSubject> {
+class UOWStateCollectionContainer<T: UOWStatusSubject> {
 
     typealias DependencyCollectionType = [T: [T]]
 
-    var deletionEventsPublisher: AnyPublisher<UOWState<T>, Never> {
-        deletionEvents.eraseToAnyPublisher()
+    var progressEventsPublisher: AnyPublisher<UOWStatus<T>, Never> {
+        progressEvents.eraseToAnyPublisher()
     }
 
-    var additionEventsPublisher: AnyPublisher<(T, T?), Never> {
-        additionEvents.eraseToAnyPublisher()
-    }
-
+    private let collection = UOWStateCollection<T>()
     private var dependencyCollection: DependencyCollectionType = [:]
-    private let lock = NSRecursiveLock()
-    private let additionEvents = PassthroughSubject<(T, T?), Never>()
-    private let deletionEvents = PassthroughSubject<UOWState<T>, Never>()
+
+    private let progressEvents = PassthroughSubject<UOWStatus<T>, Never>()
 
     func addAndNotify(_ subject: T, parent: T?) {
-        add(subject, parent: parent) { subject, parent in
-            self.additionEvents.send((subject, parent))
+        //
+        collection.link(subject, parent: parent) { subject, parent in
+
+            if let parent = parent {
+                let count = self.collection.subordinatesCount(subject: parent)
+                let status = UOWStatus(subject: parent, statement: .link(count))
+                self.progressEvents.send(status)
+            }
+            if subject != parent {
+                let count = self.collection.subordinatesCount(subject: subject)
+                let status = UOWStatus(subject: subject, statement: .link(count))
+                self.progressEvents.send(status)
+            }
         }
     }
 
     func removeAndNotify(_ subject: T) {
-        remove(subject) { subject, completed in
-            self.deletionEvents.send(UOWState(subject: subject, completed: completed))
+        collection.unlink(subject) { (subject, statement) in
+            let status = UOWStatus(subject: subject, statement: statement)
+            self.progressEvents.send(status)
         }
     }
 
     /// used for unit-tests only
     func getCollection() -> DependencyCollectionType {
-        return dependencyCollection
+        return collection.dependencyCollection
     }
+}
 
-    private func add(_ subject: T, parent: T?, competion: ((T, T?) -> Void)?) {
+// MARK: - UOWStateCollection
+
+class UOWStateCollection<T: Hashable> {
+    typealias LinkCompletionType = (_ subject: T, _ parent: T?) -> Void
+    var dependencyCollection: [T: [T]] = [:]
+    private let lock = NSRecursiveLock()
+
+    func link(_ subject: T, parent: T?, competion: LinkCompletionType?) {
+        //
         lock.lock()
-
         if !dependencyCollection.keys.contains(subject), parent == nil {
             dependencyCollection[subject] = [subject]
         }
+
         if let parent = parent {
             dependencyCollection[parent, default: [parent]].append(subject)
         }
         lock.unlock()
+
         competion?(subject, parent)
     }
 
-    private func remove(_ subject: T, completion: ((T, Bool) -> Void)?) {
+    func unlink(_ subject: T, completion: ((T, UOWStatement) -> Void)?) {
         lock.lock()
 
-        if hasChildren(subject) {
-            remove(subject, fromParent: subject)
-            completion?(subject, false)
-        } else {
-            remove(subject)
-            completion?(subject, true)
+        if subordinatesCount(subject: subject) > 0 {
+            //
+            unlink(subject, fromParent: subject)
+            if subordinatesCount(subject: subject) > 0 {
+                let subordinates = subordinatesCount(subject: subject)
+                completion?(subject, .unlinkFromParent(subordinates))
+            } else {
+                unlink(subject)
+                removeEmptyNodes(skipCompletionFor: nil) { emptyNode in
+                    let subordinates = self.subordinatesCount(subject: emptyNode)
+                    completion?(emptyNode, .removeEmptyNode(subordinates))
+                }
+            }
 
-            removeEmptyNodes().forEach {
-                completion?($0, true)
+        } else {
+            //
+            unlink(subject)
+
+            let count = subordinatesCount(subject: subject)
+            completion?(subject, .unlink(count))
+
+            let skipCompletionFor: T? = (count == 0) ? subject : nil
+
+            removeEmptyNodes(skipCompletionFor: skipCompletionFor) { emptyNode in
+                let subordinates = self.subordinatesCount(subject: emptyNode)
+                completion?(emptyNode, .removeEmptyNode(subordinates))
             }
         }
 
         lock.unlock()
     }
 
-    private func remove(_ subject: T, fromParent: T) {
+    func subordinatesCount(subject: T) -> Int {
+        return subordinates(subject: subject).count
+    }
+
+    // MARK: - private
+
+    private func unlink(_ subject: T) {
+        dependenciesContaining(subject: subject).forEach { parent in
+            unlink(subject, fromParent: parent)
+        }
+    }
+
+    private func unlink(_ subject: T, fromParent: T) {
         dependencyCollection[fromParent]?.removeAll(where: { $0 == subject })
     }
 
-    private func hasChildren(_ subject: T) -> Bool {
-        return childrenCount(subject) > 0
+    private func remove(_ subject: T) {
+        dependencyCollection.removeValue(forKey: subject)
+    }
+
+    private func removeEmptyNodes(skipCompletionFor: T?, completion: ((T) -> Void)?) {
+        let keysToRemove = dependencyCollection.keys.compactMap { key in
+            return (childrenCount(key) > 0) ? nil : key
+        }
+        if keysToRemove.isEmpty {
+            return
+        }
+        keysToRemove.forEach {
+            unlink($0)
+            remove($0)
+            if let skipCompletionFor = skipCompletionFor {
+                if skipCompletionFor != $0 {
+                    completion?($0)
+                }
+            } else {
+                completion?($0)
+            }
+        }
+
+        // recursion
+        removeEmptyNodes(skipCompletionFor: skipCompletionFor, completion: completion)
+    }
+
+    private func dependenciesContaining(subject: T) -> [T] {
+        return dependencyCollection.keys.filter { key in
+            key != subject && (dependencyCollection[key]?.contains(subject) ?? false)
+        }
     }
 
     private func childrenCount(_ subject: T) -> Int {
         return dependencyCollection[subject]?.count ?? 0
     }
 
-    private func remove(_ subject: T) {
-        nodeListContaining(subject: subject).forEach { parent in
-            remove(subject, fromParent: parent)
+    private func subordinates(subject: T) -> [T] {
+        var result: [T] = []
+        dependencyCollection[subject]?.forEach { subordinate in
+            result.append(subordinate)
+            if subordinate != subject {
+                // recursion
+                let subordinates = subordinates(subject: subordinate)
+                result.append(contentsOf: subordinates)
+            }
         }
-    }
-
-    private func removeEmptyNodes() -> [T] {
-        let keysToRemove = dependencyCollection.keys.compactMap { key in
-            return hasChildren(key) ? nil : key
-        }
-        if keysToRemove.isEmpty {
-            return []
-        }
-        keysToRemove.forEach {
-            remove($0)
-            dependencyCollection.removeValue(forKey: $0)
-        }
-
-        let nextIteration = removeEmptyNodes()
-        return keysToRemove + nextIteration
-    }
-
-    private func nodeListContaining(subject: T) -> [T] {
-        return dependencyCollection.keys.filter { key in
-            key != subject && (dependencyCollection[key]?.contains(subject) ?? false)
-        }
+        return result
     }
 }

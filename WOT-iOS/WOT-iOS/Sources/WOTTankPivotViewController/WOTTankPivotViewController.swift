@@ -272,7 +272,10 @@ class WOTTankPivotViewController: PivotViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(onPivotLoadCompleted), name: NSNotification.Name.UOWDeleted, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onPivotTaskProgress),
+                                               name: NSNotification.Name.UOWProgress,
+                                               object: nil)
 
         let items = [UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(WOTTankPivotViewController.openConstructor(_:)))]
         navigationItem.setRightBarButtonItems(items, animated: false)
@@ -287,19 +290,21 @@ class WOTTankPivotViewController: PivotViewController {
             }
 
             pivotTaskMD5 = WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext)
+
         } catch {
             appContext?.logInspector?.log(.error(error), sender: self)
         }
     }
 
     @objc
-    func onPivotLoadCompleted(_ notification: Notification) {
+    func onPivotTaskProgress(_ notification: Notification) {
         guard let userInfo = notification.userInfo as? [String: Any] else {
             return
         }
-        let wrapper = try? DependencyCollectionItemObjCWrapper(dictionary: userInfo)
-        if wrapper?.completed ?? false {
-            if wrapper?.subject == pivotTaskMD5 {
+        let wrapper = try? UOWStatusObjCWrapper(dictionary: userInfo)
+        if wrapper?.subject == pivotTaskMD5 {
+            print("pivot status: \(wrapper?.description ?? "")")
+            if wrapper?.completed ?? false {
                 DispatchQueue.main.async {
                     self.model.loadModel()
                 }

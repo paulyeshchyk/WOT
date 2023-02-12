@@ -62,10 +62,13 @@ open class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
             return
         }
 
+        context.logInspector?.log(.flow(name: "tree", message: "start"), sender: self)
+
         reindexNodeConnectors()
 
         do {
             try fetchController?.performFetch(appContext: context)
+            context.logInspector?.log(.flow(name: "tree", message: "finish"), sender: self)
         } catch let error {
             context.logInspector?.log(.error(error), sender: self)
             fetchFailed(by: self.fetchController, withError: error)
@@ -113,6 +116,7 @@ open class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
             let data = fetchedNodes?.compactMap { $0 as? Node } ?? []
             self.add(nodes: data)
             self.listener?.didFinishLoadModel(error: nil)
+            appContext?.logInspector?.log(.flow(name: "tree", message: "finish"), sender: self)
         })
     }
 }
@@ -127,7 +131,9 @@ extension TreeDataModel {
 }
 
 extension TreeDataModel {
+
     func reindexNodeConnectors() {
+        //
         nodeConnectorIndex.reset()
 
         let nodes = rootNodes(sortComparator: nil)

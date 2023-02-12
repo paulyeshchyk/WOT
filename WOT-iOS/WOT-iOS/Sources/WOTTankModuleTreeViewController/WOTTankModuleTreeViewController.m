@@ -65,15 +65,15 @@
     return self;
 }
 
-- (void)uowCompletion:(NSNotification *)notification {
+- (void)uowProgressNotification:(NSNotification *)notification {
     NSError *error = nil;
-    DependencyCollectionItemObjCWrapper *wrapper = [[DependencyCollectionItemObjCWrapper alloc] initWithDictionary: notification.userInfo
-                                                                                                             error: &error];
+    UOWStatusObjCWrapper *wrapper = [[UOWStatusObjCWrapper alloc] initWithDictionary: notification.userInfo error: &error];
     
     
-    if (wrapper.completed) {
-        if ([wrapper.subject compare: self.uowMD5] == NSOrderedSame) {
-        
+    if ([wrapper.subject compare: self.uowMD5] == NSOrderedSame) {
+        NSLog(@"tree status: %@)", wrapper.description);
+        if (wrapper.completed) {
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.model loadModel];
             });
@@ -86,8 +86,8 @@
     [super viewDidLoad];
 
     [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(uowCompletion:)
-                                                 name: @"UOWDeleted"
+                                             selector: @selector(uowProgressNotification:)
+                                                 name: @"UOWProgress"
                                                object: nil];
 
     __weak __typeof(self) weakSelf = self;

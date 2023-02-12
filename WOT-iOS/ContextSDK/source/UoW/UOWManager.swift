@@ -19,11 +19,11 @@ public class UOWManager: UOWManagerProtocol {
     public init(appContext: Context) {
         self.appContext = appContext
 
-        stateCollectionContainer.deletionEventsPublisher
+        stateCollectionContainer.progressEventsPublisher
             .receive(on: workingQueue)
             .sink { value in
                 let userInfo = try? value.serialized(type: [String: Any].self)
-                NotificationCenter.default.post(name: .UOWDeleted, object: nil, userInfo: userInfo)
+                NotificationCenter.default.post(name: .UOWProgress, object: nil, userInfo: userInfo)
             }
             .store(in: &cancellables)
     }
@@ -37,15 +37,12 @@ public class UOWManager: UOWManagerProtocol {
                 self.stateCollectionContainer.addAndNotify(uow.MD5, parent: inContextOfWork?.MD5)
             }
         }
-        oq.onRemove = { uow in
-            self.stateCollectionContainer.removeAndNotify(uow.MD5)
+        oq.onUnitCompletion = { result in
+            self.stateCollectionContainer.removeAndNotify(result.uow.MD5)
+            listenerCompletion(result)
         }
-        oq.add(unit: uow) { result in
-            self.workingQueue.async {
-                self.stateCollectionContainer.removeAndNotify(result.uow.MD5)
-                listenerCompletion(result)
-            }
-        }
+        //
+        oq.add(unit: uow)
     }
 
     public func run(units: [UOWProtocol], inContextOfWork: UOWProtocol?, listenerCompletion: @escaping(SequenceCompletionType)) {
@@ -57,20 +54,21 @@ public class UOWManager: UOWManagerProtocol {
                 self.stateCollectionContainer.addAndNotify(uow.MD5, parent: inContextOfWork?.MD5)
             }
         }
-        sequenceOperationQueue.onRemove = { uow in
-            self.stateCollectionContainer.removeAndNotify(uow.MD5)
+        sequenceOperationQueue.onUnitCompletion = { result in
+            self.stateCollectionContainer.removeAndNotify(result.uow.MD5)
         }
-
-        sequenceOperationQueue.add(units: units) {
+        sequenceOperationQueue.onSequenceCompletion = {
             self.workingQueue.async {
                 listenerCompletion(nil)
             }
         }
+        //
+        sequenceOperationQueue.add(units: units)
     }
 }
 
 public extension NSNotification.Name {
-    static let UOWDeleted = NSNotification.Name("UOWDeleted")
+    static let UOWProgress = NSNotification.Name("UOWProgress")
 }
 
 // MARK: - UOWManager.Errors

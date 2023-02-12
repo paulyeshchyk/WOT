@@ -9,8 +9,8 @@
 
 protocol UOWOperationQueueProtocol {
     init(qualityOfService: QualityOfService)
-    func add(units sequence: [UOWProtocol], completion: @escaping(() -> Void))
-    func add(unit uow: UOWProtocol, completion: @escaping((UOWResultProtocol) -> Void))
+    func add(units sequence: [UOWProtocol])
+    func add(unit uow: UOWProtocol)
 }
 
 // MARK: - UOWOperationQueue
@@ -33,43 +33,35 @@ class UOWOperationQueue: OperationQueue, UOWOperationQueueProtocol {
     }
 
     var onAdd: (([UOWProtocol]) -> Void)?
-    var onRemove: ((UOWProtocol) -> Void)?
+    var onSequenceCompletion: (() -> Void)?
+    var onUnitCompletion: ((UOWResultProtocol) -> Void)?
 
     required convenience init(qualityOfService: QualityOfService) {
         self.init()
         self.qualityOfService = qualityOfService
     }
 
-    func add(units sequence: [UOWProtocol], completion: @escaping(() -> Void)) {
+    func add(units sequence: [UOWProtocol]) {
         //
-        let progress = UOWOperationsProgress()
-        var completed: Bool = false
+        let sequenceProgress = UOWOperationSequenceProgress()
+        sequenceProgress.onSequenceCompletion = onSequenceCompletion
 
         let set = sequence.compactMap {
             return try? ($0 as? UOWRunnable)?.blockOperation { result in
 
-                self.onRemove?(result.uow)
+                self.onUnitCompletion?(result)
 
-                progress.increaseDone(by: 1) { isInProgress in
-                    if completed {
-                        assertionFailure("should not be here")
-                    }
-
-                    if !isInProgress {
-                        completion()
-                        completed = true
-                    }
-                }
+                sequenceProgress.increaseDone(by: 1)
             }
         }
 
         onAdd?(sequence)
 
-        progress.increaseTobeDone(by: (set.count))
+        sequenceProgress.increaseTobeDone(by: (set.count))
         super.addOperations(set, waitUntilFinished: false)
     }
 
-    func add(unit uow: UOWProtocol, completion: @escaping((UOWResultProtocol) -> Void)) {
+    func add(unit uow: UOWProtocol) {
         //
         do {
             guard let runnable = uow as? UOWRunnable else {
@@ -77,12 +69,12 @@ class UOWOperationQueue: OperationQueue, UOWOperationQueueProtocol {
             }
             onAdd?([uow])
             let op = try runnable.blockOperation { obj in
-                self.onRemove?(obj.uow)
-                completion(obj)
+                self.onUnitCompletion?(obj)
             }
             super.addOperation(op)
         } catch {
-            completion(UOWResult(uow: uow, fetchResult: nil, error: error))
+            let result = UOWResult(uow: uow, fetchResult: nil, error: error)
+            onUnitCompletion?(result)
         }
     }
 }
