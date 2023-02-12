@@ -273,7 +273,7 @@ class WOTTankPivotViewController: PivotViewController {
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onPivotLoadCompleted),
+                                               selector: #selector(onPivotTaskProgress),
                                                name: NSNotification.Name.UOWProgress,
                                                object: nil)
 
@@ -297,12 +297,13 @@ class WOTTankPivotViewController: PivotViewController {
     }
 
     @objc
-    func onPivotLoadCompleted(_ notification: Notification) {
+    func onPivotTaskProgress(_ notification: Notification) {
         guard let userInfo = notification.userInfo as? [String: Any] else {
             return
         }
         let wrapper = try? UOWStatusObjCWrapper(dictionary: userInfo)
         if wrapper?.subject == pivotTaskMD5 {
+            print("pivot status: \(wrapper?.description ?? "")")
             if wrapper?.completed ?? false {
                 DispatchQueue.main.async {
                     self.model.loadModel()

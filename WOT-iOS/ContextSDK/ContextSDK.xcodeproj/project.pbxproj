@@ -10,7 +10,7 @@
 		DA0432A529633B400092C891 /* ManagedObjectPinProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0432A429633B400092C891 /* ManagedObjectPinProtocol.swift */; };
 		DA08567429548C9C00273762 /* Hash_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08567329548C9C00273762 /* Hash_Test.swift */; };
 		DA08567729548E2000273762 /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08567629548E2000273762 /* String+MD5.swift */; };
-		DA09B84229975986005F37B1 /* UOWStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09B84129975986005F37B1 /* UOWStage.swift */; };
+		DA09B84229975986005F37B1 /* UOWStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09B84129975986005F37B1 /* UOWStatement.swift */; };
 		DA0E8033295064A400B44CC6 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0E8029295064A300B44CC6 /* ContextSDK.framework */; };
 		DA0E8038295064A400B44CC6 /* ContextSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E8037295064A400B44CC6 /* ContextSDKTests.swift */; };
 		DA0E803A295064A400B44CC6 /* ContextSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = DA0E802C295064A300B44CC6 /* ContextSDK.h */; platformFilter = ios; settings = {ATTRIBUTES = (Public, ); }; };
@@ -128,7 +128,7 @@
 		DA0432A429633B400092C891 /* ManagedObjectPinProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectPinProtocol.swift; sourceTree = "<group>"; };
 		DA08567329548C9C00273762 /* Hash_Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hash_Test.swift; sourceTree = "<group>"; };
 		DA08567629548E2000273762 /* String+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
-		DA09B84129975986005F37B1 /* UOWStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UOWStage.swift; sourceTree = "<group>"; };
+		DA09B84129975986005F37B1 /* UOWStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UOWStatement.swift; sourceTree = "<group>"; };
 		DA0E8029295064A300B44CC6 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0E802C295064A300B44CC6 /* ContextSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContextSDK.h; sourceTree = "<group>"; };
 		DA0E802D295064A300B44CC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -443,7 +443,7 @@
 				DA7C805D298D12B700C5D584 /* UOWStateCollectionContainer.swift */,
 				DA7C8063298EAAF600C5D584 /* UOWStatus.swift */,
 				DAD26E3D2993E1B9005938E5 /* UOWRelation.swift */,
-				DA09B84129975986005F37B1 /* UOWStage.swift */,
+				DA09B84129975986005F37B1 /* UOWStatement.swift */,
 			);
 			path = Chain;
 			sourceTree = "<group>";
@@ -916,7 +916,7 @@
 				DA2C28F42959F55D00D18A6E /* ManagedObjectLinker.swift in Sources */,
 				DA81E4F02952FDD800C60F31 /* JSONAdapter.swift in Sources */,
 				DAD26E3E2993E1B9005938E5 /* UOWRelation.swift in Sources */,
-				DA09B84229975986005F37B1 /* UOWStage.swift in Sources */,
+				DA09B84229975986005F37B1 /* UOWStatement.swift in Sources */,
 				DA7C805C298CFB5D00C5D584 /* DecodingDepthLimit.swift in Sources */,
 				DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */,
 				DA801FF729851CDF00033D85 /* Dictionary+URLString.swift in Sources */,

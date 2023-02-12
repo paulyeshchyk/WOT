@@ -36,26 +36,31 @@ class UOWStateCollectionContainer<T: UOWStatusSubject> {
         progressEvents.eraseToAnyPublisher()
     }
 
-    var additionEventsPublisher: AnyPublisher<UOWRelation<T>, Never> {
-        additionEvents.eraseToAnyPublisher()
-    }
-
     private let collection = UOWStateCollection<T>()
     private var dependencyCollection: DependencyCollectionType = [:]
 
-    private let additionEvents = PassthroughSubject<UOWRelation<T>, Never>()
     private let progressEvents = PassthroughSubject<UOWStatus<T>, Never>()
 
     func addAndNotify(_ subject: T, parent: T?) {
+        //
         collection.link(subject, parent: parent) { subject, parent in
-            let relation = UOWRelation(subject: subject, parent: parent)
-            self.additionEvents.send(relation)
+
+            if let parent = parent {
+                let count = self.collection.subordinatesCount(subject: parent)
+                let status = UOWStatus(subject: parent, statement: .link(count))
+                self.progressEvents.send(status)
+            }
+            if subject != parent {
+                let count = self.collection.subordinatesCount(subject: subject)
+                let status = UOWStatus(subject: subject, statement: .link(count))
+                self.progressEvents.send(status)
+            }
         }
     }
 
     func removeAndNotify(_ subject: T) {
-        collection.unlink(subject) { (subject, stage) in
-            let status = UOWStatus(subject: subject, stage: stage)
+        collection.unlink(subject) { (subject, statement) in
+            let status = UOWStatus(subject: subject, statement: statement)
             self.progressEvents.send(status)
         }
     }
@@ -69,16 +74,17 @@ class UOWStateCollectionContainer<T: UOWStatusSubject> {
 // MARK: - UOWStateCollection
 
 class UOWStateCollection<T: Hashable> {
-
+    typealias LinkCompletionType = (_ subject: T, _ parent: T?) -> Void
     var dependencyCollection: [T: [T]] = [:]
     private let lock = NSRecursiveLock()
 
-    func link(_ subject: T, parent: T?, competion: ((_ subject: T, _ parent: T?) -> Void)?) {
+    func link(_ subject: T, parent: T?, competion: LinkCompletionType?) {
         //
         lock.lock()
         if !dependencyCollection.keys.contains(subject), parent == nil {
             dependencyCollection[subject] = [subject]
         }
+
         if let parent = parent {
             dependencyCollection[parent, default: [parent]].append(subject)
         }
@@ -87,7 +93,7 @@ class UOWStateCollection<T: Hashable> {
         competion?(subject, parent)
     }
 
-    func unlink(_ subject: T, completion: ((T, UOWStage) -> Void)?) {
+    func unlink(_ subject: T, completion: ((T, UOWStatement) -> Void)?) {
         lock.lock()
 
         if subordinatesCount(subject: subject) > 0 {
@@ -121,6 +127,12 @@ class UOWStateCollection<T: Hashable> {
 
         lock.unlock()
     }
+
+    func subordinatesCount(subject: T) -> Int {
+        return subordinates(subject: subject).count
+    }
+
+    // MARK: - private
 
     private func unlink(_ subject: T) {
         dependenciesContaining(subject: subject).forEach { parent in
@@ -163,10 +175,6 @@ class UOWStateCollection<T: Hashable> {
         return dependencyCollection.keys.filter { key in
             key != subject && (dependencyCollection[key]?.contains(subject) ?? false)
         }
-    }
-
-    private func subordinatesCount(subject: T) -> Int {
-        return subordinates(subject: subject).count
     }
 
     private func childrenCount(_ subject: T) -> Int {

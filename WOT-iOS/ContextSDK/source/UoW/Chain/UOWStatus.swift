@@ -11,22 +11,22 @@ typealias UOWStatusSubject = Hashable & Equatable & Comparable
 
 struct UOWStatus<T: UOWStatusSubject>: UOWStatusSubject {
 
-    typealias Stage = UOWStage
+    typealias StatementType = UOWStatement
 
     let subject: T
-    let stage: Stage
+    let statement: StatementType
 
     // MARK: Lifecycle
 
-    init(subject: T, stage: Stage) {
+    init(subject: T, statement: StatementType) {
         self.subject = subject
-        self.stage = stage
+        self.statement = statement
     }
 
     // MARK: Internal
 
     static func == (lhs: UOWStatus, rhs: UOWStatus) -> Bool {
-        return lhs.subject == rhs.subject && lhs.stage == rhs.stage
+        return lhs.subject == rhs.subject && lhs.statement == rhs.statement
     }
 
     static func < (lhs: UOWStatus<T>, rhs: UOWStatus<T>) -> Bool {
@@ -52,13 +52,13 @@ extension UOWStatus: Codable where T == String {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         subject = try container.decode(T.self, forKey: .subject)
-        stage = try container.decode(Stage.self, forKey: .completed)
+        statement = try container.decode(StatementType.self, forKey: .completed)
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(subject, forKey: .subject)
-        try container.encode(stage, forKey: .completed)
+        try container.encode(statement, forKey: .completed)
     }
 }
 
@@ -77,10 +77,14 @@ extension UOWStatus where T == String {
 public class UOWStatusObjCWrapper: NSObject {
     private let structInstance: UOWStatus<String>
 
+    override public var description: String {
+        "[\(type(of: self))] subject: \(structInstance.subject), statement: \(structInstance.statement)"
+    }
+
     @objc
-    public init(subject: String, stageType: UOWStageType, subordinatesCount: Int) {
-        let stage = UOWStage.stage(stageType: stageType, subordinatesCount: subordinatesCount)
-        structInstance = UOWStatus<String>(subject: subject, stage: stage)
+    public init(subject: String, statementType: UOWStatementType, subordinatesCount: Int) {
+        let statement = UOWStatement.statement(type: statementType, subordinatesCount: subordinatesCount)
+        structInstance = UOWStatus<String>(subject: subject, statement: statement)
     }
 
     @objc
@@ -96,8 +100,9 @@ public class UOWStatusObjCWrapper: NSObject {
 
     @objc
     public var completed: Bool {
-        switch structInstance.stage {
+        switch structInstance.statement {
         case .initialization: return false
+        case .link: return false
         case .removeEmptyNode(let subordinates): return subordinates == 0
         case .unlink(let subordinates): return subordinates == 0
         case .unlinkFromParent(let subordinates): return subordinates == 0
