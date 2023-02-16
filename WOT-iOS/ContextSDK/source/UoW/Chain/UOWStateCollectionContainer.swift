@@ -129,7 +129,10 @@ class UOWStateCollection<T: Hashable> {
     }
 
     func subordinatesCount(subject: T) -> Int {
-        return subordinates(subject: subject).count
+        lock.lock()
+        let result = subordinates(subject: subject).count
+        lock.unlock()
+        return result
     }
 
     // MARK: - private
