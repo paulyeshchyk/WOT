@@ -9,7 +9,6 @@
 
 class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConvertible {
 
-    #warning("remove RequestManagerContainerProtocol & RequestRegistratorContainerProtocol")
     typealias Context = LogInspectorContainerProtocol
         & RequestRegistratorContainerProtocol
         & DataStoreContainerProtocol
@@ -27,6 +26,8 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var jsonMap: JSONMapProtocol?
+    var inContextOfWork: UOWProtocol?
+
     private var decodingDepthLevel: DecodingDepthLevel?
 
     // MARK: Lifecycle
@@ -44,10 +45,10 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
             appContext.logInspector?.log(.uow("moDecode", message: "start \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
 
             guard let fetchResult = fetchResult else {
-                throw Errors.fetchResultIsNotPresented
+                throw ManagedObjectDecodeHelperErrors.fetchResultIsNotPresented
             }
             guard let jsonMap = jsonMap else {
-                throw Errors.contextPredicateIsNotDefined
+                throw ManagedObjectDecodeHelperErrors.contextPredicateIsNotDefined
             }
 
             try appContext.dataStore?.perform(mode: .readwrite, block: { managedObjectContext in
@@ -56,17 +57,20 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
                     let managedObject = try fetchResult.managedObject(inManagedObjectContext: managedObjectContext)
 
                     guard let modelClass = type(of: managedObject) as? PrimaryKeypathProtocol.Type else {
-                        throw Errors.modelClassIsNotDefined
+                        throw ManagedObjectDecodeHelperErrors.modelClassIsNotDefined
                     }
-
+                    #warning("crash is here: malloc: Non-aligned pointer 0x600000dd7640 being freed (2); SIGABORT")
                     guard let decoderType = self.appContext.decoderManager?.jsonDecoder(for: modelClass) else {
-                        throw Errors.decoderIsNotDefined
+                        throw ManagedObjectDecodeHelperErrors.decoderIsNotDefined
                     }
 
                     let decoder = decoderType.init(appContext: self.appContext)
+                    decoder.inContextOfWork = self.inContextOfWork
                     decoder.managedObject = managedObject
+                    decoder.jsonMap = jsonMap
+                    decoder.decodingDepthLevel = self.decodingDepthLevel
 
-                    try decoder.decode(using: jsonMap, decodingDepthLevel: self.decodingDepthLevel)
+                    try decoder.decode()
 
                     self.appContext.dataStore?.stash(managedObjectContext: managedObjectContext, completion: { _, error in
                         self.appContext.logInspector?.log(.uow("moDecode", message: "finish \(String(describing: fetchResult, orValue: "<null>"))"), sender: self)
@@ -84,12 +88,11 @@ class ManagedObjectDecodeHelper: CustomStringConvertible, CustomDebugStringConve
     }
 }
 
-// MARK: - %t + ManagedObjectDecodeHelper.Errors
+// MARK: - %t + ManagedObjectDecodeHelper.ManagedObjectDecodeHelperErrors
 
 extension ManagedObjectDecodeHelper {
     // Errors
-    private enum Errors: Error, CustomStringConvertible {
-        case contextNotFound
+    private enum ManagedObjectDecodeHelperErrors: Error, CustomStringConvertible {
         case fetchResultIsNotPresented
         case contextPredicateIsNotDefined
         case fetchResultIsNotJSONDecodable(FetchResultProtocol?)
@@ -98,7 +101,6 @@ extension ManagedObjectDecodeHelper {
 
         public var description: String {
             switch self {
-            case .contextNotFound: return "[\(type(of: self))]: context not found"
             case .fetchResultIsNotJSONDecodable(let fetchResult): return "[\(type(of: self))]: fetch result(\(type(of: fetchResult)) is not JSONDecodableProtocol"
             case .contextPredicateIsNotDefined: return "\(type(of: self)): Context predicate is not defined"
             case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"

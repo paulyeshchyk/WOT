@@ -21,12 +21,9 @@ public protocol UOWManagerContainerProtocol {
 @objc
 public protocol UOWManagerProtocol {
     typealias Context = LogInspectorContainerProtocol
-        & DataStoreContainerProtocol
-        & DecoderManagerContainerProtocol
-        & RequestRegistratorContainerProtocol
         & UOWManagerContainerProtocol
 
-    func run(unit uow: UOWProtocol, listenerCompletion: @escaping(ListenerCompletionType))
+    func run(unit uow: UOWProtocol, inContextOfWork: UOWProtocol?, listenerCompletion: @escaping(ListenerCompletionType))
 
-    func run(units: [UOWProtocol], listenerCompletion: @escaping(SequenceCompletionType))
+    func run(units: [UOWProtocol], inContextOfWork: UOWProtocol?, listenerCompletion: @escaping(SequenceCompletionType))
 }

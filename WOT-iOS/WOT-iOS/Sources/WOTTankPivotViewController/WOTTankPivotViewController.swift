@@ -195,9 +195,9 @@ typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void
 class WOTTankPivotViewController: PivotViewController {
 
     typealias Context = LogInspectorContainerProtocol
-        & DataStoreContainerProtocol
         & RequestRegistratorContainerProtocol
         & DecoderManagerContainerProtocol
+        & DataStoreContainerProtocol
         & UOWManagerContainerProtocol
 
     static var registeredCells: [UICollectionViewCell.Type] = {
@@ -220,19 +220,14 @@ class WOTTankPivotViewController: PivotViewController {
     }()
 
     private lazy var fetchController: NodeFetchControllerProtocol = {
-        guard let appDelegate = UIApplication.shared.delegate as? Context else {
-            fatalError("appDelegate is not WOTAppDelegateProtocol")
-        }
-        return NodeFetchController(fetchRequestContainer: fetchRequest, appContext: appDelegate)
+        let result = NodeFetchController(fetchRequestContainer: fetchRequest)
+        return result
     }()
 
     private lazy var model: PivotDataModelProtocol = {
-        guard let appDelegate = UIApplication.shared.delegate as? Context else {
-            fatalError("appDelegate is not WOTAppDelegateProtocol")
-        }
-
-        return WOTTankPivotModel(modelListener: self, fetchController: self.fetchController, appContext: appDelegate)
-
+        let result = WOTTankPivotModel(modelListener: self, fetchController: self.fetchController)
+        result.appContext = UIApplication.shared.delegate as? Context
+        return result
     }()
 
     // MARK: Public
@@ -273,11 +268,48 @@ class WOTTankPivotViewController: PivotViewController {
         model
     }
 
+    private var pivotTaskMD5: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onPivotTaskProgress),
+                                               name: NSNotification.Name.UOWProgress,
+                                               object: nil)
+
         let items = [UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(WOTTankPivotViewController.openConstructor(_:)))]
         navigationItem.setRightBarButtonItems(items, animated: false)
+
+        fetchData()
+    }
+
+    func fetchData() {
+        do {
+            guard let appContext = UIApplication.shared.delegate as? WOTTankPivotViewController.Context else {
+                throw WOTTankPivotViewControllerError.contextNotFound
+            }
+
+            pivotTaskMD5 = WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext)
+
+        } catch {
+            appContext?.logInspector?.log(.error(error), sender: self)
+        }
+    }
+
+    @objc
+    func onPivotTaskProgress(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            return
+        }
+        let wrapper = try? UOWStatusObjCWrapper(dictionary: userInfo)
+        if wrapper?.subject == pivotTaskMD5 {
+            print("pivot status: \(wrapper?.description ?? "")")
+            if wrapper?.completed ?? false {
+                DispatchQueue.main.async {
+                    self.model.loadModel()
+                }
+            }
+        }
     }
 
     @objc
@@ -308,6 +340,14 @@ class WOTTankPivotViewController: PivotViewController {
             return UICollectionViewCell()
         }
         return cell
+    }
+}
+
+// MARK: - %t + WOTTankPivotViewController.WOTTankPivotViewControllerError
+
+extension WOTTankPivotViewController {
+    enum WOTTankPivotViewControllerError: Error {
+        case contextNotFound
     }
 }
 

@@ -76,12 +76,12 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
         return { exitToPassThrough, exit in
             do {
                 guard let modelClass = self.modelClass else {
-                    throw Errors.noModelClassProvided
+                    throw UOWDecodeAndLinkMapsError.noModelClassProvided
                 }
                 self.appContext.logInspector?.log(.uow("moParseSet", message: "start \(self.debugDescription)"), sender: self)
 
-                guard let elements = self.maps?.compactMap({ $0 }) else {
-                    throw Errors.noMapProvided
+                guard let elements = self.maps?.compactMap({ $0 }), !elements.isEmpty else {
+                    throw UOWDecodeAndLinkMapsError.noMapProvided(modelClass)
                 }
 
                 let sequence = elements.map { element -> UOWDecodeAndLinkMap in
@@ -93,23 +93,30 @@ extension UOWDecodeAndLinkMaps: UOWRunnable {
                     return uow
                 }
 
-                self.appContext.uowManager.run(units: sequence) { error in
+                self.appContext.uowManager.run(units: sequence, inContextOfWork: self) { error in
                     self.appContext.logInspector?.log(.uow("moParseSet", message: "finish \(self.debugDescription)"), sender: self)
-                    exit(exitToPassThrough, UOWResult.init(fetchResult: nil, error: error))
+                    exit(exitToPassThrough, UOWResult(uow: self, fetchResult: nil, error: error))
                 }
             } catch {
                 self.appContext.logInspector?.log(.uow("moParseSet", message: "finish \(self.debugDescription)"), sender: self)
-                exit(exitToPassThrough, UOWResult.init(fetchResult: nil, error: error))
+                exit(exitToPassThrough, UOWResult(uow: self, fetchResult: nil, error: error))
             }
         }
     }
 }
 
-// MARK: - %t + UOWDecodeAndLinkMaps.Errors
+// MARK: - %t + UOWDecodeAndLinkMaps.UOWDecodeAndLinkMapsError
 
 extension UOWDecodeAndLinkMaps {
-    enum Errors: Error {
-        case noMapProvided
+    enum UOWDecodeAndLinkMapsError: Error, CustomStringConvertible {
+        case noMapProvided(ModelClassType)
         case noModelClassProvided
+
+        var description: String {
+            switch self {
+            case .noMapProvided(let modelClass): return "[\(type(of: self))]: no maps provided for \(type(of: modelClass))"
+            case .noModelClassProvided: return "[\(type(of: self))]: no model provided"
+            }
+        }
     }
 }

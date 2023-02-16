@@ -6,15 +6,19 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+import ContextSDK
+
 // MARK: - TreeDataModel
 
-public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
+open class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
+    public typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
 
-    public var levels: Int {
+    open var levels: Int {
         return nodeConnectorIndex.levels
     }
 
-    public var width: Int {
+    open var width: Int {
         return nodeConnectorIndex.width
     }
 
@@ -23,79 +27,80 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
     weak var listener: NodeDataModelListener?
     weak var nodeCreator: NodeCreatorProtocol?
 
+    @objc
+    public var appContext: Context?
+
     // MARK: Lifecycle
 
-    public required init(fetchController fetch: NodeFetchControllerProtocol, listener list: NodeDataModelListener, nodeCreator nc: NodeCreatorProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: Context) {
+    public required init(fetchController fetch: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator nc: NodeCreatorProtocol, nodeIndexType: NodeIndexProtocol.Type) {
         fetchController = fetch
-        listener = list
+        listener = modelListener
         nodeCreator = nc
-        super.init(nodeIndex: ni, appContext: appContext)
+        super.init(nodeIndexType: nodeIndexType)
         fetchController?.setFetchListener(self)
-    }
-
-    deinit {
-        fetchController?.setFetchListener(nil)
     }
 
     public required init(enumerator _: NodeEnumeratorProtocol) {
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    public required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: Context) {
+    public required init(nodeIndexType _: NodeIndexProtocol.Type) {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 
-    // MARK: Open
-
-    override open func clearRootNodes() {
-        super.clearRootNodes()
-        reindexNodeConnectors()
+    deinit {
+        fetchController?.setFetchListener(nil)
     }
 
     // MARK: Public
 
-    override public func loadModel() {
+    override open func loadModel() {
         super.loadModel()
+
+        guard let context = appContext else {
+            assertionFailure("\(String(describing: Errors.contextNotFound))")
+            return
+        }
+
+        context.logInspector?.log(.flow(name: "tree", message: "start"), sender: self)
 
         reindexNodeConnectors()
 
         do {
-            guard let fetchController = fetchController else {
-                throw Errors.noFetchControllerDefined
-            }
-            try fetchController.performFetch(appContext: appContext)
+            try fetchController?.performFetch(appContext: context)
+            context.logInspector?.log(.flow(name: "tree", message: "finish"), sender: self)
         } catch let error {
-            appContext.logInspector?.log(.error(error), sender: self)
+            context.logInspector?.log(.error(error), sender: self)
             fetchFailed(by: self.fetchController, withError: error)
         }
     }
 
-    override public func nodesCount(section: Int) -> Int {
+    override open func nodesCount(section: Int) -> Int {
         return nodeConnectorIndex.itemsCount(atLevel: section)
     }
 
-    override public func node(atIndexPath: IndexPath) -> NodeProtocol? {
+    override open func node(atIndexPath: IndexPath) -> NodeProtocol? {
         return nodeConnectorIndex.item(indexPath: atIndexPath)
     }
 
-    override public func indexPath(forNode: NodeProtocol?) -> IndexPath? {
+    override open func indexPath(forNode: NodeProtocol?) -> IndexPath? {
         guard let node = forNode else {
             return nil
         }
         return nodeConnectorIndex.indexPath(forNode: node)
     }
 
-    override public func add(rootNode: NodeProtocol) {
+    override open func add(rootNode: NodeProtocol) {
         super.add(rootNode: rootNode)
         reindexNodeConnectors()
     }
 
-    override public func add(nodes: [NodeProtocol]) {
+    override open func add(nodes: [NodeProtocol]) {
         super.add(nodes: nodes)
         reindexNodeConnectors()
     }
 
-    override public func remove(rootNode: NodeProtocol) {
+    override open func remove(rootNode: NodeProtocol) {
         super.remove(rootNode: rootNode)
         reindexNodeConnectors()
     }
@@ -111,6 +116,7 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
             let data = fetchedNodes?.compactMap { $0 as? Node } ?? []
             self.add(nodes: data)
             self.listener?.didFinishLoadModel(error: nil)
+            appContext?.logInspector?.log(.flow(name: "tree", message: "finish"), sender: self)
         })
     }
 }
@@ -120,11 +126,14 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
 extension TreeDataModel {
     enum Errors: Error {
         case noFetchControllerDefined
+        case contextNotFound
     }
 }
 
 extension TreeDataModel {
+
     func reindexNodeConnectors() {
+        //
         nodeConnectorIndex.reset()
 
         let nodes = rootNodes(sortComparator: nil)

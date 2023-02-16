@@ -17,9 +17,9 @@ public protocol UOWRemoteProtocol: UOWProtocol {
     var modelClass: ModelClassType? { get set }
     var modelFieldKeyPaths: [String]? { get set }
     var socket: JointSocketProtocol? { get set }
-    var extractor: ManagedObjectExtractable? { get set }
-    var composer: FetchRequestPredicateComposerProtocol? { get set }
-    var nextDepthLevel: DecodingDepthLevel? { get set }
+    var extractorType: ManagedObjectExtractable.Type? { get set }
+    var contextPredicate: ContextPredicateProtocol? { get set }
+    var decodingDepthLevel: DecodingDepthLevel? { get set }
 
 }
 
@@ -52,9 +52,9 @@ public class UOWRemote: UOWRemoteProtocol, CustomStringConvertible, CustomDebugS
 
     public var modelClass: ModelClassType?
     public var socket: JointSocketProtocol?
-    public var extractor: ManagedObjectExtractable?
-    public var composer: FetchRequestPredicateComposerProtocol?
-    public var nextDepthLevel: DecodingDepthLevel?
+    public var extractorType: ManagedObjectExtractable.Type?
+    public var contextPredicate: ContextPredicateProtocol?
+    public var decodingDepthLevel: DecodingDepthLevel?
     public var modelFieldKeyPaths: [String]?
 
     private let appContext: Context
@@ -77,23 +77,24 @@ extension UOWRemote: UOWRunnable {
             let responseAdapterHelper = ResponseAdapterHelper(appContext: self.appContext)
             responseAdapterHelper.modelClass = self.modelClass
             responseAdapterHelper.socket = self.socket
-            responseAdapterHelper.extractor = self.extractor
-            responseAdapterHelper.completion = { fetchResult in
+            responseAdapterHelper.extractorType = self.extractorType
+            responseAdapterHelper.completion = { error in
                 self.appContext.logInspector?.log(.uow("remote", message: "finish \(self.debugDescription)"), sender: self)
+                let fetchResult = UOWResult(uow: self, fetchResult: nil, error: error)
                 exit(exitToPassThrough, fetchResult)
             }
 
             let requestRunnerHelper = RequestRunnerHelper(appContext: self.appContext)
             requestRunnerHelper.completion = { request, data, error in
                 if let error = error { self.appContext.logInspector?.log(.error(error), sender: self) }
-                responseAdapterHelper.run(request, data: data)
+                responseAdapterHelper.run(request, inContextOfWork: self, data: data)
             }
 
             let requestCreatorHelper = RequestCreatorHeper(appContext: self.appContext)
             requestCreatorHelper.modelClass = self.modelClass
             requestCreatorHelper.modelFieldKeyPaths = self.modelFieldKeyPaths
-            requestCreatorHelper.composer = self.composer
-            requestCreatorHelper.nextDepthLevel = self.nextDepthLevel
+            requestCreatorHelper.contextPredicate = self.contextPredicate
+            requestCreatorHelper.decodingDepthLevel = self.decodingDepthLevel
             requestCreatorHelper.completion = { request, error in
                 if let error = error { self.appContext.logInspector?.log(.error(error), sender: self) }
                 requestRunnerHelper.run(request)

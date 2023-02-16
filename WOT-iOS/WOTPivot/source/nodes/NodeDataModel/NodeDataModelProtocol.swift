@@ -15,12 +15,6 @@ import ContextSDK
 @objc
 public protocol NodeDataModelProtocol {
 
-    typealias Context = LogInspectorContainerProtocol
-        & DataStoreContainerProtocol
-        & RequestRegistratorContainerProtocol
-        & DecoderManagerContainerProtocol
-        & UOWManagerContainerProtocol
-
     var rootNodes: [NodeProtocol] { get }
     var endpointsCount: Int { get }
     func add(rootNode: NodeProtocol)

@@ -116,28 +116,27 @@ class WOTTankPivotModel: PivotDataModel {
 
     // MARK: Lifecycle
 
-    required init(modelListener: NodeDataModelListener, fetchController: NodeFetchControllerProtocol, appContext: Context) {
+    required init(modelListener: NodeDataModelListener, fetchController: NodeFetchControllerProtocol) {
         super.init(fetchController: fetchController,
                    modelListener: modelListener,
                    nodeCreator: customNodeCreator,
                    metadatasource: metadatasource,
-                   nodeIndex: NodeIndex.self,
-                   appContext: appContext)
+                   nodeIndexType: NodeIndex.self)
     }
 
     required init(enumerator _: NodeEnumeratorProtocol) {
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol, context _: Context) {
+    required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol) {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:context:) has not been implemented")
     }
 
-    @objc required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol, nodeIndex _: NodeIndexProtocol.Type, appContext _: Context) {
+    @objc required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol, nodeIndexType _: NodeIndexProtocol.Type) {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:nodeIndex:context:) has not been implemented")
     }
 
-    required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: Context) {
+    required init(nodeIndexType _: NodeIndexProtocol.Type) {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 
@@ -145,19 +144,4 @@ class WOTTankPivotModel: PivotDataModel {
         //
     }
 
-    // MARK: Internal
-
-    override func loadModel() {
-        super.loadModel()
-
-        do {
-            try WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext) { _ in
-                DispatchQueue.main.async {
-                    super.loadModel()
-                }
-            }
-        } catch {
-            appContext.logInspector?.log(.error(error), sender: self)
-        }
-    }
 }

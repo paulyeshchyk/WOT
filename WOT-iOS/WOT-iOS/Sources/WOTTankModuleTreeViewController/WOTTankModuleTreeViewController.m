@@ -23,13 +23,13 @@
 
 @interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NodeDataModelListener, MD5Protocol>
 
-@property (nonatomic, strong) TreeDataModel *model;
+@property (nonatomic, strong) WOTTreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
 @property (nonatomic, strong) UIImageView *connectorsImageView;
 @property (nonatomic, strong) WOTTankListSettingsDatasource *settingsDatasource;
 @property (nonatomic, strong) WOTTankTreeFetchController *fetchController;
-
+@property (nonatomic, copy) NSString *uowMD5;
 @end
 
 @implementation WOTTankModuleTreeViewController
@@ -53,21 +53,43 @@
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
         
-        self.fetchController = [[WOTTankTreeFetchController alloc] initWithObjCFetchRequestContainer:self
-                                                                                          appContext:appDelegate];
-        self.model = [[TreeDataModel alloc] initWithFetchController: self.fetchController
-                                                           listener: self
-                                                        nodeCreator: self
-                                                          nodeIndex: NodeIndex.self
-                                                         appContext: appDelegate];
+        self.fetchController = [[WOTTankTreeFetchController alloc] initWithObjCFetchRequestContainer:self];
+        
+        self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController
+                                                         modelListener: self
+                                                           nodeCreator: self
+                                                         nodeIndexType: NodeIndex.self];
+        self.model.appContext = appDelegate;
+        
     }
     return self;
+}
+
+- (void)uowProgressNotification:(NSNotification *)notification {
+    NSError *error = nil;
+    UOWStatusObjCWrapper *wrapper = [[UOWStatusObjCWrapper alloc] initWithDictionary: notification.userInfo error: &error];
+    
+    
+    if ([wrapper.subject compare: self.uowMD5] == NSOrderedSame) {
+        NSLog(@"tree status: %@)", wrapper.description);
+        if (wrapper.completed) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.model loadModel];
+            });
+        }
+    }
 }
 
 - (void)viewDidLoad {
 
     [super viewDidLoad];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(uowProgressNotification:)
+                                                 name: @"UOWProgress"
+                                               object: nil];
+
     __weak __typeof(self) weakSelf = self;
     UIBarButtonItem *reloadButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:[NSString localization:WOT_STRING_RELOAD] eventBlock:^(id sender) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -124,34 +146,30 @@
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankTreeConnectorCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeConnectorCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class])];
 
-//    [self reloadModel];
+    [self reloadData];
 }
 
 - (void)reloadModel {
-    //TODO: "To be checked"
-    if (![[NSThread currentThread] isMainThread]) {
-        NSAssert(NO, @"Thread should be main");
+    if ( [self isViewLoaded] ){
+        [self.model loadModel];
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ( [self isViewLoaded] ){
-            [self.model loadModel];
-        }
-    });
+}
+
+- (void)reloadData {
+    if ([self isViewLoaded] && _tank_Id != nil) {
+        
+        [self reloadModel];
+        
+        id<ContextProtocol> context = [UIApplication sharedApplication].delegate;
+        
+        self.uowMD5 = [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId:_tank_Id.intValue appContext:context];
+    }
 }
 
 - (void)setTank_Id:(NSNumber *)value {
-
     _tank_Id = [value copy];
-    id<ContextProtocol> appContext = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-    NSError *error = nil;
-    [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
-                                                 appContext: appContext
-                                                 completion:^(id<UOWResultProtocol> _Nonnull result) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self reloadModel];
-        });
-    }];
-  }
+    [self reloadData];
+}
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {

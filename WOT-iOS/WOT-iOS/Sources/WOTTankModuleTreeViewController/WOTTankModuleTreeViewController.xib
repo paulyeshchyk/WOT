@@ -21,7 +21,7 @@
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Mfw-dz-DVC">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="ae5-Q7-qy5" customClass="WOTTankConfigurationFlowLayout" customModule="WOTApi">
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="1" minimumInteritemSpacing="1" id="ae5-Q7-qy5" customClass="WOTTankConfigurationFlowLayout" customModule="WOTApi">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="2"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>

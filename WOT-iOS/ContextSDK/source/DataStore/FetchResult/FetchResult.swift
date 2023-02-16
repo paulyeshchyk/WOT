@@ -14,12 +14,7 @@ public typealias FetchResultThrowingCompletion = (FetchResultProtocol?, Error?) 
 open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
 
     public weak var managedObjectContext: ManagedObjectContextProtocol?
-    public var fetchStatus: FetchStatus = .none {
-        didSet {
-            print("FetchStatus: \(fetchStatus)")
-        }
-    }
-
+    public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
 
     override public var description: String {

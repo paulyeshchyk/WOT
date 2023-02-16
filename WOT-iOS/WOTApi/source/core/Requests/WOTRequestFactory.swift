@@ -30,7 +30,7 @@ public class WOTWEBRequestFactory: NSObject {
 
     // MARK: Public
 
-    public static func fetchVehiclePivotData(appContext: Context, completion: @escaping ListenerCompletionType) throws {
+    public static func fetchVehiclePivotData(appContext: Context) -> String {
         //
         let modelClass = Vehicles.self
         let modelFieldKeyPaths = modelClass.dataFieldsKeypaths()// modelClass.dataFieldsKeypaths()// modelClass.fieldsKeypaths()
@@ -39,54 +39,42 @@ public class WOTWEBRequestFactory: NSObject {
         uow.modelClass = modelClass
         uow.modelFieldKeyPaths = modelFieldKeyPaths
         uow.socket = nil
-        uow.extractor = VehiclesPivotManagedObjectExtractor()
-        uow.composer = nil
-        uow.nextDepthLevel = DecodingDepthLevel.initial(maxLevel: 0)
-        appContext.uowManager.run(unit: uow) { result in
-            completion(result)
+        uow.extractorType = Vehicles.PivotViewManagedObjectExtractor.self
+        uow.contextPredicate = nil
+        uow.decodingDepthLevel = DecodingDepthLevel.limited(by: .first)
+        appContext.uowManager.run(unit: uow, inContextOfWork: nil) { result in
+            if let error = result.error {
+                appContext.logInspector?.log(.warning(error: error), sender: self)
+            }
         }
+        return uow.MD5
     }
 
     @objc
-    public static func fetchVehicleTreeData(vehicleId: Int, appContext: Context, completion: @escaping ListenerCompletionType) {
+    @discardableResult
+    public static func fetchVehicleTreeData(vehicleId: Int, appContext: Context) -> String {
         //
+
         let modelClass = Vehicles.self
         let modelFieldKeyPaths = modelClass.fieldsKeypaths()
+
+        let composerInput = ComposerInput()
+        composerInput.pin = JointPin(modelClass: modelClass, identifier: vehicleId, contextPredicate: nil)
+        let composer = PrimaryKey_Composer()
+        let contextPredicate = try? composer.build(composerInput)
 
         let uow = UOWRemote(appContext: appContext)
         uow.modelClass = modelClass
         uow.modelFieldKeyPaths = modelFieldKeyPaths
         uow.socket = nil
-        uow.extractor = VehiclesTreeManagedObjectExtractor()
-        uow.composer = VehicleTreeRuleBuilder(modelClass: modelClass, vehicleId: vehicleId)
-        uow.nextDepthLevel = DecodingDepthLevel.initial()
-        appContext.uowManager.run(unit: uow) { result in
-            completion(result)
+        uow.extractorType = Vehicles.TreeViewManagedObjectExtractor.self
+        uow.contextPredicate = contextPredicate
+        uow.decodingDepthLevel = DecodingDepthLevel.unlimited()
+        appContext.uowManager.run(unit: uow, inContextOfWork: nil) { result in
+            if let error = result.error {
+                appContext.logInspector?.log(.warning(error: error), sender: self)
+            }
         }
-    }
-}
-
-extension WOTWEBRequestFactory {
-
-    private class VehiclesPivotManagedObjectExtractor: ManagedObjectExtractable {
-
-        public var linkerPrimaryKeyType: PrimaryKeyType {
-            return .internal
-        }
-
-        public var jsonKeyPath: KeypathType? {
-            nil
-        }
-    }
-
-    private class VehiclesTreeManagedObjectExtractor: ManagedObjectExtractable {
-
-        public var linkerPrimaryKeyType: PrimaryKeyType {
-            return .internal
-        }
-
-        public var jsonKeyPath: KeypathType? {
-            nil
-        }
+        return uow.MD5
     }
 }
